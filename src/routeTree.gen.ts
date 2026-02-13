@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoTableRouteImport } from './routes/demo/table'
 import { Route as DemoStoreRouteImport } from './routes/demo/store'
+import { Route as DemoD1RouteImport } from './routes/demo/d1'
 import { Route as DemoBetterAuthRouteImport } from './routes/demo/better-auth'
 import { Route as ApiResumeChatRouteImport } from './routes/api.resume-chat'
 import { Route as DemoFormSimpleRouteImport } from './routes/demo/form.simple'
@@ -37,6 +38,11 @@ const DemoTableRoute = DemoTableRouteImport.update({
 const DemoStoreRoute = DemoStoreRouteImport.update({
   id: '/demo/store',
   path: '/demo/store',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoD1Route = DemoD1RouteImport.update({
+  id: '/demo/d1',
+  path: '/demo/d1',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoBetterAuthRoute = DemoBetterAuthRouteImport.update({
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api/resume-chat': typeof ApiResumeChatRoute
   '/demo/better-auth': typeof DemoBetterAuthRoute
+  '/demo/d1': typeof DemoD1Route
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/resume-chat': typeof ApiResumeChatRoute
   '/demo/better-auth': typeof DemoBetterAuthRoute
+  '/demo/d1': typeof DemoD1Route
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/api/resume-chat': typeof ApiResumeChatRoute
   '/demo/better-auth': typeof DemoBetterAuthRoute
+  '/demo/d1': typeof DemoD1Route
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/'
     | '/api/resume-chat'
     | '/demo/better-auth'
+    | '/demo/d1'
     | '/demo/store'
     | '/demo/table'
     | '/demo/tanstack-query'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/'
     | '/api/resume-chat'
     | '/demo/better-auth'
+    | '/demo/d1'
     | '/demo/store'
     | '/demo/table'
     | '/demo/tanstack-query'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/'
     | '/api/resume-chat'
     | '/demo/better-auth'
+    | '/demo/d1'
     | '/demo/store'
     | '/demo/table'
     | '/demo/tanstack-query'
@@ -139,6 +151,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiResumeChatRoute: typeof ApiResumeChatRoute
   DemoBetterAuthRoute: typeof DemoBetterAuthRoute
+  DemoD1Route: typeof DemoD1Route
   DemoStoreRoute: typeof DemoStoreRoute
   DemoTableRoute: typeof DemoTableRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
@@ -175,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/demo/store'
       fullPath: '/demo/store'
       preLoaderRoute: typeof DemoStoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/d1': {
+      id: '/demo/d1'
+      path: '/demo/d1'
+      fullPath: '/demo/d1'
+      preLoaderRoute: typeof DemoD1RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/better-auth': {
@@ -219,6 +239,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiResumeChatRoute: ApiResumeChatRoute,
   DemoBetterAuthRoute: DemoBetterAuthRoute,
+  DemoD1Route: DemoD1Route,
   DemoStoreRoute: DemoStoreRoute,
   DemoTableRoute: DemoTableRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
