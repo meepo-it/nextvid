@@ -1,0 +1,51 @@
+import { Link } from '@tanstack/react-router'
+
+export function BlogPagination({
+  currentPage,
+  totalPages,
+}: {
+  currentPage: number
+  totalPages: number
+}) {
+  if (totalPages <= 1) return null
+
+  const prevPage = currentPage - 1
+  const nextPage = currentPage + 1
+
+  return (
+    <nav
+      className="mt-8 flex items-center justify-center gap-2"
+      aria-label="Blog pagination"
+    >
+      {currentPage > 1 ? (
+        <Link
+          to="/blog"
+          search={prevPage > 1 ? { page: prevPage } : {}}
+          className="inline-flex items-center rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted"
+        >
+          Previous
+        </Link>
+      ) : (
+        <span className="inline-flex cursor-not-allowed items-center rounded-lg border border-border px-4 py-2 text-muted-foreground text-sm">
+          Previous
+        </span>
+      )}
+      <span className="px-2 text-muted-foreground text-sm">
+        Page {currentPage} of {totalPages}
+      </span>
+      {currentPage < totalPages ? (
+        <Link
+          to="/blog"
+          search={{ page: nextPage }}
+          className="inline-flex items-center rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted"
+        >
+          Next
+        </Link>
+      ) : (
+        <span className="inline-flex cursor-not-allowed items-center rounded-lg border border-border px-4 py-2 text-muted-foreground text-sm">
+          Next
+        </span>
+      )}
+    </nav>
+  )
+}
