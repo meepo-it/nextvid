@@ -95,7 +95,10 @@ export function SidebarMain() {
   return (
     <>
       {items.map((item) =>
-        renderItem(item, item.title + (item.items?.map((i) => i.title).join('-') ?? '')),
+        renderItem(
+          item,
+          item.title + (item.items?.map((i) => i.title).join('-') ?? '')
+        )
       )}
     </>
   );

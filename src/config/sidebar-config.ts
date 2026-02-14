@@ -26,9 +26,24 @@ export function getSidebarLinks(): MenuItemConfig[] {
       title: m.settings,
       icon: IconSettings2,
       items: [
-        { title: m.profile, icon: IconUserCircle, href: Routes.SettingsProfile, external: false },
-        { title: m.security, icon: IconLock, href: Routes.SettingsSecurity, external: false },
-        { title: m.notifications, icon: IconBell, href: Routes.SettingsNotifications, external: false },
+        {
+          title: m.profile,
+          icon: IconUserCircle,
+          href: Routes.SettingsProfile,
+          external: false,
+        },
+        {
+          title: m.security,
+          icon: IconLock,
+          href: Routes.SettingsSecurity,
+          external: false,
+        },
+        {
+          title: m.notifications,
+          icon: IconBell,
+          href: Routes.SettingsNotifications,
+          external: false,
+        },
       ],
     },
   ];

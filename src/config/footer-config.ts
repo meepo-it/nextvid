@@ -31,8 +31,16 @@ export function getFooterLinks(): MenuItemConfig[] {
 
   const legalItems: MenuItemConfig[] = [
     { title: m.cookiePolicy.title, href: Routes.CookiePolicy, external: false },
-    { title: m.privacyPolicy.title, href: Routes.PrivacyPolicy, external: false },
-    { title: m.termsOfService.title, href: Routes.TermsOfService, external: false },
+    {
+      title: m.privacyPolicy.title,
+      href: Routes.PrivacyPolicy,
+      external: false,
+    },
+    {
+      title: m.termsOfService.title,
+      href: Routes.TermsOfService,
+      external: false,
+    },
   ];
 
   return [

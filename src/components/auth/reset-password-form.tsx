@@ -125,9 +125,7 @@ export function ResetPasswordForm() {
                           <IconEye className="h-4 w-4 text-muted-foreground" />
                         )}
                         <span className="sr-only">
-                          {showPassword
-? m.hidePassword
-                              : m.showPassword}
+                          {showPassword ? m.hidePassword : m.showPassword}
                         </span>
                       </Button>
                     </div>

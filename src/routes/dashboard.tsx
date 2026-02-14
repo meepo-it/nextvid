@@ -18,11 +18,7 @@ function DashboardLayout() {
 }
 
 /** Wraps children with sidebar and enforces auth (redirect to login if no session) */
-function DashboardLayoutWrapper({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function DashboardLayoutWrapper({ children }: { children: React.ReactNode }) {
   const { data: session, isPending } = authClient.useSession();
   const navigate = useNavigate();
 

@@ -15,7 +15,12 @@ import {
 } from '@/components/ui/sidebar';
 import { websiteConfig } from '@/config/website';
 import type { User } from 'better-auth';
-import { IconLogout, IconMoon, IconSelector, IconSun } from '@tabler/icons-react';
+import {
+  IconLogout,
+  IconMoon,
+  IconSelector,
+  IconSun,
+} from '@tabler/icons-react';
 import { useTheme } from '@/components/layout/theme-provider';
 import { useRouter } from '@tanstack/react-router';
 import { UserAvatar } from '@/components/layout/user-avatar';

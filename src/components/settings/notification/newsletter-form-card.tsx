@@ -60,7 +60,8 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
   });
 
   useEffect(() => {
-    if (newsletterStatus) form.setValue('subscribed', newsletterStatus.subscribed);
+    if (newsletterStatus)
+      form.setValue('subscribed', newsletterStatus.subscribed);
   }, [newsletterStatus, form]);
 
   if (!currentUser) return null;

@@ -19,7 +19,7 @@ const m = messages.dashboard.settings.security.updatePassword;
 export function PasswordCardWrapper() {
   const { data: session } = authClient.useSession();
   const { hasCredentialProvider, isLoading, error } = useHasCredentialProvider(
-    session?.user?.id,
+    session?.user?.id
   );
 
   if (error) {

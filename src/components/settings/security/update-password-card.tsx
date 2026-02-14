@@ -61,8 +61,13 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
         revokeOtherSessions: true,
       },
       {
-        onRequest: () => { setIsSaving(true); setError(''); },
-        onResponse: () => { setIsSaving(false); },
+        onRequest: () => {
+          setIsSaving(true);
+          setError('');
+        },
+        onResponse: () => {
+          setIsSaving(false);
+        },
         onSuccess: () => {
           toast.success(m.success);
           form.reset();
@@ -71,18 +76,26 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
           setError(`${ctx.error.status}: ${ctx.error.message}`);
           toast.error(m.fail);
         },
-      },
+      }
     );
   };
 
   return (
-    <Card className={cn('w-full overflow-hidden pt-6 pb-0 flex flex-col', className)}>
+    <Card
+      className={cn(
+        'w-full overflow-hidden pt-6 pb-0 flex flex-col',
+        className
+      )}
+    >
       <CardHeader>
         <CardTitle className="text-lg font-semibold">{m.title}</CardTitle>
         <CardDescription>{m.description}</CardDescription>
       </CardHeader>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col flex-1">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col flex-1"
+        >
           <CardContent className="space-y-4 flex-1">
             <FormField
               control={form.control}
@@ -104,7 +117,11 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
                         className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                         onClick={() => setShowCurrent(!showCurrent)}
                       >
-                        {showCurrent ? <IconEyeOff className="h-4 w-4" /> : <IconEye className="h-4 w-4" />}
+                        {showCurrent ? (
+                          <IconEyeOff className="h-4 w-4" />
+                        ) : (
+                          <IconEye className="h-4 w-4" />
+                        )}
                         <span className="sr-only">
                           {showCurrent ? m.hidePassword : m.showPassword}
                         </span>
@@ -135,7 +152,11 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
                         className="cursor-pointer absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                         onClick={() => setShowNew(!showNew)}
                       >
-                        {showNew ? <IconEyeOff className="size-4" /> : <IconEye className="size-4" />}
+                        {showNew ? (
+                          <IconEyeOff className="size-4" />
+                        ) : (
+                          <IconEye className="size-4" />
+                        )}
                         <span className="sr-only">
                           {showNew ? m.hidePassword : m.showPassword}
                         </span>
@@ -150,7 +171,11 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
           </CardContent>
           <CardFooter className="mt-6 px-6 py-4 flex justify-between items-center bg-muted rounded-none">
             <p className="text-sm text-muted-foreground">{m.hint}</p>
-            <Button type="submit" disabled={isSaving} className="cursor-pointer">
+            <Button
+              type="submit"
+              disabled={isSaving}
+              className="cursor-pointer"
+            >
               {isSaving ? m.saving : m.save}
             </Button>
           </CardFooter>

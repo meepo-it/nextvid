@@ -30,12 +30,48 @@ export function getNavbarLinks(): MenuItemConfig[] {
   links.push({
     title: m.pages,
     items: [
-      { title: m.about.title, description: m.about.description, href: Routes.About, icon: IconBuilding, external: false },
-      { title: m.contact.title, description: m.contact.description, href: Routes.Contact, icon: IconMail, external: false },
-      { title: m.waitlist.title, description: m.waitlist.description, href: Routes.Waitlist, icon: IconMailbox, external: false },
-      { title: m.cookiePolicy.title, description: m.cookiePolicy.description, href: Routes.CookiePolicy, icon: IconCookie, external: false },
-      { title: m.privacyPolicy.title, description: m.privacyPolicy.description, href: Routes.PrivacyPolicy, icon: IconShieldCheck, external: false },
-      { title: m.termsOfService.title, description: m.termsOfService.description, href: Routes.TermsOfService, icon: IconFileText, external: false },
+      {
+        title: m.about.title,
+        description: m.about.description,
+        href: Routes.About,
+        icon: IconBuilding,
+        external: false,
+      },
+      {
+        title: m.contact.title,
+        description: m.contact.description,
+        href: Routes.Contact,
+        icon: IconMail,
+        external: false,
+      },
+      {
+        title: m.waitlist.title,
+        description: m.waitlist.description,
+        href: Routes.Waitlist,
+        icon: IconMailbox,
+        external: false,
+      },
+      {
+        title: m.cookiePolicy.title,
+        description: m.cookiePolicy.description,
+        href: Routes.CookiePolicy,
+        icon: IconCookie,
+        external: false,
+      },
+      {
+        title: m.privacyPolicy.title,
+        description: m.privacyPolicy.description,
+        href: Routes.PrivacyPolicy,
+        icon: IconShieldCheck,
+        external: false,
+      },
+      {
+        title: m.termsOfService.title,
+        description: m.termsOfService.description,
+        href: Routes.TermsOfService,
+        icon: IconFileText,
+        external: false,
+      },
     ],
   });
   return links;

@@ -56,14 +56,20 @@ export function DeleteAccountCard() {
           setError(`${ctx.error.status}: ${ctx.error.message}`);
           toast.error(m.fail);
         },
-      },
+      }
     );
   };
 
   return (
-    <Card className={cn('w-full border-destructive/50 overflow-hidden pt-6 pb-0 flex flex-col')}>
+    <Card
+      className={cn(
+        'w-full border-destructive/50 overflow-hidden pt-6 pb-0 flex flex-col'
+      )}
+    >
       <CardHeader>
-        <CardTitle className="text-lg font-bold text-destructive">{m.title}</CardTitle>
+        <CardTitle className="text-lg font-bold text-destructive">
+          {m.title}
+        </CardTitle>
         <CardDescription>{m.description}</CardDescription>
       </CardHeader>
       <CardContent className="flex-1">
@@ -87,8 +93,12 @@ export function DeleteAccountCard() {
       <AlertDialog open={showConfirmation} onOpenChange={setShowConfirmation}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-destructive">{m.confirmTitle}</AlertDialogTitle>
-            <AlertDialogDescription>{m.confirmDescription}</AlertDialogDescription>
+            <AlertDialogTitle className="text-destructive">
+              {m.confirmTitle}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {m.confirmDescription}
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex justify-end gap-3">
             <Button

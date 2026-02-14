@@ -12,7 +12,8 @@ export function useUserAccounts(userId: string | undefined) {
     queryFn: async () => {
       if (!userId) throw new Error('User ID is required');
       const accounts = await authClient.listAccounts();
-      if ('data' in accounts && Array.isArray(accounts.data)) return accounts.data;
+      if ('data' in accounts && Array.isArray(accounts.data))
+        return accounts.data;
       throw new Error('Failed to fetch user accounts');
     },
     enabled: !!userId,

@@ -16,7 +16,8 @@ function SecurityPage() {
     { label: messages.common.settings, isCurrentPage: false },
     { label: m.title, isCurrentPage: true },
   ];
-  const credentialLoginEnabled = websiteConfig.auth?.enableCredentialLogin ?? true;
+  const credentialLoginEnabled =
+    websiteConfig.auth?.enableCredentialLogin ?? true;
 
   return (
     <SettingsPageLayout

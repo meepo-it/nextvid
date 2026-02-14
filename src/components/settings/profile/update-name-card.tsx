@@ -32,7 +32,10 @@ interface UpdateNameCardProps {
 const m = messages.dashboard.settings.profile.name;
 
 const nameSchema = z.object({
-  name: z.string().min(3, { message: m.minLength }).max(30, { message: m.maxLength }),
+  name: z
+    .string()
+    .min(3, { message: m.minLength })
+    .max(30, { message: m.maxLength }),
 });
 
 export function UpdateNameCard({ className }: UpdateNameCardProps) {
@@ -61,7 +64,9 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
           setIsSaving(true);
           setError('');
         },
-        onResponse: () => { setIsSaving(false); },
+        onResponse: () => {
+          setIsSaving(false);
+        },
         onSuccess: () => {
           toast.success(m.success);
           refetch();
@@ -71,18 +76,26 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
           setError(`${ctx.error.status}: ${ctx.error.message}`);
           toast.error(m.fail);
         },
-      },
+      }
     );
   };
 
   return (
-    <Card className={cn('w-full overflow-hidden pt-6 pb-0 flex flex-col', className)}>
+    <Card
+      className={cn(
+        'w-full overflow-hidden pt-6 pb-0 flex flex-col',
+        className
+      )}
+    >
       <CardHeader>
         <CardTitle className="text-lg font-semibold">{m.title}</CardTitle>
         <CardDescription>{m.description}</CardDescription>
       </CardHeader>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col flex-1">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col flex-1"
+        >
           <CardContent className="space-y-4 flex-1">
             <FormField
               control={form.control}
@@ -100,7 +113,11 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
           </CardContent>
           <CardFooter className="mt-6 px-6 py-4 flex justify-between items-center bg-muted rounded-none">
             <p className="text-sm text-muted-foreground">{m.hint}</p>
-            <Button type="submit" disabled={isSaving} className="cursor-pointer">
+            <Button
+              type="submit"
+              disabled={isSaving}
+              className="cursor-pointer"
+            >
               {isSaving ? m.saving : m.save}
             </Button>
           </CardFooter>

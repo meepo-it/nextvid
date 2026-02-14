@@ -23,9 +23,7 @@ const siteName = messages.site.name;
 /**
  * Dashboard sidebar
  */
-export function DashboardSidebar(
-  props: React.ComponentProps<typeof Sidebar>,
-) {
+export function DashboardSidebar(props: React.ComponentProps<typeof Sidebar>) {
   const [mounted, setMounted] = useState(false);
   const { data: session, isPending } = authClient.useSession();
   const currentUser = session?.user;
@@ -48,7 +46,9 @@ export function DashboardSidebar(
               render={
                 <Link to={Routes.Root} onClick={closeMobileSidebar}>
                   <Logo className="size-5" />
-                  <span className="truncate font-semibold text-base">{siteName}</span>
+                  <span className="truncate font-semibold text-base">
+                    {siteName}
+                  </span>
                 </Link>
               }
               className="data-[slot=sidebar-menu-button]:!p-1.5"

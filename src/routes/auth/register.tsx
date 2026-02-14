@@ -9,10 +9,7 @@ const agreement = messages.auth.agreement;
 export const Route = createFileRoute('/auth/register')({
   component: RegisterPage,
   head: () => ({
-    meta: [
-      { title: m.title },
-      { name: 'description', content: m.description },
-    ],
+    meta: [{ title: m.title }, { name: 'description', content: m.description }],
   }),
 });
 

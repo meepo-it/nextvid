@@ -162,9 +162,7 @@ export function RegisterForm({
                             <IconEye className="size-4 text-muted-foreground" />
                           )}
                           <span className="sr-only">
-                            {showPassword
-                              ? m.hidePassword
-                              : m.showPassword}
+                            {showPassword ? m.hidePassword : m.showPassword}
                           </span>
                         </Button>
                       </div>

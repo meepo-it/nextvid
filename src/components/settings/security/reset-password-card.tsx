@@ -35,7 +35,12 @@ export function ResetPasswordCard({ className }: ResetPasswordCardProps) {
   };
 
   return (
-    <Card className={cn('w-full overflow-hidden pt-6 pb-0 flex flex-col', className)}>
+    <Card
+      className={cn(
+        'w-full overflow-hidden pt-6 pb-0 flex flex-col',
+        className
+      )}
+    >
       <CardHeader>
         <CardTitle className="text-lg font-semibold">{m.title}</CardTitle>
         <CardDescription>{m.description}</CardDescription>

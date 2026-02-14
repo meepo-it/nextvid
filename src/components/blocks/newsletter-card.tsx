@@ -116,9 +116,7 @@ export function NewsletterCard() {
               </div>
             )}
             {success && (
-              <p className="text-muted-foreground text-sm">
-                {m.thanks}
-              </p>
+              <p className="text-muted-foreground text-sm">{m.thanks}</p>
             )}
           </form>
         </Form>

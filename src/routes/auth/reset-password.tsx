@@ -7,10 +7,7 @@ const m = messages.auth.resetPassword;
 export const Route = createFileRoute('/auth/reset-password')({
   component: ResetPasswordPage,
   head: () => ({
-    meta: [
-      { title: m.title },
-      { name: 'description', content: m.description },
-    ],
+    meta: [{ title: m.title }, { name: 'description', content: m.description }],
   }),
 });
 

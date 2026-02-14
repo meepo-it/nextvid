@@ -7,10 +7,7 @@ const m = messages.auth.forgotPassword;
 export const Route = createFileRoute('/auth/forgot-password')({
   component: ForgotPasswordPage,
   head: () => ({
-    meta: [
-      { title: m.title },
-      { name: 'description', content: m.description },
-    ],
+    meta: [{ title: m.title }, { name: 'description', content: m.description }],
   }),
 });
 

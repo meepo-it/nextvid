@@ -110,7 +110,11 @@ export function ContactFormCard() {
                 <FormItem>
                   <FormLabel>{m.message}</FormLabel>
                   <FormControl>
-                    <Textarea placeholder={m.placeholderMessage} rows={3} {...field} />
+                    <Textarea
+                      placeholder={m.placeholderMessage}
+                      rows={3}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
