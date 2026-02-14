@@ -5,6 +5,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '@/components/ui/sidebar';
 import { getSidebarLinks } from '@/config/sidebar-config';
 import type { MenuItemConfig } from '@/types';
@@ -22,6 +23,11 @@ function useFilteredSidebarLinks(): MenuItemConfig[] {
 export function SidebarMain() {
   const items = useFilteredSidebarLinks();
   const pathname = useRouterState({ select: (s) => s.location.pathname }) ?? '';
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  const closeMobileSidebar = () => {
+    if (isMobile) setOpenMobile(false);
+  };
 
   const isActive = (href: string | undefined): boolean => {
     if (!href) return false;
@@ -44,7 +50,7 @@ export function SidebarMain() {
                   <SidebarMenuItem key={sub.title} className="py-1">
                     <SidebarMenuButton
                       render={
-                        <Link to={sub.href ?? '#'}>
+                        <Link to={sub.href ?? '#'} onClick={closeMobileSidebar}>
                           {SubIcon ? (
                             <SubIcon className="size-4 shrink-0" />
                           ) : null}
@@ -70,7 +76,7 @@ export function SidebarMain() {
             <SidebarMenuItem>
               <SidebarMenuButton
                 render={
-                  <Link to={item.href ?? '#'}>
+                  <Link to={item.href ?? '#'} onClick={closeMobileSidebar}>
                     {Icon ? <Icon className="size-4 shrink-0" /> : null}
                     <span className="truncate font-medium text-sm">
                       {item.title}

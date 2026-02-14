@@ -35,12 +35,10 @@ export function DashboardHeader({
     <header className="flex h-(--header-height) shrink-0 items-center border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
       <div className="flex w-full min-w-0 items-center gap-2 px-4 lg:px-6">
         <SidebarTrigger className="-ml-1 shrink-0 cursor-pointer" />
-        <span className="flex h-full shrink-0 items-center">
-          <Separator
-            orientation="vertical"
-            className="h-5 w-px shrink-0"
-          />
-        </span>
+        <Separator
+          orientation="vertical"
+          className="mx-2 h-4 data-vertical:self-auto"
+        />
 
         <Breadcrumb className="min-w-0 flex-1">
           <BreadcrumbList className="text-base font-medium">

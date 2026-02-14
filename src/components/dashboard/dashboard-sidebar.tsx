@@ -9,6 +9,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '@/components/ui/sidebar';
 import { authClient } from '@/lib/auth-client';
 import { Link } from '@tanstack/react-router';
@@ -25,10 +26,15 @@ export function DashboardSidebar(
   const [mounted, setMounted] = useState(false);
   const { data: session, isPending } = authClient.useSession();
   const currentUser = session?.user;
+  const { isMobile, setOpenMobile } = useSidebar();
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const closeMobileSidebar = () => {
+    if (isMobile) setOpenMobile(false);
+  };
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -37,7 +43,7 @@ export function DashboardSidebar(
           <SidebarMenuItem>
             <SidebarMenuButton
               render={
-                <Link to={Routes.Root}>
+                <Link to={Routes.Root} onClick={closeMobileSidebar}>
                   <Logo className="size-5" />
                   <span className="truncate font-semibold text-base">App</span>
                 </Link>
