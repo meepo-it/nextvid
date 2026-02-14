@@ -12,8 +12,8 @@ import type { Column } from '@tanstack/react-table';
 import {
   IconChevronDown,
   IconChevronUp,
-  IconEyeOff,
   IconSelector,
+  IconEyeOff,
   IconX,
 } from '@tabler/icons-react';
 import { messages } from '@/config/messages';

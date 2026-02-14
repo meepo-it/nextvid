@@ -2,7 +2,7 @@ import { websiteConfig } from './config/website';
 
 export const Routes = {
   Root: '/',
-  
+
   // Marketing routes
   Features: '/features',
   Pricing: '/pricing',
@@ -18,12 +18,12 @@ export const Routes = {
   AuthError: '/auth/error',
   ForgotPassword: '/auth/forgot-password',
   ResetPassword: '/auth/reset-password',
-  
+
   // Legal routes
   TermsOfService: '/terms',
   PrivacyPolicy: '/privacy',
   CookiePolicy: '/cookie',
-  
+
   // Settings routes
   Dashboard: '/dashboard',
   SettingsProfile: '/dashboard/settings/profile',
@@ -31,7 +31,7 @@ export const Routes = {
   SettingsCredits: '/dashboard/settings/credits',
   SettingsSecurity: '/dashboard/settings/security',
   SettingsNotifications: '/dashboard/settings/notifications',
-  
+
   // Admin routes
   AdminUsers: '/dashboard/admin/users',
 } as const;

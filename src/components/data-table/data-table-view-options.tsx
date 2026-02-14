@@ -10,10 +10,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { messages } from '@/config/messages';
 import type { Table } from '@tanstack/react-table';
 import { IconSettings2 } from '@tabler/icons-react';
 import * as React from 'react';
-import { messages } from '@/config/messages';
 
 const t = messages.common.table;
 
@@ -40,9 +40,9 @@ export function DataTableViewOptions<TData>({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        render={(props) => (
+        render={(triggerProps) => (
           <Button
-            {...props}
+            {...triggerProps}
             type="button"
             aria-label={t.viewOptions}
             variant="outline"
