@@ -1,6 +1,6 @@
 import { getNavbarLinks } from '@/config/navbar-config';
 import { useScroll } from '@/hooks/use-scroll';
-import { authClient } from '@/lib/auth-client';
+import { authClient } from '@/auth/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
 import { buttonVariants } from '@/components/ui/button';

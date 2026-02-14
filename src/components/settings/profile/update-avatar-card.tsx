@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { websiteConfig } from '@/config/website';
-import { authClient } from '@/lib/auth-client';
+import { authClient } from '@/auth/auth-client';
 import { MAX_FILE_SIZE } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { uploadFileFromBrowser } from '@/storage/client';

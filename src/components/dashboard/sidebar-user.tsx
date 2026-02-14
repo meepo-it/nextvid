@@ -38,7 +38,7 @@ export function SidebarUser({ user }: SidebarUserProps) {
 
   const handleSignOut = async () => {
     try {
-      const { authClient } = await import('@/lib/auth-client');
+      const { authClient } = await import('@/auth/auth-client');
       await authClient.signOut();
       router.navigate({ to: '/' });
     } catch (error) {

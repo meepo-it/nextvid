@@ -1,4 +1,4 @@
-import { authClient } from '@/lib/auth-client';
+import { authClient } from '@/auth/auth-client';
 import { useQuery } from '@tanstack/react-query';
 
 export const userAccountsKeys = {

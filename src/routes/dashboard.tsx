@@ -1,6 +1,6 @@
 import { DashboardSidebar } from '@/components/dashboard/dashboard-sidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
-import { authClient } from '@/lib/auth-client';
+import { authClient } from '@/auth/auth-client';
 import { Routes } from '@/routes';
 import { createFileRoute, Outlet, useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';

@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useHasCredentialProvider } from '@/hooks/use-auth';
-import { authClient } from '@/lib/auth-client';
+import { authClient } from '@/auth/auth-client';
 import { cn } from '@/lib/utils';
 import { UpdatePasswordCard } from './update-password-card';
 import { ResetPasswordCard } from './reset-password-card';

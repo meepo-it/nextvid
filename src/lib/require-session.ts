@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth';
+import { auth } from '@/auth/auth';
 
 /**
  * Validates session for API routes using Better Auth.

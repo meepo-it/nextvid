@@ -22,7 +22,7 @@ import {
   useSubscribeNewsletter,
   useUnsubscribeNewsletter,
 } from '@/hooks/use-newsletter';
-import { authClient } from '@/lib/auth-client';
+import { authClient } from '@/auth/auth-client';
 import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { IconLoader2 } from '@tabler/icons-react';

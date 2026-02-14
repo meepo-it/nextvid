@@ -1,5 +1,5 @@
 import { getAvatarLinks } from '@/config/avatar-config';
-import { authClient } from '@/lib/auth-client';
+import { authClient } from '@/auth/auth-client';
 import type { User } from 'better-auth';
 import { IconLogout } from '@tabler/icons-react';
 import { Link, useRouter } from '@tanstack/react-router';

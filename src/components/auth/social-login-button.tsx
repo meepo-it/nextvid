@@ -4,7 +4,7 @@ import { GoogleIcon } from '@/components/icons/google';
 import { Button } from '@/components/ui/button';
 import { messages } from '@/config/messages';
 import { websiteConfig } from '@/config/website';
-import { authClient } from '@/lib/auth-client';
+import { authClient } from '@/auth/auth-client';
 import { getBaseUrl } from '@/lib/urls';
 import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
 import { IconLoader2 } from '@tabler/icons-react';

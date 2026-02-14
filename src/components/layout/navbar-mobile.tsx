@@ -1,5 +1,5 @@
 import { getNavbarLinks } from '@/config/navbar-config';
-import { authClient } from '@/lib/auth-client';
+import { authClient } from '@/auth/auth-client';
 import { Routes } from '@/routes';
 import { buttonVariants } from '@/components/ui/button';
 import { Button } from '@/components/ui/button';

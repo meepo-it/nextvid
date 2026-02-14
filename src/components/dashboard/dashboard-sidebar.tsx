@@ -12,7 +12,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { messages } from '@/config/messages';
-import { authClient } from '@/lib/auth-client';
+import { authClient } from '@/auth/auth-client';
 import { Link } from '@tanstack/react-router';
 import { Routes } from '@/routes';
 import type * as React from 'react';
