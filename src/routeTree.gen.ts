@@ -12,11 +12,13 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WaitlistRouteImport } from './routes/waitlist'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CookieRouteImport } from './routes/cookie'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoTableRouteImport } from './routes/demo/table'
@@ -28,6 +30,9 @@ import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
 import { Route as AuthErrorRouteImport } from './routes/auth/error'
 import { Route as ApiContactRouteImport } from './routes/api/contact'
+import { Route as DashboardSettingsSecurityRouteImport } from './routes/dashboard/settings/security'
+import { Route as DashboardSettingsProfileRouteImport } from './routes/dashboard/settings/profile'
+import { Route as DashboardSettingsNotificationsRouteImport } from './routes/dashboard/settings/notifications'
 import { Route as ApiNewsletterUnsubscribeRouteImport } from './routes/api/newsletter/unsubscribe'
 import { Route as ApiNewsletterSubscribeRouteImport } from './routes/api/newsletter/subscribe'
 import { Route as ApiNewsletterStatusRouteImport } from './routes/api/newsletter/status'
@@ -46,6 +51,11 @@ const TermsRoute = TermsRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CookieRoute = CookieRouteImport.update({
@@ -72,6 +82,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
@@ -128,6 +143,24 @@ const ApiContactRoute = ApiContactRouteImport.update({
   path: '/api/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardSettingsSecurityRoute =
+  DashboardSettingsSecurityRouteImport.update({
+    id: '/settings/security',
+    path: '/settings/security',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardSettingsProfileRoute =
+  DashboardSettingsProfileRouteImport.update({
+    id: '/settings/profile',
+    path: '/settings/profile',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardSettingsNotificationsRoute =
+  DashboardSettingsNotificationsRouteImport.update({
+    id: '/settings/notifications',
+    path: '/settings/notifications',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 const ApiNewsletterUnsubscribeRoute =
   ApiNewsletterUnsubscribeRouteImport.update({
     id: '/api/newsletter/unsubscribe',
@@ -156,6 +189,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRouteWithChildren
   '/contact': typeof ContactRoute
   '/cookie': typeof CookieRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/waitlist': typeof WaitlistRoute
@@ -170,10 +204,14 @@ export interface FileRoutesByFullPath {
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/blog/': typeof BlogIndexRoute
+  '/dashboard/': typeof DashboardIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/newsletter/status': typeof ApiNewsletterStatusRoute
   '/api/newsletter/subscribe': typeof ApiNewsletterSubscribeRoute
   '/api/newsletter/unsubscribe': typeof ApiNewsletterUnsubscribeRoute
+  '/dashboard/settings/notifications': typeof DashboardSettingsNotificationsRoute
+  '/dashboard/settings/profile': typeof DashboardSettingsProfileRoute
+  '/dashboard/settings/security': typeof DashboardSettingsSecurityRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -195,10 +233,14 @@ export interface FileRoutesByTo {
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/blog': typeof BlogIndexRoute
+  '/dashboard': typeof DashboardIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/newsletter/status': typeof ApiNewsletterStatusRoute
   '/api/newsletter/subscribe': typeof ApiNewsletterSubscribeRoute
   '/api/newsletter/unsubscribe': typeof ApiNewsletterUnsubscribeRoute
+  '/dashboard/settings/notifications': typeof DashboardSettingsNotificationsRoute
+  '/dashboard/settings/profile': typeof DashboardSettingsProfileRoute
+  '/dashboard/settings/security': typeof DashboardSettingsSecurityRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -207,6 +249,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRouteWithChildren
   '/contact': typeof ContactRoute
   '/cookie': typeof CookieRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/waitlist': typeof WaitlistRoute
@@ -221,10 +264,14 @@ export interface FileRoutesById {
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/blog/': typeof BlogIndexRoute
+  '/dashboard/': typeof DashboardIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/newsletter/status': typeof ApiNewsletterStatusRoute
   '/api/newsletter/subscribe': typeof ApiNewsletterSubscribeRoute
   '/api/newsletter/unsubscribe': typeof ApiNewsletterUnsubscribeRoute
+  '/dashboard/settings/notifications': typeof DashboardSettingsNotificationsRoute
+  '/dashboard/settings/profile': typeof DashboardSettingsProfileRoute
+  '/dashboard/settings/security': typeof DashboardSettingsSecurityRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -234,6 +281,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/contact'
     | '/cookie'
+    | '/dashboard'
     | '/privacy'
     | '/terms'
     | '/waitlist'
@@ -248,10 +296,14 @@ export interface FileRouteTypes {
     | '/demo/table'
     | '/demo/tanstack-query'
     | '/blog/'
+    | '/dashboard/'
     | '/api/auth/$'
     | '/api/newsletter/status'
     | '/api/newsletter/subscribe'
     | '/api/newsletter/unsubscribe'
+    | '/dashboard/settings/notifications'
+    | '/dashboard/settings/profile'
+    | '/dashboard/settings/security'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -273,10 +325,14 @@ export interface FileRouteTypes {
     | '/demo/table'
     | '/demo/tanstack-query'
     | '/blog'
+    | '/dashboard'
     | '/api/auth/$'
     | '/api/newsletter/status'
     | '/api/newsletter/subscribe'
     | '/api/newsletter/unsubscribe'
+    | '/dashboard/settings/notifications'
+    | '/dashboard/settings/profile'
+    | '/dashboard/settings/security'
   id:
     | '__root__'
     | '/'
@@ -284,6 +340,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/contact'
     | '/cookie'
+    | '/dashboard'
     | '/privacy'
     | '/terms'
     | '/waitlist'
@@ -298,10 +355,14 @@ export interface FileRouteTypes {
     | '/demo/table'
     | '/demo/tanstack-query'
     | '/blog/'
+    | '/dashboard/'
     | '/api/auth/$'
     | '/api/newsletter/status'
     | '/api/newsletter/subscribe'
     | '/api/newsletter/unsubscribe'
+    | '/dashboard/settings/notifications'
+    | '/dashboard/settings/profile'
+    | '/dashboard/settings/security'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -310,6 +371,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   ContactRoute: typeof ContactRoute
   CookieRoute: typeof CookieRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
   WaitlistRoute: typeof WaitlistRoute
@@ -348,6 +410,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cookie': {
       id: '/cookie'
       path: '/cookie'
@@ -382,6 +451,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
     }
     '/blog/': {
       id: '/blog/'
@@ -460,6 +536,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/settings/security': {
+      id: '/dashboard/settings/security'
+      path: '/settings/security'
+      fullPath: '/dashboard/settings/security'
+      preLoaderRoute: typeof DashboardSettingsSecurityRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/settings/profile': {
+      id: '/dashboard/settings/profile'
+      path: '/settings/profile'
+      fullPath: '/dashboard/settings/profile'
+      preLoaderRoute: typeof DashboardSettingsProfileRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/settings/notifications': {
+      id: '/dashboard/settings/notifications'
+      path: '/settings/notifications'
+      fullPath: '/dashboard/settings/notifications'
+      preLoaderRoute: typeof DashboardSettingsNotificationsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/api/newsletter/unsubscribe': {
       id: '/api/newsletter/unsubscribe'
       path: '/api/newsletter/unsubscribe'
@@ -509,12 +606,31 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
+interface DashboardRouteChildren {
+  DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardSettingsNotificationsRoute: typeof DashboardSettingsNotificationsRoute
+  DashboardSettingsProfileRoute: typeof DashboardSettingsProfileRoute
+  DashboardSettingsSecurityRoute: typeof DashboardSettingsSecurityRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardIndexRoute: DashboardIndexRoute,
+  DashboardSettingsNotificationsRoute: DashboardSettingsNotificationsRoute,
+  DashboardSettingsProfileRoute: DashboardSettingsProfileRoute,
+  DashboardSettingsSecurityRoute: DashboardSettingsSecurityRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRouteWithChildren,
   ContactRoute: ContactRoute,
   CookieRoute: CookieRoute,
+  DashboardRoute: DashboardRouteWithChildren,
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
   WaitlistRoute: WaitlistRoute,

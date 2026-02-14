@@ -1,7 +1,5 @@
 import {
   IconBell,
-  IconCoin,
-  IconCreditCard,
   IconLayoutDashboard,
   IconLock,
   IconSettings,
@@ -11,14 +9,11 @@ import {
 } from '@tabler/icons-react';
 import { Routes } from '@/routes';
 import type { MenuItemConfig } from '../types';
-import { websiteConfig } from './website';
 
 /**
  * Dashboard sidebar links (English only). Icons are Tabler icon components.
  */
 export function getSidebarLinks(): MenuItemConfig[] {
-  const creditsEnabled = websiteConfig.credits?.enableCredits ?? false;
-
   return [
     {
       title: 'Dashboard',
@@ -49,22 +44,6 @@ export function getSidebarLinks(): MenuItemConfig[] {
           href: Routes.SettingsProfile,
           external: false,
         },
-        {
-          title: 'Billing',
-          icon: IconCreditCard,
-          href: Routes.SettingsBilling,
-          external: false,
-        },
-        ...(creditsEnabled
-          ? [
-              {
-                title: 'Credits',
-                icon: IconCoin,
-                href: Routes.SettingsCredits,
-                external: false,
-              } as MenuItemConfig,
-            ]
-          : []),
         {
           title: 'Security',
           icon: IconLock,
