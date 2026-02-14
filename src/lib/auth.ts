@@ -3,6 +3,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { getDb } from "@/db";
+import { sendEmail } from "@/mail";
 import { getBaseUrl } from "./urls";
 
 /**
@@ -17,6 +18,23 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    requireEmailVerification: true,
+    sendResetPassword: async ({ user, url }) => {
+      await sendEmail({
+        to: user.email,
+        template: "forgotPassword",
+        context: { url, name: user.name ?? "" },
+      });
+    },
+  },
+  emailVerification: {
+    sendVerificationEmail: async ({ user, url }) => {
+      await sendEmail({
+        to: user.email,
+        template: "verifyEmail",
+        context: { url, name: user.name ?? "" },
+      });
+    },
   },
   plugins: [tanstackStartCookies()],
 });
