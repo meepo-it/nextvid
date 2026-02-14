@@ -41,16 +41,13 @@ export class R2Provider implements StorageProvider {
       const uniqueFilename = this.generateUniqueFilename(filename);
       const key = folder ? `${folder}/${uniqueFilename}` : uniqueFilename;
 
-      const body =
-        file instanceof Blob ? file : new Uint8Array(file as Buffer);
+      const body = file instanceof Blob ? file : new Uint8Array(file as Buffer);
       await bucket.put(key, body, {
         httpMetadata: { contentType },
       });
 
       const { publicUrl } = this.config;
-      const url = publicUrl
-        ? `${publicUrl.replace(/\/$/, '')}/${key}`
-        : key;
+      const url = publicUrl ? `${publicUrl.replace(/\/$/, '')}/${key}` : key;
 
       return { url, key };
     } catch (error) {

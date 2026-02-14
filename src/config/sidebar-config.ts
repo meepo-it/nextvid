@@ -3,13 +3,16 @@ import {
   IconLayoutDashboard,
   IconLock,
   IconSettings2,
+  IconShieldCheck,
   IconUserCircle,
+  IconUsersGroup,
 } from '@tabler/icons-react';
 import { Routes } from '@/routes';
 import type { MenuItemConfig } from '../types';
 import { messages } from './messages';
 
 const m = messages.dashboard.sidebar;
+const adminM = messages.dashboard.admin;
 
 /**
  * Dashboard sidebar links (English only). Icons are Tabler icon components.
@@ -21,6 +24,18 @@ export function getSidebarLinks(): MenuItemConfig[] {
       icon: IconLayoutDashboard,
       href: Routes.Dashboard,
       external: false,
+    },
+    {
+      title: adminM.title,
+      icon: IconShieldCheck,
+      items: [
+        {
+          title: adminM.users.title,
+          icon: IconUsersGroup,
+          href: Routes.AdminUsers,
+          external: false,
+        },
+      ],
     },
     {
       title: m.settings,

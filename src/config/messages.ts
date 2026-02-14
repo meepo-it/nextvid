@@ -221,6 +221,20 @@ export const messages = {
         },
       },
     },
+    admin: {
+      title: 'Admin',
+      users: {
+        title: 'Users',
+        search: 'Search by name or email…',
+        clearSearch: 'Clear search',
+        columns: {
+          name: 'Name',
+          email: 'Email',
+          createdAt: 'Created at',
+        },
+        noResults: 'No users found.',
+      },
+    },
     sectionCards: {
       totalRevenue: 'Total Revenue',
       newCustomers: 'New Customers',
@@ -283,5 +297,21 @@ export const messages = {
   common: {
     settings: 'Settings',
     cancel: 'Cancel',
+    table: {
+      ascending: 'Ascending',
+      descending: 'Descending',
+      resetSorting: 'Reset sorting',
+      hideColumn: 'Hide column',
+      rowsPerPage: 'Rows per page',
+      page: 'Page',
+      firstPage: 'First page',
+      previousPage: 'Previous page',
+      nextPage: 'Next page',
+      lastPage: 'Last page',
+      viewOptions: 'View options',
+      searchColumns: 'Search columns…',
+      noColumns: 'No columns.',
+      clearFilters: 'Clear filters',
+    },
   },
 } as const;
