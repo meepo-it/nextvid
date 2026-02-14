@@ -15,6 +15,7 @@ import {
 import { Skeleton } from '@/components/ui/skeleton'
 import Container from '@/components/layout/container'
 import { Logo } from '@/components/layout/logo'
+import { ModeSwitcher } from '@/components/layout/mode-switcher'
 import { NavbarIcon } from '@/components/layout/navbar-icons'
 import { NavbarMobile } from '@/components/layout/navbar-mobile'
 import { UserButton } from '@/components/layout/user-button'
@@ -180,6 +181,7 @@ export function Navbar({ scroll = true }: NavbarProps) {
           </div>
 
           <div className="flex items-center gap-x-4">
+            <ModeSwitcher />
             {!mounted || isPending ? (
               <Skeleton className="size-8 rounded-full" />
             ) : currentUser ? (

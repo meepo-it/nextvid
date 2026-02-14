@@ -6,12 +6,17 @@ import {
   Scripts,
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
+import { ThemeProvider } from '@/components/layout/theme-provider'
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
 import { NotFound } from '@/components/layout/not-found'
+import { websiteConfig } from '@/config/website'
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import StoreDevtools from '../lib/demo-store-devtools'
 import appCss from '../styles.css?url'
+
+const DEFAULT_THEME =
+  websiteConfig.ui?.mode?.defaultMode ?? 'system'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -44,16 +49,23 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      data-default-theme={DEFAULT_THEME}
+      className={DEFAULT_THEME === 'dark' ? 'dark' : undefined}
+      suppressHydrationWarning
+    >
       <head>
         <HeadContent />
       </head>
       <body>
-        <div className="flex min-h-screen flex-col">
-          <Navbar scroll />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
+        <ThemeProvider>
+          <div className="flex min-h-screen flex-col">
+            <Navbar scroll />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
+        </ThemeProvider>
         <TanStackDevtools
           config={{
             position: 'bottom-right',

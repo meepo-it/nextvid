@@ -14,6 +14,7 @@ import * as React from 'react'
 import { useEffect, useState } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Logo } from '@/components/layout/logo'
+import { ModeSwitcher } from '@/components/layout/mode-switcher'
 import { UserButton } from '@/components/layout/user-button'
 import { cn } from '@/lib/utils'
 
@@ -52,6 +53,7 @@ export function NavbarMobile({
         </Link>
 
         <div className="flex items-center justify-end gap-4">
+          <ModeSwitcher />
           {isPending ? (
             <Skeleton className="size-8 rounded-full" />
           ) : currentUser ? (
