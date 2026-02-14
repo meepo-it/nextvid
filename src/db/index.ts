@@ -9,8 +9,8 @@ export function getDb(d1: D1Database) {
   return drizzle(d1, { schema });
 }
 
-/**
- * Export individual tables for drizzle-kit
- */
-export * from "./auth.schema";
-export * from "./schema";
+/** Better Auth tables */
+export * from './auth.schema';
+/** Application tables */
+export * from './app.schema';
+export { schema } from './schema';
