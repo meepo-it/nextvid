@@ -1,9 +1,7 @@
-'use client';
-
 import { UsersTable } from '@/components/admin/users-table';
 import { getSortingStateParser } from '@/components/data-table/lib/parsers';
-import { useUsers } from '@/hooks/use-users';
 import type { SortingItem } from '@/components/data-table/lib/parsers';
+import { useUsers } from '@/hooks/use-users';
 import {
   parseAsIndex,
   parseAsInteger,
@@ -14,13 +12,20 @@ import {
 const SORTABLE_IDS: string[] = ['name', 'email', 'createdAt'];
 const defaultSort: SortingItem[] = [{ id: 'createdAt', desc: true }];
 
-export function UsersPageClient() {
-  const [queryState, setQueryState] = useQueryStates({
-    page: parseAsIndex.withDefault(0),
-    size: parseAsInteger.withDefault(10),
-    search: parseAsString.withDefault(''),
-    sort: getSortingStateParser(SORTABLE_IDS).withDefault(defaultSort),
-  });
+/**
+ * Admin users table with URL-synced search, sort, pagination.
+ * Used by the dashboard admin users route; kept as client component for hooks (nuqs, useUsers).
+ */
+export function AdminUsersContent() {
+  const [queryState, setQueryState] = useQueryStates(
+    {
+      page: parseAsIndex.withDefault(0),
+      size: parseAsInteger.withDefault(10),
+      search: parseAsString.withDefault(''),
+      sort: getSortingStateParser(SORTABLE_IDS).withDefault(defaultSort),
+    },
+    { shallow: false }
+  );
 
   const sortFirst = queryState.sort[0];
   const sortId = sortFirst?.id ?? 'createdAt';

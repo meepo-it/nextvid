@@ -27,16 +27,9 @@ import { IconX } from '@tabler/icons-react';
 import { useMemo, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { formatDateTime } from '@/lib/formatter';
 
-const m = messages.admin.users;
-
-function formatDate(value: Date | number | string): string {
-  const d = typeof value === 'number' ? new Date(value) : new Date(value);
-  return Intl.DateTimeFormat(undefined, {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  }).format(d);
-}
+const m = messages.dashboard.admin.users;
 
 function TableRowSkeleton({ columns }: { columns: number }) {
   return (
@@ -91,6 +84,8 @@ export function UsersTable({
       {
         id: 'name',
         accessorKey: 'name',
+        enableHiding: true,
+        enableSorting: true,
         header: ({ column }) => (
           <DataTableColumnHeader column={column} label={m.columns.name} />
         ),
@@ -115,6 +110,8 @@ export function UsersTable({
       {
         id: 'email',
         accessorKey: 'email',
+        enableHiding: true,
+        enableSorting: true,
         header: ({ column }) => (
           <DataTableColumnHeader column={column} label={m.columns.email} />
         ),
@@ -128,11 +125,13 @@ export function UsersTable({
       {
         id: 'createdAt',
         accessorKey: 'createdAt',
+        enableHiding: true,
+        enableSorting: true,
         header: ({ column }) => (
           <DataTableColumnHeader column={column} label={m.columns.createdAt} />
         ),
         cell: ({ row }) =>
-          formatDate(row.original.createdAt as unknown as Date),
+          formatDateTime(new Date(row.original.createdAt)),
         meta: { label: m.columns.createdAt },
         minSize: 140,
         size: 160,
@@ -182,10 +181,7 @@ export function UsersTable({
           <Input
             placeholder={m.search}
             value={search}
-            onChange={(e) => {
-              onSearch(e.target.value);
-              onPageChange(0);
-            }}
+            onChange={(e) => onSearch(e.target.value)}
             className="h-8 w-[260px] pr-8"
           />
           {search.length > 0 ? (
