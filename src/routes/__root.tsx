@@ -6,6 +6,7 @@ import {
   Scripts,
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
+import { Analytics } from '@/components/analytics/analytics'
 import { ThemeProvider } from '@/components/layout/theme-provider'
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
@@ -59,14 +60,15 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <ThemeProvider>
-          <div className="flex min-h-screen flex-col">
-            <Navbar scroll />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-        </ThemeProvider>
-        <TanStackDevtools
+        <Analytics>
+          <ThemeProvider>
+            <div className="flex min-h-screen flex-col">
+              <Navbar scroll />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+          </ThemeProvider>
+          <TanStackDevtools
           config={{
             position: 'bottom-right',
           }}
@@ -78,8 +80,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             TanStackQueryDevtools,
             StoreDevtools,
           ]}
-        />
-        <Scripts />
+          />
+          <Scripts />
+        </Analytics>
       </body>
     </html>
   )
