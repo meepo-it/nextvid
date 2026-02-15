@@ -3,11 +3,15 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { Spinner } from '@/components/ui/spinner';
 import { authClient } from '@/auth/auth-client';
 import { Routes } from '@/routes';
+import { authMiddleware } from '@/middleware/auth-middleware';
 import { createFileRoute, Outlet, useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
 
 export const Route = createFileRoute('/dashboard')({
   component: DashboardLayout,
+  server: {
+    middleware: [authMiddleware],
+  },
 });
 
 function DashboardLayout() {
