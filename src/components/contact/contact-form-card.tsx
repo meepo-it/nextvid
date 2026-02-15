@@ -25,6 +25,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const m = messages.contact;
+
 const schema = z.object({
   name: z.string().min(3, m.nameMin).max(30, m.nameMax),
   email: z.string().email(m.emailInvalid),
@@ -67,8 +68,8 @@ export function ContactFormCard() {
   return (
     <Card className="mx-auto max-w-lg overflow-hidden pt-6 pb-0">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">{m.title}</CardTitle>
-        <CardDescription>{m.description}</CardDescription>
+        <CardTitle className="text-lg font-semibold">{m.subtitle}</CardTitle>
+        {/* <CardDescription>{m.description}</CardDescription> */}
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col">

@@ -4,6 +4,7 @@ import { BlogGrid } from '@/components/blog/blog-grid';
 import { BlogPagination } from '@/components/blog/blog-pagination';
 import { getPaginatedPosts } from '@/lib/blog';
 import { websiteConfig } from '@/config/website';
+import { messages } from '@/config/messages';
 
 export const Route = createFileRoute('/blog/')({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -20,7 +21,7 @@ function BlogListPage() {
   if (!websiteConfig.blog?.enable) {
     return (
       <Container className="py-16">
-        <p className="text-center text-muted-foreground">Blog is disabled.</p>
+        <p className="text-center text-muted-foreground">{messages.blog.disabled}</p>
       </Container>
     );
   }
@@ -29,9 +30,9 @@ function BlogListPage() {
     <div className="mb-16">
       <div className="mt-8 flex w-full flex-col items-center justify-center gap-8">
         <div className="space-y-4 text-center">
-          <h1 className="text-3xl font-bold tracking-tight">Blog</h1>
+          <h1 className="text-3xl font-bold tracking-tight">{messages.blog.title}</h1>
           <p className="text-muted-foreground text-lg">
-            Insights, updates and stories from our team.
+            {messages.blog.description}
           </p>
         </div>
       </div>

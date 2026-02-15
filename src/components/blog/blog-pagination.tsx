@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router';
+import { messages } from '@/config/messages';
 
 export function BlogPagination({
   currentPage,
@@ -20,18 +21,18 @@ export function BlogPagination({
       {currentPage > 1 ? (
         <Link
           to="/blog"
-          search={prevPage > 1 ? { page: prevPage } : {}}
+          search={{ page: prevPage }}
           className="inline-flex items-center rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted"
         >
-          Previous
+          {messages.blog.previous}
         </Link>
       ) : (
         <span className="inline-flex cursor-not-allowed items-center rounded-lg border border-border px-4 py-2 text-muted-foreground text-sm">
-          Previous
+          {messages.blog.previous}
         </span>
       )}
       <span className="px-2 text-muted-foreground text-sm">
-        Page {currentPage} of {totalPages}
+        {messages.blog.page} {currentPage} {messages.blog.of} {totalPages}
       </span>
       {currentPage < totalPages ? (
         <Link
@@ -39,11 +40,11 @@ export function BlogPagination({
           search={{ page: nextPage }}
           className="inline-flex items-center rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted"
         >
-          Next
+          {messages.blog.next}
         </Link>
       ) : (
         <span className="inline-flex cursor-not-allowed items-center rounded-lg border border-border px-4 py-2 text-muted-foreground text-sm">
-          Next
+          {messages.blog.next}
         </span>
       )}
     </nav>

@@ -1,5 +1,6 @@
 import { DashboardSidebar } from '@/components/dashboard/dashboard-sidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { Spinner } from '@/components/ui/spinner';
 import { authClient } from '@/auth/auth-client';
 import { Routes } from '@/routes';
 import { createFileRoute, Outlet, useNavigate } from '@tanstack/react-router';
@@ -32,7 +33,7 @@ function DashboardLayoutWrapper({ children }: { children: React.ReactNode }) {
   if (isPending) {
     return (
       <div className="flex min-h-svh items-center justify-center">
-        <p className="text-muted-foreground">Loading...</p>
+        <Spinner className="size-6" />
       </div>
     );
   }

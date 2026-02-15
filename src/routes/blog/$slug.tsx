@@ -1,8 +1,9 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link, notFound } from '@tanstack/react-router';
 import Container from '@/components/layout/container';
-import { MarkdownBody } from '@/components/blog/markdown-body';
+import { MarkdownBody } from '@/components/page/markdown-body';
 import { getPostBySlug } from '@/lib/blog';
 import { websiteConfig } from '@/config/website';
+import { messages } from '@/config/messages';
 import { IconArrowLeft } from '@tabler/icons-react';
 
 export const Route = createFileRoute('/blog/$slug')({
@@ -24,26 +25,13 @@ function BlogPostPage() {
   if (!websiteConfig.blog?.enable) {
     return (
       <Container className="py-16">
-        <p className="text-center text-muted-foreground">Blog is disabled.</p>
+        <p className="text-center text-muted-foreground">{messages.blog.disabled}</p>
       </Container>
     );
   }
 
   if (!post) {
-    return (
-      <Container className="py-16">
-        <div className="mx-auto max-w-3xl text-center">
-          <h1 className="text-2xl font-bold">Post not found</h1>
-          <Link
-            to="/blog"
-            search={{ page: 1 }}
-            className="mt-4 inline-flex text-primary hover:underline"
-          >
-            Back to Blog
-          </Link>
-        </div>
-      </Container>
-    );
+    throw notFound();
   }
 
   const dateFormatted = formatDate(post.date);
@@ -58,7 +46,7 @@ function BlogPostPage() {
             className="mb-6 inline-flex items-center gap-2 text-muted-foreground text-sm hover:text-foreground"
           >
             <IconArrowLeft className="size-4" />
-            All posts
+            {messages.blog.allPosts}
           </Link>
 
           <article>

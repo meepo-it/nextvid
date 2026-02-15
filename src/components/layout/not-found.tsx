@@ -1,21 +1,24 @@
 import { Link } from '@tanstack/react-router';
 import { Logo } from '@/components/layout/logo';
 import { buttonVariants } from '@/components/ui/button';
+import { messages } from '@/config/messages';
 import { cn } from '@/lib/utils';
+
+const m = messages.notFound;
 
 export function NotFound() {
   return (
     <div className="flex min-h-[60vh] flex-col items-center justify-center gap-8 px-4">
       <Logo className="size-12" />
-      <h1 className="text-4xl font-bold">Not Found</h1>
+      <h1 className="text-4xl font-bold">{m.title}</h1>
       <p className="text-balance text-center text-xl font-medium text-muted-foreground">
-        The page you are looking for does not exist.
+        {m.description}
       </p>
       <Link
         to="/"
         className={cn(buttonVariants({ size: 'lg', variant: 'default' }))}
       >
-        Back to Home
+        {m.backToHome}
       </Link>
     </div>
   );

@@ -34,7 +34,7 @@ export function SocialLoginButton({
 
   const [isLoading, setIsLoading] = useState<'google' | null>(null);
 
-  if (!websiteConfig.auth.enableGoogleLogin) {
+  if (!websiteConfig.auth?.enableGoogleLogin) {
     return null;
   }
 

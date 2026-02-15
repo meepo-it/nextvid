@@ -4,7 +4,7 @@ import { messages } from '@/config/messages';
 import { Routes } from '@/routes';
 
 const m = messages.auth.register;
-const authCommon = messages.auth.common;
+const am = messages.auth.common;
 
 export const Route = createFileRoute('/auth/register')({
   component: RegisterPage,
@@ -18,19 +18,19 @@ function RegisterPage() {
     <div className="flex flex-col gap-4">
       <RegisterForm />
       <div className="text-balance text-center text-xs text-muted-foreground">
-        {authCommon.byClickingContinue}
+        {am.byClickingContinue}
         <Link
           to={Routes.TermsOfService}
           className="underline underline-offset-4 hover:text-primary"
         >
-          {authCommon.termsOfService}
+          {am.termsOfService}
         </Link>
-        {authCommon.and}
+        {am.and}
         <Link
           to={Routes.PrivacyPolicy}
           className="underline underline-offset-4 hover:text-primary"
         >
-          {authCommon.privacyPolicy}
+          {am.privacyPolicy}
         </Link>
       </div>
     </div>

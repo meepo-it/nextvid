@@ -1,4 +1,5 @@
 import type { Blog } from 'content-collections';
+import { messages } from '@/config/messages';
 import { BlogCard } from './blog-card';
 
 type BlogWithMeta = Blog & { _meta: { path: string } };
@@ -7,7 +8,7 @@ export function BlogGrid({ posts }: { posts: BlogWithMeta[] }) {
   if (posts.length === 0) {
     return (
       <div className="py-12 text-center text-muted-foreground">
-        No posts yet.
+        {messages.blog.noPosts}
       </div>
     );
   }

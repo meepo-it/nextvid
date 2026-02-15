@@ -1,5 +1,3 @@
-'use client';
-
 import { messages } from '@/config/messages';
 import { FormError } from '@/components/layout/form-error';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';

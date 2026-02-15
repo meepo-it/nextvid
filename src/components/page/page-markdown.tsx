@@ -1,4 +1,4 @@
-import { MarkdownBody } from '@/components/blog/markdown-body';
+import { MarkdownBody } from '@/components/page/markdown-body';
 import { Card, CardContent } from '@/components/ui/card';
 
 interface PageData {

@@ -3,8 +3,11 @@ import Container from '@/components/layout/container';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { buttonVariants } from '@/components/ui/button';
 import { websiteConfig } from '@/config/website';
+import { messages } from '@/config/messages';
 import { cn } from '@/lib/utils';
 import { IconBrandX, IconMail } from '@tabler/icons-react';
+
+const m = messages.about;
 
 export const Route = createFileRoute('/about')({
   component: AboutPage,
@@ -38,9 +41,9 @@ function AboutPage() {
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <h1 className="text-4xl text-foreground">MkFast</h1>
+                  <h1 className="text-4xl text-foreground">{messages.site.name}</h1>
                   <p className="mt-2 text-base text-muted-foreground">
-                    We build tools that help teams ship faster.
+                    {m.subtitle}
                   </p>
                 </div>
               </div>
@@ -48,8 +51,7 @@ function AboutPage() {
               {/* Introduction and social */}
               <div>
                 <p className="mb-8 text-base text-muted-foreground">
-                  Learn more about our mission and how we can help you. Get in
-                  touch for partnerships or feedback.
+                  {m.introduction}
                 </p>
                 <div className="flex flex-wrap items-center gap-4">
                   {twitter && (
@@ -63,7 +65,7 @@ function AboutPage() {
                       )}
                     >
                       <IconBrandX className="mr-1 size-4" />
-                      Follow us
+                      {m.followUs}
                     </a>
                   )}
                   {supportEmailHref && (
@@ -75,7 +77,7 @@ function AboutPage() {
                       )}
                     >
                       <IconMail className="mr-1 size-4" />
-                      Contact us
+                      {m.contactUs}
                     </a>
                   )}
                 </div>

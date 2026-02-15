@@ -252,9 +252,20 @@ export const messages = {
     },
   },
 
+  about: {
+    title: 'About',
+    subtitle: 'We build tools that help you ship faster.',
+    description:
+      'Learn more about our mission and how we can help you.',
+    introduction: '👋 Hi there! This is MkFast, an AI SaaS template built with modern technologies, helping you build your SaaS faster and better. If you have any questions, welcome to contact me.',
+    followUs: 'Follow us',
+    contactUs: 'Contact us',
+  },
+
   contact: {
-    title: 'Send a message',
-    description: 'We will get back to you as soon as we can.',
+    title: 'Contact',
+    subtitle: 'Send us a message',
+    description: 'Send us a message and we will get back to you.',
     name: 'Name',
     email: 'Email',
     message: 'Message',
@@ -272,14 +283,27 @@ export const messages = {
   },
 
   waitlist: {
-    title: 'Join the waitlist',
-    description: 'Subscribe to get early access and product updates.',
+    title: 'Waitlist',
+    subtitle: 'Join the waitlist',
+    description: 'Join the waitlist for early access and updates.',
     email: 'Email',
     placeholderEmail: 'you@example.com',
     subscribe: 'Subscribe',
     subscribing: 'Subscribing…',
     emailInvalid: 'Please enter a valid email address',
     error: 'Failed to subscribe',
+  },
+
+  blog: {
+    title: 'Blog',
+    description: 'Insights, updates and stories from our team.',
+    disabled: 'Blog is disabled.',
+    noPosts: 'No posts yet.',
+    allPosts: 'All posts',
+    previous: 'Previous',
+    next: 'Next',
+    page: 'Page',
+    of: 'of',
   },
 
   newsletter: {
@@ -292,6 +316,12 @@ export const messages = {
     subscribe: 'Subscribe',
     error: 'Failed to subscribe to the newsletter',
     thanks: 'Thanks for subscribing!',
+  },
+
+  notFound: {
+    title: 'Not Found',
+    description: 'The page you are looking for does not exist.',
+    backToHome: 'Back to Home',
   },
 
   common: {
