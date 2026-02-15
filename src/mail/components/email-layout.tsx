@@ -34,8 +34,8 @@ export default function EmailLayout({ children }: EmailLayoutProps) {
           <Container className="rounded-lg bg-card p-6 text-card-foreground">
             {children}
             <Hr className="my-8" />
-            <Text className="mt-4">{messages.site.name} Team</Text>
-            <Text>©️ {year} All Rights Reserved.</Text>
+            <Text className="mt-4">{messages.site.name} {messages.mail.layout.team}</Text>
+            <Text>©️ {year} {messages.mail.layout.copyright}</Text>
           </Container>
         </Section>
       </Tailwind>

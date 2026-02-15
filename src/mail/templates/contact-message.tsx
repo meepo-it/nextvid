@@ -1,5 +1,8 @@
 import EmailLayout from '../components/email-layout';
 import { Text } from '@react-email/components';
+import { messages } from '@/config/messages';
+
+const m = messages.mail.contactMessage;
 
 interface ContactMessageProps {
   name: string;
@@ -14,9 +17,9 @@ export default function ContactMessage({
 }: ContactMessageProps) {
   return (
     <EmailLayout>
-      <Text>Name: {name}</Text>
-      <Text>Email: {email}</Text>
-      <Text>Message: {message}</Text>
+      <Text>{m.name} {name}</Text>
+      <Text>{m.email} {email}</Text>
+      <Text>{m.message} {message}</Text>
     </EmailLayout>
   );
 }

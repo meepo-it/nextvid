@@ -1,14 +1,14 @@
 import EmailLayout from '../components/email-layout';
 import { Heading, Text } from '@react-email/components';
+import { messages } from '@/config/messages';
+
+const m = messages.mail.subscribeNewsletter;
 
 export default function SubscribeNewsletter() {
   return (
     <EmailLayout>
-      <Heading className="text-xl">Thanks for subscribing</Heading>
-      <Text>
-        Thank you for subscribing to the newsletter. We will keep you updated
-        with the latest news and updates.
-      </Text>
+      <Heading className="text-xl">{m.title}</Heading>
+      <Text>{m.body}</Text>
     </EmailLayout>
   );
 }

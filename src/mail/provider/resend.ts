@@ -1,4 +1,3 @@
-import { websiteConfig } from '@/config/website';
 import { getTemplate } from '../render';
 import type {
   MailProvider,

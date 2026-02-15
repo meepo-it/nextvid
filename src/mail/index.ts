@@ -22,21 +22,24 @@ export interface MailEnv {
 }
 
 function createProvider(): MailProvider {
-  if (websiteConfig.mail.provider === 'resend') {
+  if (websiteConfig.mail?.provider === 'resend') {
     const apiKey =
       (env as MailEnv).RESEND_API_KEY ??
       (typeof process !== 'undefined' && process.env?.RESEND_API_KEY);
     if (!apiKey) {
       throw new Error(
-        'RESEND_API_KEY is required. Set it in Cloudflare secrets or env.'
+        'RESEND_API_KEY is required.'
       );
+    }
+    if (!websiteConfig.mail?.fromEmail) {
+      throw new Error('mail.fromEmail is required in websiteConfig.');
     }
     return new ResendProvider({
       apiKey,
-      from: websiteConfig.mail.fromEmail,
+      from: websiteConfig.mail?.fromEmail,
     });
   }
-  throw new Error(`Unsupported mail provider: ${websiteConfig.mail.provider}`);
+  throw new Error(`Unsupported mail provider: ${websiteConfig.mail?.provider}`);
 }
 
 /**
