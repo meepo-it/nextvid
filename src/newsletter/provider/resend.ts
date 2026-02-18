@@ -7,8 +7,7 @@ import type {
 import { Resend } from 'resend';
 
 /**
- * Resend newsletter provider.
- * Contacts are bound to email; global unsubscribed status is supported.
+ * Resend newsletter provider
  * https://resend.com/docs/dashboard/audiences/contacts
  */
 export class ResendNewsletterProvider implements NewsletterProvider {

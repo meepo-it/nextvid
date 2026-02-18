@@ -7,7 +7,7 @@ import type {
 import { BeehiivClient } from '@beehiiv/sdk';
 
 /**
- * Beehiiv newsletter provider.
+ * Beehiiv newsletter provider
  * https://developers.beehiiv.com/
  */
 export class BeehiivNewsletterProvider implements NewsletterProvider {

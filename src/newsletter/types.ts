@@ -1,3 +1,9 @@
+/**
+ * Supported newsletter provider names
+ * extend when adding new providers (e.g. 'cloudflare')
+ **/
+export type NewsletterProviderName = 'resend' | 'beehiiv';
+
 export interface SubscribeNewsletterParams {
   email: string;
 }

@@ -1,57 +1,96 @@
 # Newsletter module
 
-The newsletter module provides email subscribe / unsubscribe / status checks. It supports **Resend** and **Beehiiv** as providers, configured via `websiteConfig.newsletter` and env.
+Email subscribe / unsubscribe / status, driven by **Resend** or **Beehiiv**. Config via `websiteConfig.newsletter`; env is read from **serverEnv** (`src/env/server.ts`). Add newsletter-related vars there (all optional); Worker/Node populate `process.env` (e.g. `.dev.vars`, Wrangler secrets).
+
+**Consumers:** API routes (`/api/newsletter/subscribe`, `unsubscribe`, `status`), hooks (`use-newsletter`), settings card (`NewsletterFormCard`), marketing block (`NewsletterCard`). Optional welcome email after subscribe is sent by the **Mail** module when `websiteConfig.mail.fromEmail` is set.
+
+---
 
 ## Directory structure
 
+**Core module** (`src/newsletter/`):
+
 ```
 src/newsletter/
-├── index.ts           # subscribe, unsubscribe, isSubscribed, getNewsletterProvider
-├── types.ts           # NewsletterProvider, subscribe/unsubscribe/status param types
-├── provider/
-│   ├── resend.ts      # Resend implementation
-│   └── beehiiv.ts     # Beehiiv implementation
+├── index.ts           # subscribe, unsubscribe, isSubscribed, getNewsletterProvider; providerRegistry, createProvider
+├── types.ts           # NewsletterProviderName, NewsletterProvider, Subscribe/Unsubscribe/CheckStatus params & handler types
+└── provider/
+    ├── resend.ts      # ResendNewsletterProvider (Resend Audiences contacts)
+    └── beehiiv.ts     # BeehiivNewsletterProvider (@beehiiv/sdk)
 ```
+
+**API routes** (`src/routes/api/newsletter/`): `subscribe.ts`, `unsubscribe.ts`, `status.ts`.
+
+**Client** (outside `src/newsletter/`):
+- `src/hooks/use-newsletter.ts` — `useNewsletterStatus`, `useSubscribeNewsletter`, `useUnsubscribeNewsletter`, `newsletterKeys`
+- `src/components/settings/notification/newsletter-form-card.tsx` — logged-in user toggle (Switch) in settings
+- `src/components/blocks/newsletter-card.tsx` — public email form (e.g. landing page)
+
+---
 
 ## Configuration
 
-- **websiteConfig.newsletter** (`src/config/website.ts`)
-  - `enable`: Whether newsletter is enabled.
-  - `provider`: `'resend'` | `'beehiiv'`.
-  - `autoSubscribeAfterSignUp`: Whether to auto-subscribe after sign-up (call subscribe in the sign-up flow if needed).
+| Source | Key | Description |
+|--------|-----|-------------|
+| `websiteConfig.newsletter` | `enable` | Master switch; when false, API returns 400 and UI hides. |
+| | `provider` | `'resend'` \| `'beehiiv'`. |
+| | `autoSubscribeAfterSignUp` | If true, call `subscribe(user.email)` after sign-up (implement in auth/sign-up flow). |
+| `serverEnv` (`src/env/server.ts`) | `RESEND_API_KEY` | Optional; required when provider is `resend` (shared with Mail if used). |
+| | `BEEHIIV_API_KEY`, `BEEHIIV_PUBLICATION_ID` | Optional; both required when provider is `beehiiv`. |
 
-- **Environment variables**
-  - Resend: `RESEND_API_KEY`.
-  - Beehiiv: `BEEHIIV_API_KEY`, `BEEHIIV_PUBLICATION_ID`.
+Env is defined in `serverEnv` (runtime: `process.env`; Worker vars/secrets populate it).
 
-Values are read from `cloudflare:workers` `env` with a fallback to `process.env` for local/testing. Use `.dev.vars` locally and Wrangler secrets in production.
+---
 
 ## Core API
 
-- **subscribe(email)**: Subscribe; returns `Promise<boolean>`.
-- **unsubscribe(email)**: Unsubscribe; returns `Promise<boolean>`.
-- **isSubscribed(email)**: Check subscription status; returns `Promise<boolean>`.
-- **getNewsletterProvider()**: Creates and returns the current provider from config and env (internal use).
+| Export | Description |
+|--------|-------------|
+| **subscribe(email)** | Subscribe email; returns `Promise<boolean>`. |
+| **unsubscribe(email)** | Unsubscribe; returns `Promise<boolean>`. |
+| **isSubscribed(email)** | Check status; returns `Promise<boolean>`. |
+| **getNewsletterProvider()** | Builds provider from config + env (no caching; new instance per call). |
+
+---
 
 ## Provider interface
 
-`NewsletterProvider` must implement:
-- `subscribe({ email })`
-- `unsubscribe({ email })`
-- `checkSubscribeStatus({ email })`
-- `getProviderName()`
+`NewsletterProvider` (`types.ts`) implements:
 
-To add a provider: add a branch in `createProvider()` in `index.ts` and implement the interface.
+- `subscribe({ email })` → `Promise<boolean>`
+- `unsubscribe({ email })` → `Promise<boolean>`
+- `checkSubscribeStatus({ email })` → `Promise<boolean>`
+- `getProviderName()` → string
 
-## Consumers
+**Resend:** Uses Resend Audiences contacts (`contacts.create` / `contacts.update` / `contacts.get`). Subscribe: create contact with `unsubscribed: false`; on conflict, update to subscribed.
 
-- **API routes**
-  - `GET /api/newsletter/status?email=...`: calls `isSubscribed(email)`.
-  - `POST /api/newsletter/subscribe`: body includes `email`, calls `subscribe(email)`; optionally sends welcome email via the Mail module.
-  - `POST /api/newsletter/unsubscribe`: unsubscribe.
-- If `autoSubscribeAfterSignUp` is enabled, call `subscribe(user.email)` after successful registration.
+**Beehiiv:** Uses `@beehiiv/sdk` (subscriptions + bulk updates). Subscribe: get by email, reactivate if needed or create; unsubscribe: patch subscription to unsubscribed.
+
+**Adding a provider:** Extend `NewsletterProviderName` in `types.ts`, add provider-specific optional vars to `serverEnv` in `src/env/server.ts`, implement `NewsletterProvider` in `provider/<name>.ts`, and register a factory in `providerRegistry` in `index.ts`.
+
+---
+
+## API routes
+
+| Method | Path | Body / Query | Behavior |
+|--------|------|--------------|----------|
+| POST | `/api/newsletter/subscribe` | `{ email }` | Validate email → `subscribe(email)` → optional welcome email (Mail module, 3s delay when `mail.fromEmail` set). |
+| POST | `/api/newsletter/unsubscribe` | `{ email }` | Validate email → `unsubscribe(email)`. |
+| GET | `/api/newsletter/status` | `?email=` | Validate email → `isSubscribed(email)` → `{ success, subscribed }`. |
+
+All return 400 when newsletter is disabled or email invalid; 500 on provider/network errors with `{ success: false, error }`.
+
+---
+
+## UI and hooks
+
+- **use-newsletter** — `useNewsletterStatus(email)` (query), `useSubscribeNewsletter()` / `useUnsubscribeNewsletter()` (mutations). Calls API with `getBaseUrl()` for correct origin. Invalidates status query on subscribe/unsubscribe success.
+- **NewsletterFormCard** — Renders only when `newsletter.enable` and user is logged in. Shows Switch bound to subscription status; toggling calls subscribe/unsubscribe and toast.
+- **NewsletterCard** — Renders only when `newsletter.enable`. Email input + submit; calls `POST /api/newsletter/subscribe` (relative URL). Uses `messages.newsletter` (title, description, email, placeholderEmail, subscribe, error, thanks, emailInvalid).
+
+---
 
 ## Dependencies
 
-- Resend: Resend API (can share `RESEND_API_KEY` with the Mail module).
-- Beehiiv: `@beehiiv/sdk` or equivalent HTTP calls (see `provider/beehiiv.ts`).
+- **resend** — Resend SDK (audiences/contacts).
+- **@beehiiv/sdk** — Beehiiv API client (when using Beehiiv provider).
