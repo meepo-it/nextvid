@@ -59,9 +59,11 @@ export function LoginWrapper({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger
           render={
-            asChild && React.isValidElement(children)
-              ? children
-              : <button type="button">{children}</button>
+            asChild && React.isValidElement(children) ? (
+              children
+            ) : (
+              <button type="button">{children}</button>
+            )
           }
         />
         <DialogContent className="sm:max-w-[400px] p-0 border-0 overflow-hidden">

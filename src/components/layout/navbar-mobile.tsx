@@ -1,6 +1,6 @@
 import { getNavbarLinks } from '@/config/navbar-config';
 import { authClient } from '@/auth/auth-client';
-import { isPathActive } from '@/lib/nav-utils';
+import { isPathActive } from '@/lib/routes';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/lib/routes';
 import { buttonVariants } from '@/components/ui/button';
