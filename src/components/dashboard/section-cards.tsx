@@ -13,7 +13,7 @@ import { messages } from '@/config/messages';
 const m = messages.dashboard.sectionCards;
 
 /**
- * Dashboard section cards (demo data, same copy as MkSaaS en)
+ * Dashboard section cards
  */
 export function SectionCards() {
   return (

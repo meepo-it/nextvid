@@ -9,7 +9,8 @@ interface SettingsPageLayoutProps {
 }
 
 /**
- * Shared layout for settings pages: header with breadcrumbs + title/description + content
+ * Shared layout for settings pages
+ * header with breadcrumbs + title/description + content
  */
 export function SettingsPageLayout({
   breadcrumbs,
