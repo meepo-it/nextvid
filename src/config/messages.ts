@@ -65,6 +65,22 @@ export const messages = {
       title: 'Oops! Something went wrong!',
       tryAgain: 'Please try again',
       backToLogin: 'Back to login',
+      /** Friendly labels for Better Auth error codes (key = code, value = message) */
+      codes: {
+        signup_disabled: 'Sign up is disabled.',
+        account_already_linked_to_different_user:
+          'This account is already linked to another user.',
+        unable_to_link_account: 'Unable to link account.',
+        unable_to_get_user_info: 'Could not get user info from provider.',
+        "email_doesn't_match": "Email doesn't match.",
+        email_not_found: 'Email not found.',
+        oauth_provider_not_found: 'Sign-in provider not found.',
+        no_callback_url: 'Missing callback URL.',
+        no_code: 'Authorization code missing.',
+        state_mismatch: 'Session expired or invalid. Please try again.',
+        state_not_found: 'Session not found. Please try again.',
+        invalid_callback_request: 'Invalid sign-in request. Please try again.',
+      } as Record<string, string>,
     },
     social: {
       or: 'Or continue with',

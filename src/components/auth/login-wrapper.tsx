@@ -1,5 +1,14 @@
-import { useRouter } from '@tanstack/react-router';
+import { LoginForm } from '@/components/auth/login-form';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Routes } from '@/routes';
+import { useRouter } from '@tanstack/react-router';
+import React, { useEffect, useState } from 'react';
 
 interface LoginWrapperProps {
   children: React.ReactNode;
@@ -9,25 +18,68 @@ interface LoginWrapperProps {
 }
 
 /**
- * Wraps content to trigger login (redirect to login page).
- * Modal mode not implemented; use mode="redirect" (default).
+ * Wraps content to trigger login
+ * - mode="modal" opens a login dialog
+ * - mode="redirect" navigates to the login page
  */
 export function LoginWrapper({
   children,
   mode = 'redirect',
+  asChild,
   callbackUrl,
 }: LoginWrapperProps) {
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const handleLogin = () => {
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const handleRedirect = () => {
     const loginPath = callbackUrl
       ? `${Routes.Login}?callbackUrl=${encodeURIComponent(callbackUrl)}`
       : Routes.Login;
     router.navigate({ to: loginPath });
   };
 
+  const handleModalSuccess = () => {
+    setOpen(false);
+    if (callbackUrl) {
+      router.navigate({ to: callbackUrl });
+    }
+  };
+
+  if (!mounted) {
+    return <span className="cursor-pointer">{children}</span>;
+  }
+
+  if (mode === 'modal') {
+    return (
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger
+          render={
+            asChild && React.isValidElement(children)
+              ? children
+              : <button type="button">{children}</button>
+          }
+        />
+        <DialogContent className="sm:max-w-[400px] p-0 border-0 overflow-hidden">
+          <DialogHeader className="sr-only">
+            <DialogTitle>Sign in</DialogTitle>
+          </DialogHeader>
+          <LoginForm
+            callbackUrl={callbackUrl}
+            onSuccess={handleModalSuccess}
+            className="border-0 shadow-none"
+          />
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   return (
-    <span onClick={handleLogin} className="cursor-pointer">
+    <span onClick={handleRedirect} className="cursor-pointer">
       {children}
     </span>
   );

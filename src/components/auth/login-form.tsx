@@ -30,11 +30,13 @@ const m = messages.auth.login;
 export interface LoginFormProps {
   className?: string;
   callbackUrl?: string;
+  onSuccess?: () => void;
 }
 
 export function LoginForm({
   className,
   callbackUrl: propCallbackUrl,
+  onSuccess,
 }: LoginFormProps) {
   const paramCallbackUrl =
     typeof window !== 'undefined'
@@ -56,7 +58,7 @@ export function LoginForm({
     websiteConfig.auth?.enableCredentialLogin ?? false;
 
   const LoginSchema = z.object({
-    email: z.string().email({ message: m.emailRequired }),
+    email: z.email({ message: m.emailRequired }),
     password: z.string().min(1, { message: m.passwordRequired }),
   });
 
@@ -84,7 +86,9 @@ export function LoginForm({
           setSuccess('');
         },
         onResponse: () => setIsPending(false),
-        onSuccess: () => {},
+        onSuccess: () => {
+          onSuccess?.();
+        },
         onError: (ctx) => {
           setError(`${ctx.error.status}: ${ctx.error.message}`);
         },
