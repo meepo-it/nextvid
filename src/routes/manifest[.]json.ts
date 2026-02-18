@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { messages } from '@/config/messages';
+import { websiteConfig } from '@/config/website';
 
 /**
  * Dynamic Web App Manifest (PWA)
@@ -11,10 +11,11 @@ export const Route = createFileRoute('/manifest.json')({
   server: {
     handlers: {
       GET: async () => {
+        const metadata = websiteConfig.metadata;
         const body = {
-          name: messages.site.title,
-          short_name: messages.site.name,
-          description: messages.site.description,
+          name: metadata?.title,
+          short_name: metadata?.name,
+          description: metadata?.description,
           start_url: '.',
           display: 'standalone',
           background_color: '#ffffff',

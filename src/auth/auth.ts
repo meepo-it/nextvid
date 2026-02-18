@@ -5,7 +5,6 @@ import { getDb } from '@/db';
 import { sendEmail } from '@/mail';
 import { getBaseUrl } from '../lib/urls';
 import { serverEnv } from '@/env/server';
-import { messages } from '@/config/messages';
 import { websiteConfig } from '@/config/website';
 import { emailHarmony } from 'better-auth-harmony';
 import { admin, apiKey } from 'better-auth/plugins';
@@ -17,7 +16,7 @@ import { admin, apiKey } from 'better-auth/plugins';
  */
 export const auth = betterAuth({
   baseURL: getBaseUrl(),
-  appName: messages.site.name,
+  appName: websiteConfig.metadata?.name,
   database: drizzleAdapter(getDb(), {
     provider: 'sqlite',
   }),

@@ -14,7 +14,7 @@ export const Route = createFileRoute('/about')({
 });
 
 function AboutPage() {
-  const twitter = websiteConfig.metadata?.social?.twitter;
+  const twitter = websiteConfig.social?.twitter;
   const supportEmail = websiteConfig.mail?.supportEmail;
   const supportEmailHref = supportEmail?.includes('<')
     ? supportEmail.replace(/^[^<]*<([^>]*)>.*$/, 'mailto:$1')
@@ -42,7 +42,7 @@ function AboutPage() {
                 </Avatar>
                 <div>
                   <h1 className="text-4xl text-foreground">
-                    {messages.site.name}
+                    {websiteConfig.metadata?.name}
                   </h1>
                   <p className="mt-2 text-base text-muted-foreground">
                     {m.subtitle}

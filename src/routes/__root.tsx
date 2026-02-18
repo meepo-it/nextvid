@@ -15,7 +15,6 @@ import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { NotFound } from '@/components/layout/not-found';
 import { Toaster } from '@/components/layout/toaster';
-import { messages } from '@/config/messages';
 import { websiteConfig } from '@/config/website';
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools';
 import appCss from '../styles.css?url';
@@ -37,11 +36,11 @@ export const Route = createRootRouteWithContext<{
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: messages.site.title,
+        title: websiteConfig.metadata?.title,
       },
       {
         name: 'description',
-        content: messages.site.description,
+        content: websiteConfig.metadata?.description,
       },
     ],
     links: [

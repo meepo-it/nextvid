@@ -1,4 +1,5 @@
 import type { WebsiteConfig } from '../types';
+import { messages } from './messages';
 
 /**
  * Website config
@@ -11,10 +12,13 @@ export const websiteConfig: WebsiteConfig = {
     },
   },
   metadata: {
+    name: messages.site.name,
+    title: messages.site.title,
+    description: messages.site.description,
     images: {
       ogImage: '/og.png',
       logoLight: '/logo.png',
-      logoDark: '/logo.png',
+      logoDark: '/logo-dark.png',
     }
   },
   social: {

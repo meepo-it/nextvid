@@ -31,6 +31,9 @@ export interface UiConfig {
 
 /** Website metadata */
 export interface MetadataConfig {
+  name?: string;
+  title?: string;
+  description?: string;
   images?: ImagesConfig;
 }
 
