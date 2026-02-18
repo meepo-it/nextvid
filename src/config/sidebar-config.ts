@@ -12,10 +12,10 @@ import type { MenuItemConfig } from '../types';
 import { messages } from './messages';
 
 const m = messages.dashboard.sidebar;
-const adminM = messages.dashboard.admin;
+const am = messages.dashboard.admin;
 
 /**
- * Dashboard sidebar links (English only). Icons are Tabler icon components.
+ * Dashboard sidebar links
  */
 export function getSidebarLinks(): MenuItemConfig[] {
   return [
@@ -26,11 +26,11 @@ export function getSidebarLinks(): MenuItemConfig[] {
       external: false,
     },
     {
-      title: adminM.title,
+      title: am.title,
       icon: IconShieldCheck,
       items: [
         {
-          title: adminM.users.title,
+          title: am.users.title,
           icon: IconUsers,
           href: Routes.AdminUsers,
           external: false,

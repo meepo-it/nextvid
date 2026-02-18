@@ -8,6 +8,7 @@ import type { ComponentType } from 'react';
 export interface WebsiteConfig {
   ui?: UiConfig;
   metadata?: MetadataConfig;
+  social?: SocialConfig;
   features?: FeaturesConfig;
   routes?: RoutesConfig;
   analytics?: AnalyticsConfig;
@@ -31,7 +32,6 @@ export interface UiConfig {
 /** Website metadata */
 export interface MetadataConfig {
   images?: ImagesConfig;
-  social?: SocialConfig;
 }
 
 /** Website metadata */
@@ -72,8 +72,6 @@ export interface RoutesConfig {
 /** Analytics configuration */
 export interface AnalyticsConfig {
   enable: boolean;                  // Whether to enable the analytics
-  enableVercelAnalytics?: boolean;  // Whether to enable vercel analytics
-  enableSpeedInsights?: boolean;    // Whether to enable speed insights
 }
 
 /** Auth configuration */

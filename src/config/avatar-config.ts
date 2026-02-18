@@ -10,7 +10,7 @@ import { messages } from './messages';
 const m = messages.dashboard.avatar;
 
 /**
- * Avatar dropdown links (English). Shown when user clicks avatar in header.
+ * Avatar dropdown links
  */
 export function getAvatarLinks(): MenuItemConfig[] {
   return [

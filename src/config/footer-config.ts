@@ -6,7 +6,7 @@ import { messages } from './messages';
 const m = messages.nav;
 
 /**
- * Footer links (English only). Grouped by section.
+ * Footer links, grouped by section
  */
 export function getFooterLinks(): MenuItemConfig[] {
   const productItems: MenuItemConfig[] = [

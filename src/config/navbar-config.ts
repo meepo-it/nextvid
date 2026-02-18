@@ -14,7 +14,7 @@ import { messages } from './messages';
 const m = messages.nav;
 
 /**
- * Navbar links (English only, no i18n). Icons are Tabler icon components.
+ * Navbar links
  */
 export function getNavbarLinks(): MenuItemConfig[] {
   const links: MenuItemConfig[] = [

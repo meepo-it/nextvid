@@ -15,15 +15,15 @@ export const websiteConfig: WebsiteConfig = {
       ogImage: '/og.png',
       logoLight: '/logo.png',
       logoDark: '/logo.png',
-    },
-    social: {
-      github: 'https://github.com/MkFastHQ',
-      twitter: 'https://mkfast.link/twitter',
-      blueSky: 'https://mkfast.link/bsky',
-      discord: 'https://mkfast.link/discord',
-      linkedin: 'https://mkfast.link/linkedin',
-      youtube: 'https://mkfast.link/youtube',
-    },
+    }
+  },
+  social: {
+    github: 'https://github.com/MkFastHQ',
+    twitter: 'https://mkfast.link/twitter',
+    blueSky: 'https://mkfast.link/bsky',
+    discord: 'https://mkfast.link/discord',
+    linkedin: 'https://mkfast.link/linkedin',
+    youtube: 'https://mkfast.link/youtube',
   },
   features: {
     enableUpgradeCard: true,
@@ -36,8 +36,6 @@ export const websiteConfig: WebsiteConfig = {
   },
   analytics: {
     enable: true,
-    enableVercelAnalytics: false,
-    enableSpeedInsights: false,
   },
   auth: {
     enable: true,

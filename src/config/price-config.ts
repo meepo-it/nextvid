@@ -1,8 +1,8 @@
 import type { PlanConfig } from '../types';
 import { websiteConfig } from './website';
 
-/** Plan with display copy (English) for pricing table */
-export interface PricePlanDisplay extends PlanConfig {
+/** Price plan details for pricing table */
+export interface PricePlanDetails extends PlanConfig {
   name: string;
   description: string;
   features: string[];
@@ -10,10 +10,10 @@ export interface PricePlanDisplay extends PlanConfig {
 }
 
 /**
- * Price plans with English display copy. Use in pricing table / billing UI.
+ * Price plans
  */
-export function getPricePlans(): Record<string, PricePlanDisplay> {
-  const plans: Record<string, PricePlanDisplay> = {};
+export function getPricePlans(): Record<string, PricePlanDetails> {
+  const plans: Record<string, PricePlanDetails> = {};
   const config = websiteConfig.price?.plans;
   if (!config) return plans;
 
