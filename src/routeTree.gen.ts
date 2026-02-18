@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WaitlistRouteImport } from './routes/waitlist'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ManifestDotjsonRouteImport } from './routes/manifest[.]json'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CookieRouteImport } from './routes/cookie'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -52,6 +53,11 @@ const TermsRoute = TermsRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManifestDotjsonRoute = ManifestDotjsonRouteImport.update({
+  id: '/manifest.json',
+  path: '/manifest.json',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -196,6 +202,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/cookie': typeof CookieRoute
   '/dashboard': typeof DashboardRouteWithChildren
+  '/manifest.json': typeof ManifestDotjsonRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/waitlist': typeof WaitlistRoute
@@ -226,6 +233,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRouteWithChildren
   '/contact': typeof ContactRoute
   '/cookie': typeof CookieRoute
+  '/manifest.json': typeof ManifestDotjsonRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/waitlist': typeof WaitlistRoute
@@ -258,6 +266,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/cookie': typeof CookieRoute
   '/dashboard': typeof DashboardRouteWithChildren
+  '/manifest.json': typeof ManifestDotjsonRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/waitlist': typeof WaitlistRoute
@@ -291,6 +300,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/cookie'
     | '/dashboard'
+    | '/manifest.json'
     | '/privacy'
     | '/terms'
     | '/waitlist'
@@ -321,6 +331,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/contact'
     | '/cookie'
+    | '/manifest.json'
     | '/privacy'
     | '/terms'
     | '/waitlist'
@@ -352,6 +363,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/cookie'
     | '/dashboard'
+    | '/manifest.json'
     | '/privacy'
     | '/terms'
     | '/waitlist'
@@ -384,6 +396,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   CookieRoute: typeof CookieRoute
   DashboardRoute: typeof DashboardRouteWithChildren
+  ManifestDotjsonRoute: typeof ManifestDotjsonRoute
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
   WaitlistRoute: typeof WaitlistRoute
@@ -420,6 +433,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manifest.json': {
+      id: '/manifest.json'
+      path: '/manifest.json'
+      fullPath: '/manifest.json'
+      preLoaderRoute: typeof ManifestDotjsonRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -652,6 +672,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   CookieRoute: CookieRoute,
   DashboardRoute: DashboardRouteWithChildren,
+  ManifestDotjsonRoute: ManifestDotjsonRoute,
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
   WaitlistRoute: WaitlistRoute,
