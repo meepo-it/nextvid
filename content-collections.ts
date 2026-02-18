@@ -8,10 +8,14 @@ const blog = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    date: z.string(),
+    date: z.date(),
     category: z.string(),
     content: z.string(),
-    image: z.string().optional(),
+    image: z.url(),
+  }),
+  transform: (doc) => ({
+    ...doc,
+    slug: (doc as { _meta: { path: string } })._meta.path,
   }),
 });
 
@@ -22,8 +26,12 @@ const pages = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    date: z.string().optional(),
+    date: z.date(),
     content: z.string(),
+  }),
+  transform: (doc) => ({
+    ...doc,
+    slug: (doc as { _meta: { path: string } })._meta.path,
   }),
 });
 

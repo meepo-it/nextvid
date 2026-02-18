@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router';
 import Container from '@/components/layout/container';
-import { MarkdownBody } from '@/components/page/markdown-body';
+import { Markdown } from '@/components/markdown/markdown';
 import { getPostBySlug } from '@/lib/blog';
 import { websiteConfig } from '@/config/website';
 import { messages } from '@/config/messages';
@@ -9,16 +9,17 @@ import { IconArrowLeft } from '@tabler/icons-react';
 import { formatDate } from '@/lib/formatter';
 
 export const Route = createFileRoute('/blog/$slug')({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     const post = getPostBySlug(params.slug);
     if (!post) throw notFound();
-    return { post };
+    return post;
   },
   head: ({ loaderData, params }) => {
-    const post = loaderData?.post;
+    const post = loaderData;
     if (!post) return {};
     const title = `${post.title} | ${websiteConfig.metadata?.name}`;
-    const description = post.description ?? websiteConfig.metadata?.description ?? '';
+    const description =
+      post.description ?? websiteConfig.metadata?.description ?? '';
     const url = getCanonicalUrl(`/blog/${params.slug}`);
     const image = post.image ? getImageUrl(post.image) : undefined;
     const siteName = websiteConfig.metadata?.name ?? '';
@@ -61,6 +62,9 @@ export const Route = createFileRoute('/blog/$slug')({
 });
 
 function BlogPostPage() {
+  const post = Route.useLoaderData();
+  if (!post) throw notFound();
+
   if (!websiteConfig.blog?.enable) {
     return (
       <Container className="py-16">
@@ -70,9 +74,6 @@ function BlogPostPage() {
       </Container>
     );
   }
-
-  const { post } = Route.useLoaderData();
-  if (!post) throw notFound();
 
   return (
     <div className="flex flex-col gap-8 p-16">
@@ -93,7 +94,7 @@ function BlogPostPage() {
               <span className="rounded-full bg-muted px-2.5 py-0.5 font-medium capitalize">
                 {post.category}
               </span>
-              <time dateTime={post.date}>{formatDate(new Date(post.date))}</time>
+              <span>{formatDate(new Date(post.date))}</span>
             </div>
 
             <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
@@ -107,7 +108,7 @@ function BlogPostPage() {
             )}
 
             <div className="mt-8">
-              <MarkdownBody content={post.content} />
+              <Markdown content={post.content} className='prose' />
             </div>
           </article>
         </div>

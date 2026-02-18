@@ -1,22 +1,9 @@
-import { MarkdownBody } from '@/components/page/markdown-body';
+import { Markdown } from '@/components/markdown/markdown';
 import { Card, CardContent } from '@/components/ui/card';
+import type { PageDoc } from '@/lib/pages';
+import { formatDate } from '@/lib/formatter';
 
-interface PageData {
-  title: string;
-  description: string;
-  date?: string;
-  content: string;
-}
-
-function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-}
-
-export function PageMarkdown({ page }: { page: PageData }) {
+export function MarkdownPage({ page }: { page: PageDoc }) {
   const { title, description, date, content } = page;
 
   return (
@@ -30,16 +17,16 @@ export function PageMarkdown({ page }: { page: PageData }) {
             {description}
           </p>
         )}
-        {date && (
+        {date != null && (
           <p className="text-center text-sm text-muted-foreground">
-            {formatDate(date)}
+            {formatDate(new Date(date))}
           </p>
         )}
       </div>
       <Card className="ring-0 border border-border">
         <CardContent className="pt-6">
           <div className="mt-0">
-            <MarkdownBody content={content} />
+            <Markdown content={content} className='prose' />
           </div>
         </CardContent>
       </Card>

@@ -1,19 +1,9 @@
-import type { Blog } from 'content-collections';
+import type { BlogPost } from '@/lib/blog';
 import { Link } from '@tanstack/react-router';
+import { formatDate } from '@/lib/formatter';
 
-type BlogWithMeta = Blog & { _meta: { path: string } };
-
-function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
-}
-
-export function BlogCard({ post }: { post: BlogWithMeta }) {
-  const slug = post._meta.path;
-  const dateFormatted = formatDate(post.date);
+export function BlogCard({ post }: { post: BlogPost }) {
+  const { slug } = post;
 
   return (
     <Link
@@ -37,9 +27,9 @@ export function BlogCard({ post }: { post: BlogWithMeta }) {
           <span className="rounded-full bg-muted px-2.5 py-0.5 text-muted-foreground text-xs font-medium capitalize">
             {post.category}
           </span>
-          <time dateTime={post.date} className="text-muted-foreground text-xs">
-            {dateFormatted}
-          </time>
+          <span className="text-muted-foreground text-xs">
+            {formatDate(new Date(post.date))}
+          </span>
         </div>
         {/* Title + description */}
         <div className="mt-3 flex min-h-[4.5rem] flex-1 flex-col">

@@ -1,8 +1,8 @@
 import { allPages } from 'content-collections';
 import type { Page } from 'content-collections';
 
-type PageWithMeta = Page & { _meta: { path: string } };
+export type PageDoc = Page & { slug: string };
 
-export function getPageBySlug(slug: string): Page | undefined {
-  return (allPages as PageWithMeta[]).find((p) => p._meta.path === slug);
+export function getPageBySlug(slug: string): PageDoc | undefined {
+  return (allPages as PageDoc[]).find((p) => p.slug === slug);
 }

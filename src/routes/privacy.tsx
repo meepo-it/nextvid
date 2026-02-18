@@ -1,6 +1,6 @@
 import { createFileRoute, notFound } from '@tanstack/react-router';
 import Container from '@/components/layout/container';
-import { PageMarkdown } from '@/components/page/page-markdown';
+import { MarkdownPage } from '@/components/page/markdown-page';
 import { getPageBySlug } from '@/lib/pages';
 import { websiteConfig } from '@/config/website';
 import { getCanonicalUrl } from '@/lib/urls';
@@ -30,7 +30,7 @@ function PrivacyPage() {
   if (!page) throw notFound();
   return (
     <Container className="py-16 px-4">
-      <PageMarkdown page={page} />
+      <MarkdownPage page={page} />
     </Container>
   );
 }

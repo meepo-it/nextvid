@@ -12,6 +12,10 @@ export const Route = createFileRoute('/blog/')({
     page:
       typeof search.page === 'number' ? search.page : Number(search.page) || 1,
   }),
+  loader: ({ location }) => {
+    const page = Number(new URLSearchParams(location.search).get('page')) || 1;
+    return getPaginatedPosts(page);
+  },
   head: () => ({
     meta: [
       {
@@ -25,8 +29,7 @@ export const Route = createFileRoute('/blog/')({
 });
 
 function BlogListPage() {
-  const { page } = Route.useSearch();
-  const { posts, totalPages, currentPage } = getPaginatedPosts(page);
+  const { posts, totalPages, currentPage } = Route.useLoaderData();
 
   if (!websiteConfig.blog?.enable) {
     return (
@@ -51,9 +54,7 @@ function BlogListPage() {
         </div>
       </div>
       <Container className="mt-8 px-4">
-        <BlogGrid
-          posts={posts as ((typeof posts)[0] & { _meta: { path: string } })[]}
-        />
+        <BlogGrid posts={posts} />
         <BlogPagination currentPage={currentPage} totalPages={totalPages} />
       </Container>
     </div>
