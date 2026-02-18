@@ -22,6 +22,7 @@ import { UserButton } from '@/components/layout/user-button';
 import { Link, useLocation } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { websiteConfig } from '@/config/website';
+import { messages } from '@/config/messages';
 
 const navTriggerStyle = cn(
   'relative bg-transparent text-muted-foreground cursor-pointer',
@@ -208,13 +209,13 @@ export function Navbar({ scroll = true }: NavbarProps) {
                     buttonVariants({ variant: 'outline', size: 'sm' })
                   )}
                 >
-                  Log in
+                  {messages.auth.common.login}
                 </Link>
                 <Link
                   to={Routes.Register}
                   className={cn(buttonVariants({ size: 'sm' }))}
                 >
-                  Sign up
+                  {messages.auth.common.signup}
                 </Link>
               </div>
             )}

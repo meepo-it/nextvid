@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
 
 /**
- * Injects a script into document.head on the client (useEffect). Use for third-party
- * scripts (analytics, etc.); React-rendered <script> may not execute under SSR.
- * Runs once on mount.
+ * Injects a script into document.head on the client (useEffect)
  */
 export function ClientScript({
   src,

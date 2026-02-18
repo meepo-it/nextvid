@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { DividerWithText } from '@/components/auth/divider-with-text';
-import { GoogleIcon } from '@/components/icons/google';
 import { Button } from '@/components/ui/button';
 import { messages } from '@/config/messages';
 import { websiteConfig } from '@/config/website';
 import { authClient } from '@/auth/auth-client';
 import { getBaseUrl } from '@/lib/urls';
 import { DEFAULT_LOGIN_REDIRECT, Routes } from '@/routes';
-import { IconLoader2 } from '@tabler/icons-react';
+import { IconBrandGoogleFilled, IconLoader2 } from '@tabler/icons-react';
 
 const m = messages.auth.social;
 
@@ -68,7 +67,7 @@ export function SocialLoginButton({
           {isLoading === 'google' ? (
             <IconLoader2 className="mr-2 size-4 animate-spin" />
           ) : (
-            <GoogleIcon className="size-4 mr-2" />
+            <IconBrandGoogleFilled className="size-4 mr-2" />
           )}
           <span>{m.signInWithGoogle}</span>
         </Button>

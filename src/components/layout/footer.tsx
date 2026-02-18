@@ -5,8 +5,8 @@ import Container from '@/components/layout/container';
 import { Logo } from '@/components/layout/logo';
 import { SocialIcon } from '@/components/layout/social-icons';
 import { Link } from '@tanstack/react-router';
-
-const APP_NAME = 'MkFast';
+import { websiteConfig } from '@/config/website';
+import { messages } from '@/config/messages';
 
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const footerLinks = getFooterLinks();
@@ -19,10 +19,12 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
           <div className="col-span-full flex flex-col items-start md:col-span-2">
             <div className="flex items-center space-x-2">
               <Logo />
-              <span className="text-xl font-semibold">{APP_NAME}</span>
+              <span className="text-xl font-semibold">
+                {websiteConfig.metadata?.name}
+              </span>
             </div>
             <p className="text-muted-foreground text-base py-2 md:pr-12">
-              Make AI SaaS in days, simply and effortlessly.
+              {messages.footer.tagline}
             </p>
             <div className="flex items-center gap-4 py-2">
               {socialLinks?.map((link) => (
@@ -72,7 +74,8 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
       <div className="border-t py-8">
         <Container className="px-4 flex items-center justify-between gap-x-4">
           <span className="text-muted-foreground text-sm">
-            &copy; {new Date().getFullYear()} {APP_NAME} All Rights Reserved.
+            &copy; {new Date().getFullYear()} {websiteConfig.metadata?.name}{' '}
+            {messages.footer.rightsReserved}
           </span>
         </Container>
       </div>

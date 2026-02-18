@@ -45,10 +45,15 @@ export const messages = {
     },
   },
 
+  footer: {
+    tagline: 'Make AI SaaS in days, simply and effortlessly',
+    rightsReserved: 'All Rights Reserved',
+  },
+
   auth: {
     common: {
       signup: 'Sign up',
-      login: 'Login',
+      login: 'Log in',
       logout: 'Log out',
       byClickingContinue: 'By clicking continue, you agree to our ',
       termsOfService: 'Terms of Service',
@@ -366,7 +371,6 @@ export const messages = {
 
   common: {
     cancel: 'Cancel',
-    logout: 'Log out',
     loading: 'Loading',
     settings: 'Settings',
     mode: {

@@ -14,12 +14,11 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Logo } from '@/components/layout/logo';
-import { ModeSwitcher } from '@/components/theme/mode-switcher';
 import { ModeSwitcherHorizontal } from '@/components/theme/mode-switcher-horizontal';
 import { UserButtonMobile } from '@/components/layout/user-button-mobile';
 import { cn } from '@/lib/utils';
-
-const APP_NAME = 'MkFast';
+import { messages } from '@/config/messages';
+import { websiteConfig } from '@/config/website';
 
 export function NavbarMobile({
   className,
@@ -50,7 +49,9 @@ export function NavbarMobile({
       >
         <Link to="/" className="flex items-center gap-2">
           <Logo />
-          <span className="text-xl font-semibold">{APP_NAME}</span>
+          <span className="text-xl font-semibold">
+            {websiteConfig.metadata?.name}
+          </span>
         </Link>
 
         <div className="flex items-center justify-end gap-4">
@@ -90,14 +91,14 @@ export function NavbarMobile({
                     'w-full'
                   )}
                 >
-                  Log in
+                  {messages.auth.common.login}
                 </Link>
                 <Link
                   to={Routes.Register}
                   onClick={() => setOpen(false)}
                   className={cn(buttonVariants({ size: 'lg' }), 'w-full')}
                 >
-                  Sign up
+                  {messages.auth.common.signup}
                 </Link>
               </div>
             )}
