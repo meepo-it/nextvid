@@ -16,7 +16,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Logo } from '@/components/layout/logo';
 import { ModeSwitcher } from '@/components/theme/mode-switcher';
 import { ModeSwitcherHorizontal } from '@/components/theme/mode-switcher-horizontal';
-import { UserButton } from '@/components/layout/user-button';
+import { UserButtonMobile } from '@/components/layout/user-button-mobile';
 import { cn } from '@/lib/utils';
 
 const APP_NAME = 'MkFast';
@@ -54,11 +54,10 @@ export function NavbarMobile({
         </Link>
 
         <div className="flex items-center justify-end gap-4">
-          <ModeSwitcher />
           {isPending ? (
             <Skeleton className="size-8 rounded-full" />
           ) : currentUser ? (
-            <UserButton user={currentUser} />
+            <UserButtonMobile user={currentUser} />
           ) : null}
 
           <Button
