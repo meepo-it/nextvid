@@ -1,5 +1,7 @@
 import { getNavbarLinks } from '@/config/navbar-config';
 import { authClient } from '@/auth/auth-client';
+import { isPathActive } from '@/lib/nav-utils';
+import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
 import { buttonVariants } from '@/components/ui/button';
 import { Button } from '@/components/ui/button';
@@ -10,34 +12,33 @@ import {
 } from '@/components/ui/collapsible';
 import { Link, useLocation } from '@tanstack/react-router';
 import { IconChevronRight, IconMenu2, IconX } from '@tabler/icons-react';
-import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Logo } from '@/components/layout/logo';
 import { ModeSwitcherHorizontal } from '@/components/theme/mode-switcher-horizontal';
 import { UserButtonMobile } from '@/components/layout/user-button-mobile';
-import { cn } from '@/lib/utils';
+import { LoginWrapper } from '@/components/auth/login-wrapper';
 import { messages } from '@/config/messages';
 import { websiteConfig } from '@/config/website';
 
-export function NavbarMobile({
-  className,
-  ...other
-}: React.HTMLAttributes<HTMLDivElement>) {
-  const [open, setOpen] = React.useState(false);
-  const location = useLocation();
-  const pathname = location.pathname;
+const mobileLinkClass =
+  'flex w-full items-center rounded-md p-2 text-base text-muted-foreground hover:text-foreground';
+const mobileLinkActiveClass = 'font-semibold text-foreground';
+const mobileSubLinkClass =
+  'flex w-full items-center gap-4 rounded-md p-2 text-sm text-muted-foreground hover:text-foreground';
+
+interface NavbarMobileProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+export function NavbarMobile({ className, ...props }: NavbarMobileProps) {
+  const pathname = useLocation().pathname;
+  const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { data: session, isPending } = authClient.useSession();
-  const currentUser = session?.user;
+  const user = session?.user;
+  const menuLinks = getNavbarLinks();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  useEffect(() => setMounted(true), []);
+  useEffect(() => setOpen(false), [pathname]);
 
   if (!mounted) return null;
 
@@ -45,7 +46,7 @@ export function NavbarMobile({
     <>
       <div
         className={cn('flex items-center justify-between', className)}
-        {...other}
+        {...props}
       >
         <Link to="/" className="flex items-center gap-2">
           <Logo />
@@ -54,14 +55,14 @@ export function NavbarMobile({
           </span>
         </Link>
 
-        <div className="flex items-center justify-end gap-4">
+        <div className="flex items-center gap-4">
           {isPending ? (
             <Skeleton className="size-8 rounded-full" />
-          ) : currentUser ? (
-            <UserButtonMobile user={currentUser} />
+          ) : user ? (
+            <UserButtonMobile user={user} />
           ) : null}
-
           <Button
+            type="button"
             variant="ghost"
             size="icon"
             aria-expanded={open}
@@ -80,19 +81,20 @@ export function NavbarMobile({
 
       {open && (
         <div className="fixed inset-0 top-[57px] z-50 flex flex-col overflow-y-auto bg-background">
-          <div className="flex flex-1 flex-col items-start space-y-4 p-4">
-            {!currentUser && (
+          <div className="flex flex-1 flex-col items-start gap-4 p-4">
+            {!user && (
               <div className="flex w-full flex-col gap-4">
-                <Link
-                  to={Routes.Login}
-                  onClick={() => setOpen(false)}
-                  className={cn(
-                    buttonVariants({ variant: 'outline', size: 'lg' }),
-                    'w-full'
-                  )}
-                >
-                  {messages.auth.common.login}
-                </Link>
+                <LoginWrapper mode="modal" asChild>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="lg"
+                    className="w-full cursor-pointer"
+                    onClick={() => setOpen(false)}
+                  >
+                    {messages.auth.common.login}
+                  </Button>
+                </LoginWrapper>
                 <Link
                   to={Routes.Register}
                   onClick={() => setOpen(false)}
@@ -103,19 +105,11 @@ export function NavbarMobile({
               </div>
             )}
 
-            <ul className="w-full flex-1 space-y-1">
-              {getNavbarLinks()?.map((item) => {
-                const isActive = item.href
-                  ? item.href === '/'
-                    ? pathname === '/'
-                    : pathname.startsWith(item.href)
-                  : item.items?.some(
-                      (sub) =>
-                        sub.href &&
-                        (sub.href === '/'
-                          ? pathname === '/'
-                          : pathname.startsWith(sub.href))
-                    );
+            <ul className="w-full space-y-1">
+              {menuLinks?.map((item) => {
+                const active = item.href
+                  ? isPathActive(item.href, pathname)
+                  : item.items?.some((sub) => isPathActive(sub.href, pathname));
 
                 return (
                   <li key={item.title} className="py-1">
@@ -127,12 +121,12 @@ export function NavbarMobile({
                               type="button"
                               variant="ghost"
                               className={cn(
-                                'flex w-full items-center justify-between text-left',
+                                'w-full justify-between text-left text-base',
                                 'bg-transparent text-muted-foreground hover:text-foreground',
-                                isActive && 'font-semibold text-foreground'
+                                active && 'font-semibold text-foreground'
                               )}
                             >
-                              <span className="text-base">{item.title}</span>
+                              {item.title}
                               <IconChevronRight className="size-4" />
                             </Button>
                           }
@@ -140,38 +134,30 @@ export function NavbarMobile({
                         />
                         <CollapsibleContent className="pl-2">
                           <ul className="mt-2 space-y-2">
-                            {item.items.map((subItem) => {
-                              const isSubActive =
-                                subItem.href &&
-                                pathname.startsWith(subItem.href);
-                              return (
-                                <li key={subItem.title}>
-                                  <Link
-                                    to={subItem.href ?? '#'}
-                                    target={
-                                      subItem.external ? '_blank' : undefined
-                                    }
-                                    rel={
-                                      subItem.external
-                                        ? 'noopener noreferrer'
-                                        : undefined
-                                    }
-                                    onClick={() => setOpen(false)}
-                                    className={cn(
-                                      'flex w-full items-center gap-4 rounded-md p-2 text-sm',
-                                      'text-muted-foreground hover:text-foreground',
-                                      isSubActive &&
-                                        'font-semibold text-foreground'
-                                    )}
-                                  >
-                                    {subItem.icon ? (
-                                      <subItem.icon className="size-4 shrink-0" />
-                                    ) : null}
-                                    {subItem.title}
-                                  </Link>
-                                </li>
-                              );
-                            })}
+                            {item.items.map((sub) => (
+                              <li key={sub.title}>
+                                <Link
+                                  to={sub.href ?? '#'}
+                                  target={sub.external ? '_blank' : undefined}
+                                  rel={
+                                    sub.external
+                                      ? 'noopener noreferrer'
+                                      : undefined
+                                  }
+                                  onClick={() => setOpen(false)}
+                                  className={cn(
+                                    mobileSubLinkClass,
+                                    isPathActive(sub.href, pathname) &&
+                                      mobileLinkActiveClass
+                                  )}
+                                >
+                                  {sub.icon ? (
+                                    <sub.icon className="size-4 shrink-0" />
+                                  ) : null}
+                                  {sub.title}
+                                </Link>
+                              </li>
+                            ))}
                           </ul>
                         </CollapsibleContent>
                       </Collapsible>
@@ -182,9 +168,8 @@ export function NavbarMobile({
                         rel={item.external ? 'noopener noreferrer' : undefined}
                         onClick={() => setOpen(false)}
                         className={cn(
-                          'flex w-full items-center rounded-md p-2 text-base',
-                          'text-muted-foreground hover:text-foreground',
-                          isActive && 'font-semibold text-foreground'
+                          mobileLinkClass,
+                          active && mobileLinkActiveClass
                         )}
                       >
                         {item.title}
@@ -195,8 +180,7 @@ export function NavbarMobile({
               })}
             </ul>
 
-            {/* bottom: theme switcher (horizontal) */}
-            <div className="flex w-full items-center justify-end border-t border-border/50 p-4">
+            <div className="mt-auto w-full border-t border-border/50 p-4 flex items-center justify-end">
               <ModeSwitcherHorizontal />
             </div>
           </div>
