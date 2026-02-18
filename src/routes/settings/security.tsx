@@ -1,4 +1,4 @@
-import { SettingsPageLayout } from '@/components/dashboard/settings-page-layout';
+import { DashboardLayout } from '@/components/dashboard/dashboard-layout';
 import { DeleteAccountCard } from '@/components/settings/security/delete-account-card';
 import { PasswordCardWrapper } from '@/components/settings/security/password-card-wrapper';
 import { messages } from '@/config/messages';
@@ -20,7 +20,7 @@ function SecurityPage() {
     websiteConfig.auth?.enableCredentialLogin ?? true;
 
   return (
-    <SettingsPageLayout
+    <DashboardLayout
       breadcrumbs={breadcrumbs}
       title={m.title}
       description={m.description}
@@ -35,6 +35,6 @@ function SecurityPage() {
           <DeleteAccountCard />
         </div>
       </div>
-    </SettingsPageLayout>
+    </DashboardLayout>
   );
 }

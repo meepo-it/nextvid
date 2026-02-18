@@ -1,4 +1,4 @@
-import { SettingsPageLayout } from '@/components/dashboard/settings-page-layout';
+import { DashboardLayout } from '@/components/dashboard/dashboard-layout';
 import { NewsletterFormCard } from '@/components/settings/notification/newsletter-form-card';
 import { messages } from '@/config/messages';
 import { createFileRoute } from '@tanstack/react-router';
@@ -16,7 +16,7 @@ function NotificationsPage() {
   ];
 
   return (
-    <SettingsPageLayout
+    <DashboardLayout
       breadcrumbs={breadcrumbs}
       title={m.title}
       description={m.description}
@@ -26,6 +26,6 @@ function NotificationsPage() {
           <NewsletterFormCard />
         </div>
       </div>
-    </SettingsPageLayout>
+    </DashboardLayout>
   );
 }

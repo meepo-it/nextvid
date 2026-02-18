@@ -1,7 +1,7 @@
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
 import type { DashboardBreadcrumbItem } from '@/components/dashboard/dashboard-header';
 
-interface SettingsPageLayoutProps {
+interface DashboardLayoutProps {
   breadcrumbs: DashboardBreadcrumbItem[];
   title: string;
   description: string;
@@ -9,15 +9,15 @@ interface SettingsPageLayoutProps {
 }
 
 /**
- * Shared layout for settings pages
+ * Shared layout for dashboard/admin/settings routes
  * header with breadcrumbs + title/description + content
  */
-export function SettingsPageLayout({
+export function DashboardLayout({
   breadcrumbs,
   title,
   description,
   children,
-}: SettingsPageLayoutProps) {
+}: DashboardLayoutProps) {
   return (
     <>
       <DashboardHeader breadcrumbs={breadcrumbs} />

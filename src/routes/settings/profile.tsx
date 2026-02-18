@@ -1,4 +1,4 @@
-import { SettingsPageLayout } from '@/components/dashboard/settings-page-layout';
+import { DashboardLayout } from '@/components/dashboard/dashboard-layout';
 import { UpdateAvatarCard } from '@/components/settings/profile/update-avatar-card';
 import { UpdateNameCard } from '@/components/settings/profile/update-name-card';
 import { messages } from '@/config/messages';
@@ -17,7 +17,7 @@ function ProfilePage() {
   ];
 
   return (
-    <SettingsPageLayout
+    <DashboardLayout
       breadcrumbs={breadcrumbs}
       title={m.title}
       description={m.description}
@@ -30,6 +30,6 @@ function ProfilePage() {
           <UpdateAvatarCard />
         </div>
       </div>
-    </SettingsPageLayout>
+    </DashboardLayout>
   );
 }
