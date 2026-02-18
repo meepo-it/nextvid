@@ -7,11 +7,11 @@ import { useNavigate } from '@tanstack/react-router';
 import { useEffect, type ReactNode } from 'react';
 
 /**
- * Shared layout for /dashboard and /settings
+ * Shared layout for /dashboard /settings and /admin routes
  * sidebar + auth guard (redirect to login if no session)
  * use with Outlet as children
  */
-export function AppSidebarLayout({ children }: { children: ReactNode }) {
+export function SidebarLayout({ children }: { children: ReactNode }) {
   const { data: session, isPending } = authClient.useSession();
   const navigate = useNavigate();
 

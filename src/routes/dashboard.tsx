@@ -1,4 +1,4 @@
-import { AppSidebarLayout } from '@/components/dashboard/app-sidebar-layout';
+import { SidebarLayout } from '@/components/dashboard/sidebar-layout';
 import { authMiddleware } from '@/middleware/auth-middleware';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 
@@ -12,8 +12,8 @@ export const Route = createFileRoute('/dashboard')({
 
 function DashboardLayoutPage() {
   return (
-    <AppSidebarLayout>
+    <SidebarLayout>
       <Outlet />
-    </AppSidebarLayout>
+    </SidebarLayout>
   );
 }
