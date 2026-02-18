@@ -23,7 +23,7 @@ import {
   IconSun,
 } from '@tabler/icons-react';
 import { useState } from 'react';
-import { useTheme } from '@/components/layout/theme-provider';
+import { useTheme } from '@/components/theme/theme-provider';
 import { UserAvatar } from '@/components/layout/user-avatar';
 import { authClient } from '@/auth/auth-client';
 import { messages } from '@/config/messages';

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { websiteConfig } from '@/config/website';
 
 type Theme = 'dark' | 'light' | 'system';
 
@@ -29,13 +30,13 @@ const ThemeProviderContext =
   React.createContext<ThemeProviderState>(initialState);
 
 /**
- * Theme provider (not used)
- * https://github.com/backpine/tanstack-start-on-cloudflare/blob/main/src/components/theme/theme-provider.tsx
+ * Single theme provider: SSR-safe, prevents FOUC via inline script, configurable.
+ * Default theme from websiteConfig.ui?.mode?.defaultMode when not passed.
  */
 export function ThemeProvider({
   children,
-  defaultTheme = 'system',
-  storageKey = 'ui-theme',
+  defaultTheme = websiteConfig.ui?.mode?.defaultMode ?? 'system',
+  storageKey = 'theme',
   attribute = 'class',
   enableSystem = true,
   disableTransitionOnChange = false,

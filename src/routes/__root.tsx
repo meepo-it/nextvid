@@ -9,7 +9,7 @@ import {
 } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { Analytics } from '@/components/analytics/analytics';
-import { ThemeProvider } from '@/components/layout/theme-provider';
+import { ThemeProvider } from '@/components/theme/theme-provider';
 import { TailwindIndicator } from '@/components/layout/tailwind-indicator';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';

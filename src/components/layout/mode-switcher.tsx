@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { IconDeviceDesktop, IconMoon, IconSun } from '@tabler/icons-react';
-import { useTheme } from '@/components/layout/theme-provider';
+import { useTheme } from '@/components/theme/theme-provider';
 import { messages } from '@/config/messages';
 
 const m = messages.common;
