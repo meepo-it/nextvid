@@ -70,10 +70,10 @@ export function UserButton({ user }: UserButtonProps) {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="cursor-pointer"
-          onSelect={async (event) => {
+          onClick={async (event) => {
             event.preventDefault();
             setOpen(false);
-            handleSignOut();
+            await handleSignOut();
           }}
         >
           <IconLogout className="mr-2 size-4" />
