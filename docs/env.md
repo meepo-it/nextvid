@@ -1,87 +1,94 @@
 # Environment Variables
 
-本项目使用 **T3 Environment**（`@t3-oss/env-core`）做构建时与运行时的类型安全校验：
+The project uses **T3 Env** (`@t3-oss/env-core`) for type-safe validation at build time and runtime:
 
-- **`clientEnv`**（`src/env/client.ts`）：仅客户端/构建时变量，前缀 `VITE_`，来源 `import.meta.env`。
-- **`serverEnv`**（`src/env/server.ts`）：仅服务端变量，来源 `process.env`（Worker 的 vars/secrets 会注入其中）。
+- **`clientEnv`** (`src/env/client.ts`): Client/build-time only. Variables must be prefixed with `VITE_` and are read from `import.meta.env`.
+- **`serverEnv`** (`src/env/server.ts`): Server-only. Read from `process.env` at runtime (Worker vars and secrets are populated into `process.env` when `nodejs_compat_populate_process_env` is enabled).
 
-约定：**构建时** 用 `clientEnv`，**运行时** 用 `serverEnv`。部署目标为 Cloudflare Workers，且已开启 `nodejs_compat_populate_process_env`。
-
----
-
-## 1. 构建时（clientEnv / `import.meta.env`）
-
-在 **执行 `vite dev` 或 `vite build` 时** 由 Vite 从 `.env*` 读取并**替换**进代码，值会打进 bundle，**不会**在 Worker 运行时再读环境变量。
-
-### 如何设置
-
-| 场景 | 设置方式 |
-|------|----------|
-| 本地开发 `pnpm dev` | 在 **`.env.local`** 中定义（或使用代码中的默认值） |
-| 生产构建 `pnpm build` | 在 **`.env.production`** 中定义，或在 **执行 build 的环境**（本机 / CI）里设置同名环境变量 |
-
-只有以 **`VITE_`** 开头的变量会暴露给应用代码，其他变量仅在 Vite 配置中可用。
-
-### 构建时变量列表
-
-| 变量 | 用途 | 必填 | 说明 |
-|------|------|------|------|
-| `VITE_BASE_URL` | 站点 origin（如 `getBaseUrl()`） | 建议设置 | 未设置时使用 `clientEnv` 默认 `http://localhost:8888` |
-
-**不要**把 `VITE_*` 放在 `wrangler.jsonc` 的 `vars` 或 `wrangler secret` 里——它们是构建时用的，不是 Worker 运行时环境变量。
+Rule of thumb: use **`clientEnv`** for build-time configuration; use **`serverEnv`** for runtime configuration (secrets, API keys, etc.). The deployment target is Cloudflare Workers.
 
 ---
 
-## 2. 运行时（serverEnv / `process.env`）
+## 1. Build-time (clientEnv / `import.meta.env`)
 
-在 **Worker 每次请求执行时** 才读取，用于密钥、API Key、业务配置等。
+Values are read by Vite from `.env*` when you run `vite dev` or `vite build`, inlined into the bundle, and **not** read again at Worker runtime.
 
-### 如何设置
+### How to set
 
-| 场景 | 设置方式 |
-|------|----------|
-| 本地开发 `pnpm dev` | 在 **`.env.local`** 中定义，由 dev 进程加载到 `process.env` |
-| Cloudflare Workers 部署 | 使用 **`wrangler secret put <NAME>`**（密钥类）或 **`wrangler.jsonc` 的 `vars`**（非敏感配置） |
+| Scenario | Where to set |
+|----------|---------------|
+| Local dev (`pnpm dev`) | **`.env.local`** (or rely on defaults in code) |
+| Production build (`pnpm build`) | **`.env.production`** or environment variables in the **build environment** (CI, etc.) |
 
-开启 `nodejs_compat_populate_process_env` 后，Worker 的 vars 和 secrets 会自动出现在 `process.env` 中。D1、R2 等 **binding** 仍通过 `env.DB`、`env.FILES` 等访问，不会进 `process.env`。
+Only variables prefixed with **`VITE_`** are exposed to app code; others are only available in Vite config.
 
-### 运行时变量列表（按功能）
+### Build-time variables (clientEnv)
 
-| 变量 | 用途 | 本地 | Workers |
-|------|------|------|---------|
-| `BETTER_AUTH_SECRET` | Better Auth 会话签名 | .env.local | `wrangler secret put BETTER_AUTH_SECRET` |
-| `GOOGLE_CLIENT_ID` | Google 登录 | .env.local | `wrangler secret put GOOGLE_CLIENT_ID` |
-| `GOOGLE_CLIENT_SECRET` | Google 登录 | .env.local | `wrangler secret put GOOGLE_CLIENT_SECRET` |
-| `RESEND_API_KEY` | 发邮件 (Resend) | .env.local | `wrangler secret put RESEND_API_KEY` |
-| `STORAGE_PUBLIC_URL` | R2 公网访问 URL（可选） | .env.local | vars 或 secret |
-| `BEEHIIV_API_KEY` / `BEEHIIV_PUBLICATION_ID` | Beehiiv 邮件（可选） | .env.local | secret / vars |
+| Variable | Purpose | Required | Notes |
+|----------|---------|----------|--------|
+| `VITE_BASE_URL` | Site origin (e.g. for `getBaseUrl()`) | No | Default: `http://localhost:3000` |
+| `VITE_GOOGLE_ANALYTICS_ID` | Google Analytics | No | |
+| `VITE_CLARITY_PROJECT_ID` | Microsoft Clarity | No | |
+| `VITE_PLAUSIBLE_DOMAIN` / `VITE_PLAUSIBLE_SCRIPT` | Plausible Analytics | No | |
+| `VITE_UMAMI_WEBSITE_ID` / `VITE_UMAMI_SCRIPT` | Umami Analytics | No | |
+| `VITE_DATAFAST_DOMAIN` / `VITE_DATAFAST_WEBSITE_ID` | DataFast Analytics | No | |
 
----
-
-## 3. 关于 `VITE_BASE_URL` 和 `getBaseUrl()`
-
-当前实现：`getBaseUrl()` 通过 `clientEnv.VITE_BASE_URL` 读取（由 T3 校验并带默认值），即**构建时**变量。
-
-- **本地开发**：在 **`.env.local`** 中定义 `VITE_BASE_URL=http://localhost:8888`（也可不定义，用 `clientEnv` 默认值）。
-- **生产部署**：在**执行 `pnpm build` 的环境**里提供 `VITE_BASE_URL`：
-  - 若在本机 build：在 **`.env.production`** 中写 `VITE_BASE_URL=https://你的域名`（不要提交到 Git）。
-  - 若在 CI/Cloudflare Pages 等 build：在对应流水线的 **构建环境变量** 里添加 `VITE_BASE_URL`。
-
-**不需要**在 Cloudflare Workers 的 **运行时** vars/secrets 里配置 `VITE_BASE_URL`——它只在 build 时被 Vite 打进 bundle，部署后 Worker 不再读取该环境变量。
+Do **not** put `VITE_*` in Wrangler `vars` or `wrangler secret`—they are build-time only, not Worker runtime env.
 
 ---
 
-## 4. 文件与配置一览
+## 2. Runtime (serverEnv / `process.env`)
 
-| 文件 | 何时生效 | 说明 |
-|------|----------|------|
-| `.env.local` | `pnpm dev` 且存在时 | 本地构建时 + 本地运行时的变量，Git 忽略 |
-| `.env.production` | `pnpm build` 时 | 生产构建用（如 `VITE_BASE_URL`），不要提交密钥 |
-| `wrangler.jsonc` `vars` | Worker 运行时 | 非敏感配置，会进 `process.env`（需开启 nodejs_compat_populate_process_env） |
-| `wrangler secret put <NAME>` | Worker 运行时 | 密钥类，会进 `process.env` |
+Read **at Worker request time**. Used for secrets, API keys, and feature configuration.
+
+### How to set
+
+| Scenario | Where to set |
+|----------|---------------|
+| Local dev (`pnpm dev`) | **`.env.local`** (loaded into `process.env` by the dev process) |
+| Cloudflare Workers | **`wrangler secret put <NAME>`** for secrets, or **`vars`** in `wrangler.jsonc` for non-sensitive config |
+
+With `nodejs_compat_populate_process_env` enabled, Worker vars and secrets appear on `process.env`. D1, R2, and other **bindings** are still accessed via `env.DB`, `env.FILES`, etc., and do not go on `process.env`.
+
+### Runtime variables (serverEnv)
+
+| Variable | Purpose | Required | Used by |
+|----------|---------|----------|---------|
+| `VITE_BASE_URL` | URL schema validation at runtime | Yes (schema) | Same value as build; can be set in build env |
+| `BETTER_AUTH_SECRET` | Better Auth session signing | Yes | Auth |
+| `GOOGLE_CLIENT_ID` | Google OAuth | No | Auth (when Google login enabled) |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth | No | Auth |
+| `RESEND_API_KEY` | Resend email API | No | Mail, Newsletter (when using Resend) |
+| `BEEHIIV_API_KEY` | Beehiiv API | No | Newsletter (when using Beehiiv) |
+| `BEEHIIV_PUBLICATION_ID` | Beehiiv publication | No | Newsletter |
+| `STORAGE_PUBLIC_URL` | R2 public URL (e.g. custom domain) | No | Storage |
+
+Local: set in **`.env.local`**. Workers: use **`wrangler secret put <NAME>`** for secrets; **vars** in `wrangler.jsonc` for non-sensitive values.
+
+---
+
+## 3. VITE_BASE_URL and getBaseUrl()
+
+`getBaseUrl()` reads from **`clientEnv.VITE_BASE_URL`** (see `src/lib/urls.ts`), i.e. a **build-time** value.
+
+- **Local dev**: Set `VITE_BASE_URL=http://localhost:3000` (or your dev URL) in **`.env.local`**, or omit and use the default.
+- **Production**: Set `VITE_BASE_URL=https://your-domain.com` in the **build environment** (e.g. `.env.production` or CI env vars).
+
+You do **not** need to set `VITE_BASE_URL` in Cloudflare Workers **runtime** vars or secrets—it is inlined at build time.
+
+---
+
+## 4. Files and config overview
+
+| File / mechanism | When it applies | Notes |
+|------------------|-----------------|--------|
+| `.env.local` | When present during `pnpm dev` | Build-time and runtime vars locally; git-ignored |
+| `.env.production` | During `pnpm build` | Production build (e.g. `VITE_BASE_URL`); do not commit secrets |
+| `wrangler.jsonc` `vars` | Worker runtime | Non-sensitive config; ends up on `process.env` if nodejs compat is on |
+| `wrangler secret put <NAME>` | Worker runtime | Secrets; end up on `process.env` |
 
 ---
 
 ## 5. Storage (R2)
 
-R2 使用 `wrangler.jsonc` 中的 **binding**（如 `FILES`），不是环境变量。若使用 R2 自定义域名，可把该 URL 放在 **运行时** 变量 `STORAGE_PUBLIC_URL`（`.env.local` / Worker vars 或 secret）中，代码通过 `serverEnv.STORAGE_PUBLIC_URL` 读取。
+R2 is configured via **bindings** in `wrangler.jsonc` (e.g. `FILES`), not via environment variables. For a custom public URL (e.g. R2 custom domain), set the **runtime** variable **`STORAGE_PUBLIC_URL`** (in `.env.local` or Worker vars/secret); the app reads it via `serverEnv.STORAGE_PUBLIC_URL`.
