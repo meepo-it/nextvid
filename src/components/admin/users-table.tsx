@@ -1,3 +1,4 @@
+import { UserDetailViewer } from '@/components/admin/user-detail-viewer';
 import { DataTableAdvancedToolbar } from '@/components/data-table/data-table-advanced-toolbar';
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header';
 import { DataTableFacetedFilter } from '@/components/data-table/data-table-faceted-filter';
@@ -23,14 +24,18 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { IconUserCheck, IconUserX, IconX } from '@tabler/icons-react';
+import {
+  IconMailCheck,
+  IconMailQuestion,
+  IconUserCheck,
+  IconUserX,
+  IconX,
+} from '@tabler/icons-react';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { IconMailCheck, IconMailQuestion } from '@tabler/icons-react';
-import { formatDateTime } from '@/lib/formatter';
+import { formatDate, formatDateTime } from '@/lib/formatter';
 
 const m = messages.admin.users;
 
@@ -115,20 +120,7 @@ export function UsersTable({
         header: ({ column }) => (
           <DataTableColumnHeader column={column} label={m.columns.name} />
         ),
-        cell: ({ row }) => {
-          const u = row.original;
-          return (
-            <div className="flex items-center gap-2">
-              <Avatar className="size-8 shrink-0">
-                <AvatarImage src={u.image ?? undefined} alt={u.name} />
-                <AvatarFallback className="text-xs">
-                  {u.name.slice(0, 2).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              <span className="font-medium">{u.name}</span>
-            </div>
-          );
-        },
+        cell: ({ row }) => <UserDetailViewer user={row.original} />,
         meta: { label: m.columns.name },
         minSize: 120,
         size: 160,
@@ -232,6 +224,43 @@ export function UsersTable({
         meta: { label: m.columns.status },
         minSize: 100,
         size: 120,
+      },
+      {
+        id: 'banReason',
+        accessorKey: 'banReason',
+        enableHiding: true,
+        enableSorting: false,
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={m.columns.banReason} />
+        ),
+        cell: ({ row }) => (
+          <span className="text-muted-foreground">
+            {row.original.banReason ?? '-'}
+          </span>
+        ),
+        meta: { label: m.columns.banReason },
+        minSize: 120,
+        size: 140,
+      },
+      {
+        id: 'banExpires',
+        accessorKey: 'banExpires',
+        enableHiding: true,
+        enableSorting: false,
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} label={m.columns.banExpires} />
+        ),
+        cell: ({ row }) => {
+          const exp = row.original.banExpires;
+          return (
+            <span className="text-muted-foreground">
+              {exp ? formatDate(new Date(exp)) : '-'}
+            </span>
+          );
+        },
+        meta: { label: m.columns.banExpires },
+        minSize: 140,
+        size: 160,
       },
     ],
     []

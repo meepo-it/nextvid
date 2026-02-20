@@ -1,5 +1,11 @@
+import { authClient } from '@/auth/auth-client';
 import type { User } from '@/auth/auth-types';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import type { ColumnSort } from '@tanstack/react-table';
 
 /** Sorting state for users list (avoids ExtendedColumnSort from data-table parsers). */
@@ -69,5 +75,37 @@ export function useUsers(
       return json.data as { items: User[]; total: number };
     },
     placeholderData: keepPreviousData,
+  });
+}
+
+/** Ban user via Better Auth admin plugin; invalidates users list on success. */
+export function useBanUser() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (opts: {
+      userId: string;
+      banReason: string;
+      banExpiresIn?: number;
+    }) =>
+      authClient.admin.banUser({
+        userId: opts.userId,
+        banReason: opts.banReason,
+        banExpiresIn: opts.banExpiresIn,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: usersKeys.all });
+    },
+  });
+}
+
+/** Unban user via Better Auth admin plugin; invalidates users list on success. */
+export function useUnbanUser() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (opts: { userId: string }) =>
+      authClient.admin.unbanUser({ userId: opts.userId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: usersKeys.all });
+    },
   });
 }
