@@ -1,5 +1,6 @@
 import {
   IconBell,
+  IconKey,
   IconLayoutDashboard,
   IconLock,
   IconSettings2,
@@ -52,6 +53,12 @@ export function getSidebarLinks(): MenuItemConfig[] {
           title: m.security,
           icon: IconLock,
           href: Routes.SettingsSecurity,
+          external: false,
+        },
+        {
+          title: m.apiKeys,
+          icon: IconKey,
+          href: Routes.SettingsApiKeys,
           external: false,
         },
         {

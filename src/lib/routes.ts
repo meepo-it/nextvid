@@ -32,6 +32,7 @@ export const Routes = {
   SettingsBilling: '/settings/billing',
   SettingsCredits: '/settings/credits',
   SettingsSecurity: '/settings/security',
+  SettingsApiKeys: '/settings/apikeys',
   SettingsNotifications: '/settings/notifications',
 
   // Admin routes
