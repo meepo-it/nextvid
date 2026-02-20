@@ -8,7 +8,7 @@ import {
 } from '@tanstack/react-query';
 import type { ColumnSort } from '@tanstack/react-table';
 
-/** Sorting state for users list (avoids ExtendedColumnSort from data-table parsers). */
+/** Sorting state for users list */
 export type UsersSortingState = ColumnSort[];
 
 interface SimpleFilter {
@@ -74,11 +74,13 @@ export function useUsers(
       }
       return json.data as { items: User[]; total: number };
     },
-    placeholderData: keepPreviousData,
+    // placeholderData: keepPreviousData,
   });
 }
 
-/** Ban user via Better Auth admin plugin; invalidates users list on success. */
+/** 
+ * Ban user via Better Auth admin plugin; invalidates users list on success.
+ */
 export function useBanUser() {
   const queryClient = useQueryClient();
   return useMutation({
@@ -98,7 +100,9 @@ export function useBanUser() {
   });
 }
 
-/** Unban user via Better Auth admin plugin; invalidates users list on success. */
+/** 
+ * Unban user via Better Auth admin plugin; invalidates users list on success.
+ */
 export function useUnbanUser() {
   const queryClient = useQueryClient();
   return useMutation({

@@ -163,7 +163,7 @@ export function UsersTable({
         id: 'role',
         accessorKey: 'role',
         enableHiding: true,
-        enableSorting: true,
+        enableSorting: false,
         header: ({ column }) => (
           <DataTableColumnHeader column={column} label={m.columns.role} />
         ),

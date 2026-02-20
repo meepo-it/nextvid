@@ -2,19 +2,16 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import type { Column } from '@tanstack/react-table';
+import { messages } from '@/messages';
 import {
   IconChevronDown,
   IconChevronUp,
-  IconSelector,
-  IconEyeOff,
-  IconX,
+  IconSelector
 } from '@tabler/icons-react';
-import { messages } from '@/messages';
+import type { Column } from '@tanstack/react-table';
 
 const t = messages.common.table;
 
@@ -72,26 +69,7 @@ export function DataTableColumnHeader<TData, TValue>({
               <IconChevronDown />
               {t.descending}
             </DropdownMenuCheckboxItem>
-            {column.getIsSorted() && (
-              <DropdownMenuItem
-                className="pl-2 [&_svg]:text-muted-foreground"
-                onClick={() => column.clearSorting()}
-              >
-                <IconX />
-                {t.resetSorting}
-              </DropdownMenuItem>
-            )}
           </>
-        )}
-        {column.getCanHide() && (
-          <DropdownMenuCheckboxItem
-            className="relative pr-8 pl-2 [&>span:first-child]:right-2 [&>span:first-child]:left-auto [&_svg]:text-muted-foreground"
-            checked={!column.getIsVisible()}
-            onClick={() => column.toggleVisibility(false)}
-          >
-            <IconEyeOff />
-            {t.hideColumn}
-          </DropdownMenuCheckboxItem>
         )}
       </DropdownMenuContent>
     </DropdownMenu>
