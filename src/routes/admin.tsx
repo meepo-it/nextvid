@@ -1,4 +1,4 @@
-import { SidebarLayout } from '@/components/dashboard/sidebar-layout';
+import { SidebarLayout } from '@/components/layout/sidebar-layout';
 import { adminMiddleware } from '@/middleware/admin-middleware';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 

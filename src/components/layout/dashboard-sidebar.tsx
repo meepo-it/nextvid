@@ -1,6 +1,6 @@
 import { Logo } from '@/components/layout/logo';
-import { SidebarMain } from '@/components/dashboard/sidebar-main';
-import { SidebarUser } from '@/components/dashboard/sidebar-user';
+import { SidebarMain } from '@/components/layout/sidebar-main';
+import { SidebarUser } from '@/components/layout/sidebar-user';
 import {
   Sidebar,
   SidebarContent,
