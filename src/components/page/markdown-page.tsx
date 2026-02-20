@@ -24,7 +24,7 @@ export function MarkdownPage({ page }: { page: PageDoc }) {
         )}
       </div>
       <Card className="ring-0 border border-border">
-        <CardContent className="py-4 px-8">
+        <CardContent>
           <Markdown
             content={content}
             className="prose prose-neutral dark:prose-invert max-w-none"
