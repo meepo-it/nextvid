@@ -13,11 +13,6 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import { Label } from '@/components/ui/label';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { useBanUser, useUnbanUser } from '@/hooks/use-users';
@@ -47,6 +42,7 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
   const [error, setError] = useState<string | undefined>();
   const [banReason, setBanReason] = useState<string>(m.ban.defaultReason);
   const [banExpiresAt, setBanExpiresAt] = useState<Date | undefined>();
+  const [calendarOpen, setCalendarOpen] = useState(false);
 
   const banUserMutation = useBanUser();
   const unbanUserMutation = useUnbanUser();
@@ -239,30 +235,37 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
                   required
                 />
               </div>
-              <div className="grid gap-2">
+              <div className="grid w-fit max-w-full gap-2">
                 <Label>{m.ban.expires}</Label>
-                <Popover>
-                  <PopoverTrigger
+                <div className="w-fit rounded-lg border border-input bg-background">
+                  <button
+                    type="button"
+                    onClick={() => setCalendarOpen((o) => !o)}
                     className={cn(
-                      'flex h-9 w-full cursor-pointer items-center justify-start gap-1.5 rounded-lg border border-input bg-background px-2.5 text-sm font-normal outline-none hover:bg-muted hover:text-foreground',
+                      'flex h-9 w-full cursor-pointer items-center justify-start gap-1.5 px-2.5 text-sm font-normal outline-none hover:bg-muted hover:text-foreground rounded-lg',
                       !banExpiresAt && 'text-muted-foreground'
                     )}
                   >
-                    <IconCalendar className='size-4' />
+                    <IconCalendar className="size-4 shrink-0" />
                     {banExpiresAt ? (
                       formatDate(banExpiresAt)
                     ) : (
                       <span>{m.ban.selectDate}</span>
                     )}
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={banExpiresAt}
-                      onSelect={setBanExpiresAt}
-                    />
-                  </PopoverContent>
-                </Popover>
+                  </button>
+                  {calendarOpen && (
+                    <div className="w-auto border-t border-input p-2">
+                      <Calendar
+                        mode="single"
+                        selected={banExpiresAt}
+                        onSelect={(date) => {
+                          setBanExpiresAt(date);
+                          setCalendarOpen(false);
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
               <Button
                 type="submit"
