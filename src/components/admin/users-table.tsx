@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import type { AdminUser } from '@/hooks/use-users';
+import type { User } from '@/auth/auth-types';
 import { messages } from '@/messages';
 import {
   type ColumnDef,
@@ -73,7 +73,7 @@ function TableRowSkeleton({ columns }: { columns: number }) {
 }
 
 interface UsersTableProps {
-  data: AdminUser[];
+  data: User[];
   total: number;
   pageIndex: number;
   pageSize: number;
@@ -105,7 +105,7 @@ export function UsersTable({
 }: UsersTableProps) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
-  const columns: ColumnDef<AdminUser>[] = useMemo(
+  const columns: ColumnDef<User>[] = useMemo(
     () => [
       {
         id: 'name',

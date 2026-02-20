@@ -5,7 +5,7 @@ import { getRequestHeaders } from '@tanstack/react-start/server';
 import { Routes } from '@/lib/routes';
 
 /**
- * Auth middleware for TanStack Start.
+ * Auth middleware: requires authenticated user.
  * Use in route definitions via server: { middleware: [authMiddleware] }.
  * https://www.better-auth.com/docs/integrations/tanstack#middleware
  */

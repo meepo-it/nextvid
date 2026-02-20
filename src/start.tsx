@@ -1,6 +1,7 @@
 import { createStart } from '@tanstack/react-start';
 
 /**
+ * TanStack Start instance
  * https://github.com/backpine/tanstack-start-on-cloudflare/blob/main/src/start.tsx
  */
 declare module '@tanstack/react-start' {

@@ -1,22 +1,9 @@
+import type { User } from '@/auth/auth-types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import type { ColumnSort } from '@tanstack/react-table';
 
 /** Sorting state for users list (avoids ExtendedColumnSort from data-table parsers). */
 export type UsersSortingState = ColumnSort[];
-
-export interface AdminUser {
-  id: string;
-  name: string;
-  email: string;
-  emailVerified: boolean;
-  image: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  role: string | null;
-  banned: boolean;
-  banReason: string | null;
-  banExpires: Date | null;
-}
 
 interface SimpleFilter {
   id: string;
@@ -74,12 +61,12 @@ export function useUsers(
       const json = (await res.json()) as {
         success?: boolean;
         error?: string;
-        data?: { items: AdminUser[]; total: number };
+        data?: { items: User[]; total: number };
       };
       if (!res.ok || !json.success) {
         throw new Error(json.error ?? 'Failed to fetch users');
       }
-      return json.data as { items: AdminUser[]; total: number };
+      return json.data as { items: User[]; total: number };
     },
     placeholderData: keepPreviousData,
   });
