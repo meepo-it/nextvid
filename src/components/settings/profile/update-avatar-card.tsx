@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/card';
 import { websiteConfig } from '@/config/website';
 import { authClient } from '@/auth/client';
-import { useUploadAvatarFile } from '@/hooks/use-user-files';
+import { useUploadUserAvatar } from '@/hooks/use-user-files';
 import { cn } from '@/lib/utils';
 import { IconUser } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
@@ -26,7 +26,7 @@ interface UpdateAvatarCardProps {
 const m = messages.settings.profile.avatar;
 
 /**
- * Renders when storage and enableUpdateAvatar are enabled. Supports avatar upload via S3-compatible storage.
+ * Renders when storage and enableUpdateAvatar are enabled
  */
 export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
   if (
@@ -39,7 +39,7 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
   const [error, setError] = useState<string | undefined>('');
   const [avatarUrl, setAvatarUrl] = useState('');
   const { data: session, refetch } = authClient.useSession();
-  const uploadMutation = useUploadAvatarFile();
+  const uploadMutation = useUploadUserAvatar();
 
   useEffect(() => {
     if (session?.user?.image) setAvatarUrl(session.user.image);

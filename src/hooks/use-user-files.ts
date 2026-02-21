@@ -4,7 +4,11 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import { deleteUserFile, listUserFiles } from '@/api/user-files';
+import {
+  deleteUserFile,
+  listUserFiles,
+  uploadUserFile,
+} from '@/api/user-files';
 
 export const userFilesKeys = {
   all: ['user-files'] as const,
@@ -56,16 +60,7 @@ export function useUploadUserFile() {
       if (params.description != null && params.description !== '') {
         form.append('description', params.description);
       }
-      const res = await fetch('/api/storage/upload', {
-        method: 'POST',
-        body: form,
-        credentials: 'include',
-      });
-      if (!res.ok) {
-        const err = (await res.json()) as { error?: string };
-        throw new Error(err.error ?? 'Upload failed');
-      }
-      return res.json();
+      return uploadUserFile({ data: form });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: userFilesKeys.all });
@@ -76,23 +71,14 @@ export function useUploadUserFile() {
 /**
  * Uploads a file to the avatars folder
  */
-export function useUploadAvatarFile() {
+export function useUploadUserAvatar() {
   return useMutation({
     mutationFn: async (file: File) => {
       const form = new FormData();
       form.append('file', file);
       form.append('folder', 'avatars');
       form.append('isPublic', 'true');
-      const res = await fetch('/api/storage/upload', {
-        method: 'POST',
-        body: form,
-        credentials: 'include',
-      });
-      if (!res.ok) {
-        const err = (await res.json()) as { error?: string };
-        throw new Error(err.error ?? 'Upload failed');
-      }
-      return res.json() as Promise<{ url: string; key: string }>;
+      return uploadUserFile({ data: form });
     },
   });
 }

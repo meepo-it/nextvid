@@ -36,7 +36,7 @@ The storage module provides file upload (and optional delete) using **Cloudflare
    },
    ```
 
-   After this, the upload API and avatar card are active. Returned file URLs use the same-origin proxy `/api/storage/file?key=...`.
+   After this, the upload server function and avatar card are active. Returned file URLs use the same-origin proxy `/api/storage/file?key=...`.
 
 ## Directory structure
 
@@ -64,26 +64,29 @@ No storage-specific environment variables are required. Files are always served 
 
 ## Core API
 
-- **uploadFile(file, filename, contentType, folder?)** (server)
-  - Uploads to R2; returns `Promise<{ url, key }>`. Used by the upload API route.
+- **uploadFile(file, filename, contentType, folder?)** (server, in `@/storage`)
+  - Uploads to R2; returns `Promise<{ url, key }>`. Used by the `uploadUserFile` server function.
 
 - **deleteFile(key)** (server)
-  - Deletes the object from R2. Available for future use (e.g. avatar cleanup).
+  - Deletes the object from R2. Used by `deleteUserFile` server function (e.g. Settings → Files, avatar cleanup).
 
-- **useUploadAvatarFile()** (client, in `@/hooks/use-user-files`): Mutation that uploads a file with `folder: 'avatars'` to `POST /api/storage/upload`; returns `{ url, key }`. Used by the avatar upload card.
+- **uploadUserFile** (server function, in `@/api/user-files`): Accepts `FormData` (file, optional folder, isPublic, description). Requires session via `authApiMiddleware`. Validates file size and type, uploads to R2, optionally inserts into `userFiles` table; returns `{ url, key }`. Used by `useUploadUserFile()` and `useUploadAvatarFile()`.
+
+- **useUploadAvatarFile()** (client, in `@/hooks/use-user-files`): Mutation that uploads a file with `folder: 'avatars'` via `uploadUserFile`; returns `{ url, key }`. Used by the avatar upload card.
+
+- **useUploadUserFile()** (client, in `@/hooks/use-user-files`): Mutation that uploads a user file via `uploadUserFile`; used by Settings → Files.
 
 ## API routes
 
-- **POST /api/storage/upload**
-  - Requires session. Validates file size (`websiteConfig.storage.maxFileSize`) and type (`allowedTypes`). Uploads to R2 and returns `{ url, key }`. `url` is the same-origin proxy URL (`/api/storage/file?key=...` or full origin + path).
-
 - **GET /api/storage/file?key=...**
-  - Streams the object from R2. Keys are unguessable (e.g. `avatars/<uuid>.<ext>`).
+  - Streams the object from R2. Keys are unguessable (e.g. `avatars/<uuid>.<ext>`). Private files require session and ownership check.
+
+Upload is implemented as a **server function** (`uploadUserFile` in `src/api/user-files.ts`), not an API route.
 
 ## Consumers
 
-- **Settings → Profile** (`UpdateAvatarCard`): When `websiteConfig.storage.enable` and `websiteConfig.features.enableUpdateAvatar` are true, the user can upload an avatar; the client uses `useUploadAvatarFile()` to upload to the API then updates `user.image` with the returned URL.
-- **Settings → Files**: List/delete via server functions in `src/api/user-files.ts`; upload via `routes/api/storage/upload.ts`. Files are stored under `userFilesFolder`.
+- **Settings → Profile** (`UpdateAvatarCard`): When `websiteConfig.storage.enable` and `websiteConfig.features.enableUpdateAvatar` are true, the user can upload an avatar; the client uses `useUploadAvatarFile()` (which calls `uploadUserFile`) then updates `user.image` with the returned URL.
+- **Settings → Files**: List/delete/upload via server functions in `src/api/user-files.ts` (`listUserFiles`, `deleteUserFile`, `uploadUserFile`). Files are stored under `userFilesFolder`.
 
 ## Notes
 

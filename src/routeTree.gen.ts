@@ -43,7 +43,6 @@ import { Route as pagesAboutRouteImport } from './routes/(pages)/about'
 import { Route as legalsTermsRouteImport } from './routes/(legals)/terms'
 import { Route as legalsPrivacyRouteImport } from './routes/(legals)/privacy'
 import { Route as legalsCookieRouteImport } from './routes/(legals)/cookie'
-import { Route as ApiStorageUploadRouteImport } from './routes/api/storage/upload'
 import { Route as ApiStorageFileRouteImport } from './routes/api/storage/file'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
@@ -217,11 +216,6 @@ const legalsCookieRoute = legalsCookieRouteImport.update({
   path: '/cookie',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiStorageUploadRoute = ApiStorageUploadRouteImport.update({
-  id: '/api/storage/upload',
-  path: '/api/storage/upload',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiStorageFileRoute = ApiStorageFileRouteImport.update({
   id: '/api/storage/file',
   path: '/api/storage/file',
@@ -270,7 +264,6 @@ export interface FileRoutesByFullPath {
   '/settings/': typeof SettingsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/storage/file': typeof ApiStorageFileRoute
-  '/api/storage/upload': typeof ApiStorageUploadRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -306,7 +299,6 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/storage/file': typeof ApiStorageFileRoute
-  '/api/storage/upload': typeof ApiStorageUploadRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -346,7 +338,6 @@ export interface FileRoutesById {
   '/settings/': typeof SettingsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/storage/file': typeof ApiStorageFileRoute
-  '/api/storage/upload': typeof ApiStorageUploadRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -387,7 +378,6 @@ export interface FileRouteTypes {
     | '/settings/'
     | '/api/auth/$'
     | '/api/storage/file'
-    | '/api/storage/upload'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -423,7 +413,6 @@ export interface FileRouteTypes {
     | '/settings'
     | '/api/auth/$'
     | '/api/storage/file'
-    | '/api/storage/upload'
   id:
     | '__root__'
     | '/'
@@ -462,7 +451,6 @@ export interface FileRouteTypes {
     | '/settings/'
     | '/api/auth/$'
     | '/api/storage/file'
-    | '/api/storage/upload'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -488,7 +476,6 @@ export interface RootRouteChildren {
   BlogIndexRoute: typeof BlogIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiStorageFileRoute: typeof ApiStorageFileRoute
-  ApiStorageUploadRoute: typeof ApiStorageUploadRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -731,13 +718,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof legalsCookieRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/storage/upload': {
-      id: '/api/storage/upload'
-      path: '/api/storage/upload'
-      fullPath: '/api/storage/upload'
-      preLoaderRoute: typeof ApiStorageUploadRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/storage/file': {
       id: '/api/storage/file'
       path: '/api/storage/file'
@@ -842,7 +822,6 @@ const rootRouteChildren: RootRouteChildren = {
   BlogIndexRoute: BlogIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiStorageFileRoute: ApiStorageFileRoute,
-  ApiStorageUploadRoute: ApiStorageUploadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,7 +1,10 @@
+import { websiteConfig } from '@/config/website';
 import { getDb } from '@/db';
 import { userFiles } from '@/db/app.schema';
+import { getBaseUrl } from '@/lib/urls';
 import { authApiMiddleware } from '@/middleware/auth-middleware';
-import { deleteFile } from '@/storage';
+import { deleteFile, uploadFile } from '@/storage';
+import { StorageError, UploadError } from '@/storage/types';
 import { createServerFn } from '@tanstack/react-start';
 import { and, count, desc, eq } from 'drizzle-orm';
 import { z } from 'zod';
@@ -58,4 +61,66 @@ export const deleteUserFile = createServerFn({ method: 'POST' })
 
     await deleteFile(row.r2Key);
     await db.delete(userFiles).where(eq(userFiles.id, data.id));
+  });
+
+const uploadSchema = z
+  .custom<FormData>((v): v is FormData => v instanceof FormData)
+  .transform((fd) => {
+    const file = fd.get('file');
+    if (!file || !(file instanceof File)) {
+      throw new Error('No file provided');
+    }
+    const folderRaw = fd.get('folder');
+    const folder = typeof folderRaw === 'string' ? folderRaw : undefined;
+    const isPublicRaw = fd.get('isPublic');
+    const isPublic = typeof isPublicRaw === 'string' ? isPublicRaw === 'true' : undefined;
+    const descriptionRaw = fd.get('description');
+    const description = typeof descriptionRaw === 'string' && descriptionRaw !== '' ? descriptionRaw : undefined;
+    return {
+      file,
+      folder,
+      isPublic,
+      description,
+    };
+  });
+
+export const uploadUserFile = createServerFn({ method: 'POST' })
+  .inputValidator(uploadSchema)
+  .middleware([authApiMiddleware])
+  .handler(async ({ data, context }) => {
+    const { userId } = context;
+    try {
+      const buffer = Buffer.from(await data.file.arrayBuffer());
+      const requestOrigin = getBaseUrl();
+      const result = await uploadFile(buffer, data.file.name, data.file.type, {
+        folder: data.folder,
+        userId: userId ?? undefined,
+        requestOrigin,
+      });
+
+      if (userId && result.metadata) {
+        const db = getDb();
+        const now = result.metadata.uploadedAt;
+        await db.insert(userFiles).values({
+          id: result.metadata.id,
+          userId,
+          filename: result.metadata.filename,
+          originalName: result.metadata.originalName,
+          contentType: result.metadata.contentType,
+          size: result.metadata.size,
+          r2Key: result.metadata.r2Key,
+          createdAt: now,
+          updatedAt: now,
+          isPublic: data.isPublic ?? null,
+          description: data.description ?? null,
+        });
+      }
+
+      return result;
+    } catch (error) {
+      if (error instanceof UploadError || error instanceof StorageError) {
+        throw new Error(error.message);
+      }
+      throw new Error('Something went wrong while uploading the file');
+    }
   });
