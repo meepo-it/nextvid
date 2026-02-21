@@ -13,6 +13,9 @@ export const userFilesKeys = {
     [...userFilesKeys.lists(), params] as const,
 };
 
+/**
+ * Fetches a list of user files
+ */
 export function useUserFiles(pageIndex: number, pageSize: number) {
   return useQuery({
     queryKey: userFilesKeys.list({ pageIndex, pageSize }),
@@ -32,6 +35,9 @@ export function useUserFiles(pageIndex: number, pageSize: number) {
   });
 }
 
+/**
+ * Uploads a user file
+ */
 export function useUploadUserFile() {
   const queryClient = useQueryClient();
   return useMutation({
@@ -65,6 +71,32 @@ export function useUploadUserFile() {
   });
 }
 
+/** 
+ * Uploads a file to the avatars folder
+ */
+export function useUploadAvatarFile() {
+  return useMutation({
+    mutationFn: async (file: File) => {
+      const form = new FormData();
+      form.append('file', file);
+      form.append('folder', 'avatars');
+      const res = await fetch('/api/storage/upload', {
+        method: 'POST',
+        body: form,
+        credentials: 'include',
+      });
+      if (!res.ok) {
+        const err = (await res.json()) as { error?: string };
+        throw new Error(err.error ?? 'Upload failed');
+      }
+      return res.json() as Promise<{ url: string; key: string }>;
+    },
+  });
+}
+
+/**
+ * Deletes a user file
+ */
 export function useDeleteUserFile() {
   const queryClient = useQueryClient();
   return useMutation({

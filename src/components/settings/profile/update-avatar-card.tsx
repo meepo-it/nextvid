@@ -12,11 +12,12 @@ import {
 } from '@/components/ui/card';
 import { websiteConfig } from '@/config/website';
 import { authClient } from '@/auth/client';
+import { useUploadAvatarFile } from '@/hooks/use-user-files';
 import { cn } from '@/lib/utils';
-import { uploadFileFromBrowser } from '@/storage/client';
 import { IconUser } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { DEFAULT_MAX_FILE_SIZE } from '@/storage/types';
 
 interface UpdateAvatarCardProps {
   className?: string;
@@ -36,9 +37,9 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
   }
 
   const [error, setError] = useState<string | undefined>('');
-  const [isUploading, setIsUploading] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState('');
   const { data: session, refetch } = authClient.useSession();
+  const uploadMutation = useUploadAvatarFile();
 
   useEffect(() => {
     if (session?.user?.image) setAvatarUrl(session.user.image);
@@ -58,46 +59,45 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
     input.click();
   };
 
-  const handleFileUpload = async (file: File) => {
-    setIsUploading(true);
-    setError('');
-    let tempUrl = '';
-
-    try {
-      const maxSize = websiteConfig.storage?.maxFileSize ?? 4 * 1024 * 1024;
-      if (file.size > maxSize) {
-        throw new Error('File size exceeds the server limit');
-      }
-
-      tempUrl = URL.createObjectURL(file);
-      setAvatarUrl(tempUrl);
-
-      const { url } = await uploadFileFromBrowser(file, 'avatars');
-
-      await authClient.updateUser(
-        { image: url },
-        {
-          onSuccess: () => {
-            setAvatarUrl(url);
-            toast.success(m.success);
-            refetch();
-          },
-          onError: (ctx) => {
-            setError(`${ctx.error.status}: ${ctx.error.message}`);
-            if (session?.user?.image) setAvatarUrl(session.user.image);
-            toast.error(m.fail);
-          },
-        }
-      );
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : m.fail;
-      setError(msg);
-      if (session?.user?.image) setAvatarUrl(session.user.image);
-      toast.error(msg);
-    } finally {
-      setIsUploading(false);
-      if (tempUrl) URL.revokeObjectURL(tempUrl);
+  const handleFileUpload = (file: File) => {
+    const maxSize = websiteConfig.storage?.maxFileSize ?? DEFAULT_MAX_FILE_SIZE;
+    if (file.size > maxSize) {
+      setError('File size exceeds the server limit');
+      toast.error('File size exceeds the server limit');
+      return;
     }
+    setError('');
+    const tempUrl = URL.createObjectURL(file);
+    setAvatarUrl(tempUrl);
+
+    uploadMutation.mutate(file, {
+      onSuccess: (result) => {
+        authClient.updateUser(
+          { image: result.url },
+          {
+            onSuccess: () => {
+              setAvatarUrl(result.url);
+              URL.revokeObjectURL(tempUrl);
+              toast.success(m.success);
+              refetch();
+            },
+            onError: (ctx) => {
+              setError(`${ctx.error.status}: ${ctx.error.message}`);
+              if (session?.user?.image) setAvatarUrl(session.user.image);
+              URL.revokeObjectURL(tempUrl);
+              toast.error(m.fail);
+            },
+          }
+        );
+      },
+      onError: (err) => {
+        const msg = err.message || m.fail;
+        setError(msg);
+        if (session?.user?.image) setAvatarUrl(session.user.image);
+        URL.revokeObjectURL(tempUrl);
+        toast.error(msg);
+      },
+    });
   };
 
   return (
@@ -123,10 +123,10 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
             variant="outline"
             size="sm"
             onClick={handleUploadClick}
-            disabled={isUploading}
+            disabled={uploadMutation.isPending}
             className="cursor-pointer"
           >
-            {isUploading ? m.uploading : m.uploadAvatar}
+            {uploadMutation.isPending ? m.uploading : m.uploadAvatar}
           </Button>
         </div>
         <FormError message={error} />

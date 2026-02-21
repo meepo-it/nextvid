@@ -44,7 +44,6 @@ The storage module provides file upload (and optional delete) using **Cloudflare
 src/storage/
 ├── index.ts           # getR2Bucket, getStorageProvider, uploadFile, deleteFile, …
 ├── types.ts           # StorageConfig (provider options), R2BucketInterface, UploadFileResult, errors
-├── client.ts          # uploadFileFromBrowser (for client components)
 └── provider/
     └── r2.ts          # getR2Bucket(), R2Provider (upload, delete, download, list, …)
 ```
@@ -71,8 +70,7 @@ No storage-specific environment variables are required. Files are always served 
 - **deleteFile(key)** (server)
   - Deletes the object from R2. Available for future use (e.g. avatar cleanup).
 
-- **uploadFileFromBrowser(file, folder?)** (client)
-  - Sends a file to `POST /api/storage/upload` via FormData; returns `Promise<{ url, key }>`. Used by the avatar upload card.
+- **useUploadAvatarFile()** (client, in `@/hooks/use-user-files`): Mutation that uploads a file with `folder: 'avatars'` to `POST /api/storage/upload`; returns `{ url, key }`. Used by the avatar upload card.
 
 ## API routes
 
@@ -84,7 +82,7 @@ No storage-specific environment variables are required. Files are always served 
 
 ## Consumers
 
-- **Settings → Profile** (`UpdateAvatarCard`): When `websiteConfig.storage.enable` and `websiteConfig.features.enableUpdateAvatar` are true, the user can upload an avatar; the client calls `uploadFileFromBrowser(file, 'avatars')` then updates `user.image` with the returned URL.
+- **Settings → Profile** (`UpdateAvatarCard`): When `websiteConfig.storage.enable` and `websiteConfig.features.enableUpdateAvatar` are true, the user can upload an avatar; the client uses `useUploadAvatarFile()` to upload to the API then updates `user.image` with the returned URL.
 - **Settings → Files**: User file uploads use the same R2 bucket and upload API; files are stored under `userFilesFolder` (see `routes/api/user-files.ts`, `api/storage/upload.ts`).
 
 ## Notes
