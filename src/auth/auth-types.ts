@@ -1,7 +1,8 @@
 import type { auth } from './auth';
 
 /**
- * https://www.better-auth.com/docs/concepts/typescript#additional-fields
+ * Better Auth infers the types
+ * https://www.better-auth.com/docs/concepts/typescript#inferring-types
  */
 export type Session = typeof auth.$Infer.Session;
 export type User = typeof auth.$Infer.Session.user;

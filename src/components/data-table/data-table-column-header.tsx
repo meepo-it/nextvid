@@ -2,6 +2,7 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
@@ -9,7 +10,9 @@ import { messages } from '@/messages';
 import {
   IconChevronDown,
   IconChevronUp,
-  IconSelector
+  IconEyeOff,
+  IconSelector,
+  IconX
 } from '@tabler/icons-react';
 import type { Column } from '@tanstack/react-table';
 
@@ -50,11 +53,11 @@ export function DataTableColumnHeader<TData, TValue>({
             <IconSelector />
           ))}
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="w-28">
+      <DropdownMenuContent align="start" className="min-w-40">
         {column.getCanSort() && (
           <>
             <DropdownMenuCheckboxItem
-              className="relative pr-8 pl-2 [&>span:first-child]:right-2 [&>span:first-child]:left-auto [&_svg]:text-muted-foreground"
+              className="relative pl-2 pr-10 [&>span:first-child]:right-3 [&>span:first-child]:left-auto [&_svg]:text-muted-foreground"
               checked={column.getIsSorted() === 'asc'}
               onClick={() => column.toggleSorting(false)}
             >
@@ -62,14 +65,33 @@ export function DataTableColumnHeader<TData, TValue>({
               {t.ascending}
             </DropdownMenuCheckboxItem>
             <DropdownMenuCheckboxItem
-              className="relative pr-8 pl-2 [&>span:first-child]:right-2 [&>span:first-child]:left-auto [&_svg]:text-muted-foreground"
+              className="relative pl-2 pr-10 [&>span:first-child]:right-3 [&>span:first-child]:left-auto [&_svg]:text-muted-foreground"
               checked={column.getIsSorted() === 'desc'}
               onClick={() => column.toggleSorting(true)}
             >
               <IconChevronDown />
               {t.descending}
             </DropdownMenuCheckboxItem>
+            {column.getIsSorted() && (
+              <DropdownMenuItem
+                className="pl-2 [&_svg]:text-muted-foreground"
+                onClick={() => column.clearSorting()}
+              >
+                <IconX />
+                {t.resetSorting}
+              </DropdownMenuItem>
+            )}
           </>
+        )}
+        {column.getCanHide() && (
+          <DropdownMenuCheckboxItem
+            className="relative pr-8 pl-2 [&>span:first-child]:right-2 [&>span:first-child]:left-auto [&_svg]:text-muted-foreground"
+            checked={!column.getIsVisible()}
+            onClick={() => column.toggleVisibility(false)}
+          >
+            <IconEyeOff />
+            {t.hideColumn}
+          </DropdownMenuCheckboxItem>
         )}
       </DropdownMenuContent>
     </DropdownMenu>
