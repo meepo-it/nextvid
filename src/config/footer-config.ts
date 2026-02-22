@@ -12,6 +12,7 @@ export function getFooterLinks(): MenuItemConfig[] {
   const productItems: MenuItemConfig[] = [
     { title: m.features, href: Routes.Features, external: false },
     { title: m.pricing, href: Routes.Pricing, external: false },
+    { title: m.faq, href: Routes.Faqs, external: false },
   ];
 
   const resourcesItems: MenuItemConfig[] = [];

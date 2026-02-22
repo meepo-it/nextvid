@@ -4,7 +4,8 @@ export const Routes = {
   Root: '/',
 
   // Marketing routes
-  Features: '/features',
+  Features: '/#features',
+  Faqs: '/#faqs',
   Pricing: '/pricing',
   Blog: '/blog',
   Changelog: '/changelog',

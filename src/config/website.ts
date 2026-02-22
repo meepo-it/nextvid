@@ -24,11 +24,11 @@ export const websiteConfig: WebsiteConfig = {
   },
   social: {
     github: 'https://github.com/MkFastHQ',
-    twitter: 'https://mkfast.link/twitter',
-    blueSky: 'https://mkfast.link/bsky',
-    discord: 'https://mkfast.link/discord',
-    linkedin: 'https://mkfast.link/linkedin',
-    youtube: 'https://mkfast.link/youtube',
+    twitter: 'https://mksaas.link/twitter',
+    blueSky: 'https://mksaas.link/bsky',
+    discord: 'https://mksaas.link/discord',
+    linkedin: 'https://mksaas.link/linkedin',
+    youtube: 'https://mksaas.link/youtube',
   },
   features: {
     enableUpgradeCard: true,
