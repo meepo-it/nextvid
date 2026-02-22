@@ -4,7 +4,7 @@ import { Markdown } from '@/components/markdown/markdown';
 import { getPostBySlug } from '@/lib/blog';
 import { websiteConfig } from '@/config/website';
 import { messages } from '@/messages';
-import { getImageUrl } from '@/lib/urls';
+import { getCanonicalUrl, getImageUrl } from '@/lib/urls';
 import { seo } from '@/lib/seo';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { formatDate } from '@/lib/formatter';
@@ -18,13 +18,39 @@ export const Route = createFileRoute('/blog/$slug')({
   head: ({ loaderData, params }) => {
     const post = loaderData;
     if (!post) return {};
-    return seo(`/blog/${params.slug}`, {
-      title: `${post.title} | ${websiteConfig.metadata?.name}`,
-      description:
-        post.description ?? websiteConfig.metadata?.description ?? '',
-      image: post.image ? getImageUrl(post.image) : undefined,
+    const path = `/blog/${params.slug}`;
+    const title = `${post.title} | ${websiteConfig.metadata?.name}`;
+    const description =
+      post.description ?? websiteConfig.metadata?.description ?? '';
+    const image = post.image ? getImageUrl(post.image) : undefined;
+    const metadata = seo(path, {
+      title,
+      description,
+      image,
       type: 'article',
     });
+    const articleJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: post.title,
+      description,
+      ...(image && { image }),
+      datePublished: new Date(post.date).toISOString(),
+      url: getCanonicalUrl(path),
+      publisher: {
+        '@type': 'Organization',
+        name: websiteConfig.metadata?.name ?? '',
+      },
+    };
+    return {
+      ...metadata,
+      scripts: [
+        {
+          type: 'application/ld+json',
+          children: JSON.stringify(articleJsonLd),
+        },
+      ],
+    };
   },
   component: BlogPostPage,
 });

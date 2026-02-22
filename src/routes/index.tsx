@@ -29,9 +29,9 @@ export const Route = createFileRoute('/')({
       description,
       url,
     };
-    const head = seo('/', { title, description });
+    const metadata = seo('/', { title, description });
     return {
-      ...head,
+      ...metadata,
       scripts: [
         {
           type: 'application/ld+json',
