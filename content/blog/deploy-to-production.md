@@ -26,12 +26,8 @@ If you use the included Wrangler setup:
 pnpm deploy
 ```
 
-This runs `pnpm build` and then `wrangler deploy`. Configure your account and bindings in `wrangler.toml` (or `wrangler.jsonc`) and set any required environment variables or secrets with `wrangler secret`.
+This runs `pnpm build` and then `wrangler deploy`. Configure your account and bindings in `wrangler.jsonc`, and set any required environment variables or secrets with `wrangler secret`.
 
 ![img](https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80)
-
-## Other platforms
-
-You can also serve the built app on Node with the appropriate adapter, or use community adapters for Vercel, Netlify, etc. Check the TanStack Start docs for your target platform.
 
 Good luck with your launch.

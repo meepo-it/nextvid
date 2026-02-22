@@ -43,7 +43,7 @@ function AboutPage() {
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <h1 className="text-4xl text-foreground">
+                  <h1 className="text-2xl text-foreground">
                     {websiteConfig.metadata?.name}
                   </h1>
                   <p className="mt-2 text-base text-muted-foreground">

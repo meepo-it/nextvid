@@ -135,15 +135,6 @@
   code {
     font-family: var(--font-mono);
   }
-  /* Use Bricolage Grotesque for headings (MkSaaS style) */
-  .prose h1,
-  .prose h2,
-  .prose h3,
-  .prose h4,
-  .prose h5,
-  .prose h6 {
-    font-family: var(--font-heading);
-  }
 }
 
 /* custom markdown styles start */

@@ -1,17 +1,17 @@
+import { Routes } from '@/lib/routes';
+import { messages } from '@/messages';
 import {
   IconBuilding,
   IconCookie,
   IconFileText,
-  IconHistory,
+  IconListCheck,
   IconMail,
   IconMailbox,
   IconRoute,
   IconShieldCheck,
 } from '@tabler/icons-react';
-import { Routes } from '@/lib/routes';
 import type { MenuItemConfig } from '../types';
 import { websiteConfig } from './website';
-import { messages } from '@/messages';
 
 const m = messages.nav;
 
@@ -54,7 +54,7 @@ export function getNavbarLinks(): MenuItemConfig[] {
         title: m.changelog.title,
         description: m.changelog.description,
         href: Routes.Changelog,
-        icon: IconHistory,
+        icon: IconListCheck,
         external: false,
       },
       {

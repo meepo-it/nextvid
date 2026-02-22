@@ -743,7 +743,7 @@ export const messages = {
   about: {
     title: 'About',
     description: 'Learn more about our mission and how we can help you',
-    bio: 'We help you make SaaS faster',
+    bio: 'We help you build SaaS faster',
     introduction:
       '👋 Hi there! This is TanStack Starter, the complete TanStack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, blog, database, storage, newsletter, dashboard, SEO and more. If you have any questions, please welcome to contact us for free.',
     followUs: 'Follow us on X',
