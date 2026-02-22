@@ -4,10 +4,10 @@
  */
 export const messages = {
   site: {
-    name: 'Tanstack Starter',
+    name: 'TanStack Starter',
     title: 'Ship Faster, Cost Less',
     description:
-      'Tanstack Starter is the complete Tanstack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, database, storage, email, newsletter, blog, dashboard, SEO and more, fully deployed on Cloudflare Workers',
+      'TanStack Starter is the complete TanStack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, database, storage, email, newsletter, blog, dashboard, SEO and more, fully deployed on Cloudflare Workers',
   },
 
   nav: {
@@ -73,18 +73,18 @@ export const messages = {
 
   footer: {
     tagline:
-      'The complete Tanstack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, database, storage, email, newsletter, blog, dashboard, SEO and more, fully deployed on Cloudflare Workers',
+      'The complete TanStack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, database, storage, email, newsletter, blog, dashboard, SEO and more, fully deployed on Cloudflare Workers',
     rightsReserved: 'All Rights Reserved',
   },
 
   homePage: {
-    title: 'Tanstack Starter',
+    title: 'TanStack Starter',
     description: 'Build with TanStack Start & Cloudflare, fast and affordable',
     hero: {
       title: 'Ship Faster, Cost Less',
       description:
-        'The complete Tanstack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, database, storage, email, newsletter, blog, dashboard, SEO and more, fully deployed on Cloudflare Workers',
-      introduction: 'Introducing Tanstack Starter',
+        'The complete TanStack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, database, storage, email, newsletter, blog, dashboard, SEO and more, fully deployed on Cloudflare Workers',
+      introduction: 'Introducing TanStack Starter',
       primary: 'Get Started',
       secondary: 'See Demo',
     },
@@ -243,7 +243,7 @@ export const messages = {
     calltoaction: {
       title: 'Ready to get started?',
       description:
-        'Join thousands of teams building with Tanstack Starter today',
+        'Join thousands of teams building with TanStack Starter today',
       primaryButton: 'Get started free',
       secondaryButton: 'View pricing',
     },
@@ -725,7 +725,7 @@ export const messages = {
     description: 'Learn more about our mission and how we can help you',
     bio: 'We help you make SaaS faster',
     introduction:
-      '👋 Hi there! This is Tanstack Starter, the complete Tanstack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, blog, database, storage, newsletter, dashboard, SEO and more. If you have any questions, please welcome to contact us for free.',
+      '👋 Hi there! This is TanStack Starter, the complete TanStack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, blog, database, storage, newsletter, dashboard, SEO and more. If you have any questions, please welcome to contact us for free.',
     followUs: 'Follow us on X',
     contactUs: 'Contact us',
   },
