@@ -1,7 +1,11 @@
+import type { MailConfig } from "@/types";
+
 /**
  * Supported mail provider names
  **/
-export type MailProviderName = 'resend';
+export type MailProviderName = NonNullable<
+  MailConfig['provider']
+>;
 
 /**
  * Email template names
@@ -35,7 +39,18 @@ export interface SendRawEmailParams {
  * Mail provider interface
  */
 export interface MailProvider {
-  sendTemplate(params: SendTemplateParams): Promise<SendEmailResult>;
-  sendRawEmail(params: SendRawEmailParams): Promise<SendEmailResult>;
+  /**
+   * Get the provider's name
+   */
   getProviderName(): string;
+
+  /**
+   * Send an email using a template
+   */
+  sendTemplate(params: SendTemplateParams): Promise<SendEmailResult>;
+  
+  /**
+   * Send a raw email
+   */
+  sendRawEmail(params: SendRawEmailParams): Promise<SendEmailResult>;
 }

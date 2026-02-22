@@ -33,6 +33,10 @@ export class StripeProvider implements PaymentProvider {
     this.webhookSecret = webhookSecret;
   }
 
+  getProviderName(): string {
+    return 'stripe';
+  }
+
   private async createOrGetCustomer(
     email: string,
     name?: string

@@ -1,8 +1,11 @@
+import type { NewsletterConfig } from "@/types";
+
 /**
  * Supported newsletter provider names
- * extend when adding new providers (e.g. 'cloudflare')
  **/
-export type NewsletterProviderName = 'resend' | 'beehiiv';
+export type NewsletterProviderName = NonNullable<
+  NewsletterConfig['provider']
+>;
 
 export interface SubscribeNewsletterParams {
   email: string;
@@ -28,9 +31,27 @@ export type CheckSubscribeStatusHandler = (
   params: CheckSubscribeStatusParams
 ) => Promise<boolean>;
 
+/**
+ * Newsletter provider interface
+ */
 export interface NewsletterProvider {
-  subscribe: SubscribeNewsletterHandler;
-  unsubscribe: UnsubscribeNewsletterHandler;
-  checkSubscribeStatus: CheckSubscribeStatusHandler;
+  /**
+   * Get the provider's name
+   */
   getProviderName(): string;
+
+  /**
+   * Subscribe to the newsletter
+   */
+  subscribe: SubscribeNewsletterHandler;
+  
+  /**
+   * Unsubscribe from the newsletter
+   */
+  unsubscribe: UnsubscribeNewsletterHandler;
+  
+  /**
+   * Check if the user is subscribed to the newsletter
+   */
+  checkSubscribeStatus: CheckSubscribeStatusHandler;
 }

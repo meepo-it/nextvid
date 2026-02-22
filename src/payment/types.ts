@@ -1,3 +1,5 @@
+import type { PaymentConfig } from "@/types";
+
 /**
  * Payment types: subscription and one-time
  */
@@ -150,12 +152,19 @@ export interface PortalResult {
 /**
  * Payment providers
  */
-export type PaymentProviderName = 'stripe';
+export type PaymentProviderName = NonNullable<
+  PaymentConfig['provider']
+>;
 
 /**
  * Payment provider interface
  */
 export interface PaymentProvider {
+  /**
+   * Get the provider's name
+   */
+  getProviderName(): string;
+
   /**
    * Create a checkout session
    */
