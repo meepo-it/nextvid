@@ -5,9 +5,9 @@
 export const messages = {
   site: {
     name: 'Tanstack Starter',
-    title: 'Build with TanStack Start & Cloudflare, fast and affordable',
+    title: 'Ship Faster, Cost Less',
     description:
-      'Tanstack Starter is the complete Tanstack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, blog, database, storage, email, newsletter, dashboard, SEO and more, deployed on Cloudflare Workers',
+      'Tanstack Starter is the complete Tanstack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, database, storage, email, newsletter, blog, dashboard, SEO and more, fully deployed on Cloudflare Workers',
   },
 
   nav: {
@@ -73,7 +73,7 @@ export const messages = {
 
   footer: {
     tagline:
-      'The complete Tanstack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, blog, database, storage, email, newsletter, dashboard, SEO and more, deployed on Cloudflare Workers',
+      'The complete Tanstack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, database, storage, email, newsletter, blog, dashboard, SEO and more, fully deployed on Cloudflare Workers',
     rightsReserved: 'All Rights Reserved',
   },
 
@@ -81,9 +81,9 @@ export const messages = {
     title: 'Tanstack Starter',
     description: 'Build with TanStack Start & Cloudflare, fast and affordable',
     hero: {
-      title: 'Build with TanStack Start & Cloudflare, fast and affordable',
+      title: 'Ship Faster, Cost Less',
       description:
-        'The complete Tanstack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, blog, database, storage, email, newsletter, dashboard, SEO and more, deployed on Cloudflare Workers',
+        'The complete Tanstack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, database, storage, email, newsletter, blog, dashboard, SEO and more, fully deployed on Cloudflare Workers',
       introduction: 'Introducing Tanstack Starter',
       primary: 'Get Started',
       secondary: 'See Demo',
