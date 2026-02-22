@@ -172,14 +172,8 @@ export class StripeProvider implements PaymentProvider {
   public async createCheckout(
     params: CreateCheckoutParams
   ): Promise<CheckoutResult> {
-    const {
-      planId,
-      priceId,
-      customerEmail,
-      successUrl,
-      cancelUrl,
-      metadata,
-    } = params;
+    const { planId, priceId, customerEmail, successUrl, cancelUrl, metadata } =
+      params;
 
     try {
       // Get plan and price
@@ -284,7 +278,7 @@ export class StripeProvider implements PaymentProvider {
     try {
       const session = await this.stripe.billingPortal.sessions.create({
         customer: customerId,
-        return_url: returnUrl ?? ''
+        return_url: returnUrl ?? '',
       });
 
       return {
@@ -1025,7 +1019,9 @@ export class StripeProvider implements PaymentProvider {
       return invoiceSubscription.id;
     }
 
-    const invoiceAny = invoice as { parent?: { subscription_details?: { subscription?: string } } };
+    const invoiceAny = invoice as {
+      parent?: { subscription_details?: { subscription?: string } };
+    };
     if (invoiceAny.parent?.subscription_details?.subscription) {
       const subscriptionId =
         invoiceAny.parent.subscription_details.subscription;
@@ -1054,7 +1050,9 @@ export class StripeProvider implements PaymentProvider {
         return lineItem.subscription.id;
       }
 
-      const lineItemAny = lineItem as { parent?: { subscription_item_details?: { subscription?: string } } };
+      const lineItemAny = lineItem as {
+        parent?: { subscription_item_details?: { subscription?: string } };
+      };
       if (lineItemAny.parent?.subscription_item_details?.subscription) {
         const subscriptionId =
           lineItemAny.parent.subscription_item_details.subscription;

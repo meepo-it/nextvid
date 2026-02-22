@@ -13,7 +13,7 @@ export const Route = createFileRoute('/manifest.json')({
       GET: async () => {
         const metadata = websiteConfig.metadata;
         const body = {
-          name: metadata?.title,
+          name: metadata?.name,
           short_name: metadata?.name,
           description: metadata?.description,
           start_url: '.',
