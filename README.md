@@ -34,11 +34,11 @@ By default, you should have access to all 2 repositories. If you find that youâ€
 
 ## Notice
 
-> If you have any questions, please contact me at [support@tanstackstarter.dev](mailto:support@tanstackstarter.dev), or join our [discord community](https://mksaas.link/discord) and ask for help there.
+- If you have any questions, please contact me at [support@tanstackstarter.dev](mailto:support@tanstackstarter.dev), or join our [discord community](https://mksaas.link/discord) and ask for help there.
 
-> If you want to receive notifications whenever code changes, please click `Watch` button in the top right.
+- If you want to receive notifications whenever code changes, please click `Watch` button in the top right.
 
-> When submitting any content to the  issues of the repository, please use **English** as the main Language, so that everyone can read it and help you, thank you for your supports.
+- When submitting any content to the  issues of the repository, please use **English** as the main Language, so that everyone can read it and help you, thank you for your supports.
 
 ## License
 
