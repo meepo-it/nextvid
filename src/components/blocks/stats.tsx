@@ -1,7 +1,15 @@
 import { HeaderSection } from '@/components/shared/header-section';
-import { messages } from '@/messages';
 
-const m = messages.homePage.stats;
+const m = {
+  title: 'STATS',
+  subtitle: 'Built for growth',
+  description: 'Numbers that speak for themselves',
+  items: {
+    'item-1': { title: 'Active users' },
+    'item-2': { title: 'API requests' },
+    'item-3': { title: 'Teams' },
+  },
+};
 
 export default function StatsSection() {
   return (

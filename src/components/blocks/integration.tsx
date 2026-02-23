@@ -4,9 +4,36 @@ import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Link } from '@tanstack/react-router';
 import { IconChevronRight } from '@tabler/icons-react';
-import { messages } from '@/messages';
 
-const m = messages.homePage.integration;
+const m = {
+  title: 'INTEGRATIONS',
+  subtitle: 'Works with your stack',
+  description: 'Connect to the tools you already use',
+  learnMore: 'Learn More',
+  items: {
+    'item-1': {
+      title: 'AI & LLMs',
+      description: 'Connect to OpenAI, Anthropic, and more.',
+    },
+    'item-2': {
+      title: 'Replit',
+      description: 'Deploy and run in the cloud.',
+    },
+    'item-3': {
+      title: 'Magic UI',
+      description: 'Beautiful animated components.',
+    },
+    'item-4': {
+      title: 'VS Codium',
+      description: 'AI-powered code editor.',
+    },
+    'item-5': {
+      title: 'MediaWiki',
+      description: 'Knowledge base integration.',
+    },
+    'item-6': { title: 'Google PaLM', description: 'Google AI models.' },
+  },
+};
 
 const items = [
   m.items['item-1'],

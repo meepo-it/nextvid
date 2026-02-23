@@ -1,6 +1,6 @@
-import { messages } from '@/messages';
-
-const m = messages.homePage.logocloud;
+const m = {
+  title: 'Your favorite companies are our partners',
+};
 
 const logos = [
   {

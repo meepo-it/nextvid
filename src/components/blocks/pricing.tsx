@@ -5,9 +5,12 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Link } from '@tanstack/react-router';
 import { IconCheck } from '@tabler/icons-react';
 import { cn } from '@/lib/utils';
-import { messages } from '@/messages';
 
-const m = messages.homePage.pricing;
+const m = {
+  title: 'Pricing',
+  subtitle: 'Simple pricing',
+  description: 'Choose the plan that fits your needs',
+};
 
 export default function PricingSection() {
   const plans = getPricePlans();

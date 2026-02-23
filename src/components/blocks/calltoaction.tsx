@@ -1,9 +1,13 @@
 import { buttonVariants } from '@/components/ui/button';
-import { messages } from '@/messages';
 import { cn } from '@/lib/utils';
 import { Link } from '@tanstack/react-router';
 
-const m = messages.homePage.calltoaction;
+const m = {
+  title: 'Ready to get started?',
+  description: 'Join thousands of teams building with TanStack Starter today',
+  primaryButton: 'Get started',
+  secondaryButton: 'View pricing',
+};
 
 export default function CallToActionSection() {
   return (
@@ -17,7 +21,7 @@ export default function CallToActionSection() {
 
           <div className="mt-12 flex flex-wrap justify-center gap-4">
             <Link
-              to="/auth/register"
+              to="/auth/login"
               className={cn(buttonVariants({ size: 'lg' }))}
             >
               <span>{m.primaryButton}</span>

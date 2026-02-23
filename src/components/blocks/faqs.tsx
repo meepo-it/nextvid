@@ -5,9 +5,38 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { messages } from '@/messages';
 
-const m = messages.homePage.faqs;
+const m = {
+  title: 'FAQs',
+  subtitle: 'Frequently asked questions',
+  items: {
+    'item-1': {
+      question: 'Can I change my plan later?',
+      answer:
+        'Yes, you can upgrade or downgrade your plan at any time. Changes take effect at the start of the next billing cycle.',
+    },
+    'item-2': {
+      question: 'What payment methods do you accept?',
+      answer:
+        'We accept all major credit cards, PayPal, and wire transfer for annual plans.',
+    },
+    'item-3': {
+      question: 'Is there a free trial?',
+      answer:
+        'Yes, we offer a 14-day free trial on all paid plans. No credit card required.',
+    },
+    'item-4': {
+      question: 'What is your refund policy?',
+      answer:
+        'We offer a 30-day money-back guarantee. Contact support for a full refund.',
+    },
+    'item-5': {
+      question: 'How do I get support?',
+      answer:
+        'Email support is included for all plans. Pro and above get priority support.',
+    },
+  },
+};
 
 const faqItems = [
   {

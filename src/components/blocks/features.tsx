@@ -11,10 +11,35 @@ import {
   IconFingerprint,
   IconId,
 } from '@tabler/icons-react';
-import { messages } from '@/messages';
 import { useState } from 'react';
 
-const m = messages.homePage.features;
+const m = {
+  title: 'FEATURES',
+  subtitle: 'Everything you need to ship',
+  description: 'Built-in features so you can focus on your product',
+  items: {
+    'item-1': {
+      title: 'Database',
+      description:
+        'Store and query your data with a powerful database layer. Supports relations, migrations, and type-safe access.',
+    },
+    'item-2': {
+      title: 'Authentication',
+      description:
+        'Secure auth with email, OAuth, and magic links. Session management and role-based access built in.',
+    },
+    'item-3': {
+      title: 'Identity',
+      description:
+        'User profiles, avatars, and account management. Connect multiple providers per user.',
+    },
+    'item-4': {
+      title: 'Analytics',
+      description:
+        'Track usage and conversions. Dashboards and reports out of the box.',
+    },
+  },
+};
 
 type ImageKey = 'item-1' | 'item-2' | 'item-3' | 'item-4';
 

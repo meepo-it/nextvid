@@ -5,9 +5,16 @@ import {
   IconCompass,
   IconMail,
 } from '@tabler/icons-react';
-import { messages } from '@/messages';
 
-const m = messages.homePage.features2;
+const m = {
+  title: 'FEATURES',
+  subtitle: 'Designed for productivity',
+  description: 'Everything you need to build and ship faster',
+  feature1: 'Email notifications',
+  feature2: 'Real-time updates',
+  feature3: 'Activity tracking',
+  feature4: 'Custom workflows',
+};
 
 export default function Features2Section() {
   return (

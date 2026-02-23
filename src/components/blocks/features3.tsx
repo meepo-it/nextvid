@@ -7,9 +7,38 @@ import {
   IconSettings,
   IconSparkles,
 } from '@tabler/icons-react';
-import { messages } from '@/messages';
 
-const m = messages.homePage.features3;
+const m = {
+  title: 'FEATURES',
+  subtitle: 'Built for developers',
+  description: 'Developer experience first',
+  items: {
+    'item-1': {
+      title: 'Fast',
+      description: 'Optimized for speed and low latency.',
+    },
+    'item-2': {
+      title: 'Scalable',
+      description: 'Handles growth from zero to millions.',
+    },
+    'item-3': {
+      title: 'Secure',
+      description: 'Auth and encryption built in.',
+    },
+    'item-4': {
+      title: 'Customizable',
+      description: 'Theme and extend to fit your brand.',
+    },
+    'item-5': {
+      title: 'Configurable',
+      description: 'Environment-based configuration.',
+    },
+    'item-6': {
+      title: 'AI-ready',
+      description: 'Integrate LLMs and agents easily.',
+    },
+  },
+};
 
 const items = [
   { key: 'item-1' as const, Icon: IconBolt },

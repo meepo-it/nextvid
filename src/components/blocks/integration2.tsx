@@ -2,9 +2,14 @@ import { Logo } from '@/components/shared/logo';
 import { buttonVariants } from '@/components/ui/button';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@/lib/utils';
-import { messages } from '@/messages';
 
-const m = messages.homePage.integration2;
+const m = {
+  title: 'Integrate with your favorite tools',
+  description:
+    'Connect seamlessly with popular platforms and services to enhance your workflow',
+  primaryButton: 'Get Started',
+  secondaryButton: 'View Pricing',
+};
 
 function IntegrationCard({
   children,
@@ -78,11 +83,15 @@ export default function Integration2Section() {
               <p className="text-muted-foreground">{m.description}</p>
 
               <div className="mt-12 flex flex-wrap justify-center gap-4 md:justify-start">
-                <Link to="/" className={cn(buttonVariants({ size: 'lg' }))}>
+                <Link
+                  to="/auth/login"
+                  className={cn(buttonVariants({ size: 'lg' }))}
+                >
                   <span>{m.primaryButton}</span>
                 </Link>
                 <Link
                   to="/"
+                  hash="pricing"
                   className={cn(
                     buttonVariants({ size: 'lg', variant: 'outline' })
                   )}

@@ -1,15 +1,18 @@
 import { buttonVariants } from '@/components/ui/button';
-import { messages } from '@/messages';
 import { cn } from '@/lib/utils';
 import { Link } from '@tanstack/react-router';
 import { IconArrowRight } from '@tabler/icons-react';
 
-const m = messages.homePage.hero;
+const m = {
+  title: 'Ship Faster, Cost Less',
+  description:
+    'The complete TanStack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, database, storage, email, newsletter, blog, dashboard, SEO and more, fully deployed on Cloudflare Workers',
+  introduction: 'Introducing TanStack Starter',
+  primary: 'Get Started',
+  secondary: 'View Pricing',
+};
 
 export default function HeroSection() {
-  const linkIntroduction = 'https://x.com/tanstackstarter';
-  const linkSecondary = 'https://demo.tanstackstarter.dev';
-
   return (
     <main id="hero" className="overflow-hidden">
       {/* background, light shadows on top of the hero section */}
@@ -28,7 +31,7 @@ export default function HeroSection() {
             <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
               {/* introduction */}
               <a
-                href={linkIntroduction}
+                href="https://x.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:bg-accent group mx-auto flex w-fit items-center gap-2 rounded-full border p-1 pl-4"
@@ -62,27 +65,25 @@ export default function HeroSection() {
               <div className="mt-12 flex flex-row items-center justify-center gap-4">
                 <div className="bg-foreground/10 rounded-xl">
                   <Link
-                    to="/"
-                    hash="pricing"
+                    to="/auth/login"
                     className={cn(
                       buttonVariants({ size: 'lg' }),
-                      'rounded-xl px-5 text-base h-10.5'
+                      'h-10.5 rounded-xl px-5 text-base'
                     )}
                   >
                     <span className="text-nowrap">{m.primary}</span>
                   </Link>
                 </div>
-                <a
-                  href={linkSecondary}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/"
+                  hash="pricing"
                   className={cn(
                     buttonVariants({ size: 'lg', variant: 'outline' }),
                     'h-10.5 rounded-xl px-5'
                   )}
                 >
                   <span className="text-nowrap">{m.secondary}</span>
-                </a>
+                </Link>
               </div>
             </div>
 

@@ -1,9 +1,54 @@
 import { HeaderSection } from '@/components/shared/header-section';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
-import { messages } from '@/messages';
 
-const m = messages.homePage.testimonials;
+const m = {
+  title: 'TESTIMONIALS',
+  subtitle: 'What our customers are saying',
+  items: {
+    'item-1': {
+      name: 'Jane Doe',
+      role: 'CTO, Acme Inc',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane',
+      quote:
+        'The best TanStack Starter kit we evaluated. Auth and billing just work.',
+    },
+    'item-2': {
+      name: 'John Smith',
+      role: 'Founder, Startup',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John',
+      quote:
+        'TanStack Starter really saved us months of development. We shipped our MVP in just 2 weeks.',
+    },
+    'item-3': {
+      name: 'Alex Chen',
+      role: 'Engineer, Tech Co',
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex',
+      quote:
+        'Clean code, great DX. We extended it for our use case easily.',
+    },
+    'item-4': {
+      name: 'Maria Garcia',
+      role: 'Product Lead, ScaleUp',
+      image: 'https://api.dicebear.com/7.x/lorelei/svg?seed=Maria',
+      quote:
+        'Finally a template that includes auth, billing, and dashboard out of the box. No more stitching boilerplate.',
+    },
+    'item-5': {
+      name: 'Sam Wilson',
+      role: 'Indie Maker',
+      image: 'https://api.dicebear.com/7.x/notionists/svg?seed=Sam',
+      quote: 'The stack choices and structure are exactly what we needed.',
+    },
+    'item-6': {
+      name: 'Jordan Lee',
+      role: 'DevRel, Cloud Co',
+      image: 'https://api.dicebear.com/7.x/open-peeps/svg?seed=Jordan',
+      quote:
+        'Best-in-class starter for production SaaS. Our team recommends it to every founder building with modern React.',
+    },
+  },
+};
 
 type Testimonial = {
   name: string;
