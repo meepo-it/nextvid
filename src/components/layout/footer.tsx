@@ -1,13 +1,18 @@
 import { getFooterLinks } from '@/config/footer-config';
 import { getSocialLinks } from '@/config/social-config';
+import { isLinkActive } from '@/lib/urls';
 import { cn } from '@/lib/utils';
 import Container from '@/components/layout/container';
 import { Logo } from '@/components/shared/logo';
-import { Link } from '@tanstack/react-router';
+import { Link, useLocation } from '@tanstack/react-router';
 import { websiteConfig } from '@/config/website';
 import { messages } from '@/messages';
 
+const footerLinkClass =
+  'text-sm text-muted-foreground hover:text-primary data-[active=true]:font-medium data-[active=true]:text-foreground';
+
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
+  const pathname = useLocation().pathname;
   const footerLinks = getFooterLinks();
   const socialLinks = getSocialLinks();
 
@@ -57,13 +62,30 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
                   (item) =>
                     item.href && (
                       <li key={item.title}>
-                        <Link
-                          to={item.href}
-                          target={item.external ? '_blank' : undefined}
-                          className="text-sm text-muted-foreground hover:text-primary"
-                        >
-                          {item.title}
-                        </Link>
+                        {item.external ? (
+                          <a
+                            href={item.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={footerLinkClass}
+                          >
+                            {item.title}
+                          </a>
+                        ) : (
+                          <Link
+                            to={item.href}
+                            data-active={
+                              item.href.includes('#')
+                                ? undefined
+                                : isLinkActive(item.href, pathname)
+                                  ? 'true'
+                                  : undefined
+                            }
+                            className={footerLinkClass}
+                          >
+                            {item.title}
+                          </Link>
+                        )}
                       </li>
                     )
                 )}

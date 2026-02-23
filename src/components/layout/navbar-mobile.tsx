@@ -1,6 +1,6 @@
 import { getNavbarLinks } from '@/config/navbar-config';
 import { authClient } from '@/auth/client';
-import { isPathActive } from '@/lib/routes';
+import { isLinkActive } from '@/lib/urls';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/lib/routes';
 import { buttonVariants } from '@/components/ui/button';
@@ -108,8 +108,8 @@ export function NavbarMobile({ className, ...props }: NavbarMobileProps) {
             <ul className="w-full space-y-1">
               {menuLinks?.map((item) => {
                 const active = item.href
-                  ? isPathActive(item.href, pathname)
-                  : item.items?.some((sub) => isPathActive(sub.href, pathname));
+                  ? isLinkActive(item.href, pathname)
+                  : item.items?.some((sub) => isLinkActive(sub.href, pathname));
 
                 return (
                   <li key={item.title} className="py-1">
@@ -147,7 +147,7 @@ export function NavbarMobile({ className, ...props }: NavbarMobileProps) {
                                   onClick={() => setOpen(false)}
                                   className={cn(
                                     mobileSubLinkClass,
-                                    isPathActive(sub.href, pathname) &&
+                                    isLinkActive(sub.href, pathname) &&
                                       mobileLinkActiveClass
                                   )}
                                 >

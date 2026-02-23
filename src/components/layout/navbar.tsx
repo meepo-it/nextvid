@@ -1,7 +1,7 @@
 import { getNavbarLinks } from '@/config/navbar-config';
 import { useScroll } from '@/hooks/use-scroll';
 import { authClient } from '@/auth/client';
-import { isPathActive } from '@/lib/routes';
+import { isLinkActive } from '@/lib/urls';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/lib/routes';
 import { buttonVariants } from '@/components/ui/button';
@@ -88,7 +88,7 @@ export function Navbar({ scroll = true }: NavbarProps) {
                       <NavigationMenuTrigger
                         data-active={
                           item.items.some((sub) =>
-                            isPathActive(sub.href, pathname)
+                            isLinkActive(sub.href, pathname)
                           )
                             ? 'true'
                             : undefined
@@ -114,7 +114,7 @@ export function Navbar({ scroll = true }: NavbarProps) {
                                     }
                                     className={cn(
                                       navDropdownItemClass,
-                                      isPathActive(sub.href, pathname) &&
+                                      isLinkActive(sub.href, pathname) &&
                                         'bg-accent text-accent-foreground'
                                     )}
                                   >
@@ -155,7 +155,7 @@ export function Navbar({ scroll = true }: NavbarProps) {
                               item.external ? 'noopener noreferrer' : undefined
                             }
                             data-active={
-                              isPathActive(item.href, pathname)
+                              isLinkActive(item.href, pathname)
                                 ? 'true'
                                 : undefined
                             }

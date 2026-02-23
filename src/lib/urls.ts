@@ -79,3 +79,19 @@ export function getMailtoUrl(
     ? trimmed.replace(/^[^<]*<([^>]*)>.*$/, 'mailto:$1')
     : `mailto:${trimmed}`;
 }
+
+/**
+ * Whether the current pathname exactly matches the given href (no prefix match).
+ * Ignores hash in href; use only for path-only comparison.
+ */
+export function isLinkActive(
+  href: string | undefined,
+  pathname: string
+): boolean {
+  if (!href) return false;
+  const path = href.split('#')[0] ?? '/';
+  const normalizedHref = path === '/' ? '/' : path.replace(/\/$/, '') || '/';
+  const normalizedPath =
+    pathname === '/' ? '/' : pathname.replace(/\/$/, '') || '/';
+  return normalizedPath === normalizedHref;
+}
