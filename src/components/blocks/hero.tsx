@@ -98,7 +98,7 @@ export default function HeroSection() {
                 <img
                   className="z-2 border-border/25 relative rounded-2xl border dark:hidden w-full"
                   src="https://cdn.mksaas.com/blocks/music-light.png"
-                  alt="App screen"
+                  alt="website screenshot"
                 />
               </div>
             </div>

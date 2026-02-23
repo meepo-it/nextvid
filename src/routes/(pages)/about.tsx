@@ -1,13 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router';
 import Container from '@/components/layout/container';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { buttonVariants } from '@/components/ui/button';
 import { websiteConfig } from '@/config/website';
-import { messages } from '@/messages';
-import { getMailtoUrl } from '@/lib/urls';
 import { seo } from '@/lib/seo';
+import { getMailtoUrl } from '@/lib/urls';
 import { cn } from '@/lib/utils';
-import { IconBrandX, IconMail } from '@tabler/icons-react';
+import { messages } from '@/messages';
+import { IconBrandXFilled, IconMailFilled } from '@tabler/icons-react';
+import { createFileRoute } from '@tanstack/react-router';
 
 const m = messages.about;
 
@@ -68,7 +68,7 @@ function AboutPage() {
                         'rounded-lg'
                       )}
                     >
-                      <IconBrandX className="mr-1 size-4" />
+                      <IconBrandXFilled className="mr-1 size-4" />
                       {m.followUs}
                     </a>
                   )}
@@ -80,7 +80,7 @@ function AboutPage() {
                         'rounded-lg inline-flex items-center'
                       )}
                     >
-                      <IconMail className="mr-1 size-4" />
+                      <IconMailFilled className="mr-1 size-4" />
                       {m.contactUs}
                     </a>
                   )}

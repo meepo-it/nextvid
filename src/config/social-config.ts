@@ -1,19 +1,19 @@
+import { getMailtoUrl } from '@/lib/urls';
+import type { MenuItemConfig } from '@/types';
 import {
   IconBrandBluesky,
-  IconBrandDiscord,
+  IconBrandDiscordFilled,
   IconBrandFacebook,
-  IconBrandGithub,
+  IconBrandGithubFilled,
   IconBrandInstagram,
   IconBrandLinkedin,
   IconBrandMastodon,
   IconBrandTelegram,
-  IconBrandTiktok,
-  IconBrandX,
-  IconBrandYoutube,
-  IconMail,
+  IconBrandTiktokFilled,
+  IconBrandXFilled,
+  IconBrandYoutubeFilled,
+  IconMailFilled,
 } from '@tabler/icons-react';
-import type { MenuItemConfig } from '@/types';
-import { getMailtoUrl } from '@/lib/urls';
 import { websiteConfig } from './website';
 
 /**
@@ -27,7 +27,7 @@ export function getSocialLinks(): MenuItemConfig[] {
     social.push({
       title: 'GitHub',
       href: config.github,
-      icon: IconBrandGithub,
+      icon: IconBrandGithubFilled,
       external: true,
     });
   }
@@ -35,7 +35,7 @@ export function getSocialLinks(): MenuItemConfig[] {
     social.push({
       title: 'Twitter',
       href: config.twitter,
-      icon: IconBrandX,
+      icon: IconBrandXFilled,
       external: true,
     });
   }
@@ -59,7 +59,7 @@ export function getSocialLinks(): MenuItemConfig[] {
     social.push({
       title: 'Discord',
       href: config.discord,
-      icon: IconBrandDiscord,
+      icon: IconBrandDiscordFilled,
       external: true,
     });
   }
@@ -67,7 +67,7 @@ export function getSocialLinks(): MenuItemConfig[] {
     social.push({
       title: 'YouTube',
       href: config.youtube,
-      icon: IconBrandYoutube,
+      icon: IconBrandYoutubeFilled,
       external: true,
     });
   }
@@ -99,7 +99,7 @@ export function getSocialLinks(): MenuItemConfig[] {
     social.push({
       title: 'TikTok',
       href: config.tiktok,
-      icon: IconBrandTiktok,
+      icon: IconBrandTiktokFilled,
       external: true,
     });
   }
@@ -116,7 +116,7 @@ export function getSocialLinks(): MenuItemConfig[] {
     social.push({
       title: 'Email',
       href: supportEmail,
-      icon: IconMail,
+      icon: IconMailFilled,
       external: true,
     });
   }
