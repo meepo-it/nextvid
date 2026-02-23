@@ -7,9 +7,8 @@ import { clientEnv } from '@/env/client';
  */
 export function PlausibleAnalytics() {
   if (!import.meta.env.PROD) return null;
-  const domain = clientEnv.VITE_PLAUSIBLE_DOMAIN;
   const script = clientEnv.VITE_PLAUSIBLE_SCRIPT;
-  if (!domain || !script) return null;
+  if (!script) return null;
 
-  return <ClientScript src={script} defer dataAttributes={{ domain }} />;
+  return <ClientScript src={script} defer async />;
 }

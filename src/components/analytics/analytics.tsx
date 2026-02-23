@@ -1,5 +1,5 @@
+import { websiteConfig } from '@/config/website';
 import { ClarityAnalytics } from './clarity-analytics';
-import { DataFastAnalytics } from './data-fast-analytics';
 import { GoogleAnalytics } from './google-analytics';
 import { PlausibleAnalytics } from './plausible-analytics';
 import { UmamiAnalytics } from './umami-analytics';
@@ -9,13 +9,13 @@ import { UmamiAnalytics } from './umami-analytics';
  */
 export function Analytics() {
   if (!import.meta.env.PROD) return null;
+  if (!websiteConfig.analytics?.enable) return null;
 
   return (
     <>
       <GoogleAnalytics />
       <UmamiAnalytics />
       <PlausibleAnalytics />
-      <DataFastAnalytics />
       <ClarityAnalytics />
     </>
   );
