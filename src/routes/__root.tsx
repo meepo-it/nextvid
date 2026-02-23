@@ -2,12 +2,6 @@ import '@fontsource/bricolage-grotesque/latin-400.css';
 import '@fontsource/bricolage-grotesque/latin-500.css';
 import '@fontsource/bricolage-grotesque/latin-600.css';
 import '@fontsource/bricolage-grotesque/latin-700.css';
-import '@fontsource/noto-sans/latin-400.css';
-import '@fontsource/noto-sans/latin-500.css';
-import '@fontsource/noto-sans/latin-600.css';
-import '@fontsource/noto-sans/latin-700.css';
-import '@fontsource/noto-sans-mono/latin-400.css';
-import '@fontsource/noto-serif/latin-400.css';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import type { QueryClient } from '@tanstack/react-query';
 import {
