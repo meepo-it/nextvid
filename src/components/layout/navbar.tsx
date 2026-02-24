@@ -41,13 +41,16 @@ export function Navbar({ scroll = true }: NavbarProps) {
   const scrolled = useScroll(50);
   const menuLinks = getNavbarLinks();
   const [mounted, setMounted] = useState(false);
-  const [menuValue, setMenuValue] = useState<string | undefined>();
+  const [menuValue, setMenuValue] = useState('');
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
   const showBarBg = scroll && scrolled;
 
-  useEffect(() => setMounted(true), []);
-  useEffect(() => setMenuValue(undefined), [pathname]);
+  // Sync mount (avoid auth hydration mismatch) and close menu on route change
+  useEffect(() => {
+    setMounted(true);
+    setMenuValue('');
+  }, [pathname]);
 
   return (
     <section

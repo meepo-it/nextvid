@@ -37,8 +37,11 @@ export function NavbarMobile({ className, ...props }: NavbarMobileProps) {
   const user = session?.user;
   const menuLinks = getNavbarLinks();
 
-  useEffect(() => setMounted(true), []);
-  useEffect(() => setOpen(false), [pathname]);
+  // Sync mount (avoid hydration mismatch) and close drawer on route change
+  useEffect(() => {
+    setMounted(true);
+    setOpen(false);
+  }, [pathname]);
 
   if (!mounted) return null;
 

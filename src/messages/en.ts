@@ -7,7 +7,7 @@ export const messages = {
     name: 'TanStarter',
     title: 'TanStarter - Ship Faster, Cost Less',
     description:
-      'TanStarter is the complete TanStack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, storage, email, newsletter, blog, dashboard, SEO and more, fully deployed on Cloudflare Workers',
+      'TanStarter is the complete TanStack Start boilerplate for building profitable SaaS, packed with AI, auth, database, storage, blog, email, newsletter, payments, dashboard, SEO, and more, fully deployed on Cloudflare Workers',
   },
 
   nav: {
@@ -73,7 +73,7 @@ export const messages = {
 
   footer: {
     tagline:
-      'The complete TanStack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, storage, email, newsletter, blog, dashboard, SEO and more, fully deployed on Cloudflare Workers',
+      'The complete TanStack Start boilerplate for building profitable SaaS, packed with AI, auth, database, storage, blog, email, newsletter, payments, dashboard, SEO, and more, fully deployed on Cloudflare Workers',
     rightsReserved: 'All Rights Reserved',
   },
 
@@ -525,7 +525,7 @@ export const messages = {
     description: 'Learn more about our mission and how we can help you',
     bio: 'We help you build SaaS faster',
     introduction:
-      '👋 Hi there! This is TanStarter, the complete TanStack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, blog, storage, newsletter, dashboard, SEO and more. If you have any questions, please welcome to contact us for free.',
+      '👋 Hi there! This is TanStarter, the complete TanStack Start boilerplate for building profitable SaaS, packed with AI, auth, database, storage, blog, email, newsletter, payments, dashboard, SEO, and more, fully deployed on Cloudflare Workers. If you have any questions, please welcome to contact us for free.',
     followUs: 'Follow us on X',
     contactUs: 'Contact us',
   },

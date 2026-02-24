@@ -6,7 +6,7 @@ import { IconArrowRight } from '@tabler/icons-react';
 const m = {
   title: 'Ship Faster, Cost Less',
   description:
-    'The complete TanStack Start boilerplate for building profitable SaaS, packed with AI, auth, payments, database, storage, email, newsletter, blog, dashboard, SEO and more, fully deployed on Cloudflare Workers',
+    'The complete TanStack Start boilerplate for building profitable SaaS, packed with AI, auth, database, storage, blog, email, newsletter, payments, dashboard, SEO, and more, fully deployed on Cloudflare Workers',
   introduction: 'Introducing TanStarter',
   primary: 'Get Started',
   secondary: 'View Pricing',
