@@ -40,7 +40,7 @@ export function useUsers(
       sorting,
       filters,
     }),
-    queryFn: async ({ signal }) => {
+    queryFn: async () => {
       const first = sorting[0];
       const sortId = first?.id ?? 'createdAt';
       const sortDesc = first?.desc ?? true;
@@ -60,7 +60,6 @@ export function useUsers(
           role: roleFilter?.value,
           status,
         },
-        signal,
       });
     },
   });
