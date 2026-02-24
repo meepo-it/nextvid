@@ -173,34 +173,35 @@ export function Navbar({ scroll = true }: NavbarProps) {
 
             <div className="flex items-center gap-4 shrink-0">
               <ModeSwitcher />
-              {!mounted || isPending ? (
-                <Skeleton className="size-8 rounded-full" />
-              ) : user ? (
-                <UserButton user={user} />
-              ) : (
-                <>
-                  <LoginWrapper mode="modal" asChild>
-                    <button
-                      type="button"
-                      className={cn(
-                        buttonVariants({
-                          variant: 'outline',
-                          size: 'sm',
-                        }),
-                        'cursor-pointer'
-                      )}
+              {websiteConfig.auth?.enable &&
+                (!mounted || isPending ? (
+                  <Skeleton className="size-8 rounded-full" />
+                ) : user ? (
+                  <UserButton user={user} />
+                ) : (
+                  <>
+                    <LoginWrapper mode="modal" asChild>
+                      <button
+                        type="button"
+                        className={cn(
+                          buttonVariants({
+                            variant: 'outline',
+                            size: 'sm',
+                          }),
+                          'cursor-pointer'
+                        )}
+                      >
+                        {messages.auth.common.login}
+                      </button>
+                    </LoginWrapper>
+                    <Link
+                      to={Routes.Register}
+                      className={buttonVariants({ size: 'sm' })}
                     >
-                      {messages.auth.common.login}
-                    </button>
-                  </LoginWrapper>
-                  <Link
-                    to={Routes.Register}
-                    className={buttonVariants({ size: 'sm' })}
-                  >
-                    {messages.auth.common.signup}
-                  </Link>
-                </>
-              )}
+                      {messages.auth.common.signup}
+                    </Link>
+                  </>
+                ))}
             </div>
           </nav>
 

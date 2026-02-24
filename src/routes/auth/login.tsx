@@ -1,5 +1,6 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link, redirect } from '@tanstack/react-router';
 import { LoginForm } from '@/components/auth/login-form';
+import { websiteConfig } from '@/config/website';
 import { messages } from '@/messages';
 import { Routes } from '@/lib/routes';
 
@@ -7,6 +8,11 @@ const m = messages.auth.login;
 const am = messages.auth.common;
 
 export const Route = createFileRoute('/auth/login')({
+  beforeLoad: () => {
+    if (!websiteConfig.auth?.enable) {
+      throw redirect({ to: Routes.Root });
+    }
+  },
   component: LoginPage,
   head: () => ({
     meta: [{ title: m.title }, { name: 'description', content: m.description }],

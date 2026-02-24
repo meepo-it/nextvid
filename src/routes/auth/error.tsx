@@ -1,7 +1,14 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 import { ErrorCard } from '@/components/auth/error-card';
+import { websiteConfig } from '@/config/website';
+import { Routes } from '@/lib/routes';
 
 export const Route = createFileRoute('/auth/error')({
+  beforeLoad: () => {
+    if (!websiteConfig.auth?.enable) {
+      throw redirect({ to: Routes.Root });
+    }
+  },
   validateSearch: (search: Record<string, unknown>) => ({
     error: typeof search.error === 'string' ? search.error : undefined,
     error_description:

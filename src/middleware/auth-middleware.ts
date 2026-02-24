@@ -3,6 +3,7 @@ import { redirect } from '@tanstack/react-router';
 import { createMiddleware } from '@tanstack/react-start';
 import { getRequestHeaders } from '@tanstack/react-start/server';
 import { Routes } from '@/lib/routes';
+import { websiteConfig } from '@/config/website';
 
 /**
  * Auth Route middleware: requires authenticated user.
@@ -11,6 +12,10 @@ import { Routes } from '@/lib/routes';
  */
 export const authRouteMiddleware = createMiddleware().server(
   async ({ next }) => {
+    if (!websiteConfig.auth?.enable) {
+      throw redirect({ to: Routes.Root });
+    }
+
     const headers = getRequestHeaders();
     const session = await auth.api.getSession({ headers });
 

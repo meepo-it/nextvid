@@ -62,7 +62,7 @@ export interface RoutesConfig {
 
 /** Auth configuration */
 export interface AuthConfig {
-  enable: boolean;                 // Whether to enable the auth
+  enable: boolean;                 // Whether to enable the auth (hide auth pages and features)
   enableGoogleLogin?: boolean;     // Whether to enable google login
   enableCredentialLogin?: boolean; // Whether to enable email/password login
   enableDeleteAccount?: boolean;   // Whether to enable account deletion

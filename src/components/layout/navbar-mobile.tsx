@@ -56,11 +56,12 @@ export function NavbarMobile({ className, ...props }: NavbarMobileProps) {
         </Link>
 
         <div className="flex items-center gap-4">
-          {isPending ? (
-            <Skeleton className="size-8 rounded-full" />
-          ) : user ? (
-            <UserButtonMobile user={user} />
-          ) : null}
+          {websiteConfig.auth?.enable &&
+            (isPending ? (
+              <Skeleton className="size-8 rounded-full" />
+            ) : user ? (
+              <UserButtonMobile user={user} />
+            ) : null)}
           <Button
             type="button"
             variant="ghost"
@@ -82,7 +83,7 @@ export function NavbarMobile({ className, ...props }: NavbarMobileProps) {
       {open && (
         <div className="fixed inset-0 top-[57px] z-50 flex flex-col overflow-y-auto bg-background">
           <div className="flex flex-1 flex-col items-start gap-4 p-4">
-            {!user && (
+            {websiteConfig.auth?.enable && !user && (
               <div className="flex w-full flex-col gap-4">
                 <LoginWrapper mode="modal" asChild>
                   <Button
