@@ -1,9 +1,9 @@
 ---
-title: Getting Started with TanStarter
+title: Getting Started
 description: Quick guide to set up and run the TanStarter template.
 date: 2026-02-12
 category: Guide
-image: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80
+image: https://cdn.mksaas.com/tanstarter/template/blog-get-started.jpeg
 ---
 
 This post walks you through the basics of running and customizing the TanStarter template.
@@ -24,7 +24,7 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-![img](https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80)
+![img](https://cdn.mksaas.com/tanstarter/template/blog-get-started.jpeg)
 
 Blog posts live in `content/blog/` as Markdown files. The collection is defined in `content-collections.ts` with fields: `title`, `description`, `date`, `category`, `content`, and `image`. The slug is derived from the file path (e.g. `getting-started.md` → `getting-started`).
 

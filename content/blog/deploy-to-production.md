@@ -1,9 +1,9 @@
 ---
 title: Deploy to Production
-description: How to build and deploy your TanStarter app to Cloudflare Workers.
+description: How to build and deploy your app to Cloudflare Workers.
 date: 2026-02-13
 category: Guide
-image: https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80
+image: https://cdn.mksaas.com/tanstarter/template/blog-deployment.jpeg
 ---
 
 Once your app is ready, you can deploy it with a single command.
@@ -28,6 +28,6 @@ pnpm deploy
 
 This runs `pnpm build` and then `wrangler deploy`. Configure your account and bindings in `wrangler.jsonc`, and set any required environment variables or secrets with `wrangler secret`.
 
-![img](https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80)
+![img](https://cdn.mksaas.com/tanstarter/template/blog-deployment.jpeg)
 
 Good luck with your launch.

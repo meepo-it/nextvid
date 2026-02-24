@@ -3,7 +3,7 @@ title: Hello World
 description: A simple introduction to the blog and what you can expect.
 date: 2026-02-11
 category: General
-image: https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80
+image: https://cdn.mksaas.com/tanstarter/template/blog-hello-world.jpeg
 ---
 
 This is the first post on the blog. You can use **Markdown** here.
@@ -22,7 +22,7 @@ The blog is powered by **content-collections**: each post is a Markdown file und
 
 You can add [links](https://example.com) and reference images. Keep the layout simple and readable.
 
-![img](https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80)
+![img](https://cdn.mksaas.com/tanstarter/template/blog-hello-world.jpeg)
 
 ## Code
 
