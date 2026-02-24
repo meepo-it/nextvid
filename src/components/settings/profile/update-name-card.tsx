@@ -14,6 +14,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -102,6 +103,7 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
               name="name"
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel>{m.title}</FormLabel>
                   <FormControl>
                     <Input placeholder={m.placeholder} {...field} />
                   </FormControl>

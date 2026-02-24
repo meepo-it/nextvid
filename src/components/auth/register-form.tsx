@@ -140,8 +140,8 @@ export function RegisterForm({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{m.password}</FormLabel>
-                    <FormControl>
-                      <div className="relative">
+                    <div className="relative">
+                      <FormControl>
                         <Input
                           {...field}
                           disabled={isPending}
@@ -149,25 +149,25 @@ export function RegisterForm({
                           type={showPassword ? 'text' : 'password'}
                           className="pr-10"
                         />
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          className="absolute right-0 top-0 h-full px-3 border-0 bg-transparent hover:bg-transparent dark:hover:bg-transparent"
-                          onClick={togglePasswordVisibility}
-                          disabled={isPending}
-                        >
-                          {showPassword ? (
-                            <IconEyeOff className="size-4 text-muted-foreground" />
-                          ) : (
-                            <IconEye className="size-4 text-muted-foreground" />
-                          )}
-                          <span className="sr-only">
-                            {showPassword ? m.hidePassword : m.showPassword}
-                          </span>
-                        </Button>
-                      </div>
-                    </FormControl>
+                      </FormControl>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-0 top-0 h-full px-3 border-0 bg-transparent hover:bg-transparent dark:hover:bg-transparent"
+                        onClick={togglePasswordVisibility}
+                        disabled={isPending}
+                      >
+                        {showPassword ? (
+                          <IconEyeOff className="size-4 text-muted-foreground" />
+                        ) : (
+                          <IconEye className="size-4 text-muted-foreground" />
+                        )}
+                        <span className="sr-only">
+                          {showPassword ? m.hidePassword : m.showPassword}
+                        </span>
+                      </Button>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}

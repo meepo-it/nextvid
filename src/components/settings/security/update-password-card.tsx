@@ -103,31 +103,31 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{m.currentPassword}</FormLabel>
-                  <FormControl>
-                    <div className="relative">
+                  <div className="relative">
+                    <FormControl>
                       <Input
                         type={showCurrent ? 'text' : 'password'}
                         placeholder={m.placeholderCurrent}
                         {...field}
                       />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                        onClick={() => setShowCurrent(!showCurrent)}
-                      >
-                        {showCurrent ? (
-                          <IconEyeOff className="h-4 w-4" />
-                        ) : (
-                          <IconEye className="h-4 w-4" />
-                        )}
-                        <span className="sr-only">
-                          {showCurrent ? m.hidePassword : m.showPassword}
-                        </span>
-                      </Button>
-                    </div>
-                  </FormControl>
+                    </FormControl>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                      onClick={() => setShowCurrent(!showCurrent)}
+                    >
+                      {showCurrent ? (
+                        <IconEyeOff className="h-4 w-4" />
+                      ) : (
+                        <IconEye className="h-4 w-4" />
+                      )}
+                      <span className="sr-only">
+                        {showCurrent ? m.hidePassword : m.showPassword}
+                      </span>
+                    </Button>
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
@@ -138,31 +138,31 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{m.newPassword}</FormLabel>
-                  <FormControl>
-                    <div className="relative">
+                  <div className="relative">
+                    <FormControl>
                       <Input
                         type={showNew ? 'text' : 'password'}
                         placeholder={m.placeholderNew}
                         {...field}
                       />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                        onClick={() => setShowNew(!showNew)}
-                      >
-                        {showNew ? (
-                          <IconEyeOff className="size-4" />
-                        ) : (
-                          <IconEye className="size-4" />
-                        )}
-                        <span className="sr-only">
-                          {showNew ? m.hidePassword : m.showPassword}
-                        </span>
-                      </Button>
-                    </div>
-                  </FormControl>
+                    </FormControl>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                      onClick={() => setShowNew(!showNew)}
+                    >
+                      {showNew ? (
+                        <IconEyeOff className="size-4" />
+                      ) : (
+                        <IconEye className="size-4" />
+                      )}
+                      <span className="sr-only">
+                        {showNew ? m.hidePassword : m.showPassword}
+                      </span>
+                    </Button>
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}

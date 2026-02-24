@@ -102,13 +102,13 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between">
                   <FormLabel className="text-base">{m.label}</FormLabel>
-                  <FormControl>
-                    <div className="relative flex items-center">
-                      {(isStatusLoading ||
-                        subscribeMutation.isPending ||
-                        unsubscribeMutation.isPending) && (
-                        <IconLoader2 className="mr-2 size-4 animate-spin text-primary" />
-                      )}
+                  <div className="relative flex items-center">
+                    {(isStatusLoading ||
+                      subscribeMutation.isPending ||
+                      unsubscribeMutation.isPending) && (
+                      <IconLoader2 className="mr-2 size-4 animate-spin text-primary" />
+                    )}
+                    <FormControl>
                       <Switch
                         checked={field.value}
                         onCheckedChange={(checked) => {
@@ -121,8 +121,8 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
                           unsubscribeMutation.isPending
                         }
                       />
-                    </div>
-                  </FormControl>
+                    </FormControl>
+                  </div>
                 </FormItem>
               )}
             />
