@@ -33,9 +33,6 @@ export const websiteConfig: WebsiteConfig = {
     twitter: 'https://x.com/TanStarter',
     youtube: 'https://www.youtube.com/@TanStarter',
   },
-  routes: {
-    defaultLoginRedirect: '/dashboard',
-  },
   auth: {
     enable: true,
     enableGoogleLogin: true,

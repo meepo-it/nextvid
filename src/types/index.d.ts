@@ -6,7 +6,6 @@ export interface WebsiteConfig {
   ui?: UiConfig;
   metadata?: MetadataConfig;
   social?: SocialConfig;
-  routes?: RoutesConfig;
   auth?: AuthConfig;
   blog?: BlogConfig;
   affiliates?: AffiliatesConfig;
@@ -53,11 +52,6 @@ export interface SocialConfig {
   instagram?: string;
   tiktok?: string;
   telegram?: string;
-}
-
-/** Routes configuration */
-export interface RoutesConfig {
-  defaultLoginRedirect?: string;   // The default login redirect route
 }
 
 /** Auth configuration */

@@ -1,5 +1,3 @@
-import { websiteConfig } from '../config/website';
-
 export const Routes = {
   Root: '/',
 
@@ -48,8 +46,5 @@ export const Routes = {
   AdminUsers: '/admin/users',
 } as const;
 
-/**
- * Default login redirect route
- */
-export const DEFAULT_LOGIN_REDIRECT =
-  websiteConfig.routes?.defaultLoginRedirect ?? Routes.Dashboard;
+/** Default login redirect route */
+export const DEFAULT_LOGIN_REDIRECT = Routes.Dashboard;
