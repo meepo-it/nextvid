@@ -4,6 +4,7 @@ import { isLinkActive } from '@/lib/urls';
 import { cn } from '@/lib/utils';
 import Container from '@/components/layout/container';
 import { Logo } from '@/components/shared/logo';
+import BuiltWithButton from '@/components/shared/built-with-button';
 import { Link, useLocation } from '@tanstack/react-router';
 import { websiteConfig } from '@/config/website';
 import { messages } from '@/messages';
@@ -98,6 +99,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
             &copy; {new Date().getFullYear()} {websiteConfig.metadata?.name}{' '}
             {messages.footer.rightsReserved}
           </span>
+          <BuiltWithButton />
         </Container>
       </div>
     </footer>
