@@ -116,7 +116,7 @@ export function UsersTable({
         id: 'name',
         accessorKey: 'name',
         enableHiding: true,
-        enableSorting: true,
+        enableSorting: false,
         header: ({ column }) => (
           <DataTableColumnHeader column={column} label={m.columns.name} />
         ),
@@ -129,7 +129,7 @@ export function UsersTable({
         id: 'email',
         accessorKey: 'email',
         enableHiding: true,
-        enableSorting: true,
+        enableSorting: false,
         header: ({ column }) => (
           <DataTableColumnHeader column={column} label={m.columns.email} />
         ),
@@ -186,7 +186,7 @@ export function UsersTable({
         id: 'createdAt',
         accessorKey: 'createdAt',
         enableHiding: true,
-        enableSorting: true,
+        enableSorting: false,
         header: ({ column }) => (
           <DataTableColumnHeader column={column} label={m.columns.createdAt} />
         ),
