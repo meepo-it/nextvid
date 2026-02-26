@@ -150,7 +150,7 @@ async function onCreateUser(user: User) {
   ) {
     return;
   }
-  // Delay to avoid rate limiting (e.g. Resend 1 email/sec) and let verification email send first
+  // Delay to avoid rate limiting (e.g. Resend 1 email/sec)
   setTimeout(async () => {
     try {
       const subscribed = await subscribe(user.email!);
@@ -162,5 +162,5 @@ async function onCreateUser(user: User) {
     } catch (error) {
       console.error('onCreateUser, newsletter subscription error:', error);
     }
-  }, 2000);
+  }, 3000);
 }
