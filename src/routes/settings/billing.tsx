@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { DashboardLayout } from '@/components/layout/dashboard-layout';
-import { BillingCard } from '@/components/settings/billing-card';
+import { BillingCard } from '@/components/settings/billing/billing-card';
 import { websiteConfig } from '@/config/website';
 import { messages } from '@/messages';
 import { Routes } from '@/lib/routes';
