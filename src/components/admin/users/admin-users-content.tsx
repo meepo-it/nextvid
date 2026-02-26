@@ -1,4 +1,4 @@
-import { UsersTable } from '@/components/admin/users-table';
+import { UsersTable } from '@/components/admin/users/users-table';
 import { getSortingStateParser } from '@/components/data-table/lib/parsers';
 import { useUsers } from '@/hooks/use-users';
 import type { ColumnFiltersState, SortingState } from '@tanstack/react-table';

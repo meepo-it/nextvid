@@ -1,4 +1,4 @@
-import { UserDetailViewer } from '@/components/admin/user-detail-viewer';
+import { UserDetailViewer } from '@/components/admin/users/user-detail-viewer';
 import { DataTableAdvancedToolbar } from '@/components/data-table/data-table-advanced-toolbar';
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header';
 import { DataTableFacetedFilter } from '@/components/data-table/data-table-faceted-filter';
