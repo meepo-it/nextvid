@@ -150,17 +150,15 @@ async function onCreateUser(user: User) {
   ) {
     return;
   }
-  // Delay to avoid rate limiting (e.g. Resend 1 email/sec)
-  setTimeout(async () => {
-    try {
-      const subscribed = await subscribe(user.email!);
-      if (!subscribed) {
-        console.error(`onCreateUser, user ${user.email} failed to subscribe`);
-      } else {
-        console.log(`User ${user.email} subscribed to newsletter`);
-      }
-    } catch (error) {
-      console.error('onCreateUser, newsletter subscription error:', error);
+
+  try {
+    const subscribed = await subscribe(user.email);
+    if (!subscribed) {
+      console.error(`onCreateUser, user ${user.email} failed to subscribe`);
+    } else {
+      console.log(`onCreateUser, user ${user.email} subscribed to newsletter`);
     }
-  }, 3000);
+  } catch (error) {
+    console.error('onCreateUser, newsletter subscription error:', error);
+  }
 }
