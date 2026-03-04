@@ -42,6 +42,15 @@
     }
   },
 
+  // Custom domains
+  // https://developers.cloudflare.com/workers/configuration/routing/custom-domains/
+  "routes": [
+    {
+      "pattern": "demo.tanstarter.dev",
+      "custom_domain": true
+    }
+  ],
+
   /**
    * Bindings
    * Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform, including
