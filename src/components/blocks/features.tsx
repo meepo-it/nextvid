@@ -1,4 +1,5 @@
 import { HeaderSection } from '@/components/shared/header-section';
+import { ScrollReveal } from '@/components/shared/scroll-reveal';
 import {
   Accordion,
   AccordionContent,
@@ -83,68 +84,72 @@ export default function FeaturesSection() {
   return (
     <section id="features" className="px-4 py-16">
       <div className="mx-auto max-w-6xl px-6 space-y-8 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
-        <HeaderSection
-          title={m.title}
-          subtitle={m.subtitle}
-          subtitleAs="h2"
-          description={m.description}
-          descriptionAs="p"
-        />
+        <ScrollReveal>
+          <HeaderSection
+            title={m.title}
+            subtitle={m.subtitle}
+            subtitleAs="h2"
+            description={m.description}
+            descriptionAs="p"
+          />
+        </ScrollReveal>
 
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-24">
-          <div className="flex flex-col gap-8 lg:col-span-5">
-            <div className="text-left lg:pr-0">
-              <h3 className="py-1 text-3xl font-semibold leading-normal text-foreground lg:text-4xl">
-                {m.title}
-              </h3>
-              <p className="mt-4 text-muted-foreground">{m.description}</p>
-            </div>
-            <Accordion
-              value={[activeItem]}
-              onValueChange={(v) =>
-                setActiveItem((v?.[0] as ImageKey) ?? 'item-1')
-              }
-              className="w-full"
-            >
-              {(Object.keys(m.items) as ImageKey[]).map((key) => {
-                const ItemIcon = icons[key];
-                return (
-                  <AccordionItem key={key} value={key}>
-                    <AccordionTrigger>
-                      <div className="flex items-center gap-2 text-base">
-                        <ItemIcon className="size-4" />
-                        {m.items[key].title}
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground">
-                      {m.items[key].description}
-                    </AccordionContent>
-                  </AccordionItem>
-                );
-              })}
-            </Accordion>
-          </div>
-
-          <div className="relative flex w-full overflow-hidden rounded-2xl border bg-background p-2 lg:col-span-7 lg:h-auto">
-            <div className="relative w-full rounded-2xl aspect-76/59 bg-background">
-              <div
-                key={activeItem}
-                className="size-full overflow-hidden rounded-2xl border bg-muted shadow-md"
+        <ScrollReveal delay={150}>
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-24">
+            <div className="flex flex-col gap-8 lg:col-span-5">
+              <div className="text-left lg:pr-0">
+                <h3 className="py-1 text-3xl font-semibold leading-normal text-foreground lg:text-4xl">
+                  {m.title}
+                </h3>
+                <p className="mt-4 text-muted-foreground">{m.description}</p>
+              </div>
+              <Accordion
+                value={[activeItem]}
+                onValueChange={(v) =>
+                  setActiveItem((v?.[0] as ImageKey) ?? 'item-1')
+                }
+                className="w-full"
               >
-                <img
-                  src={images[activeItem].image}
-                  alt={images[activeItem].alt}
-                  className="size-full object-cover object-top-left rounded-2xl dark:hidden"
-                />
-                <img
-                  src={images[activeItem].darkImage}
-                  alt={images[activeItem].alt}
-                  className="hidden size-full object-cover object-top-left rounded-2xl dark:block"
-                />
+                {(Object.keys(m.items) as ImageKey[]).map((key) => {
+                  const ItemIcon = icons[key];
+                  return (
+                    <AccordionItem key={key} value={key}>
+                      <AccordionTrigger>
+                        <div className="flex items-center gap-2 text-base">
+                          <ItemIcon className="size-4" />
+                          {m.items[key].title}
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="text-muted-foreground">
+                        {m.items[key].description}
+                      </AccordionContent>
+                    </AccordionItem>
+                  );
+                })}
+              </Accordion>
+            </div>
+
+            <div className="relative flex w-full overflow-hidden rounded-2xl border bg-background p-2 lg:col-span-7 lg:h-auto">
+              <div className="relative w-full rounded-2xl aspect-76/59 bg-background">
+                <div
+                  key={activeItem}
+                  className="animate-crossfade-in size-full overflow-hidden rounded-2xl border bg-muted shadow-md"
+                >
+                  <img
+                    src={images[activeItem].image}
+                    alt={images[activeItem].alt}
+                    className="size-full object-cover object-top-left rounded-2xl dark:hidden"
+                  />
+                  <img
+                    src={images[activeItem].darkImage}
+                    alt={images[activeItem].alt}
+                    className="hidden size-full object-cover object-top-left rounded-2xl dark:block"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

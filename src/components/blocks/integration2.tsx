@@ -1,4 +1,5 @@
 import { Logo } from '@/components/shared/logo';
+import { ScrollReveal } from '@/components/shared/scroll-reveal';
 import { buttonVariants } from '@/components/ui/button';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@/lib/utils';
@@ -65,7 +66,7 @@ export default function Integration2Section() {
         <div className="absolute inset-0 bg-linear-to-tl from-primary/5 via-muted/70 to-chart-1/6 dark:from-primary/6 dark:via-muted/40 dark:to-chart-1/4" />
         <div className="relative mx-auto max-w-5xl px-6">
           <div className="grid items-center gap-8 sm:grid-cols-2 sm:gap-0">
-            <div className="relative mx-auto w-fit">
+            <ScrollReveal className="relative mx-auto w-fit">
               <div className="mx-auto mb-2 flex w-fit justify-center gap-2">
                 <IntegrationCard>
                   <b0.Icon className="size-8" style={{ color: b0.color }} />
@@ -96,8 +97,11 @@ export default function Integration2Section() {
                   <b5.Icon className="size-8" style={{ color: b5.color }} />
                 </IntegrationCard>
               </div>
-            </div>
-            <div className="mx-auto max-w-lg space-y-6 text-center sm:text-left">
+            </ScrollReveal>
+            <ScrollReveal
+              delay={200}
+              className="mx-auto max-w-lg space-y-6 text-center sm:text-left"
+            >
               <h2 className="text-balance text-3xl font-semibold md:text-4xl">
                 {m.title}
               </h2>
@@ -120,7 +124,7 @@ export default function Integration2Section() {
                   <span>{m.secondaryButton}</span>
                 </Link>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </div>

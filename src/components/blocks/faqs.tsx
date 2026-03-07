@@ -1,4 +1,5 @@
 import { HeaderSection } from '@/components/shared/header-section';
+import { ScrollReveal } from '@/components/shared/scroll-reveal';
 import {
   Accordion,
   AccordionContent,
@@ -47,14 +48,16 @@ export default function FaqSection() {
   return (
     <section id="faqs" className="px-4 py-16">
       <div className="mx-auto max-w-4xl">
-        <HeaderSection
-          title={m.title}
-          titleAs="h2"
-          subtitle={m.subtitle}
-          subtitleAs="p"
-        />
+        <ScrollReveal>
+          <HeaderSection
+            title={m.title}
+            titleAs="h2"
+            subtitle={m.subtitle}
+            subtitleAs="p"
+          />
+        </ScrollReveal>
 
-        <div className="mx-auto mt-12 max-w-4xl">
+        <ScrollReveal delay={150} className="mx-auto mt-12 max-w-4xl">
           <Accordion className="ring-primary/10 w-full rounded-2xl border border-primary/15 px-4 py-3 shadow-sm ring-4 dark:ring-primary/5 dark:border-primary/10 sm:px-8">
             {faqItems.map((item) => (
               <AccordionItem
@@ -73,7 +76,7 @@ export default function FaqSection() {
               </AccordionItem>
             ))}
           </Accordion>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

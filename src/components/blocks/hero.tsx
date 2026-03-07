@@ -35,7 +35,7 @@ export default function HeroSection() {
                 href="https://x.com/tanstarter"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:bg-primary/5 group mx-auto flex w-fit items-center gap-2 rounded-full border border-primary/20 p-1 pl-4 transition-colors"
+                className="animate-fade-up delay-0 hover:bg-primary/5 group mx-auto flex w-fit items-center gap-2 rounded-full border border-primary/20 p-1 pl-4 transition-colors"
               >
                 <span className="text-foreground text-sm font-medium">
                   {m.introduction}
@@ -53,17 +53,17 @@ export default function HeroSection() {
               </a>
 
               {/* title */}
-              <h1 className="mt-8 text-balance text-3xl font-bold sm:text-4xl md:text-5xl lg:mt-16 xl:text-[4rem]">
+              <h1 className="animate-fade-up delay-1 mt-8 text-balance text-3xl font-bold sm:text-4xl md:text-5xl lg:mt-16 xl:text-[4rem]">
                 {m.title}
               </h1>
 
               {/* description */}
-              <p className="mx-auto mt-6 max-w-5xl text-balance text-base text-muted-foreground sm:mt-8 sm:text-lg">
+              <p className="animate-fade-up delay-2 mx-auto mt-6 max-w-5xl text-balance text-base text-muted-foreground sm:mt-8 sm:text-lg">
                 {m.description}
               </p>
 
               {/* action buttons */}
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:mt-12 sm:gap-4">
+              <div className="animate-fade-up delay-3 mt-8 flex flex-wrap items-center justify-center gap-3 sm:mt-12 sm:gap-4">
                 <div className="bg-foreground/10 rounded-xl">
                   <Link
                     to="/auth/login"
@@ -89,7 +89,7 @@ export default function HeroSection() {
             </div>
 
             {/* images */}
-            <div className="relative overflow-hidden px-2 my-8 sm:my-12 md:my-16">
+            <div className="animate-fade-up delay-4 relative overflow-hidden px-2 my-8 sm:my-12 md:my-16">
               <div className="inset-shadow-2xs ring-muted/50 dark:inset-shadow-white/20 bg-muted/50 relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
                 <img
                   className="bg-muted/50 relative hidden rounded-2xl dark:block w-full"

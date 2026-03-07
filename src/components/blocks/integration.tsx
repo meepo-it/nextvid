@@ -1,4 +1,5 @@
 import { HeaderSection } from '@/components/shared/header-section';
+import { ScrollReveal } from '@/components/shared/scroll-reveal';
 import { buttonVariants } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
@@ -92,7 +93,7 @@ function IntegrationCard({
   color: string;
 }) {
   return (
-    <Card className="bg-transparent p-6 hover:bg-accent dark:hover:bg-card">
+    <Card className="bg-transparent p-6 transition-colors duration-200 hover:bg-accent dark:hover:bg-card">
       <div className="relative">
         <div className="*:size-10">
           <Icon className="size-10 shrink-0" style={{ color }} />
@@ -126,23 +127,26 @@ export default function IntegrationSection() {
   return (
     <section id="integration" className="px-4 py-16">
       <div className="mx-auto max-w-5xl">
-        <HeaderSection
-          title={m.title}
-          subtitle={m.subtitle}
-          description={m.description}
-          subtitleAs="h2"
-          descriptionAs="p"
-        />
+        <ScrollReveal>
+          <HeaderSection
+            title={m.title}
+            subtitle={m.subtitle}
+            description={m.description}
+            subtitleAs="h2"
+            descriptionAs="p"
+          />
+        </ScrollReveal>
 
         <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((item) => (
-            <IntegrationCard
-              key={item.title}
-              title={item.title}
-              description={item.description}
-              icon={item.icon}
-              color={item.color}
-            />
+          {items.map((item, index) => (
+            <ScrollReveal key={item.title} delay={index * 80}>
+              <IntegrationCard
+                title={item.title}
+                description={item.description}
+                icon={item.icon}
+                color={item.color}
+              />
+            </ScrollReveal>
           ))}
         </div>
       </div>

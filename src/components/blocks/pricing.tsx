@@ -1,4 +1,5 @@
 import { HeaderSection } from '@/components/shared/header-section';
+import { ScrollReveal } from '@/components/shared/scroll-reveal';
 import { PricingTable } from '@/components/pricing/pricing-table';
 
 const m = {
@@ -10,14 +11,18 @@ export default function PricingSection() {
   return (
     <section id="pricing" className="px-4 py-16">
       <div className="mx-auto max-w-6xl space-y-16">
-        <HeaderSection
-          subtitle={m.subtitle}
-          subtitleAs="h2"
-          subtitleClassName="text-4xl font-bold"
-          description={m.description}
-          descriptionAs="p"
-        />
-        <PricingTable />
+        <ScrollReveal>
+          <HeaderSection
+            subtitle={m.subtitle}
+            subtitleAs="h2"
+            subtitleClassName="text-4xl font-bold"
+            description={m.description}
+            descriptionAs="p"
+          />
+        </ScrollReveal>
+        <ScrollReveal delay={150}>
+          <PricingTable />
+        </ScrollReveal>
       </div>
     </section>
   );
