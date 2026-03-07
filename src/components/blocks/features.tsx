@@ -82,7 +82,7 @@ export default function FeaturesSection() {
 
   return (
     <section id="features" className="px-4 py-16">
-      <div className="mx-auto max-w-6xl space-y-8 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
+      <div className="mx-auto max-w-6xl px-6 space-y-8 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
         <HeaderSection
           title={m.title}
           subtitle={m.subtitle}
@@ -91,7 +91,7 @@ export default function FeaturesSection() {
           descriptionAs="p"
         />
 
-        <div className="grid gap-12 sm:px-12 lg:grid-cols-12 lg:gap-24 lg:px-0">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-24">
           <div className="flex flex-col gap-8 lg:col-span-5">
             <div className="text-left lg:pr-0">
               <h3 className="py-1 text-3xl font-semibold leading-normal text-foreground lg:text-4xl">

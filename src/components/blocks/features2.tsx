@@ -19,7 +19,7 @@ const m = {
 export default function Features2Section() {
   return (
     <section id="features2" className="px-4 py-16">
-      <div className="mx-auto max-w-6xl space-y-8 lg:space-y-20">
+      <div className="mx-auto max-w-6xl px-6 space-y-8 lg:space-y-20">
         <HeaderSection
           title={m.title}
           subtitle={m.subtitle}

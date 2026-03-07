@@ -23,16 +23,16 @@ export default function StatsSection() {
           descriptionAs="p"
         />
 
-        <div className="grid gap-12 divide-y-0 *:text-center md:grid-cols-3 md:gap-2 md:divide-x">
-          <div className="space-y-4">
+        <div className="grid gap-2 *:text-center md:grid-cols-3 md:divide-x">
+          <div className="space-y-4 py-4 md:py-0">
             <div className="text-5xl font-bold text-foreground">+1200</div>
             <p>{m.items['item-1'].title}</p>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-4 py-4 md:py-0">
             <div className="text-5xl font-bold text-foreground">22 Million</div>
             <p>{m.items['item-2'].title}</p>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-4 py-4 md:py-0">
             <div className="text-5xl font-bold text-foreground">+500</div>
             <p>{m.items['item-3'].title}</p>
           </div>

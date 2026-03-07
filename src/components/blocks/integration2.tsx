@@ -63,7 +63,7 @@ export default function Integration2Section() {
     <section>
       <div className="bg-muted/50 py-24">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="grid items-center sm:grid-cols-2">
+          <div className="grid items-center gap-8 sm:grid-cols-2 sm:gap-0">
             <div className="relative mx-auto w-fit">
               <div className="mx-auto mb-2 flex w-fit justify-center gap-2">
                 <IntegrationCard>
@@ -96,7 +96,7 @@ export default function Integration2Section() {
                 </IntegrationCard>
               </div>
             </div>
-            <div className="mx-auto mt-6 max-w-lg space-y-6 text-center sm:mt-0 sm:text-left">
+            <div className="mx-auto max-w-lg space-y-6 text-center sm:text-left">
               <h2 className="text-balance text-3xl font-semibold md:text-4xl">
                 {m.title}
               </h2>

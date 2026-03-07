@@ -53,17 +53,17 @@ export default function HeroSection() {
               </a>
 
               {/* title */}
-              <h1 className="mt-8 text-balance text-5xl font-bold lg:mt-16 xl:text-[4rem]">
+              <h1 className="mt-8 text-balance text-3xl font-bold sm:text-4xl md:text-5xl lg:mt-16 xl:text-[4rem]">
                 {m.title}
               </h1>
 
               {/* description */}
-              <p className="mx-auto mt-8 max-w-5xl text-balance text-lg text-muted-foreground">
+              <p className="mx-auto mt-6 max-w-5xl text-balance text-base text-muted-foreground sm:mt-8 sm:text-lg">
                 {m.description}
               </p>
 
               {/* action buttons */}
-              <div className="mt-12 flex flex-row items-center justify-center gap-4">
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:mt-12 sm:gap-4">
                 <div className="bg-foreground/10 rounded-xl">
                   <Link
                     to="/auth/login"

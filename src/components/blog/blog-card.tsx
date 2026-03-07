@@ -20,7 +20,7 @@ export function BlogCard({ post }: { post: BlogPost }) {
             <img
               src={post.image}
               alt="blog post"
-              className="object-cover transition-transform hover:scale-[1.05]"
+              className="size-full object-cover transition-transform hover:scale-[1.05]"
             />
           </div>
         )}

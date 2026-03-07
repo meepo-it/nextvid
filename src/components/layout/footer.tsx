@@ -94,7 +94,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
       </Container>
 
       <div className="border-t py-8">
-        <Container className="px-4 flex items-center justify-between gap-x-4">
+        <Container className="px-4 flex flex-col items-center justify-between gap-4 sm:flex-row">
           <span className="text-muted-foreground text-sm">
             &copy; {new Date().getFullYear()} {websiteConfig.metadata?.name}{' '}
             {messages.footer.rightsReserved}
