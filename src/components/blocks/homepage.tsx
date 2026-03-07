@@ -1,16 +1,36 @@
-import CallToActionSection from '@/components/blocks/calltoaction';
-import FaqSection from '@/components/blocks/faqs';
-import FeaturesSection from '@/components/blocks/features';
-import Features2Section from '@/components/blocks/features2';
-import Features3Section from '@/components/blocks/features3';
 import HeroSection from '@/components/blocks/hero';
-import IntegrationSection from '@/components/blocks/integration';
-import Integration2Section from '@/components/blocks/integration2';
 import LogoCloudSection from '@/components/blocks/logo-cloud';
-import NewsletterCard from '@/components/blocks/newsletter-card';
-import PricingSection from '@/components/blocks/pricing';
 import StatsSection from '@/components/blocks/stats';
-import TestimonialsSection from '@/components/blocks/testimonials';
+import { lazy, Suspense } from 'react';
+
+const Features3Section = lazy(
+  () => import('@/components/blocks/features3')
+);
+const FeaturesSection = lazy(
+  () => import('@/components/blocks/features')
+);
+const CallToActionSection = lazy(
+  () => import('@/components/blocks/calltoaction')
+);
+const Features2Section = lazy(
+  () => import('@/components/blocks/features2')
+);
+const IntegrationSection = lazy(
+  () => import('@/components/blocks/integration')
+);
+const Integration2Section = lazy(
+  () => import('@/components/blocks/integration2')
+);
+const PricingSection = lazy(
+  () => import('@/components/blocks/pricing')
+);
+const FaqSection = lazy(() => import('@/components/blocks/faqs'));
+const TestimonialsSection = lazy(
+  () => import('@/components/blocks/testimonials')
+);
+const NewsletterCard = lazy(
+  () => import('@/components/blocks/newsletter-card')
+);
 
 export function HomePage() {
   return (
@@ -18,16 +38,18 @@ export function HomePage() {
       <HeroSection />
       <LogoCloudSection />
       <StatsSection />
-      <Features3Section />
-      <FeaturesSection />
-      <CallToActionSection />
-      <Features2Section />
-      <IntegrationSection />
-      <Integration2Section />
-      <PricingSection />
-      <FaqSection />
-      <TestimonialsSection />
-      <NewsletterCard />
+      <Suspense>
+        <Features3Section />
+        <FeaturesSection />
+        <CallToActionSection />
+        <Features2Section />
+        <IntegrationSection />
+        <Integration2Section />
+        <PricingSection />
+        <FaqSection />
+        <TestimonialsSection />
+        <NewsletterCard />
+      </Suspense>
     </div>
   );
 }
