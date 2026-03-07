@@ -42,7 +42,7 @@ function IntegrationCard({
   return (
     <div
       className={cn(
-        'relative flex size-20 rounded-xl bg-muted dark:bg-muted/50',
+        'relative flex size-20 rounded-xl bg-muted dark:bg-muted/50 transition-transform duration-200 hover:scale-105 hover:shadow-lg',
         className
       )}
     >

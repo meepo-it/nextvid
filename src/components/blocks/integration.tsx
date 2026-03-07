@@ -46,12 +46,12 @@ const m = {
 
 // Brand colors (visible on both light and dark backgrounds)
 export const BRAND_COLORS = {
-  openai: '#10a37f',
-  codesandbox: '#f38020',
-  react: '#61dafb',
-  vs: '#007acc',
-  wikipedia: '#636466',
-  google: '#4285f4',
+  openai: '#0d8c6c',
+  codesandbox: '#e06a10',
+  react: '#149eca',
+  vs: '#0065a9',
+  wikipedia: '#9c27b0',
+  google: '#2a6fdb',
 } as const;
 
 const items: Array<{
