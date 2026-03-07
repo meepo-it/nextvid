@@ -40,7 +40,7 @@ export function HeaderSection({
       {title ? (
         <TitleComponent
           className={cn(
-            'uppercase tracking-wider text-foreground font-semibold',
+            'uppercase tracking-wider text-primary font-semibold',
             titleClassName
           )}
         >
