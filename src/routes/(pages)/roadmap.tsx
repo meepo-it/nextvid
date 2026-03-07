@@ -22,7 +22,7 @@ export const Route = createFileRoute('/(pages)/roadmap')({
 function RoadmapPage() {
   return (
     <Container className="py-16 px-4">
-      <div className="space-y-8 pb-16">
+      <div className="mx-auto max-w-6xl space-y-8">
         <div className="space-y-4">
           <h1 className="text-center text-3xl font-bold tracking-tight">
             {m.title}

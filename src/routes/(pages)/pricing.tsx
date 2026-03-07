@@ -32,9 +32,9 @@ function PricingPage() {
   const currentPlan = planData?.currentPlan ?? null;
 
   return (
-    <Container className="px-4 py-16">
-      <div className="mx-auto max-w-6xl space-y-12">
-        <div className="text-center space-y-4">
+    <Container className="py-16 px-4">
+      <div className="mx-auto max-w-6xl space-y-8">
+        <div className="space-y-4 text-center">
           <h1 className="text-3xl font-bold tracking-tight">{m.title}</h1>
           <p className="text-lg text-muted-foreground">{m.subtitle}</p>
         </div>
