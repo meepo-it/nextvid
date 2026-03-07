@@ -321,7 +321,8 @@ export const messages = {
       noResults: 'No files yet',
       openLink: 'Open',
       uploadSuccess: 'File uploaded successfully',
-      uploadError: 'Could not upload the file. Please check the file and try again.',
+      uploadError:
+        'Could not upload the file. Please check the file and try again.',
       deleteSuccess: 'File deleted successfully',
       deleteError: 'Could not delete the file. Please try again.',
       columns: {

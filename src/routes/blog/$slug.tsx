@@ -79,9 +79,7 @@ function BlogPostPage() {
             <span>{formatDate(new Date(post.date))}</span>
           </div>
 
-          <h1 className="text-3xl font-bold tracking-tight">
-            {post.title}
-          </h1>
+          <h1 className="text-3xl font-bold tracking-tight">{post.title}</h1>
 
           {post.description && (
             <p className="mt-4 text-muted-foreground text-lg leading-relaxed">

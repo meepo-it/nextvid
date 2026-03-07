@@ -108,9 +108,7 @@ export default function TestimonialsSection() {
                         {role}
                       </span>
                       <blockquote className="mt-3">
-                        <p className="text-muted-foreground">
-                          {quote}
-                        </p>
+                        <p className="text-muted-foreground">{quote}</p>
                       </blockquote>
                     </div>
                   </CardContent>

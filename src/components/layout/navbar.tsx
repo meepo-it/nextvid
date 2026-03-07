@@ -98,9 +98,7 @@ export function Navbar({ scroll = true }: NavbarProps) {
                                 render={
                                   <Link
                                     to={sub.href ?? '#'}
-                                    target={
-                                      sub.external ? '_blank' : undefined
-                                    }
+                                    target={sub.external ? '_blank' : undefined}
                                     rel={
                                       sub.external
                                         ? 'noopener noreferrer'
