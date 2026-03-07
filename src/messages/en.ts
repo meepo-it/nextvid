@@ -38,31 +38,31 @@ export const messages = {
     },
     cookiePolicy: {
       title: 'Cookie Policy',
-      description: 'Cookie policy',
+      description: 'How we use cookies on our site',
     },
     privacyPolicy: {
       title: 'Privacy Policy',
-      description: 'Privacy policy',
+      description: 'How we protect and handle your data',
     },
     termsOfService: {
       title: 'Terms of Service',
-      description: 'Terms of service',
+      description: 'Legal agreement between you and us',
     },
     changelog: {
       title: 'Changelog',
-      description: 'Release notes',
+      description: 'See what we shipped recently',
     },
   },
 
   changelog: {
     title: 'Changelog',
     subtitle: 'Release notes and product updates',
-    description: 'Release notes and product updates',
+    description: 'Track every improvement, fix, and new feature we ship',
   },
 
   roadmap: {
     title: 'Roadmap',
-    description: 'Explore our future plans and upcoming features',
+    description: 'See what we are building next and what is on the horizon',
     subtitle: 'Explore our future plans and upcoming features',
     columns: {
       backlog: 'Backlog',
@@ -134,7 +134,7 @@ export const messages = {
       email: 'Email',
       send: 'Send reset link',
       backToLogin: 'Back to login',
-      checkEmail: 'Please check your email inbox',
+      checkEmail: "We've sent a password reset link to your email",
       emailRequired: 'Please enter your email',
       placeholderEmail: 'name@example.com',
     },
@@ -147,7 +147,7 @@ export const messages = {
       password: 'Password',
       signUp: 'Sign Up',
       signInHint: 'Already have an account? Sign in',
-      checkEmail: 'Please check your email inbox',
+      checkEmail: 'Check your email to verify your account',
       showPassword: 'Show password',
       hidePassword: 'Hide password',
       nameRequired: 'Please enter your name',
@@ -219,7 +219,7 @@ export const messages = {
         minLength: 'Please use 3 characters at minimum',
         maxLength: 'Please use 30 characters at maximum',
         success: 'Name updated successfully',
-        fail: 'Failed to update name',
+        fail: 'Could not update your name. Please try again.',
       },
       avatar: {
         title: 'Avatar',
@@ -228,7 +228,7 @@ export const messages = {
         uploadAvatar: 'Upload Avatar',
         uploading: 'Uploading...',
         success: 'Avatar updated successfully',
-        fail: 'Failed to update avatar',
+        fail: 'Could not update your avatar. Please try again.',
         hint: 'An avatar is optional but strongly recommended',
       },
     },
@@ -250,7 +250,7 @@ export const messages = {
         saving: 'Saving...',
         save: 'Save',
         success: 'Password updated successfully',
-        fail: 'Failed to update password',
+        fail: 'Could not update your password. Please check your current password and try again.',
       },
       deleteAccount: {
         title: 'Delete Account',
@@ -265,7 +265,7 @@ export const messages = {
         deleting: 'Deleting...',
         confirm: 'Delete',
         success: 'Account deleted successfully',
-        fail: 'Failed to delete account',
+        fail: 'Could not delete your account. Please try again or contact support.',
       },
       resetPassword: {
         title: 'Reset Password',
@@ -293,9 +293,9 @@ export const messages = {
       never: 'Never',
       noResults: 'No API keys found',
       createSuccess: 'API key created successfully',
-      createError: 'Failed to create API key',
+      createError: 'Could not create the API key. Please try again.',
       deleteSuccess: 'API key deleted successfully',
-      deleteError: 'Failed to delete API key',
+      deleteError: 'Could not delete the API key. Please try again.',
       columns: {
         name: 'Name',
         key: 'Key',
@@ -321,9 +321,9 @@ export const messages = {
       noResults: 'No files yet',
       openLink: 'Open',
       uploadSuccess: 'File uploaded successfully',
-      uploadError: 'Failed to upload file',
+      uploadError: 'Could not upload the file. Please check the file and try again.',
       deleteSuccess: 'File deleted successfully',
-      deleteError: 'Failed to delete file',
+      deleteError: 'Could not delete the file. Please try again.',
       columns: {
         originalName: 'Name',
         contentType: 'Type',
@@ -442,7 +442,7 @@ export const messages = {
 
   pricing: {
     title: 'Pricing',
-    description: 'Choose the plan that works best for you',
+    description: 'Simple, transparent pricing with no hidden fees',
     subtitle: 'Choose the plan that works best for you',
     monthly: 'Monthly',
     yearly: 'Yearly',

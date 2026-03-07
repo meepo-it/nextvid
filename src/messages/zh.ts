@@ -37,15 +37,15 @@ export const messages = {
     },
     cookiePolicy: {
       title: 'Cookie 政策',
-      description: '关于我们如何在网站上使用 Cookie 的信息',
+      description: '了解我们如何在网站上使用 Cookie',
     },
     privacyPolicy: {
       title: '隐私政策',
-      description: '关于我们将如何保护和处理您在网站上的数据',
+      description: '了解我们如何保护和处理您的数据',
     },
     termsOfService: {
       title: '服务条款',
-      description: '关于您与我们公司之间的法律协议和条款',
+      description: '了解您与我们之间的法律协议',
     },
     changelog: {
       title: '更新日志',
@@ -56,12 +56,12 @@ export const messages = {
   changelog: {
     title: '更新日志',
     subtitle: '查看我们产品的最新动态',
-    description: '查看我们产品的最新动态',
+    description: '追踪我们发布的每个改进、修复和新功能',
   },
 
   roadmap: {
     title: '路线图',
-    description: '探索我们的未来计划和即将推出的功能',
+    description: '了解我们正在构建什么，以及未来的发展方向',
     subtitle: '探索我们的未来计划和即将推出的功能',
     columns: {
       backlog: '待办',
@@ -131,7 +131,7 @@ export const messages = {
       email: '邮箱',
       send: '发送重置链接',
       backToLogin: '返回登录',
-      checkEmail: '请检查您的邮箱',
+      checkEmail: '我们已将重置密码链接发送到您的邮箱',
       emailRequired: '请输入邮箱',
       placeholderEmail: 'name@example.com',
     },
@@ -144,7 +144,7 @@ export const messages = {
       password: '密码',
       signUp: '注册',
       signInHint: '已经有账号？登录',
-      checkEmail: '请检查您的邮箱',
+      checkEmail: '请检查您的邮箱以验证账号',
       showPassword: '显示密码',
       hidePassword: '隐藏密码',
       nameRequired: '请输入姓名',
@@ -216,7 +216,7 @@ export const messages = {
         minLength: '请至少使用 3 个字符',
         maxLength: '请最多使用 30 个字符',
         success: '名字更新成功',
-        fail: '更新名字失败',
+        fail: '无法更新名字，请重试。',
       },
       avatar: {
         title: '头像',
@@ -225,7 +225,7 @@ export const messages = {
         uploadAvatar: '上传头像',
         uploading: '上传中...',
         success: '头像更新成功',
-        fail: '更新头像失败',
+        fail: '无法更新头像，请重试。',
         hint: '头像是可选的，但强烈推荐设置',
       },
     },
@@ -247,7 +247,7 @@ export const messages = {
         saving: '保存中...',
         save: '保存',
         success: '密码更新成功',
-        fail: '更新密码失败',
+        fail: '无法更新密码，请检查当前密码后重试。',
       },
       deleteAccount: {
         title: '删除账号',
@@ -260,7 +260,7 @@ export const messages = {
         deleting: '删除中...',
         confirm: '删除',
         success: '账号删除成功',
-        fail: '删除账号失败',
+        fail: '无法删除账号，请重试或联系支持。',
       },
       resetPassword: {
         title: '重置密码',
@@ -287,9 +287,9 @@ export const messages = {
       never: '永不过期',
       noResults: '未找到 API 密钥',
       createSuccess: 'API 密钥创建成功',
-      createError: '创建 API 密钥失败',
+      createError: '无法创建 API 密钥，请重试。',
       deleteSuccess: 'API 密钥已删除',
-      deleteError: '删除 API 密钥失败',
+      deleteError: '无法删除 API 密钥，请重试。',
       columns: {
         name: '名称',
         key: '密钥',
@@ -315,9 +315,9 @@ export const messages = {
       noResults: '暂无文件',
       openLink: '打开',
       uploadSuccess: '文件上传成功',
-      uploadError: '上传文件失败',
+      uploadError: '无法上传文件，请检查文件后重试。',
       deleteSuccess: '文件删除成功',
-      deleteError: '删除文件失败',
+      deleteError: '无法删除文件，请重试。',
       columns: {
         originalName: '名称',
         contentType: '类型',
@@ -435,7 +435,7 @@ export const messages = {
 
   pricing: {
     title: '价格',
-    description: '选择最适合您的付费计划',
+    description: '简单透明的定价，无隐藏费用',
     subtitle: '选择最适合您的付费计划',
     monthly: '月付',
     yearly: '年付',
