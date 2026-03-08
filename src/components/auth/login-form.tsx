@@ -46,8 +46,8 @@ export function LoginForm({
     propCallbackUrl ??
     (paramCallbackUrl ? paramCallbackUrl : defaultCallbackUrl);
 
-  const [error, setError] = useState<string | undefined>('');
-  const [success, setSuccess] = useState<string | undefined>('');
+  const [error, setError] = useState<string | undefined>(undefined);
+  const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, setIsPending] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -159,7 +159,7 @@ export function LoginForm({
                         type="button"
                         variant="ghost"
                         size="sm"
-                        className="absolute right-0 top-0 h-full px-3 border-0 bg-transparent hover:bg-transparent dark:hover:bg-transparent"
+                        className="absolute right-0 top-0 h-full px-3 border-0 bg-transparent hover:bg-transparent hover:opacity-70 dark:hover:bg-transparent"
                         onClick={togglePasswordVisibility}
                         disabled={isPending}
                       >
@@ -187,7 +187,7 @@ export function LoginForm({
               className="w-full flex items-center justify-center gap-2"
             >
               {isPending && (
-                <IconLoader2 className="mr-2 size-4 animate-spin" />
+                <IconLoader2 className="size-4 animate-spin" />
               )}
               <span>{m.signIn}</span>
             </Button>

@@ -51,7 +51,7 @@ export function CheckoutButton({
       ) {
         const promotekitReferral =
           typeof window !== 'undefined'
-            ? (window as any).promotekit_referral
+            ? (window as { promotekit_referral?: string }).promotekit_referral
             : undefined;
         if (promotekitReferral) {
           console.log(

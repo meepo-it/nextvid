@@ -127,7 +127,7 @@ export function PricingCard({
         ) : isCurrentPlan ? (
           <Button
             disabled
-            className="mt-4 w-full border border-blue-200 bg-blue-100 text-blue-700 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-800 dark:text-blue-100 dark:hover:bg-blue-800"
+            className="mt-4 w-full border border-primary/20 bg-primary/10 text-primary hover:bg-primary/10 dark:border-primary/30 dark:bg-primary/15 dark:text-primary dark:hover:bg-primary/15"
           >
             {card.yourCurrentPlan}
           </Button>
@@ -169,7 +169,7 @@ export function PricingCard({
         <ul className="list-outside space-y-4 text-sm">
           {plan.features?.map((feature, i) => (
             <li key={i} className="flex items-center gap-2">
-              <IconCircleCheck className="size-4 text-green-500 dark:text-green-400" />
+              <IconCircleCheck className="size-4 text-chart-2" />
               <span>{feature}</span>
             </li>
           ))}
@@ -177,7 +177,7 @@ export function PricingCard({
         <ul className="list-outside space-y-4 text-sm">
           {plan.limits?.map((limit, i) => (
             <li key={i} className="flex items-center gap-2">
-              <IconCircleX className="size-4 text-gray-500 dark:text-gray-400" />
+              <IconCircleX className="size-4 text-muted-foreground" />
               <span>{limit}</span>
             </li>
           ))}
@@ -185,7 +185,7 @@ export function PricingCard({
 
         {hasTrialPeriod && price && (
           <div className="my-4">
-            <span className="inline-block rounded-md border border-green-200 bg-green-100 px-2.5 py-1.5 text-xs font-medium text-green-800 shadow-sm dark:border-green-800 dark:bg-green-900 dark:text-green-200">
+            <span className="inline-block rounded-md border border-chart-2/20 bg-chart-2/10 px-2.5 py-1.5 text-xs font-medium text-chart-2 shadow-sm dark:border-chart-2/30 dark:bg-chart-2/15 dark:text-chart-2">
               {price.trialPeriodDays} {card.daysFreeTrial}
             </span>
           </div>

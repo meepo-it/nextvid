@@ -48,7 +48,7 @@ export function Navbar({ scroll = true }: NavbarProps) {
   }, [pathname]);
 
   return (
-    <section
+    <header
       className={cn(
         'sticky inset-x-0 top-0 z-40 py-4 transition-all duration-300',
         showBarBg && 'border-b'
@@ -57,13 +57,20 @@ export function Navbar({ scroll = true }: NavbarProps) {
       {showBarBg && (
         <div
           className="absolute inset-0 z-0 bg-muted/50 backdrop-blur-md"
-          aria-hidden
+          aria-hidden="true"
         />
       )}
       <div className="relative z-10">
         <Container className="px-4">
-          <nav className="hidden lg:flex lg:items-center lg:justify-between lg:gap-4">
-            <Link to="/" className="flex items-center gap-2 shrink-0">
+          <nav
+            aria-label="Main navigation"
+            className="hidden lg:flex lg:items-center lg:justify-between lg:gap-4"
+          >
+            <Link
+              to="/"
+              aria-label="Home"
+              className="flex items-center gap-2 shrink-0"
+            >
               <Logo />
               <span className="text-xl font-semibold">
                 {websiteConfig.metadata?.name}
@@ -185,6 +192,6 @@ export function Navbar({ scroll = true }: NavbarProps) {
           <NavbarMobile className="lg:hidden" />
         </Container>
       </div>
-    </section>
+    </header>
   );
 }

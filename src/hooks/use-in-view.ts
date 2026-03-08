@@ -18,6 +18,12 @@ export function useInView<T extends HTMLElement = HTMLDivElement>({
     const el = ref.current;
     if (!el) return;
 
+    // Skip observer for users who prefer reduced motion
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setIsInView(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

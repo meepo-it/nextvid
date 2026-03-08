@@ -3,6 +3,7 @@ import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Link } from '@tanstack/react-router';
 import { IconArrowRight } from '@tabler/icons-react';
+import { Routes } from '@/lib/routes';
 
 const m = {
   title: 'Ship Faster with TanStack, Cost Less with Cloudflare',
@@ -18,7 +19,7 @@ export default function HeroSection() {
     <section id="hero" className="overflow-hidden">
       {/* background, warm-tinted light blobs on top of the hero section */}
       <div
-        aria-hidden
+        aria-hidden="true"
         className="absolute inset-0 isolate hidden opacity-65 contain-strict lg:block"
       >
         <div className="w-140 h-320 -translate-y-87.5 absolute left-0 top-0 -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,oklch(0.85_0.04_55/.12)_0,oklch(0.7_0.02_45/.04)_50%,transparent_80%)]" />
@@ -35,7 +36,7 @@ export default function HeroSection() {
                 href="https://x.com/tanstarter"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="animate-fade-up delay-0 hover:bg-muted group mx-auto flex w-fit items-center gap-2 rounded-full border border-border p-1 pl-4 transition-colors"
+                className="animate-fade-up delay-0 hover:bg-muted group mx-auto flex w-fit items-center gap-2 rounded-full border border-border p-1 pl-4 transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:rounded-full"
               >
                 <span className="text-foreground text-sm font-medium">
                   {m.introduction}
@@ -66,7 +67,7 @@ export default function HeroSection() {
               <div className="animate-fade-up delay-3 mt-8 flex flex-wrap items-center justify-center gap-3 sm:mt-12 sm:gap-4">
                 <div className="bg-foreground/10 rounded-xl">
                   <Link
-                    to="/auth/login"
+                    to={Routes.Login}
                     className={cn(
                       buttonVariants({ size: 'lg' }),
                       'h-10.5 rounded-xl px-5 text-base'
@@ -94,7 +95,7 @@ export default function HeroSection() {
                 <img
                   className="bg-muted/50 relative hidden rounded-2xl dark:block w-full"
                   src="https://cdn.mksaas.com/blocks/music.png"
-                  alt="website screenshot"
+                  alt="TanStarter dashboard screenshot in dark mode"
                   fetchPriority="high"
                   width={2796}
                   height={2008}
@@ -102,7 +103,7 @@ export default function HeroSection() {
                 <img
                   className="z-2 border-border/25 relative rounded-2xl border dark:hidden w-full"
                   src="https://cdn.mksaas.com/blocks/music-light.png"
-                  alt="website screenshot"
+                  alt="TanStarter dashboard screenshot in light mode"
                   fetchPriority="high"
                   width={2796}
                   height={2008}

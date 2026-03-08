@@ -85,7 +85,7 @@ export function DataTableFacetedFilter<TData, TValue>({
           >
             {selectedValues?.size > 0 ? (
               <div
-                // biome-ignore lint/a11y/useSemanticElements: <explanation>
+                // biome-ignore lint/a11y/useSemanticElements: Using div with role="button" for clear filter functionality within a composite widget
                 role="button"
                 tabIndex={0}
                 aria-label={`Clear ${title} filter`}

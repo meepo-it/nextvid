@@ -136,11 +136,13 @@ export default function FeaturesSection() {
                   <img
                     src={images[activeItem].image}
                     alt={images[activeItem].alt}
+                    loading="lazy"
                     className="size-full object-cover object-top-left rounded-2xl dark:hidden"
                   />
                   <img
                     src={images[activeItem].darkImage}
                     alt={images[activeItem].alt}
+                    loading="lazy"
                     className="hidden size-full object-cover object-top-left rounded-2xl dark:block"
                   />
                 </div>

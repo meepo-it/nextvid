@@ -1,6 +1,7 @@
 import { ScrollReveal } from '@/components/shared/scroll-reveal';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { Routes } from '@/lib/routes';
 import { Link } from '@tanstack/react-router';
 
 const m = {
@@ -27,7 +28,7 @@ export default function CallToActionSection() {
 
           <div className="mt-12 flex flex-wrap justify-center gap-4">
             <Link
-              to="/auth/login"
+              to={Routes.Login}
               className={cn(buttonVariants({ size: 'lg' }))}
             >
               <span>{m.primaryButton}</span>

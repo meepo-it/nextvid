@@ -41,7 +41,7 @@ const nameSchema = z.object({
 
 export function UpdateNameCard({ className }: UpdateNameCardProps) {
   const [isSaving, setIsSaving] = useState(false);
-  const [error, setError] = useState<string | undefined>('');
+  const [error, setError] = useState<string | undefined>(undefined);
   const { data: session, refetch } = authClient.useSession();
 
   const form = useForm<z.infer<typeof nameSchema>>({
@@ -71,7 +71,7 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
         onSuccess: () => {
           toast.success(m.success);
           refetch();
-          form.reset();
+          form.reset({ name: values.name });
         },
         onError: (ctx) => {
           setError(`${ctx.error.status}: ${ctx.error.message}`);

@@ -29,8 +29,6 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function NewsletterCard() {
-  if (!websiteConfig.newsletter?.enable) return null;
-
   const [error, setError] = useState<string | undefined>();
   const subscribeMutation = useSubscribeNewsletter();
 
@@ -40,6 +38,8 @@ export default function NewsletterCard() {
   });
 
   const isPending = subscribeMutation.isPending;
+
+  if (!websiteConfig.newsletter?.enable) return null;
 
   async function onSubmit(data: FormData) {
     setError(undefined);
@@ -96,9 +96,9 @@ export default function NewsletterCard() {
                 disabled={isPending}
               >
                 {isPending ? (
-                  <IconLoader2 className="size-6 animate-spin" aria-hidden />
+                  <IconLoader2 className="size-6 animate-spin" aria-hidden="true" />
                 ) : (
-                  <IconSend2 className="size-6" aria-hidden />
+                  <IconSend2 className="size-6" aria-hidden="true" />
                 )}
                 <span className="sr-only">{m.subscribe}</span>
               </Button>

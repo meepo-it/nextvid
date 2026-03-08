@@ -75,7 +75,6 @@ export default function LogoCloudSection() {
                 className={`${logo.h} w-fit dark:invert`}
                 loading="lazy"
                 height={24}
-                width="auto"
               />
             ))}
           </div>
