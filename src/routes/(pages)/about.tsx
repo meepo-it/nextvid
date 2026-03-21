@@ -38,7 +38,7 @@ function AboutPage() {
                     src="/logo.png"
                     alt="Avatar"
                   />
-                  <AvatarFallback>
+                  <AvatarFallback className="absolute inset-0">
                     <div className="size-32 text-muted-foreground" />
                   </AvatarFallback>
                 </Avatar>

@@ -101,7 +101,9 @@ export default function TestimonialsSection() {
                         width={120}
                         height={120}
                       />
-                      <AvatarFallback>{name.charAt(0)}</AvatarFallback>
+                      <AvatarFallback className="absolute inset-0">
+                        {name.charAt(0)}
+                      </AvatarFallback>
                     </Avatar>
 
                     <div>
