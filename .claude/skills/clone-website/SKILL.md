@@ -120,14 +120,64 @@ The spec file is not optional. It is not a nice-to-have. If you dispatch a build
 
 Every builder agent must verify `npx tsc --noEmit` passes before finishing. After merging worktrees, you verify `pnpm build` passes. A broken build is never acceptable, even temporarily.
 
+### 10. Never Write Specs from Memory — Only from Extraction
+
+This is a hard rule with zero exceptions. Every CSS value, every color, every layout property in a spec file MUST come from a `getComputedStyle()` extraction or Chrome MCP visual inspection of the ACTUAL rendered page. Never write a spec value based on:
+- What you "know" a well-known product looks like (e.g., "WhatsApp headers are dark green")
+- General knowledge of a platform's design system
+- Assumptions about standard UI patterns
+- Educated guesses based on component names or class names
+
+The target site may use a custom theme, modified version, or completely different visual treatment. The only truth is what `getComputedStyle()` returns from the live page. If you catch yourself typing a CSS value without having extracted it, STOP and go extract it first.
+
+### 11. Close-Up Screenshots Before Specs
+
+For every section that will become a component, take a **dedicated close-up screenshot** via Chrome MCP BEFORE writing the spec. Full-page screenshots are too small to see details — they miss:
+- Subtle border styles and shadows
+- Icon details and small UI elements (read receipts, status dots, badges)
+- Background patterns and textures (wallpaper, grain, gradients)
+- Pseudo-element decorations (bubble tails, arrows, dividers)
+- Text rendering details (letter-spacing, font weight differences)
+
+For **"page-within-page" elements** (phone simulators, embedded editors, preview windows, iframes), take TWO screenshots:
+1. The outer container showing its position in the page
+2. A zoomed-in screenshot of just the inner content area
+
+These close-up screenshots are what you compare against during Visual QA. Without them, you can't catch fine-grained visual differences.
+
+### 12. Deep Extraction for Nested UI
+
+Some components have deeply nested DOM structures (chat apps, email clients, social feeds, code editors). The default extraction script walks 4 levels deep, which is insufficient for these.
+
+**Rule:** If the component is a simulator/mockup/preview of another product's UI, increase the extraction depth to 8 levels and run the extraction script SEPARATELY on each meaningful sub-region:
+- Status bar area
+- Header/navigation area
+- Content/body area
+- Input/footer area
+- Overlay/watermark area
+
+For each sub-region, also check:
+- **Pseudo-elements:** Run `getComputedStyle(el, '::before')` and `getComputedStyle(el, '::after')` for any element that has visual decorations (bubble tails, arrows, badges, quote marks)
+- **Background images/patterns:** Check `backgroundImage` — not just `backgroundColor`. Many UIs use repeating SVG patterns, gradients, or image textures
+- **SVG icons inline:** Extract the actual SVG markup for small icons (checkmarks, arrows, status indicators) rather than approximating with emoji or text
+- **Clip-paths and masks:** Check `clipPath` and `mask` properties that create non-rectangular shapes
+
 ## Phase 1: Reconnaissance
 
 Navigate to the target URL with Chrome MCP.
 
 ### Screenshots
-- Take **full-page screenshots** at desktop (1440px) and mobile (390px) viewports
-- Save to `docs/design-references/` with descriptive names
-- These are your master reference — builders will receive section-specific crops/screenshots later
+
+**Full-page screenshots** (master reference):
+- Desktop (1440px) and mobile (390px) viewports
+- Save to `docs/design-references/fullpage-desktop.png` and `fullpage-mobile.png`
+
+**Per-section close-up screenshots** (MANDATORY — do not skip):
+- For EVERY distinct section/component identified in the page topology, scroll to it and take a dedicated screenshot
+- Name them descriptively: `docs/design-references/section-hero.png`, `section-features.png`, etc.
+- For nested/embedded UIs (phone mockups, chat simulators, editor previews), take an ADDITIONAL zoomed screenshot of just the inner content
+- These close-up screenshots are what builders use as visual reference AND what you compare against during QA
+- **If you don't have a close-up screenshot of a section, you are NOT ready to write its spec**
 
 ### Global Extraction
 Extract these from the page before doing anything else:
@@ -540,6 +590,68 @@ Record the diff explicitly: "Property X changes from VALUE_A to VALUE_B, trigger
 
 6. **Assess complexity** — how many distinct sub-components does this section contain? A distinct sub-component is an element with its own unique styling, structure, and behavior (e.g., a card, a nav item, a search panel).
 
+7. **Deep-inspect nested UIs** — If the section contains a "page-within-page" (phone simulator, chat mockup, email preview, code editor), run a SEPARATE extraction pass on it:
+
+```javascript
+// Deep extraction for nested UI — run via Chrome MCP
+// Extracts pseudo-elements, background patterns, and walks 8 levels deep
+(function(selector) {
+  const el = document.querySelector(selector);
+  if (!el) return JSON.stringify({ error: 'Not found: ' + selector });
+  const props = [
+    'fontSize','fontWeight','fontFamily','lineHeight','letterSpacing','color',
+    'textTransform','textDecoration','backgroundColor','backgroundImage','background',
+    'padding','paddingTop','paddingRight','paddingBottom','paddingLeft',
+    'margin','marginTop','marginRight','marginBottom','marginLeft',
+    'width','height','maxWidth','minWidth','maxHeight','minHeight',
+    'display','flexDirection','justifyContent','alignItems','gap',
+    'gridTemplateColumns','gridTemplateRows',
+    'borderRadius','border','borderTop','borderBottom','borderLeft','borderRight',
+    'boxShadow','overflow','overflowX','overflowY',
+    'position','top','right','bottom','left','zIndex',
+    'opacity','transform','transition','cursor',
+    'objectFit','objectPosition','mixBlendMode','filter','backdropFilter',
+    'clipPath','mask','whiteSpace','textOverflow','WebkitLineClamp'
+  ];
+  function extractStyles(element, pseudo) {
+    const cs = getComputedStyle(element, pseudo || null);
+    const styles = {};
+    props.forEach(p => {
+      const v = cs[p];
+      if (v && v !== 'none' && v !== 'normal' && v !== 'auto' && v !== '0px' && v !== 'rgba(0, 0, 0, 0)' && v !== '' && v !== '0s') styles[p] = v;
+    });
+    return styles;
+  }
+  function walk(element, depth) {
+    if (depth > 8) return null;
+    const children = [...element.children];
+    const beforeStyles = extractStyles(element, '::before');
+    const afterStyles = extractStyles(element, '::after');
+    const svgContent = element.tagName === 'SVG' ? element.outerHTML.slice(0, 500) : null;
+    return {
+      tag: element.tagName.toLowerCase(),
+      classes: element.className?.toString().split(' ').slice(0, 5).join(' '),
+      text: element.childNodes.length === 1 && element.childNodes[0].nodeType === 3 ? element.textContent.trim().slice(0, 200) : null,
+      styles: extractStyles(element),
+      before: Object.keys(beforeStyles).length > 0 ? beforeStyles : undefined,
+      after: Object.keys(afterStyles).length > 0 ? afterStyles : undefined,
+      svg: svgContent,
+      images: element.tagName === 'IMG' ? { src: element.src, alt: element.alt } : null,
+      childCount: children.length,
+      children: children.slice(0, 20).map(c => walk(c, depth + 1)).filter(Boolean)
+    };
+  }
+  return JSON.stringify(walk(el, 0), null, 2);
+})('SELECTOR');
+```
+
+This script differs from the standard one in 3 ways:
+- Walks **8 levels deep** instead of 4
+- Extracts **pseudo-element styles** (`::before`, `::after`) which create bubble tails, decorative arrows, badges
+- Extracts **backgroundImage** (not just backgroundColor) to catch wallpaper patterns, gradients, SVG textures
+- Captures **SVG content** inline for small icon elements
+- Checks **clipPath** and **mask** for non-rectangular shapes
+
 ### Step 2: Write the Component Spec File
 
 For each section (or sub-component, if you're breaking it up), create a spec file in `docs/research/components/`. This is NOT optional — every builder must have a corresponding spec file.
@@ -711,6 +823,12 @@ These are lessons from previous failed clones — each one cost hours of rework:
 - **Don't forget smooth scroll libraries.** Check for Lenis (`.lenis` class), Locomotive Scroll, or similar. Default browser scrolling feels noticeably different and the user will spot it immediately.
 - **Don't dispatch builders without a spec file.** The spec file forces exhaustive extraction and creates an auditable artifact. Skipping it means the builder gets whatever you can fit in a prompt from memory.
 - **Don't use Node.js-specific APIs.** This project deploys to Cloudflare Workers. Avoid `fs`, `path`, `process` etc. in runtime code. Build scripts are fine.
+- **Don't write CSS values from memory or training data.** If you "know" WhatsApp uses dark green headers, that's irrelevant — the target site might use a completely different color scheme. Every value must come from `getComputedStyle()` on the actual rendered page. This is the single most common source of visual mismatches.
+- **Don't skip close-up screenshots of complex sub-regions.** A full-page screenshot is too small to see bubble tails, read receipts, status bar icons, background patterns, or subtle border styles. Each section needs its own close-up screenshot BEFORE you write its spec.
+- **Don't ignore pseudo-elements.** Chat bubble tails, decorative arrows, quote marks, and many other visual details are rendered via `::before` / `::after` pseudo-elements. Always check for them — they're invisible in a standard DOM walk.
+- **Don't assume `backgroundColor` is the only background.** Many elements use `backgroundImage` for patterns, gradients, or SVG textures. Extract both `backgroundColor` AND `backgroundImage`.
+- **Don't write a spec for a collapsed/hidden section without first expanding it.** If a sidebar accordion, tab panel, dropdown, or collapsible section is closed on page load, you MUST click it open via Chrome MCP and extract its expanded content. A spec that says "Messages (collapsed)" with no content detail is an incomplete spec and will produce an empty component.
+- **Don't use the standard 4-level extraction depth for nested/embedded UIs.** Phone simulators, chat previews, email mockups, and similar "page-within-page" components have deep DOM trees. Increase depth to 8 levels and run extraction separately on each sub-region (status bar, header, body, input bar, overlays).
 
 ## Completion
 
