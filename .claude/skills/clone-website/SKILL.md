@@ -842,21 +842,89 @@ Steps:
 - Update `head()` in the route file for proper SEO metadata
 - Verify: `pnpm build` passes clean
 
-## Phase 5: Visual QA Diff
+## Phase 5: Verification
 
-After assembly, do NOT declare the clone complete. Take side-by-side comparison screenshots:
+After assembly, do NOT declare the clone complete. This phase systematically verifies every aspect of the clone against the original, using a MANIFEST-driven approach to guarantee nothing is skipped.
 
-1. Open the original site and your clone side-by-side (or take screenshots at the same viewport widths)
-2. Compare section by section, top to bottom, at desktop (1440px)
-3. Compare again at mobile (390px)
-4. For each discrepancy found:
-   - Check the component spec file — was the value extracted correctly?
-   - If the spec was wrong: re-extract from Chrome MCP, update the spec, fix the component
-   - If the spec was right but the builder got it wrong: fix the component to match the spec
-5. Test all interactive behaviors: scroll through the page, click every button/tab, hover over interactive elements
-6. Verify smooth scroll feels right, header transitions work, tab switching works, animations play
+### Step 1: Generate QA MANIFEST
 
-Only after this visual QA pass is the clone complete.
+Create `docs/research/QA_MANIFEST.md` — a checklist of EVERYTHING that must be verified. Generate it from:
+- PAGE_TOPOLOGY.md (every section)
+- INTERACTION_MAP.md (every ✅ REPLICATE interaction)
+- Component spec files (every component)
+
+Format:
+
+```markdown
+# QA Manifest
+
+## Visual Comparison
+| Section | Original Screenshot | Clone Screenshot | Status |
+|---|---|---|---|
+| Header | docs/qa/original-header.png | docs/qa/clone-header.png | ⬜ |
+| Sidebar | docs/qa/original-sidebar.png | docs/qa/clone-sidebar.png | ⬜ |
+| Preview | docs/qa/original-preview.png | docs/qa/clone-preview.png | ⬜ |
+| Footer | docs/qa/original-footer.png | docs/qa/clone-footer.png | ⬜ |
+
+## Interaction Verification
+| Interaction | Section | Trigger | Expected Result | Status |
+|---|---|---|---|---|
+| Accordion expand | Sidebar | Click "Messages" header | Shows 7 message items | ⬜ |
+| Tab switch | Header | Click "AI Chat" | Content area updates | ⬜ |
+| Hover effect | Cards | Mouse over card | Shadow + scale change | ⬜ |
+| ... | ... | ... | ... | ⬜ |
+
+## Responsive Check
+| Viewport | Screenshot | Status |
+|---|---|---|
+| Desktop 1440px | docs/qa/responsive-desktop.png | ⬜ |
+| Tablet 768px | docs/qa/responsive-tablet.png | ⬜ |
+| Mobile 390px | docs/qa/responsive-mobile.png | ⬜ |
+```
+
+### Step 2: Per-Component Visual Regression
+
+For EACH section in the manifest, execute this loop:
+
+1. **Chrome MCP → original site:** Navigate to the section, take a close-up screenshot, save to `docs/qa/original-<section>.png`
+2. **Chrome MCP → clone site:** Navigate to the same section, take a close-up screenshot, save to `docs/qa/clone-<section>.png`
+3. **Compare:** Analyze both screenshots. List every visual difference found.
+4. **Fix or accept:**
+   - If the difference is a genuine mismatch → fix the component, re-screenshot, re-compare
+   - If the difference is due to dynamic content (timestamps, user data) → accept and note
+5. **Update manifest:** Mark the section as ✅ when screenshots match
+
+Repeat the fix → screenshot → compare loop until the section passes. Do not move to the next section until the current one is verified.
+
+### Step 3: Interaction Verification
+
+For EACH interaction marked ✅ REPLICATE in INTERACTION_MAP.md:
+
+1. **On original site:** Trigger the interaction via Chrome MCP (click, scroll, hover). Screenshot the result state.
+2. **On clone site:** Trigger the same interaction. Screenshot the result state.
+3. **Compare:** Does the same trigger produce the same visual result? Check:
+   - Does the revealed/changed content match?
+   - Does the transition feel similar (duration, direction)?
+   - Does the trigger element change appearance correctly (active highlight, rotation, color)?
+4. **Fix or accept:** Same loop as visual regression.
+5. **Update manifest:** Mark as ✅ when behavior matches.
+
+### Step 4: Responsive Verification
+
+Using Chrome MCP resize:
+1. Resize to 1440px → screenshot clone → compare layout with original
+2. Resize to 768px → same
+3. Resize to 390px → same
+
+Note any layout breakages (overflow, stacking issues, hidden elements).
+
+### Step 5: Final Manifest Review
+
+Read through the entire QA_MANIFEST.md. Every row must be ✅. If any row is still ⬜ or ❌:
+- It's either a known limitation (document in BLOCKED_INTERACTIONS.md)
+- Or it needs to be fixed before declaring the clone complete
+
+Only when every verifiable item in the manifest is ✅ is the clone complete.
 
 ## Pre-Dispatch Checklist
 
@@ -906,8 +974,10 @@ When done, report:
 - Total spec files written (should match components)
 - Total assets downloaded (images, videos, SVGs, fonts)
 - Build status (`pnpm build` result)
-- Visual QA results (any remaining discrepancies)
-- Any known gaps or limitations
+- **QA Manifest summary:** X/Y visual checks passed, X/Y interactions verified, X/Y responsive checks passed
+- **Blocked interactions:** list from BLOCKED_INTERACTIONS.md
+- **Remaining discrepancies:** any ❌ items with explanation
+- Link to `docs/qa/` directory for all comparison screenshots
 
 @.claude/skills/clone-website/TARGET.md
 @.claude/skills/clone-website/INSPECTION_GUIDE.md
