@@ -123,7 +123,7 @@ Every builder agent must verify `npx tsc --noEmit` passes before finishing. Afte
 ### 10. Never Write Specs from Memory — Only from Extraction
 
 This is a hard rule with zero exceptions. Every CSS value, every color, every layout property in a spec file MUST come from a `getComputedStyle()` extraction or Chrome MCP visual inspection of the ACTUAL rendered page. Never write a spec value based on:
-- What you "know" a well-known product looks like (e.g., "WhatsApp headers are dark green")
+- What you "know" a well-known product looks like based on training data
 - General knowledge of a platform's design system
 - Assumptions about standard UI patterns
 - Educated guesses based on component names or class names
@@ -192,7 +192,7 @@ This applies to colors, sizes, spacing, font properties, border-radius, shadows 
 
 ### 16. Visual Complexity Drives Extraction Granularity
 
-Extraction depth is not fixed — it is driven by visual complexity. A plain text section with a heading and paragraph needs only top-level style extraction. A section containing a simulated phone screen with chat bubbles, status indicators, timestamps, and background patterns requires separate extraction passes on each sub-region.
+Extraction depth is not fixed — it is driven by visual complexity. A plain text section with a heading and paragraph needs only top-level style extraction. A section containing deeply nested UI with multiple visual layers and sub-components requires separate extraction passes on each sub-region.
 
 Before extracting any section, look at your close-up screenshot and judge: how many visually distinct layers, sub-components, and states does this section contain? That number determines how many extraction passes you need. One pass per visually distinct sub-region.
 
@@ -281,13 +281,13 @@ Process:
       - Content swap (different content appears in another area of the page)
       - Style change on the element itself (active state highlight, color, border)
       - New content revealed (accordion opens, dropdown appears, modal pops up)
-      - Content in a DIFFERENT section updates (e.g., clicking sidebar button changes main preview)
+      - Content in a DIFFERENT section updates (e.g., clicking an element in Section A changes what's displayed in Section B)
       - Combination of the above
    e. Record the full cause-and-effect: "Clicking [element X] in [section A] causes [change Y] in [section B]"
 3. For element groups (e.g., a grid of 20 app buttons, a row of tabs), click at least 3 representative items to establish the pattern, then document: "All N items in this group follow the same pattern: clicking any one causes [change Y]"
 4. Any element with state-indicating attributes (`aria-expanded`, `aria-controls`, `data-state`, `aria-selected`, `aria-checked`) MUST be triggered to reveal all its states. If it has N states, visit all N.
 
-The output of this step is not just "20 clickable buttons found" — it's "clicking any of these 20 buttons swaps the main preview area to show that platform's chat UI, changes the button to active state (green bg), and updates the header badge text."
+The output of this step is not just "N clickable buttons found" — it's "clicking any of these N buttons causes [specific visual change] in [specific other section], and changes the clicked button to [specific active state]."
 
 This cause-and-effect documentation flows directly into component specs and tells builders exactly what behavior to implement.
 
@@ -342,15 +342,7 @@ For EACH element, document:
 
 | Element | Type | Content | Interactive? | Action → Effect |
 |---|---|---|---|---|
-| Logo | Image | "Mockly" SVG | Click → navigates to / | Same page (already home) |
-| "Chat" tab | Nav link | Text "Chat" | Click → switches page mode | Sidebar shows chat platforms, preview shows chat |
-| "AI Chat" tab | Nav link | Text "AI Chat" | Click → switches page mode | Sidebar shows AI platforms, preview shows AI chat |
-| Instagram button | Button | Instagram icon + "Instagram" | Click → changes preview | Preview swaps to Instagram chat style, button highlights |
-| WhatsApp button | Button | WhatsApp icon + "WhatsApp" | Click → changes preview | Preview swaps to WhatsApp style, button turns green |
-| Messages accordion | Accordion | Header "Messages" + badge "7" | Click → expand/collapse | Reveals 7 editable message rows below |
-| Message row 1 | Editable | Text "Hey, want to try..." | Click → editable | Text becomes editable, updates preview in real-time |
-| "Header" toggle | Toggle switch | Label "Header" | Click → on/off | Toggles phone status bar visibility in preview |
-| Download button | Button | Text "Download" | Click → triggers download | Exports preview as image (BLOCKED: requires auth/payment check) |
+| <element name> | <type> | <what it shows> | <is it interactive? action> | <what changes when triggered, in which section> |
 | ... | ... | ... | ... | ... |
 
 #### States
@@ -372,16 +364,13 @@ Map every control relationship:
 
 | Controller | Target | Mechanism | Effect |
 |---|---|---|---|
-| Header tabs | Sidebar + Preview | Tab click changes page mode | Sidebar options change, preview template changes |
-| Sidebar app grid | Preview area | Button click selects platform | Preview renders selected platform's chat style |
-| Sidebar "Appearance" toggles | Preview area | Toggle on/off | Preview updates (show/hide header, dark mode, etc.) |
-| Sidebar "Messages" editor | Preview chat bubbles | Text edit | Preview bubble content updates in real-time |
+| <section A> | <section B> | <user action> | <what changes in target> |
+| ... | ... | ... | ... |
 
 ## Data Flow
-- User selects app (sidebar) → preview renders that app's chat template
-- User edits message (sidebar) → preview updates the corresponding bubble
-- User toggles appearance option → preview reflects the change
-- User clicks download → image export of current preview state
+Describe the end-to-end flow of user actions through the page:
+- User does X → section A updates → section B reflects the change
+- User does Y → triggers Z
 
 ## Scope Decision
 For each element/interaction, classify:
@@ -1083,7 +1072,7 @@ These are lessons from previous failed clones — each one cost hours of rework:
 - **Don't forget smooth scroll libraries.** Check for Lenis (`.lenis` class), Locomotive Scroll, or similar. Default browser scrolling feels noticeably different and the user will spot it immediately.
 - **Don't dispatch builders without a spec file.** The spec file forces exhaustive extraction and creates an auditable artifact. Skipping it means the builder gets whatever you can fit in a prompt from memory.
 - **Don't use Node.js-specific APIs.** This project deploys to Cloudflare Workers. Avoid `fs`, `path`, `process` etc. in runtime code. Build scripts are fine.
-- **Don't write CSS values from memory or training data.** If you "know" WhatsApp uses dark green headers, that's irrelevant — the target site might use a completely different color scheme. Every value must come from `getComputedStyle()` on the actual rendered page. This is the single most common source of visual mismatches.
+- **Don't write CSS values from memory or training data.** What you "know" about a product's design is irrelevant — the target site may use a completely different color scheme or theme. Every value must come from `getComputedStyle()` on the actual rendered page. This is the single most common source of visual mismatches.
 - **Don't skip close-up screenshots of complex sub-regions.** A full-page screenshot is too small to see bubble tails, read receipts, status bar icons, background patterns, or subtle border styles. Each section needs its own close-up screenshot BEFORE you write its spec.
 - **Don't ignore pseudo-elements.** Chat bubble tails, decorative arrows, quote marks, and many other visual details are rendered via `::before` / `::after` pseudo-elements. Always check for them — they're invisible in a standard DOM walk.
 - **Don't assume `backgroundColor` is the only background.** Many elements use `backgroundImage` for patterns, gradients, or SVG textures. Extract both `backgroundColor` AND `backgroundImage`.
