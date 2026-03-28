@@ -205,6 +205,7 @@ This is a dedicated pass AFTER screenshots and BEFORE anything else. Its purpose
 - Every button, tab, pill, link, card
 - Record what happens: does content change? Does a modal open? Does a dropdown appear?
 - For tabs/pills: click EACH ONE and record the content that appears for each state
+- **State discovery rule:** Any element with state-indicating attributes (`aria-expanded`, `aria-controls`, `role="tab"`, `data-state`, `aria-selected`, `aria-checked`) or that Chrome MCP snapshot shows as expandable/collapsible/toggleable MUST be triggered to reveal all its states. For each state, take a screenshot and extract the revealed content. If an element can be open or closed, you must see both. If it has N tabs, you must click all N. No hidden state should go unvisited.
 
 **Hover sweep:** Hover over every element that might have hover states:
 - Buttons, cards, links, images, nav items
