@@ -268,11 +268,28 @@ This is a dedicated pass AFTER screenshots and BEFORE anything else. Its purpose
 - Are there scroll-snap points? Record which containers.
 - Is there a smooth scroll library active? Check for non-native scroll behavior.
 
-**Click sweep:** Click every element that looks interactive:
-- Every button, tab, pill, link, card
-- Record what happens: does content change? Does a modal open? Does a dropdown appear?
-- For tabs/pills: click EACH ONE and record the content that appears for each state
-- **State discovery rule:** Any element with state-indicating attributes (`aria-expanded`, `aria-controls`, `role="tab"`, `data-state`, `aria-selected`, `aria-checked`) or that Chrome MCP snapshot shows as expandable/collapsible/toggleable MUST be triggered to reveal all its states. For each state, take a screenshot and extract the revealed content. If an element can be open or closed, you must see both. If it has N tabs, you must click all N. No hidden state should go unvisited.
+**Click sweep — intent-level analysis:** For every interactive element on the page, determine not just THAT it's clickable, but WHAT clicking it does to the page. This is the most important step in the entire skill — skipping it means builders create dead buttons.
+
+Process:
+1. Use Chrome MCP snapshot to enumerate all interactive elements (anything with `cursor: pointer`, `role="button"`, `role="tab"`, `aria-expanded`, `data-state`, `<button>`, `<a>`, clickable `<div>`s)
+2. For EACH interactive element:
+   a. Screenshot the page BEFORE clicking
+   b. Click it via Chrome MCP
+   c. Screenshot the page AFTER clicking
+   d. Observe and record: what changed? Options include:
+      - Nothing (purely navigational link, or already active state)
+      - Content swap (different content appears in another area of the page)
+      - Style change on the element itself (active state highlight, color, border)
+      - New content revealed (accordion opens, dropdown appears, modal pops up)
+      - Content in a DIFFERENT section updates (e.g., clicking sidebar button changes main preview)
+      - Combination of the above
+   e. Record the full cause-and-effect: "Clicking [element X] in [section A] causes [change Y] in [section B]"
+3. For element groups (e.g., a grid of 20 app buttons, a row of tabs), click at least 3 representative items to establish the pattern, then document: "All N items in this group follow the same pattern: clicking any one causes [change Y]"
+4. Any element with state-indicating attributes (`aria-expanded`, `aria-controls`, `data-state`, `aria-selected`, `aria-checked`) MUST be triggered to reveal all its states. If it has N states, visit all N.
+
+The output of this step is not just "20 clickable buttons found" — it's "clicking any of these 20 buttons swaps the main preview area to show that platform's chat UI, changes the button to active state (green bg), and updates the header badge text."
+
+This cause-and-effect documentation flows directly into component specs and tells builders exactly what behavior to implement.
 
 **Hover sweep:** Hover over every element that might have hover states:
 - Buttons, cards, links, images, nav items
