@@ -1,5 +1,6 @@
 import { websiteConfig } from '@/config/website';
-import { getCanonicalUrl, getOgImage, twitterHandleFromUrl } from '@/lib/urls';
+import { getCanonicalUrl, getBaseUrl, getOgImage, twitterHandleFromUrl } from '@/lib/urls';
+import { locales, baseLocale } from '@/paraglide/runtime.js';
 
 /**
  * Build metadata + canonical link for a page
@@ -21,7 +22,10 @@ export function seo(
   const image = options.image ?? getOgImage();
   return {
     meta: metadata({ ...options, url, image, type: options.type ?? 'website' }),
-    links: [{ rel: 'canonical', href: url }],
+    links: [
+      { rel: 'canonical', href: url },
+      ...getHreflangLinks(path),
+    ],
   };
 }
 
@@ -76,3 +80,22 @@ export const metadata = ({
   ];
   return metadata;
 };
+
+/**
+ * Generate hreflang alternate links for i18n SEO
+ */
+export function getHreflangLinks(path: string) {
+  const base = getBaseUrl().replace(/\/$/, '');
+  return [
+    ...locales.map((locale) => ({
+      rel: 'alternate' as const,
+      hrefLang: locale,
+      href: `${base}${locale === baseLocale ? '' : `/${locale}`}${path}`,
+    })),
+    {
+      rel: 'alternate' as const,
+      hrefLang: 'x-default',
+      href: `${base}${path}`,
+    },
+  ];
+}

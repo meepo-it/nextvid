@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import {
   IconChevronDown,
   IconChevronUp,
@@ -15,8 +15,6 @@ import {
   IconX
 } from '@tabler/icons-react';
 import type { Column } from '@tanstack/react-table';
-
-const t = messages.common.table;
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.ComponentProps<typeof DropdownMenuTrigger> {
@@ -62,7 +60,7 @@ export function DataTableColumnHeader<TData, TValue>({
               onClick={() => column.toggleSorting(false)}
             >
               <IconChevronUp />
-              {t.ascending}
+              {m.common_table_ascending()}
             </DropdownMenuCheckboxItem>
             <DropdownMenuCheckboxItem
               className="relative pl-2 pr-10 [&>span:first-child]:right-3 [&>span:first-child]:left-auto [&_svg]:text-muted-foreground"
@@ -70,7 +68,7 @@ export function DataTableColumnHeader<TData, TValue>({
               onClick={() => column.toggleSorting(true)}
             >
               <IconChevronDown />
-              {t.descending}
+              {m.common_table_descending()}
             </DropdownMenuCheckboxItem>
             {column.getIsSorted() && (
               <DropdownMenuItem
@@ -78,7 +76,7 @@ export function DataTableColumnHeader<TData, TValue>({
                 onClick={() => column.clearSorting()}
               >
                 <IconX />
-                {t.resetSorting}
+                {m.common_table_reset_sorting()}
               </DropdownMenuItem>
             )}
           </>
@@ -90,7 +88,7 @@ export function DataTableColumnHeader<TData, TValue>({
             onClick={() => column.toggleVisibility(false)}
           >
             <IconEyeOff />
-            {t.hideColumn}
+            {m.common_table_hide_column()}
           </DropdownMenuCheckboxItem>
         )}
       </DropdownMenuContent>

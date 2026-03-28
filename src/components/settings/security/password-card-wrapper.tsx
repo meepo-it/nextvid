@@ -1,4 +1,4 @@
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import {
   Card,
   CardContent,
@@ -13,8 +13,6 @@ import { authClient } from '@/auth/client';
 import { cn } from '@/lib/utils';
 import { UpdatePasswordCard } from './update-password-card';
 import { ResetPasswordCard } from './reset-password-card';
-
-const m = messages.settings.security.updatePassword;
 
 export function PasswordCardWrapper() {
   const { data: session } = authClient.useSession();
@@ -31,8 +29,8 @@ export function PasswordCardWrapper() {
     return (
       <Card className={cn('w-full overflow-hidden pt-6 pb-0 flex flex-col')}>
         <CardHeader>
-          <CardTitle className="text-lg font-semibold">{m.title}</CardTitle>
-          <CardDescription>{m.description}</CardDescription>
+          <CardTitle className="text-lg font-semibold">{m.settings_security_update_password_title()}</CardTitle>
+          <CardDescription>{m.settings_security_update_password_description()}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col space-y-3 flex-1">
           <Skeleton className="h-5 w-1/2" />

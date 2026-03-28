@@ -31,7 +31,7 @@ import {
 import type { ApiKey } from '@/db/types';
 import { formatDate } from '@/lib/formatter';
 import { cn } from '@/lib/utils';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import {
   type ColumnDef,
   type VisibilityState,
@@ -48,8 +48,6 @@ import {
   IconTrash,
 } from '@tabler/icons-react';
 import { useMemo, useState } from 'react';
-
-const t = messages.settings.apiKeys;
 
 function TableRowSkeleton({ columns }: { columns: number }) {
   return (
@@ -110,7 +108,7 @@ export function ApiKeysTable({
       {
         id: 'name',
         accessorKey: 'name',
-        header: t.columns.name,
+        header: m.settings_api_keys_columns_name(),
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
             <span className="font-medium">{row.original.name ?? '—'}</span>
@@ -123,7 +121,7 @@ export function ApiKeysTable({
       {
         id: 'key',
         accessorKey: 'start',
-        header: t.columns.key,
+        header: m.settings_api_keys_columns_key(),
         cell: ({ row }) => <span>{maskApiKey(row.original.start)}</span>,
         minSize: 180,
         size: 220,
@@ -132,7 +130,7 @@ export function ApiKeysTable({
       {
         id: 'createdAt',
         accessorKey: 'createdAt',
-        header: t.columns.createdAt,
+        header: m.settings_api_keys_columns_created_at(),
         cell: ({ row }) => {
           const d = toDate(row.original.createdAt);
           return d ? formatDate(d) : '—';
@@ -144,10 +142,10 @@ export function ApiKeysTable({
       {
         id: 'expiresAt',
         accessorKey: 'expiresAt',
-        header: t.columns.expiresAt,
+        header: m.settings_api_keys_columns_expires_at(),
         cell: ({ row }) => {
           const d = toDate(row.original.expiresAt ?? null);
-          return d ? formatDate(d) : t.never;
+          return d ? formatDate(d) : m.settings_api_keys_never();
         },
         minSize: 140,
         size: 160,
@@ -155,7 +153,7 @@ export function ApiKeysTable({
       },
       {
         id: 'actions',
-        header: t.columns.actions,
+        header: m.settings_api_keys_columns_actions(),
         cell: ({ row }) => {
           const keyId = row.original.id;
           return (
@@ -166,12 +164,12 @@ export function ApiKeysTable({
                 )}
               >
                 <IconDots className="size-4" />
-                <span className="sr-only">{t.columns.actions}</span>
+                <span className="sr-only">{m.settings_api_keys_columns_actions()}</span>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => onDelete(keyId)}>
                   <IconTrash className="mr-2 size-4" />
-                  {t.delete}
+                  {m.settings_api_keys_delete()}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -248,21 +246,21 @@ export function ApiKeysTable({
             )}
           >
             <IconPlus className="size-4" />
-            {t.createButton}
+            {m.settings_api_keys_create_button()}
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>{t.createDialogTitle}</DialogTitle>
-              <DialogDescription>{t.createDialogDescription}</DialogDescription>
+              <DialogTitle>{m.settings_api_keys_create_dialog_title()}</DialogTitle>
+              <DialogDescription>{m.settings_api_keys_create_dialog_description()}</DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="flex items-center gap-4">
                 <Label htmlFor="key-name" className="shrink-0">
-                  {t.keyNameLabel}
+                  {m.settings_api_keys_key_name_label()}
                 </Label>
                 <Input
                   id="key-name"
-                  placeholder={t.keyNamePlaceholder}
+                  placeholder={m.settings_api_keys_key_name_placeholder()}
                   value={newKeyName}
                   onChange={(e) => setNewKeyName(e.target.value)}
                   onKeyDown={(e) => {
@@ -278,10 +276,10 @@ export function ApiKeysTable({
                 onClick={() => setCreateDialogOpen(false)}
                 disabled={creating}
               >
-                {t.cancel}
+                {m.settings_api_keys_cancel()}
               </Button>
               <Button onClick={handleCreate} disabled={creating}>
-                {creating ? t.creating : t.create}
+                {creating ? m.settings_api_keys_creating() : m.settings_api_keys_create()}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -291,8 +289,8 @@ export function ApiKeysTable({
       <Dialog open={newKeyDialogOpen} onOpenChange={handleCloseNewKeyDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{t.newKeyDialogTitle}</DialogTitle>
-            <DialogDescription>{t.newKeyDialogDescription}</DialogDescription>
+            <DialogTitle>{m.settings_api_keys_new_key_dialog_title()}</DialogTitle>
+            <DialogDescription>{m.settings_api_keys_new_key_dialog_description()}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="flex items-center gap-2">
@@ -312,7 +310,7 @@ export function ApiKeysTable({
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={handleCloseNewKeyDialog}>{t.done}</Button>
+            <Button onClick={handleCloseNewKeyDialog}>{m.settings_api_keys_done()}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -364,7 +362,7 @@ export function ApiKeysTable({
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    {t.noResults}
+                    {m.settings_api_keys_no_results()}
                   </TableCell>
                 </TableRow>
               )}

@@ -2,7 +2,7 @@ import type { Column, Table } from "@tanstack/react-table";
 import { IconX } from "@tabler/icons-react";
 import * as React from "react";
 
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { DataTableDateFilter } from "@/components/data-table/data-table-date-filter";
 import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter";
 import { DataTableSliderFilter } from "@/components/data-table/data-table-slider-filter";
@@ -48,14 +48,14 @@ export function DataTableToolbar<TData>({
         ))}
         {isFiltered && (
           <Button
-            aria-label={messages.common.table.clearFilters}
+            aria-label={m.common_table_clear_filters()}
             variant="outline"
             size="sm"
             className="border-dashed"
             onClick={onReset}
           >
             <IconX />
-            {messages.common.table.clearFilters}
+            {m.common_table_clear_filters()}
           </Button>
         )}
       </div>

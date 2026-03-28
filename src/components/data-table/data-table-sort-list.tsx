@@ -30,9 +30,7 @@ import {
 } from "@/components/ui/select";
 import { dataTableConfig } from "@/components/data-table/config/data-table";
 import { cn } from "@/lib/utils";
-import { messages } from '@/messages';
-
-const t = messages.common.table;
+import * as m from '@/paraglide/messages.js';
 
 const SORT_SHORTCUT_KEY = "s";
 const REMOVE_SORT_SHORTCUTS = ["backspace", "delete"];
@@ -163,7 +161,7 @@ export function DataTableSortList<TData>({
             onKeyDown={onTriggerKeyDown}
           >
             <IconArrowsDownUp className="text-muted-foreground" />
-            {t.sort}
+            {m.common_table_sort()}
             {sorting.length > 0 && (
               <Badge
                 variant="secondary"
@@ -183,7 +181,7 @@ export function DataTableSortList<TData>({
       >
         <div className="flex flex-col gap-1">
           <h4 id={labelId} className="font-medium leading-none">
-            {sorting.length > 0 ? t.sortBy : t.noSortingApplied}
+            {sorting.length > 0 ? m.common_table_sort_by() : m.common_table_no_sorting_applied()}
           </h4>
           <p
             id={descriptionId}
@@ -193,8 +191,8 @@ export function DataTableSortList<TData>({
             )}
           >
             {sorting.length > 0
-              ? t.modifySortingHint
-              : t.addSortingHint}
+              ? m.common_table_modify_sorting_hint()
+              : m.common_table_add_sorting_hint()}
           </p>
         </div>
         {sorting.length > 0 && (
@@ -220,7 +218,7 @@ export function DataTableSortList<TData>({
             onClick={onSortAdd}
             disabled={columns.length === 0}
           >
-            {t.addSort}
+            {m.common_table_add_sort()}
           </Button>
           {sorting.length > 0 && (
             <Button
@@ -229,7 +227,7 @@ export function DataTableSortList<TData>({
               className="rounded"
               onClick={onSortingReset}
             >
-              {t.resetSorting}
+              {m.common_table_reset_sorting()}
             </Button>
           )}
         </div>
@@ -312,9 +310,9 @@ function DataTableSortItem({
           className="w-48 p-0"
         >
           <Command>
-            <CommandInput placeholder={t.searchFields} />
+            <CommandInput placeholder={m.common_table_search_fields()} />
             <CommandList>
-              <CommandEmpty>{t.noFieldsFound}</CommandEmpty>
+              <CommandEmpty>{m.common_table_no_fields_found()}</CommandEmpty>
               <CommandGroup>
                 {columns.map((column) => (
                   <CommandItem

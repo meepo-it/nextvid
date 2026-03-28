@@ -28,6 +28,8 @@ import appCss from '../styles.css?url';
 import { DefaultCatchBoundary } from '@/components/layout/default-catch-boundary';
 import { Routes } from '@/lib/routes';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { getLocale } from '@/paraglide/runtime.js';
+import { LocaleSuggestBanner } from '@/components/locale/locale-suggest-banner';
 
 /**
  * https://github.com/backpine/tanstack-start-on-cloudflare/blob/main/src/routes/__root.tsx
@@ -118,6 +120,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
+      <LocaleSuggestBanner />
     </div>
   );
 }
@@ -127,7 +130,7 @@ function RootComponent() {
  */
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={getLocale()} suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>

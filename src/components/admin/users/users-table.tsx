@@ -13,7 +13,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import type { User } from '@/db/types';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -37,8 +37,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
 import { formatDate, formatDateTime } from '@/lib/formatter';
 import { cn } from '@/lib/utils';
-
-const m = messages.admin.users;
 
 function TableRowSkeleton({ columns }: { columns: number }) {
   return (
@@ -119,10 +117,10 @@ export function UsersTable({
         enableHiding: true,
         enableSorting: false,
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={m.columns.name} />
+          <DataTableColumnHeader column={column} label={m.admin_users_columns_name()} />
         ),
         cell: ({ row }) => <UserDetailViewer user={row.original} />,
-        meta: { label: m.columns.name },
+        meta: { label: m.admin_users_columns_name() },
         minSize: 120,
         size: 160,
       },
@@ -132,7 +130,7 @@ export function UsersTable({
         enableHiding: true,
         enableSorting: false,
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={m.columns.email} />
+          <DataTableColumnHeader column={column} label={m.admin_users_columns_email()} />
         ),
         cell: ({ row }) => {
           const u = row.original;
@@ -143,7 +141,7 @@ export function UsersTable({
                 className="text-sm border-transparent px-1.5 py-2 hover:cursor-pointer hover:underline hover:underline-offset-4"
                 onClick={() => {
                   navigator.clipboard.writeText(u.email);
-                  toast.success(m.emailCopied);
+                  toast.success(m.admin_users_email_copied());
                 }}
               >
                 {u.emailVerified ? (
@@ -156,7 +154,7 @@ export function UsersTable({
             </div>
           );
         },
-        meta: { label: m.columns.email },
+        meta: { label: m.admin_users_columns_email() },
         minSize: 180,
         size: 220,
       },
@@ -166,7 +164,7 @@ export function UsersTable({
         enableHiding: true,
         enableSorting: false,
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={m.columns.role} />
+          <DataTableColumnHeader column={column} label={m.admin_users_columns_role()} />
         ),
         cell: ({ row }) => {
           const r = row.original.role ?? 'user';
@@ -180,11 +178,11 @@ export function UsersTable({
                   : 'bg-secondary text-secondary-foreground'
               )}
             >
-              {r === 'admin' ? m.admin : m.user}
+              {r === 'admin' ? m.admin_users_admin() : m.admin_users_user()}
             </Badge>
           );
         },
-        meta: { label: m.columns.role },
+        meta: { label: m.admin_users_columns_role() },
         minSize: 100,
         size: 120,
       },
@@ -194,10 +192,10 @@ export function UsersTable({
         enableHiding: true,
         enableSorting: false,
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={m.columns.createdAt} />
+          <DataTableColumnHeader column={column} label={m.admin_users_columns_created_at()} />
         ),
         cell: ({ row }) => formatDateTime(new Date(row.original.createdAt)),
-        meta: { label: m.columns.createdAt },
+        meta: { label: m.admin_users_columns_created_at() },
         minSize: 140,
         size: 160,
       },
@@ -207,7 +205,7 @@ export function UsersTable({
         enableHiding: true,
         enableSorting: false,
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={m.columns.status} />
+          <DataTableColumnHeader column={column} label={m.admin_users_columns_status()} />
         ),
         cell: ({ row }) => {
           const banned = row.original.banned;
@@ -224,18 +222,18 @@ export function UsersTable({
               {banned ? (
                 <>
                   <IconUserX />
-                  {m.inactive}
+                  {m.admin_users_inactive()}
                 </>
               ) : (
                 <>
                   <IconUserCheck />
-                  {m.active}
+                  {m.admin_users_active()}
                 </>
               )}
             </Badge>
           );
         },
-        meta: { label: m.columns.status },
+        meta: { label: m.admin_users_columns_status() },
         minSize: 100,
         size: 120,
       },
@@ -245,14 +243,14 @@ export function UsersTable({
         enableHiding: true,
         enableSorting: false,
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={m.columns.banReason} />
+          <DataTableColumnHeader column={column} label={m.admin_users_columns_ban_reason()} />
         ),
         cell: ({ row }) => (
           <span className="text-muted-foreground">
             {row.original.banReason ?? '-'}
           </span>
         ),
-        meta: { label: m.columns.banReason },
+        meta: { label: m.admin_users_columns_ban_reason() },
         minSize: 120,
         size: 140,
       },
@@ -262,7 +260,7 @@ export function UsersTable({
         enableHiding: true,
         enableSorting: false,
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={m.columns.banExpires} />
+          <DataTableColumnHeader column={column} label={m.admin_users_columns_ban_expires()} />
         ),
         cell: ({ row }) => {
           const exp = row.original.banExpires;
@@ -272,7 +270,7 @@ export function UsersTable({
             </span>
           );
         },
-        meta: { label: m.columns.banExpires },
+        meta: { label: m.admin_users_columns_ban_expires() },
         minSize: 140,
         size: 160,
       },
@@ -282,15 +280,15 @@ export function UsersTable({
 
   const roleFilterOptions = useMemo(
     () => [
-      { label: m.admin, value: 'admin' },
-      { label: m.user, value: 'user' },
+      { label: m.admin_users_admin(), value: 'admin' },
+      { label: m.admin_users_user(), value: 'user' },
     ],
     []
   );
   const statusFilterOptions = useMemo(
     () => [
-      { label: m.active, value: 'active' },
-      { label: m.inactive, value: 'inactive' },
+      { label: m.admin_users_active(), value: 'active' },
+      { label: m.admin_users_inactive(), value: 'inactive' },
     ],
     []
   );
@@ -341,7 +339,7 @@ export function UsersTable({
         <div className="flex flex-1 flex-wrap items-center gap-2">
           <div className="relative">
             <Input
-              placeholder={m.search}
+              placeholder={m.admin_users_search()}
               value={search}
               onChange={(e) => {
                 onSearch(e.target.value);
@@ -352,7 +350,7 @@ export function UsersTable({
             {search.length > 0 ? (
               <button
                 type="button"
-                aria-label={m.clearSearch}
+                aria-label={m.admin_users_clear_search()}
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
                 onClick={() => {
                   onSearch('');
@@ -365,12 +363,12 @@ export function UsersTable({
           </div>
           <DataTableFacetedFilter
             column={table.getColumn('role')}
-            title={m.columns.role}
+            title={m.admin_users_columns_role()}
             options={roleFilterOptions}
           />
           <DataTableFacetedFilter
             column={table.getColumn('status')}
-            title={m.columns.status}
+            title={m.admin_users_columns_status()}
             options={statusFilterOptions}
           />
         </div>
@@ -422,7 +420,7 @@ export function UsersTable({
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    {m.noResults}
+                    {m.admin_users_no_results()}
                   </TableCell>
                 </TableRow>
               )}

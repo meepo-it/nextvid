@@ -1,11 +1,7 @@
 import { HeaderSection } from '@/components/shared/header-section';
 import { ScrollReveal } from '@/components/shared/scroll-reveal';
 import { PricingTable } from '@/components/pricing/pricing-table';
-
-const m = {
-  subtitle: 'Pricing',
-  description: 'Choose the plan that fits your needs',
-};
+import * as m from '@/paraglide/messages.js';
 
 export default function PricingSection() {
   return (
@@ -13,9 +9,9 @@ export default function PricingSection() {
       <div className="mx-auto max-w-6xl space-y-16">
         <ScrollReveal>
           <HeaderSection
-            subtitle={m.subtitle}
+            subtitle={m.blocks_pricing_subtitle()}
             subtitleClassName="text-4xl font-bold"
-            description={m.description}
+            description={m.blocks_pricing_description()}
           />
         </ScrollReveal>
         <ScrollReveal delay={150}>

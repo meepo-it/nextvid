@@ -20,9 +20,7 @@ import type { Option } from '@/components/data-table/types/data-table';
 import type { Column } from '@tanstack/react-table';
 import { IconCheck, IconCirclePlus, IconCircleX } from '@tabler/icons-react';
 import * as React from 'react';
-import { messages } from '@/messages';
-
-const t = messages.common.table;
+import * as m from '@/paraglide/messages.js';
 
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>;
@@ -120,7 +118,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                       variant="secondary"
                       className="rounded-sm px-1 font-normal"
                     >
-                      {selectedValues.size} {t.selected}
+                      {selectedValues.size} {m.common_table_selected()}
                     </Badge>
                   ) : (
                     options
@@ -145,7 +143,7 @@ export function DataTableFacetedFilter<TData, TValue>({
         <Command>
           <CommandInput placeholder={title} />
           <CommandList className="max-h-full">
-            <CommandEmpty>{t.noResultsFound}</CommandEmpty>
+            <CommandEmpty>{m.common_table_no_results_found()}</CommandEmpty>
             <CommandGroup className="max-h-[300px] scroll-py-1 overflow-y-auto overflow-x-hidden">
               {options.map((option) => {
                 const isSelected = selectedValues.has(option.value);
@@ -184,7 +182,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                     onSelect={() => onReset()}
                     className="justify-center text-center"
                   >
-                    {t.clearFilters}
+                    {m.common_table_clear_filters()}
                   </CommandItem>
                 </CommandGroup>
               </>

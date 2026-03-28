@@ -1,7 +1,7 @@
 import { createFileRoute, useSearch } from '@tanstack/react-router';
 import { DashboardHeader } from '@/components/layout/dashboard-header';
 import { PaymentCard } from '@/components/payment/payment-card';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 
 export const Route = createFileRoute('/settings/payment')({
   validateSearch: (s): { session_id?: string; callback?: string } => ({
@@ -14,8 +14,8 @@ export const Route = createFileRoute('/settings/payment')({
 function PaymentPage() {
   const search = useSearch({ from: '/settings/payment' });
   const breadcrumbs = [
-    { label: messages.common.settings, isCurrentPage: false },
-    { label: messages.settings.billing.breadcrumb, isCurrentPage: true },
+    { label: m.common_settings(), isCurrentPage: false },
+    { label: m.settings_billing_breadcrumb(), isCurrentPage: true },
   ];
 
   return (

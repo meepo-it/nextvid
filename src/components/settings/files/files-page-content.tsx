@@ -4,11 +4,9 @@ import {
   useUploadUserFile,
   useUserFiles,
 } from '@/hooks/use-user-files';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { toast } from 'sonner';
 import { useState } from 'react';
-
-const t = messages.settings.files;
 
 export function FilesPageContent() {
   const [page, setPage] = useState(0);
@@ -26,11 +24,11 @@ export function FilesPageContent() {
     new Promise<void>((resolve, reject) => {
       uploadMutation.mutate(params, {
         onSuccess: () => {
-          toast.success(t.uploadSuccess);
+          toast.success(m.settings_files_upload_success());
           resolve();
         },
         onError: (err) => {
-          toast.error(err.message || t.uploadError);
+          toast.error(err.message || m.settings_files_upload_error());
           reject(err);
         },
       });
@@ -38,8 +36,8 @@ export function FilesPageContent() {
 
   const handleDelete = (id: string) => {
     deleteMutation.mutate(id, {
-      onSuccess: () => toast.success(t.deleteSuccess),
-      onError: () => toast.error(t.deleteError),
+      onSuccess: () => toast.success(m.settings_files_delete_success()),
+      onError: () => toast.error(m.settings_files_delete_error()),
     });
   };
 

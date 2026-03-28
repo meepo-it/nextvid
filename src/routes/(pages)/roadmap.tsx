@@ -2,16 +2,14 @@ import { createFileRoute } from '@tanstack/react-router';
 import Container from '@/components/layout/container';
 import { Roadmap } from '@/components/roadmap/roadmap';
 import { websiteConfig } from '@/config/website';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { seo } from '@/lib/seo';
-
-const m = messages.roadmap;
 
 export const Route = createFileRoute('/(pages)/roadmap')({
   head: () =>
     seo('/roadmap', {
-      title: `${m.title} | ${websiteConfig.metadata?.name}`,
-      description: m.description,
+      title: `${m.roadmap_title()} | ${websiteConfig.metadata?.name}`,
+      description: m.roadmap_subtitle(),
     }),
   component: RoadmapPage,
 });
@@ -25,10 +23,10 @@ function RoadmapPage() {
       <div className="mx-auto space-y-8">
         <div className="space-y-4">
           <h1 className="text-center text-3xl font-bold tracking-tight">
-            {m.title}
+            {m.roadmap_title()}
           </h1>
           <p className="text-center text-lg text-muted-foreground">
-            {m.subtitle}
+            {m.roadmap_subtitle()}
           </p>
         </div>
 

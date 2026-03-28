@@ -14,36 +14,16 @@ import {
   IconId,
 } from '@tabler/icons-react';
 import { useState } from 'react';
-
-const m = {
-  title: 'FEATURES',
-  subtitle: 'Everything you need to ship',
-  description: 'Built-in features so you can focus on your product',
-  items: {
-    'item-1': {
-      title: 'Database',
-      description:
-        'Store and query your data with a powerful database layer. Supports relations, migrations, and type-safe access.',
-    },
-    'item-2': {
-      title: 'Authentication',
-      description:
-        'Secure auth with email, OAuth, and magic links. Session management and role-based access built in.',
-    },
-    'item-3': {
-      title: 'Identity',
-      description:
-        'User profiles, avatars, and account management. Connect multiple providers per user.',
-    },
-    'item-4': {
-      title: 'Analytics',
-      description:
-        'Track usage and conversions. Dashboards and reports out of the box.',
-    },
-  },
-};
+import * as m from '@/paraglide/messages.js';
 
 type ImageKey = 'item-1' | 'item-2' | 'item-3' | 'item-4';
+
+const featureItems: Record<ImageKey, { title: () => string; description: () => string }> = {
+  'item-1': { title: m.blocks_features_item1_title, description: m.blocks_features_item1_description },
+  'item-2': { title: m.blocks_features_item2_title, description: m.blocks_features_item2_description },
+  'item-3': { title: m.blocks_features_item3_title, description: m.blocks_features_item3_description },
+  'item-4': { title: m.blocks_features_item4_title, description: m.blocks_features_item4_description },
+};
 
 const icons: Record<ImageKey, Icon> = {
   'item-1': IconDatabase,
@@ -86,9 +66,9 @@ export default function FeaturesSection() {
       <div className="mx-auto max-w-6xl px-2 lg:px-0 space-y-8 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
         <ScrollReveal>
           <HeaderSection
-            title={m.title}
-            subtitle={m.subtitle}
-            description={m.description}
+            title={m.blocks_features_title()}
+            subtitle={m.blocks_features_subtitle()}
+            description={m.blocks_features_description()}
           />
         </ScrollReveal>
 
@@ -97,9 +77,9 @@ export default function FeaturesSection() {
             <div className="flex flex-col gap-8 lg:col-span-5">
               <div className="text-left lg:pr-0">
                 <h3 className="py-1 text-3xl font-semibold leading-normal text-foreground lg:text-4xl">
-                  {m.title}
+                  {m.blocks_features_title()}
                 </h3>
-                <p className="mt-4 text-muted-foreground">{m.description}</p>
+                <p className="mt-4 text-muted-foreground">{m.blocks_features_description()}</p>
               </div>
               <Accordion
                 value={[activeItem]}
@@ -108,18 +88,18 @@ export default function FeaturesSection() {
                 }
                 className="w-full"
               >
-                {(Object.keys(m.items) as ImageKey[]).map((key) => {
+                {(Object.keys(featureItems) as ImageKey[]).map((key) => {
                   const ItemIcon = icons[key];
                   return (
                     <AccordionItem key={key} value={key}>
                       <AccordionTrigger>
                         <div className="flex items-center gap-2 text-base">
                           <ItemIcon className="size-4" />
-                          {m.items[key].title}
+                          {featureItems[key].title()}
                         </div>
                       </AccordionTrigger>
                       <AccordionContent className="text-muted-foreground">
-                        {m.items[key].description}
+                        {featureItems[key].description()}
                       </AccordionContent>
                     </AccordionItem>
                   );

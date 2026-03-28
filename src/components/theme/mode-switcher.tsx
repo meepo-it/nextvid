@@ -7,9 +7,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { IconDeviceDesktop, IconMoon, IconSun } from '@tabler/icons-react';
 import { useTheme } from '@/components/theme/theme-provider';
-import { messages } from '@/messages';
-
-const m = messages.common;
+import * as m from '@/paraglide/messages.js';
 
 /**
  * Theme mode switcher (light / dark / system), used in navbar.
@@ -35,15 +33,15 @@ export function ModeSwitcher() {
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme('light')}>
           <IconSun className="mr-2 size-4" />
-          {m.mode.light}
+          {m.common_mode_light()}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('dark')}>
           <IconMoon className="mr-2 size-4" />
-          {m.mode.dark}
+          {m.common_mode_dark()}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('system')}>
           <IconDeviceDesktop className="mr-2 size-4" />
-          {m.mode.system}
+          {m.common_mode_system()}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

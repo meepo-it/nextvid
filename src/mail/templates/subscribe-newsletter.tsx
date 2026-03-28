@@ -1,14 +1,12 @@
 import EmailLayout from '../components/email-layout';
 import { Heading, Text } from '@react-email/components';
-import { messages } from '@/messages';
-
-const m = messages.mail.subscribeNewsletter;
+import * as m from '@/paraglide/messages.js';
 
 export default function SubscribeNewsletter() {
   return (
     <EmailLayout>
-      <Heading className="text-xl">{m.title}</Heading>
-      <Text>{m.body}</Text>
+      <Heading className="text-xl">{m.mail_subscribe_newsletter_title()}</Heading>
+      <Text>{m.mail_subscribe_newsletter_body()}</Text>
     </EmailLayout>
   );
 }

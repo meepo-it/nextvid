@@ -7,6 +7,30 @@ import { fileURLToPath, URL } from 'url';
 import tailwindcss from '@tailwindcss/vite';
 import { cloudflare } from '@cloudflare/vite-plugin';
 import contentCollections from '@content-collections/vite';
+import { paraglideVitePlugin } from '@inlang/paraglide-js';
+
+// ── i18n URL pattern helpers ──────────────────────────────────────
+const BASE_LOCALE = 'en';
+const LOCALES = ['en', 'zh', 'ja'] as const;
+
+/** Public route: default locale has no prefix, others get /{locale} prefix */
+function publicPattern(path: string) {
+  return {
+    pattern: path,
+    localized: LOCALES.map((l) => [
+      l,
+      l === BASE_LOCALE ? path : `/${l}${path === '/' ? '' : path}`,
+    ]),
+  };
+}
+
+/** Protected/API route: same URL for all locales, no prefix */
+function protectedPattern(path: string) {
+  return {
+    pattern: path,
+    localized: LOCALES.map((l) => [l, path]),
+  };
+}
 
 /**
  * Vite configuration
@@ -25,6 +49,35 @@ const config = defineConfig({
     // this is the plugin that enables path aliases
     viteTsConfigPaths({
       projects: ['./tsconfig.json'],
+    }),
+    // Paraglide i18n — compile-time translations with URL-based locale routing
+    paraglideVitePlugin({
+      project: './project.inlang',
+      outdir: './src/paraglide',
+      outputStructure: 'message-modules',
+      cookieName: 'PARAGLIDE_LOCALE',
+      strategy: ['url', 'cookie', 'preferredLanguage', 'baseLocale'],
+      urlPatterns: [
+        // Public / marketing pages — default locale has no prefix
+        publicPattern('/'),
+        publicPattern('/pricing'),
+        publicPattern('/about'),
+        publicPattern('/contact'),
+        publicPattern('/blog'),
+        publicPattern('/blog/:slug'),
+        publicPattern('/changelog'),
+        publicPattern('/roadmap'),
+        publicPattern('/waitlist'),
+        publicPattern('/auth/:path(.*)?'),
+        publicPattern('/terms'),
+        publicPattern('/privacy'),
+        publicPattern('/cookie'),
+        // Protected & API routes — no locale prefix
+        protectedPattern('/dashboard/:path(.*)?'),
+        protectedPattern('/settings/:path(.*)?'),
+        protectedPattern('/admin/:path(.*)?'),
+        protectedPattern('/api/:path(.*)?'),
+      ],
     }),
     // https://tanstack.dev/start/latest/docs/framework/react/build-from-scratch
     tanstackStart({

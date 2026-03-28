@@ -20,11 +20,24 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { IconEye, IconEyeOff, IconLoader2 } from '@tabler/icons-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import * as z from 'zod';
 import { SocialLoginButton } from './social-login-button';
 
-const m = messages.auth.login;
+const authErrorCodes: Record<string, () => string> = {
+  signup_disabled: m.auth_error_codes_signup_disabled,
+  account_already_linked_to_different_user: m.auth_error_codes_account_already_linked_to_different_user,
+  unable_to_link_account: m.auth_error_codes_unable_to_link_account,
+  unable_to_get_user_info: m.auth_error_codes_unable_to_get_user_info,
+  "email_doesn't_match": m.auth_error_codes_email_doesnt_match,
+  email_not_found: m.auth_error_codes_email_not_found,
+  oauth_provider_not_found: m.auth_error_codes_oauth_provider_not_found,
+  no_callback_url: m.auth_error_codes_no_callback_url,
+  no_code: m.auth_error_codes_no_code,
+  state_mismatch: m.auth_error_codes_state_mismatch,
+  state_not_found: m.auth_error_codes_state_not_found,
+  invalid_callback_request: m.auth_error_codes_invalid_callback_request,
+};
 
 interface LoginFormProps {
   className?: string;
@@ -55,8 +68,8 @@ export function LoginForm({
     websiteConfig.auth?.enableCredentialLogin ?? false;
 
   const LoginSchema = z.object({
-    email: z.email({ message: m.emailRequired }),
-    password: z.string().min(1, { message: m.passwordRequired }),
+    email: z.email({ message: m.auth_login_email_required() }),
+    password: z.string().min(1, { message: m.auth_login_password_required() }),
   });
 
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -89,8 +102,8 @@ export function LoginForm({
         onError: (ctx) => {
           const code = ctx.error.code;
           const friendlyMessage =
-            code && messages.auth.error.codes[code]
-              ? messages.auth.error.codes[code]
+            code && authErrorCodes[code]
+              ? authErrorCodes[code]()
               : ctx.error.message;
           setError(friendlyMessage);
         },
@@ -104,8 +117,8 @@ export function LoginForm({
 
   return (
     <AuthCard
-      headerLabel={m.welcomeBack}
-      bottomButtonLabel={m.signUpHint}
+      headerLabel={m.auth_login_welcome_back()}
+      bottomButtonLabel={m.auth_login_sign_up_hint()}
       bottomButtonHref={Routes.Register}
       className={cn('', className)}
     >
@@ -118,12 +131,12 @@ export function LoginForm({
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{m.email}</FormLabel>
+                    <FormLabel>{m.auth_login_email()}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         disabled={isPending}
-                        placeholder={m.placeholderEmail}
+                        placeholder={m.auth_login_placeholder_email()}
                         type="email"
                       />
                     </FormControl>
@@ -137,12 +150,12 @@ export function LoginForm({
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex justify-between items-center">
-                      <FormLabel>{m.password}</FormLabel>
+                      <FormLabel>{m.auth_login_password()}</FormLabel>
                       <Link
                         to={Routes.ForgotPassword}
                         className="text-xs font-normal text-muted-foreground hover:underline hover:underline-offset-4 hover:text-primary"
                       >
-                        {m.forgotPassword}
+                        {m.auth_login_forgot_password()}
                       </Link>
                     </div>
                     <div className="relative">
@@ -150,7 +163,7 @@ export function LoginForm({
                         <Input
                           {...field}
                           disabled={isPending}
-                          placeholder={m.placeholderPassword}
+                          placeholder={m.auth_login_placeholder_password()}
                           type={showPassword ? 'text' : 'password'}
                           className="pr-10"
                         />
@@ -169,7 +182,7 @@ export function LoginForm({
                           <IconEye className="size-4 text-muted-foreground" />
                         )}
                         <span className="sr-only">
-                          {showPassword ? m.hidePassword : m.showPassword}
+                          {showPassword ? m.auth_login_hide_password() : m.auth_login_show_password()}
                         </span>
                       </Button>
                     </div>
@@ -187,7 +200,7 @@ export function LoginForm({
               className="w-full flex items-center justify-center gap-2"
             >
               {isPending && <IconLoader2 className="size-4 animate-spin" />}
-              <span>{m.signIn}</span>
+              <span>{m.auth_login_sign_in()}</span>
             </Button>
           </form>
         </Form>

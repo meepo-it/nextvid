@@ -19,10 +19,23 @@ import { IconEye, IconEyeOff, IconLoader2 } from '@tabler/icons-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { SocialLoginButton } from './social-login-button';
 
-const m = messages.auth.register;
+const authErrorCodes: Record<string, () => string> = {
+  signup_disabled: m.auth_error_codes_signup_disabled,
+  account_already_linked_to_different_user: m.auth_error_codes_account_already_linked_to_different_user,
+  unable_to_link_account: m.auth_error_codes_unable_to_link_account,
+  unable_to_get_user_info: m.auth_error_codes_unable_to_get_user_info,
+  "email_doesn't_match": m.auth_error_codes_email_doesnt_match,
+  email_not_found: m.auth_error_codes_email_not_found,
+  oauth_provider_not_found: m.auth_error_codes_oauth_provider_not_found,
+  no_callback_url: m.auth_error_codes_no_callback_url,
+  no_code: m.auth_error_codes_no_code,
+  state_mismatch: m.auth_error_codes_state_mismatch,
+  state_not_found: m.auth_error_codes_state_not_found,
+  invalid_callback_request: m.auth_error_codes_invalid_callback_request,
+};
 
 interface RegisterFormProps {
   callbackUrl?: string;
@@ -49,9 +62,9 @@ export function RegisterForm({
     websiteConfig.auth?.enableCredentialLogin ?? true;
 
   const RegisterSchema = z.object({
-    email: z.string().email({ message: m.emailRequired }),
-    password: z.string().min(1, { message: m.passwordRequired }),
-    name: z.string().min(1, { message: m.nameRequired }),
+    email: z.string().email({ message: m.auth_register_email_required() }),
+    password: z.string().min(1, { message: m.auth_register_password_required() }),
+    name: z.string().min(1, { message: m.auth_register_name_required() }),
   });
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
@@ -74,12 +87,12 @@ export function RegisterForm({
           setSuccess('');
         },
         onResponse: () => setIsPending(false),
-        onSuccess: () => setSuccess(m.checkEmail),
+        onSuccess: () => setSuccess(m.auth_register_check_email()),
         onError: (ctx) => {
           const code = ctx.error.code;
           const friendlyMessage =
-            code && messages.auth.error.codes[code]
-              ? messages.auth.error.codes[code]
+            code && authErrorCodes[code]
+              ? authErrorCodes[code]()
               : ctx.error.message;
           setError(friendlyMessage);
         },
@@ -93,8 +106,8 @@ export function RegisterForm({
 
   return (
     <AuthCard
-      headerLabel={m.createAccount}
-      bottomButtonLabel={m.signInHint}
+      headerLabel={m.auth_register_create_account()}
+      bottomButtonLabel={m.auth_register_sign_in_hint()}
       bottomButtonHref={Routes.Login}
     >
       {credentialLoginEnabled && (
@@ -106,12 +119,12 @@ export function RegisterForm({
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{m.name}</FormLabel>
+                    <FormLabel>{m.auth_register_name()}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         disabled={isPending}
-                        placeholder={m.placeholderName}
+                        placeholder={m.auth_register_placeholder_name()}
                       />
                     </FormControl>
                     <FormMessage />
@@ -123,12 +136,12 @@ export function RegisterForm({
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{m.email}</FormLabel>
+                    <FormLabel>{m.auth_register_email()}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         disabled={isPending}
-                        placeholder={m.placeholderEmail}
+                        placeholder={m.auth_register_placeholder_email()}
                         type="email"
                       />
                     </FormControl>
@@ -141,13 +154,13 @@ export function RegisterForm({
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{m.password}</FormLabel>
+                    <FormLabel>{m.auth_register_password()}</FormLabel>
                     <div className="relative">
                       <FormControl>
                         <Input
                           {...field}
                           disabled={isPending}
-                          placeholder={m.placeholderPassword}
+                          placeholder={m.auth_register_placeholder_password()}
                           type={showPassword ? 'text' : 'password'}
                           className="pr-10"
                         />
@@ -166,7 +179,7 @@ export function RegisterForm({
                           <IconEye className="size-4 text-muted-foreground" />
                         )}
                         <span className="sr-only">
-                          {showPassword ? m.hidePassword : m.showPassword}
+                          {showPassword ? m.auth_register_hide_password() : m.auth_register_show_password()}
                         </span>
                       </Button>
                     </div>
@@ -184,7 +197,7 @@ export function RegisterForm({
               className="w-full flex items-center justify-center gap-2"
             >
               {isPending && <IconLoader2 className="size-4 animate-spin" />}
-              <span>{m.signUp}</span>
+              <span>{m.auth_register_sign_up()}</span>
             </Button>
           </form>
         </Form>

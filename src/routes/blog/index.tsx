@@ -4,7 +4,7 @@ import { BlogGrid } from '@/components/blog/blog-grid';
 import { BlogPagination } from '@/components/blog/blog-pagination';
 import { getPaginatedPosts } from '@/lib/blog';
 import { websiteConfig } from '@/config/website';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { seo } from '@/lib/seo';
 
 export const Route = createFileRoute('/blog/')({
@@ -22,8 +22,8 @@ export const Route = createFileRoute('/blog/')({
   },
   head: () =>
     seo('/blog', {
-      title: `${messages.blog.title} | ${websiteConfig.metadata?.name}`,
-      description: messages.blog.description,
+      title: `${m.blog_title()} | ${websiteConfig.metadata?.name}`,
+      description: m.blog_title(),
     }),
   component: BlogListPage,
 });
@@ -39,10 +39,10 @@ function BlogListPage() {
       <div className="mx-auto space-y-8">
         <div className="space-y-4 text-center">
           <h1 className="text-3xl font-bold tracking-tight">
-            {messages.blog.title}
+            {m.blog_title()}
           </h1>
           <p className="text-muted-foreground text-lg">
-            {messages.blog.description}
+            {m.blog_title()}
           </p>
         </div>
         <BlogGrid posts={posts} />

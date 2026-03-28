@@ -11,10 +11,8 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { cn } from "@/lib/utils";
-
-const t = messages.common.table;
 
 interface Range {
   min: number;
@@ -154,7 +152,7 @@ export function DataTableSliderFilter<TData>({
             {columnFilterValue ? (
               <div
                 role="button"
-                aria-label={`${t.clear} ${title} ${t.filter}`}
+                aria-label={m.common_table_clear_filter_label({ title: title ?? '' })}
                 tabIndex={0}
                 className="rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 onClick={onReset}
@@ -186,7 +184,7 @@ export function DataTableSliderFilter<TData>({
           </p>
           <div className="flex items-center gap-4">
             <Label htmlFor={`${id}-from`} className="sr-only">
-              {t.from}
+              {m.common_table_from()}
             </Label>
             <div className="relative">
               <Input
@@ -210,7 +208,7 @@ export function DataTableSliderFilter<TData>({
               )}
             </div>
             <Label htmlFor={`${id}-to`} className="sr-only">
-              {t.to}
+              {m.common_table_to()}
             </Label>
             <div className="relative">
               <Input
@@ -235,7 +233,7 @@ export function DataTableSliderFilter<TData>({
             </div>
           </div>
           <Label htmlFor={`${id}-slider`} className="sr-only">
-            {title} {t.slider}
+            {title} {m.common_table_slider()}
           </Label>
           <Slider
             id={`${id}-slider`}
@@ -247,12 +245,12 @@ export function DataTableSliderFilter<TData>({
           />
         </div>
         <Button
-          aria-label={`${t.clear} ${title} ${t.filter}`}
+          aria-label={m.common_table_clear_filter_label({ title: title ?? '' })}
           variant="outline"
           size="sm"
           onClick={onReset}
         >
-          {t.clear}
+          {m.common_table_clear()}
         </Button>
       </PopoverContent>
     </Popover>

@@ -1,5 +1,5 @@
 import { clientEnv } from '@/env/client';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import type { WebsiteConfig } from '../types';
 import {
   DEFAULT_ALLOWED_TYPES,
@@ -18,9 +18,9 @@ export const websiteConfig: WebsiteConfig = {
     },
   },
   metadata: {
-    name: messages.site.name,
-    title: messages.site.title,
-    description: messages.site.description,
+    get name() { return m.site_name(); },
+    get title() { return m.site_title(); },
+    get description() { return m.site_description(); },
     images: {
       ogImage: '/og.png',
       logoLight: '/logo.png',
@@ -79,10 +79,10 @@ export const websiteConfig: WebsiteConfig = {
           prices: [],
           isFree: true,
           isLifetime: false,
-          name: messages.pricing.plans.free.name,
-          description: messages.pricing.plans.free.description,
-          features: [...messages.pricing.plans.free.features],
-          limits: [...messages.pricing.plans.free.limits],
+          get name() { return m.pricing_plans_free_name(); },
+          get description() { return m.pricing_plans_free_description(); },
+          get features() { return [m.pricing_plans_free_features_0(), m.pricing_plans_free_features_1(), m.pricing_plans_free_features_2(), m.pricing_plans_free_features_3()]; },
+          get limits() { return [m.pricing_plans_free_limits_0(), m.pricing_plans_free_limits_1(), m.pricing_plans_free_limits_2()]; },
         },
         pro: {
           id: 'pro',
@@ -105,10 +105,10 @@ export const websiteConfig: WebsiteConfig = {
           isFree: false,
           isLifetime: false,
           popular: true,
-          name: messages.pricing.plans.pro.name,
-          description: messages.pricing.plans.pro.description,
-          features: [...messages.pricing.plans.pro.features],
-          limits: [...messages.pricing.plans.pro.limits],
+          get name() { return m.pricing_plans_pro_name(); },
+          get description() { return m.pricing_plans_pro_description(); },
+          get features() { return [m.pricing_plans_pro_features_0(), m.pricing_plans_pro_features_1(), m.pricing_plans_pro_features_2(), m.pricing_plans_pro_features_3(), m.pricing_plans_pro_features_4()]; },
+          get limits() { return [m.pricing_plans_pro_limits_0(), m.pricing_plans_pro_limits_1()]; },
         },
         lifetime: {
           id: 'lifetime',
@@ -123,10 +123,10 @@ export const websiteConfig: WebsiteConfig = {
           ],
           isFree: false,
           isLifetime: true,
-          name: messages.pricing.plans.lifetime.name,
-          description: messages.pricing.plans.lifetime.description,
-          features: [...messages.pricing.plans.lifetime.features],
-          limits: [...messages.pricing.plans.lifetime.limits],
+          get name() { return m.pricing_plans_lifetime_name(); },
+          get description() { return m.pricing_plans_lifetime_description(); },
+          get features() { return [m.pricing_plans_lifetime_features_0(), m.pricing_plans_lifetime_features_1(), m.pricing_plans_lifetime_features_2(), m.pricing_plans_lifetime_features_3(), m.pricing_plans_lifetime_features_4(), m.pricing_plans_lifetime_features_5(), m.pricing_plans_lifetime_features_6()]; },
+          get limits() { return [] as string[]; },
         },
       },
     },

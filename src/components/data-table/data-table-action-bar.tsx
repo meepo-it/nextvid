@@ -9,10 +9,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { cn } from "@/lib/utils";
-
-const t = messages.common.table;
 
 interface DataTableActionBarProps<TData>
   extends React.ComponentProps<"div"> {
@@ -149,7 +147,7 @@ function DataTableActionBarSelection<TData>({
   return (
     <div className="flex h-7 items-center rounded-md border pr-1 pl-2.5">
       <span className="whitespace-nowrap text-xs">
-        {table.getFilteredSelectedRowModel().rows.length} {t.selected}
+        {table.getFilteredSelectedRowModel().rows.length} {m.common_table_selected()}
       </span>
       <Separator
         orientation="vertical"
@@ -173,7 +171,7 @@ function DataTableActionBarSelection<TData>({
           sideOffset={10}
           className="flex items-center gap-2 border bg-accent px-2 py-1 font-semibold text-foreground dark:bg-zinc-900 [&>span]:hidden"
         >
-          <p>{t.clearSelection}</p>
+          <p>{m.common_table_clear_selection()}</p>
           <kbd className="select-none rounded border bg-background px-1.5 py-px font-mono font-normal text-[0.7rem] text-foreground shadow-xs">
             <abbr title="Escape" className="no-underline">
               Esc

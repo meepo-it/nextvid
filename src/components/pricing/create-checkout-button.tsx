@@ -2,12 +2,10 @@ import { createCheckoutSession } from '@/api/payment';
 import { Button } from '@/components/ui/button';
 import { websiteConfig } from '@/config/website';
 import { cn } from '@/lib/utils';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { IconLoader2 } from '@tabler/icons-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
-
-const m = messages.pricing.checkout;
 
 interface CheckoutButtonProps {
   planId: string;
@@ -96,11 +94,11 @@ export function CheckoutButton({
       if (result?.url) {
         window.location.href = result.url;
       } else {
-        toast.error(m.failed);
+        toast.error(m.pricing_checkout_failed());
       }
     } catch (err) {
       console.error('Checkout error:', err);
-      toast.error(m.failed);
+      toast.error(m.pricing_checkout_failed());
     } finally {
       setIsLoading(false);
     }
@@ -117,7 +115,7 @@ export function CheckoutButton({
       {isLoading ? (
         <>
           <IconLoader2 className="mr-2 size-4 animate-spin" />
-          {m.loading}
+          {m.pricing_checkout_loading()}
         </>
       ) : (
         children

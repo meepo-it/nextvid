@@ -6,50 +6,22 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import * as m from '@/paraglide/messages.js';
 
-const m = {
-  title: 'FAQs',
-  subtitle: 'Frequently asked questions',
-  items: {
-    'item-1': {
-      question: 'Can I change my plan later?',
-      answer:
-        'Yes, you can upgrade or downgrade your plan at any time. Changes take effect at the start of the next billing cycle.',
-    },
-    'item-2': {
-      question: 'What payment methods do you accept?',
-      answer:
-        'We accept all major credit cards, PayPal, and wire transfer for annual plans.',
-    },
-    'item-3': {
-      question: 'Is there a free trial?',
-      answer:
-        'Yes, we offer a 14-day free trial on all paid plans. No credit card required.',
-    },
-    'item-4': {
-      question: 'What is your refund policy?',
-      answer:
-        'We offer a 30-day money-back guarantee. Contact support for a full refund.',
-    },
-    'item-5': {
-      question: 'How do I get support?',
-      answer:
-        'Email support is included for all plans. Pro and above get priority support.',
-    },
-  },
-};
-
-const faqItems = Object.entries(m.items).map(([id, item]) => ({
-  id,
-  ...item,
-}));
+const faqItems = [
+  { id: 'item-1', question: () => m.blocks_faqs_item1_question(), answer: () => m.blocks_faqs_item1_answer() },
+  { id: 'item-2', question: () => m.blocks_faqs_item2_question(), answer: () => m.blocks_faqs_item2_answer() },
+  { id: 'item-3', question: () => m.blocks_faqs_item3_question(), answer: () => m.blocks_faqs_item3_answer() },
+  { id: 'item-4', question: () => m.blocks_faqs_item4_question(), answer: () => m.blocks_faqs_item4_answer() },
+  { id: 'item-5', question: () => m.blocks_faqs_item5_question(), answer: () => m.blocks_faqs_item5_answer() },
+];
 
 export default function FaqSection() {
   return (
     <section id="faqs" className="px-4 py-16 md:py-24">
       <div className="mx-auto max-w-4xl">
         <ScrollReveal>
-          <HeaderSection title={m.title} subtitle={m.subtitle} />
+          <HeaderSection title={m.blocks_faqs_title()} subtitle={m.blocks_faqs_subtitle()} />
         </ScrollReveal>
 
         <ScrollReveal delay={150} className="mx-auto mt-12 max-w-4xl">
@@ -61,11 +33,11 @@ export default function FaqSection() {
                 className="border-dashed"
               >
                 <AccordionTrigger className="text-base hover:no-underline">
-                  {item.question}
+                  {item.question()}
                 </AccordionTrigger>
                 <AccordionContent>
                   <p className="text-base text-muted-foreground">
-                    {item.answer}
+                    {item.answer()}
                   </p>
                 </AccordionContent>
               </AccordionItem>

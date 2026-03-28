@@ -4,11 +4,9 @@ import {
   useCreateApiKey,
   useDeleteApiKey,
 } from '@/hooks/use-apikeys';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { toast } from 'sonner';
 import { useState } from 'react';
-
-const t = messages.settings.apiKeys;
 
 export function ApiKeysPageContent() {
   const [page, setPage] = useState(0);
@@ -24,11 +22,11 @@ export function ApiKeysPageContent() {
         { name },
         {
           onSuccess: (data) => {
-            toast.success(t.createSuccess);
+            toast.success(m.settings_api_keys_create_success());
             resolve(data?.key ? { key: data.key } : undefined);
           },
           onError: () => {
-            toast.error(t.createError);
+            toast.error(m.settings_api_keys_create_error());
             resolve(undefined);
           },
         }
@@ -39,8 +37,8 @@ export function ApiKeysPageContent() {
     deleteMutation.mutate(
       { keyId },
       {
-        onSuccess: () => toast.success(t.deleteSuccess),
-        onError: () => toast.error(t.deleteError),
+        onSuccess: () => toast.success(m.settings_api_keys_delete_success()),
+        onError: () => toast.error(m.settings_api_keys_delete_error()),
       }
     );
   };

@@ -2,16 +2,14 @@ import { createFileRoute } from '@tanstack/react-router';
 import Container from '@/components/layout/container';
 import { ContactFormCard } from '@/components/contact/contact-form-card';
 import { websiteConfig } from '@/config/website';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { seo } from '@/lib/seo';
-
-const m = messages.contact;
 
 export const Route = createFileRoute('/(pages)/contact')({
   head: () =>
     seo('/contact', {
-      title: `${m.title} | ${websiteConfig.metadata?.name}`,
-      description: m.description,
+      title: `${m.contact_title()} | ${websiteConfig.metadata?.name}`,
+      description: m.contact_title(),
     }),
   component: ContactPage,
 });
@@ -22,10 +20,10 @@ function ContactPage() {
       <div className="mx-auto max-w-4xl space-y-8 pb-16">
         <div className="space-y-4">
           <h1 className="text-center text-3xl font-bold tracking-tight">
-            {m.title}
+            {m.contact_title()}
           </h1>
           <p className="text-center text-lg text-muted-foreground">
-            {m.description}
+            {m.contact_title()}
           </p>
         </div>
         <ContactFormCard />

@@ -11,14 +11,7 @@ import {
   IconBrandVisualStudio,
   IconBrandWikipedia,
 } from '@tabler/icons-react';
-
-const m = {
-  title: 'Integrate with your favorite tools',
-  description:
-    'Connect seamlessly with popular platforms and services to enhance your workflow',
-  primaryButton: 'Get Started',
-  secondaryButton: 'View Pricing',
-};
+import * as m from '@/paraglide/messages.js';
 
 import { BRAND_COLORS } from '@/components/blocks/integration';
 
@@ -103,16 +96,16 @@ export default function Integration2Section() {
               className="mx-auto max-w-lg space-y-6 text-center sm:text-left"
             >
               <h2 className="text-balance text-3xl font-semibold md:text-4xl">
-                {m.title}
+                {m.blocks_integration2_title()}
               </h2>
-              <p className="text-muted-foreground">{m.description}</p>
+              <p className="text-muted-foreground">{m.blocks_integration2_description()}</p>
 
               <div className="mt-12 flex flex-wrap justify-center gap-4 md:justify-start">
                 <Link
                   to="/auth/login"
                   className={cn(buttonVariants({ size: 'lg' }))}
                 >
-                  <span>{m.primaryButton}</span>
+                  <span>{m.blocks_integration2_primary_button()}</span>
                 </Link>
                 <Link
                   to="/"
@@ -121,7 +114,7 @@ export default function Integration2Section() {
                     buttonVariants({ size: 'lg', variant: 'outline' })
                   )}
                 >
-                  <span>{m.secondaryButton}</span>
+                  <span>{m.blocks_integration2_secondary_button()}</span>
                 </Link>
               </div>
             </ScrollReveal>

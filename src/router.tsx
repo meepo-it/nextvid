@@ -3,6 +3,7 @@ import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query
 import { NuqsAdapter } from 'nuqs/adapters/tanstack-router';
 import * as TanstackQuery from './integrations/tanstack-query/root-provider';
 import { routeTree } from './routeTree.gen';
+import { deLocalizeUrl, localizeUrl } from './paraglide/runtime.js';
 
 /**
  * TanStack Router instance
@@ -17,6 +18,11 @@ export const getRouter = () => {
     context: { ...queryContext },
     defaultPreload: 'intent',
     scrollRestoration: true,
+    // Paraglide i18n URL rewriting — transparently handles locale prefixes
+    rewrite: {
+      input: ({ url }) => deLocalizeUrl(url),
+      output: ({ url }) => localizeUrl(url),
+    },
     // Wrap: provides NuqsAdapter and TanstackQuery.Provider for SSR
     // These providers wrap the entire route tree content (not RootDocument)
     // RootDocument (shellComponent)

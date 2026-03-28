@@ -1,16 +1,6 @@
 import { HeaderSection } from '@/components/shared/header-section';
 import { ScrollReveal } from '@/components/shared/scroll-reveal';
-
-const m = {
-  title: 'STATS',
-  subtitle: 'Built for growth',
-  description: 'Numbers that speak for themselves',
-  items: {
-    'item-1': { title: 'Active users' },
-    'item-2': { title: 'API requests' },
-    'item-3': { title: 'Teams' },
-  },
-};
+import * as m from '@/paraglide/messages.js';
 
 export default function StatsSection() {
   return (
@@ -18,9 +8,9 @@ export default function StatsSection() {
       <div className="mx-auto max-w-5xl px-6 space-y-8 md:space-y-16">
         <ScrollReveal>
           <HeaderSection
-            title={m.title}
-            subtitle={m.subtitle}
-            description={m.description}
+            title={m.blocks_stats_title()}
+            subtitle={m.blocks_stats_subtitle()}
+            description={m.blocks_stats_description()}
           />
         </ScrollReveal>
 
@@ -30,7 +20,7 @@ export default function StatsSection() {
               +1200
             </div>
             <p className="text-muted-foreground font-medium">
-              {m.items['item-1'].title}
+              {m.blocks_stats_item1_title()}
             </p>
           </ScrollReveal>
           <ScrollReveal delay={120} className="space-y-4 py-4 md:py-0">
@@ -38,7 +28,7 @@ export default function StatsSection() {
               22 Million
             </div>
             <p className="text-muted-foreground font-medium">
-              {m.items['item-2'].title}
+              {m.blocks_stats_item2_title()}
             </p>
           </ScrollReveal>
           <ScrollReveal delay={240} className="space-y-4 py-4 md:py-0">
@@ -46,7 +36,7 @@ export default function StatsSection() {
               +500
             </div>
             <p className="text-muted-foreground font-medium">
-              {m.items['item-3'].title}
+              {m.blocks_stats_item3_title()}
             </p>
           </ScrollReveal>
         </div>

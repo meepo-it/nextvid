@@ -18,16 +18,14 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-const m = messages.waitlist;
-
 const schema = z.object({
-  email: z.string().email(m.emailInvalid),
+  email: z.string().email(m.waitlist_email_invalid()),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -51,14 +49,14 @@ export function WaitlistFormCard() {
       await subscribeMutation.mutateAsync(values.email);
       form.reset();
     } catch (err) {
-      setError(err instanceof Error ? err.message : m.error);
+      setError(err instanceof Error ? err.message : m.waitlist_error());
     }
   }
 
   return (
     <Card className="mx-auto max-w-lg overflow-hidden pt-6 pb-0">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">{m.formTitle}</CardTitle>
+        <CardTitle className="text-lg font-semibold">{m.waitlist_form_title()}</CardTitle>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col">
@@ -68,11 +66,11 @@ export function WaitlistFormCard() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{m.email}</FormLabel>
+                  <FormLabel>{m.waitlist_email()}</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder={m.placeholderEmail}
+                      placeholder={m.waitlist_placeholder_email()}
                       {...field}
                     />
                   </FormControl>
@@ -84,7 +82,7 @@ export function WaitlistFormCard() {
           </CardContent>
           <CardFooter className="mt-6 flex items-center justify-between rounded-none border-t bg-muted px-6 py-4">
             <Button type="submit" disabled={isPending}>
-              {isPending ? m.subscribing : m.subscribe}
+              {isPending ? m.waitlist_subscribing() : m.waitlist_subscribe()}
             </Button>
           </CardFooter>
         </form>

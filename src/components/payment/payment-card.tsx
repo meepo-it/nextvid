@@ -9,7 +9,7 @@ import {
   PAYMENT_MAX_POLL_TIME,
   PAYMENT_POLL_INTERVAL,
 } from '@/payment/constants';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import {
@@ -20,8 +20,6 @@ import {
 } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
 
-const m = messages.settings.payment;
-
 type PaymentStatus = 'processing' | 'success' | 'failed' | 'timeout';
 
 function getStatusContent(status: PaymentStatus): {
@@ -31,15 +29,15 @@ function getStatusContent(status: PaymentStatus): {
   switch (status) {
     case 'processing':
       return {
-        title: m.processing.title,
-        description: m.processing.description,
+        title: m.settings_payment_processing_title(),
+        description: m.settings_payment_processing_description(),
       };
     case 'success':
-      return { title: m.success.title, description: m.success.description };
+      return { title: m.settings_payment_success_title(), description: m.settings_payment_success_description() };
     case 'failed':
-      return { title: m.failed.title, description: m.failed.description };
+      return { title: m.settings_payment_failed_title(), description: m.settings_payment_failed_description() };
     case 'timeout':
-      return { title: m.timeout.title, description: m.timeout.description };
+      return { title: m.settings_payment_timeout_title(), description: m.settings_payment_timeout_description() };
     default:
       return { title: '', description: '' };
   }

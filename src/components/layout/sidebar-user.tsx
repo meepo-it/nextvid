@@ -29,11 +29,9 @@ import { useState } from 'react';
 import { useTheme } from '@/components/theme/theme-provider';
 import { UserAvatar } from '@/components/shared/user-avatar';
 import { authClient } from '@/auth/client';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { useRouter } from '@tanstack/react-router';
 import { toast } from 'sonner';
-
-const m = messages.common;
 
 interface SidebarUserProps {
   user: SessionUser;
@@ -61,7 +59,7 @@ export function SidebarUser({ user }: SidebarUserProps) {
           router.navigate({ to: '/' });
         },
         onError: (err) => {
-          toast.error(messages.auth.common.logoutFailed);
+          toast.error(m.auth_common_logout_failed());
           console.error('sign out error:', err);
         },
       },
@@ -124,20 +122,20 @@ export function SidebarUser({ user }: SidebarUserProps) {
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
                       <ThemeIcon className="mr-2 size-4" />
-                      {m.mode.theme}
+                      {m.common_mode_theme()}
                     </DropdownMenuSubTrigger>
                     <DropdownMenuSubContent>
                       <DropdownMenuItem onClick={() => setTheme('light')}>
                         <IconSun className="mr-2 size-4" />
-                        {m.mode.light}
+                        {m.common_mode_light()}
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setTheme('dark')}>
                         <IconMoon className="mr-2 size-4" />
-                        {m.mode.dark}
+                        {m.common_mode_dark()}
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setTheme('system')}>
                         <IconDeviceDesktop className="mr-2 size-4" />
-                        {m.mode.system}
+                        {m.common_mode_system()}
                       </DropdownMenuItem>
                     </DropdownMenuSubContent>
                   </DropdownMenuSub>
@@ -153,7 +151,7 @@ export function SidebarUser({ user }: SidebarUserProps) {
                 }}
               >
                 <IconLogout className="mr-2 size-4" />
-                {messages.auth.common.logout}
+                {m.auth_common_logout()}
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>

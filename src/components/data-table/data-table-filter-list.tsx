@@ -46,9 +46,7 @@ import type {
   FilterOperator,
   JoinOperator,
 } from "@/components/data-table/types/data-table";
-import { messages } from '@/messages';
-
-const t = messages.common.table;
+import * as m from '@/paraglide/messages.js';
 
 const DEBOUNCE_MS = 300;
 const THROTTLE_MS = 50;
@@ -207,7 +205,7 @@ export function DataTableFilterList<TData>({
             onKeyDown={onTriggerKeyDown}
           >
             <IconFilter className="text-muted-foreground" />
-            {t.filter}
+            {m.common_table_filter()}
             {filters.length > 0 && (
               <Badge
                 variant="secondary"
@@ -227,7 +225,7 @@ export function DataTableFilterList<TData>({
       >
         <div className="flex flex-col gap-1">
           <h4 id={labelId} className="font-medium leading-none">
-            {filters.length > 0 ? t.filters : t.noFiltersApplied}
+            {filters.length > 0 ? m.common_table_filters() : m.common_table_no_filters_applied()}
           </h4>
           <p
             id={descriptionId}
@@ -237,8 +235,8 @@ export function DataTableFilterList<TData>({
             )}
           >
             {filters.length > 0
-              ? t.modifyFiltersHint
-              : t.addFiltersHint}
+              ? m.common_table_modify_filters_hint()
+              : m.common_table_add_filters_hint()}
           </p>
         </div>
         {filters.length > 0 ? (
@@ -265,7 +263,7 @@ export function DataTableFilterList<TData>({
             ref={addButtonRef}
             onClick={onFilterAdd}
           >
-            {t.addFilter}
+            {m.common_table_add_filter()}
           </Button>
           {filters.length > 0 ? (
             <Button
@@ -274,7 +272,7 @@ export function DataTableFilterList<TData>({
               className="rounded"
               onClick={onFiltersReset}
             >
-              {t.resetFilters}
+              {m.common_table_reset_filters()}
             </Button>
           ) : null}
         </div>
@@ -359,7 +357,7 @@ function DataTableFilterItem<TData>({
     >
       <div className="min-w-[72px] text-center">
         {index === 0 ? (
-          <span className="text-muted-foreground text-sm">{t.where}</span>
+          <span className="text-muted-foreground text-sm">{m.common_table_where()}</span>
         ) : index === 1 ? (
           <Select
             value={joinOperator}
@@ -370,7 +368,7 @@ function DataTableFilterItem<TData>({
             }}
           >
             <SelectTrigger
-              aria-label={t.selectJoinOperator}
+              aria-label={m.common_table_select_join_operator()}
               aria-controls={joinOperatorListboxId}
               className="h-8 rounded lowercase data-size:h-8"
             >
@@ -405,7 +403,7 @@ function DataTableFilterItem<TData>({
             >
               <span className="truncate">
                 {columns.find((c) => c.id === filter.id)?.columnDef
-                  .meta?.label ?? t.selectField}
+                  .meta?.label ?? m.common_table_select_field()}
               </span>
               <IconSelector className="opacity-50" />
             </Button>
@@ -417,9 +415,9 @@ function DataTableFilterItem<TData>({
           className="w-40 p-0"
         >
           <Command>
-            <CommandInput placeholder={t.searchFields} />
+            <CommandInput placeholder={m.common_table_search_fields()} />
             <CommandList>
-              <CommandEmpty>{t.noFieldsFound}</CommandEmpty>
+              <CommandEmpty>{m.common_table_no_fields_found()}</CommandEmpty>
               <CommandGroup>
                 {columns.map((col) => (
                   <CommandItem
@@ -576,7 +574,7 @@ function onFilterInputRender<TData>({
           aria-label={`${columnMeta?.label} filter value`}
           aria-describedby={`${inputId}-description`}
           inputMode={isNumber ? "numeric" : undefined}
-          placeholder={columnMeta?.placeholder ?? t.enterValue}
+          placeholder={columnMeta?.placeholder ?? m.common_table_enter_value()}
           className="h-8 w-full rounded"
           defaultValue={
             typeof filter.value === "string" ? filter.value : undefined
@@ -612,11 +610,11 @@ function onFilterInputRender<TData>({
             aria-label={`${columnMeta?.label} boolean filter`}
             className="h-8 w-full rounded data-size:h-8"
           >
-            <SelectValue placeholder={filter.value ? t.boolTrue : t.boolFalse} />
+            <SelectValue placeholder={filter.value ? m.common_table_bool_true() : m.common_table_bool_false()} />
           </SelectTrigger>
           <SelectContent id={inputListboxId}>
-            <SelectItem value="true">{t.boolTrue}</SelectItem>
-            <SelectItem value="false">{t.boolFalse}</SelectItem>
+            <SelectItem value="true">{m.common_table_bool_true()}</SelectItem>
+            <SelectItem value="false">{m.common_table_bool_false()}</SelectItem>
           </SelectContent>
         </Select>
       );
@@ -654,11 +652,11 @@ function onFilterInputRender<TData>({
               >
                 {selectedOptions.length === 0 ? (
                   columnMeta?.placeholder ??
-                  (multiple ? t.selectOptions : t.selectOption)
+                  (multiple ? m.common_table_select_options() : m.common_table_select_option())
                 ) : (
                   <span className="truncate">
                     {selectedOptions.length > 1
-                      ? `${selectedOptions.length} ${t.selected}`
+                      ? `${selectedOptions.length} ${m.common_table_selected()}`
                       : selectedOptions[0]?.label}
                   </span>
                 )}
@@ -669,10 +667,10 @@ function onFilterInputRender<TData>({
             <Command>
               <CommandInput
                 aria-label={`Search ${columnMeta?.label} options`}
-                placeholder={columnMeta?.placeholder ?? t.searchOptions}
+                placeholder={columnMeta?.placeholder ?? m.common_table_search_options()}
               />
               <CommandList>
-                <CommandEmpty>{t.noOptionsFound}</CommandEmpty>
+                <CommandEmpty>{m.common_table_no_options_found()}</CommandEmpty>
                 <CommandGroup>
                   {options.map((option) => {
                     const isSelected = selectedValues.includes(option.value);
@@ -730,7 +728,7 @@ function onFilterInputRender<TData>({
             )}`
           : dateValue[0]
             ? formatDate(new Date(Number(dateValue[0])))
-            : t.pickDate;
+            : m.common_table_pick_date();
 
       return (
         <Popover open={showValueSelector} onOpenChange={setShowValueSelector}>

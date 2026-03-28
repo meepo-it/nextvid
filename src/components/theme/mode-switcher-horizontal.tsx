@@ -1,12 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { websiteConfig } from '@/config/website';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { cn } from '@/lib/utils';
 import { IconDeviceDesktop, IconMoon, IconSun } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { useTheme } from '@/components/theme/theme-provider';
-
-const m = messages.common;
 
 /**
  * Horizontal theme switcher (sun / moon / system) for mobile menu footer.
@@ -43,7 +41,7 @@ export function ModeSwitcherHorizontal() {
           theme === 'light' && 'bg-muted text-foreground'
         )}
         onClick={() => setTheme('light')}
-        aria-label={m.mode.light}
+        aria-label={m.common_mode_light()}
       >
         <IconSun className="size-4" />
       </Button>
@@ -55,7 +53,7 @@ export function ModeSwitcherHorizontal() {
           theme === 'dark' && 'bg-muted text-foreground'
         )}
         onClick={() => setTheme('dark')}
-        aria-label={m.mode.dark}
+        aria-label={m.common_mode_dark()}
       >
         <IconMoon className="size-4" />
       </Button>
@@ -67,7 +65,7 @@ export function ModeSwitcherHorizontal() {
           theme === 'system' && 'bg-muted text-foreground'
         )}
         onClick={() => setTheme('system')}
-        aria-label={m.mode.system}
+        aria-label={m.common_mode_system()}
       >
         <IconDeviceDesktop className="size-4" />
       </Button>

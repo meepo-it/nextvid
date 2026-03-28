@@ -1,12 +1,10 @@
 import { createCustomerPortalSession } from '@/api/payment';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { IconLoader2 } from '@tabler/icons-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
-
-const m = messages.pricing.customerPortal;
 
 interface CustomerPortalButtonProps {
   userId: string;
@@ -42,11 +40,11 @@ export function CustomerPortalButton({
       if (result?.url) {
         window.location.href = result.url;
       } else {
-        toast.error(m.failed);
+        toast.error(m.pricing_customer_portal_failed());
       }
     } catch (err) {
       console.error('Customer portal error:', err);
-      toast.error(m.failed);
+      toast.error(m.pricing_customer_portal_failed());
     } finally {
       setIsLoading(false);
     }
@@ -63,7 +61,7 @@ export function CustomerPortalButton({
       {isLoading ? (
         <>
           <IconLoader2 className="mr-2 size-4 animate-spin" />
-          {m.loading}
+          {m.pricing_customer_portal_loading()}
         </>
       ) : (
         children

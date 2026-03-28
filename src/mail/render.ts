@@ -1,4 +1,4 @@
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import React, { type ReactElement } from 'react';
 import type { EmailTemplate } from './types';
 import ContactMessage from './templates/contact-message';
@@ -12,6 +12,13 @@ const EmailTemplates = {
   subscribeNewsletter: SubscribeNewsletter,
   contactMessage: ContactMessage,
 } as const;
+
+const EmailSubjects: Record<EmailTemplate, () => string> = {
+  forgotPassword: m.mail_forgot_password_subject,
+  verifyEmail: m.mail_verify_email_subject,
+  subscribeNewsletter: m.mail_subscribe_newsletter_subject,
+  contactMessage: m.mail_contact_message_subject,
+};
 
 export async function renderEmailHtml(email: ReactElement): Promise<string> {
   const reactDomServer = (await import('react-dom/server')) as {
@@ -66,6 +73,6 @@ export async function getTemplate({
   );
   const html = await renderEmailHtml(email);
   const text = toPlainText(html);
-  const subject = messages.mail[template].subject;
+  const subject = EmailSubjects[template]();
   return { html, text, subject };
 }

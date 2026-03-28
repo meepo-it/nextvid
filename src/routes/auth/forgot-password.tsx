@@ -1,10 +1,8 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { ForgotPasswordForm } from '@/components/auth/forgot-password-form';
 import { websiteConfig } from '@/config/website';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { Routes } from '@/lib/routes';
-
-const m = messages.auth.forgotPassword;
 
 export const Route = createFileRoute('/auth/forgot-password')({
   beforeLoad: () => {
@@ -14,7 +12,7 @@ export const Route = createFileRoute('/auth/forgot-password')({
   },
   component: ForgotPasswordPage,
   head: () => ({
-    meta: [{ title: m.title }, { name: 'description', content: m.description }],
+    meta: [{ title: m.auth_forgot_password_title() }, { name: 'description', content: m.auth_forgot_password_description() }],
   }),
 });
 

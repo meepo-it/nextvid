@@ -14,36 +14,7 @@ import {
   IconChevronRight,
 } from '@tabler/icons-react';
 import type { Icon } from '@tabler/icons-react';
-
-const m = {
-  title: 'INTEGRATIONS',
-  subtitle: 'Works with your stack',
-  description: 'Connect to the tools you already use',
-  learnMore: 'Learn More',
-  items: {
-    'item-1': {
-      title: 'AI & LLMs',
-      description: 'Connect to OpenAI, Anthropic, and more.',
-    },
-    'item-2': {
-      title: 'Replit',
-      description: 'Deploy and run in the cloud.',
-    },
-    'item-3': {
-      title: 'Magic UI',
-      description: 'Beautiful animated components.',
-    },
-    'item-4': {
-      title: 'VS Codium',
-      description: 'AI-powered code editor.',
-    },
-    'item-5': {
-      title: 'MediaWiki',
-      description: 'Knowledge base integration.',
-    },
-    'item-6': { title: 'Google PaLM', description: 'Google AI models.' },
-  },
-};
+import * as m from '@/paraglide/messages.js';
 
 // Brand colors (visible on both light and dark backgrounds)
 export const BRAND_COLORS = {
@@ -61,24 +32,12 @@ const items: Array<{
   icon: Icon;
   color: string;
 }> = [
-  { ...m.items['item-1'], icon: IconBrandOpenai, color: BRAND_COLORS.openai },
-  {
-    ...m.items['item-2'],
-    icon: IconBrandCodesandbox,
-    color: BRAND_COLORS.codesandbox,
-  },
-  { ...m.items['item-3'], icon: IconBrandReact, color: BRAND_COLORS.react },
-  { ...m.items['item-4'], icon: IconBrandVisualStudio, color: BRAND_COLORS.vs },
-  {
-    ...m.items['item-5'],
-    icon: IconBrandWikipedia,
-    color: BRAND_COLORS.wikipedia,
-  },
-  {
-    ...m.items['item-6'],
-    icon: IconBrandGoogleFilled,
-    color: BRAND_COLORS.google,
-  },
+  { title: m.blocks_integration_item1_title(), description: m.blocks_integration_item1_description(), icon: IconBrandOpenai, color: BRAND_COLORS.openai },
+  { title: m.blocks_integration_item2_title(), description: m.blocks_integration_item2_description(), icon: IconBrandCodesandbox, color: BRAND_COLORS.codesandbox },
+  { title: m.blocks_integration_item3_title(), description: m.blocks_integration_item3_description(), icon: IconBrandReact, color: BRAND_COLORS.react },
+  { title: m.blocks_integration_item4_title(), description: m.blocks_integration_item4_description(), icon: IconBrandVisualStudio, color: BRAND_COLORS.vs },
+  { title: m.blocks_integration_item5_title(), description: m.blocks_integration_item5_description(), icon: IconBrandWikipedia, color: BRAND_COLORS.wikipedia },
+  { title: m.blocks_integration_item6_title(), description: m.blocks_integration_item6_description(), icon: IconBrandGoogleFilled, color: BRAND_COLORS.google },
 ];
 
 function IntegrationCard({
@@ -112,7 +71,7 @@ function IntegrationCard({
               'gap-1 pr-2 shadow-none'
             )}
           >
-            {m.learnMore}
+            {m.blocks_integration_learn_more()}
             <IconChevronRight className="ml-0 size-3.5 opacity-50" />
           </Link>
         </div>
@@ -127,9 +86,9 @@ export default function IntegrationSection() {
       <div className="mx-auto max-w-6xl">
         <ScrollReveal>
           <HeaderSection
-            title={m.title}
-            subtitle={m.subtitle}
-            description={m.description}
+            title={m.blocks_integration_title()}
+            subtitle={m.blocks_integration_subtitle()}
+            description={m.blocks_integration_description()}
           />
         </ScrollReveal>
 

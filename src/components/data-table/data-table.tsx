@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getCommonPinningStyles } from "@/components/data-table/lib/data-table";
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { cn } from "@/lib/utils";
 
 interface DataTableProps<TData> extends React.ComponentProps<"div"> {
@@ -84,7 +84,7 @@ export function DataTable<TData>({
                   colSpan={table.getAllColumns().length}
                   className="h-24 text-center"
                 >
-                  {messages.common.table.noResults}
+                  {m.common_table_no_results()}
                 </TableCell>
               </TableRow>
             )}

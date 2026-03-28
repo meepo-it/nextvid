@@ -1,13 +1,11 @@
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { getPricePlans } from '@/lib/price-plan';
 import { cn } from '@/lib/utils';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import type { PlanInterval, PricePlan } from '@/payment/types';
 import { PlanIntervals, PaymentTypes } from '@/payment/types';
 import { useState } from 'react';
 import { PricingCard } from './pricing-card';
-
-const m = messages.pricing;
 
 interface PricingTableProps {
   metadata?: Record<string, string>;
@@ -77,7 +75,7 @@ export function PricingTable({
                 value="month"
                 className="rounded-md px-3 py-0 text-sm data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
               >
-                {m.monthly}
+                {m.pricing_monthly()}
               </ToggleGroupItem>
             )}
             {hasYearly && (
@@ -85,7 +83,7 @@ export function PricingTable({
                 value="year"
                 className="rounded-md px-3 py-0 text-sm data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
               >
-                {m.yearly}
+                {m.pricing_yearly()}
               </ToggleGroupItem>
             )}
           </ToggleGroup>

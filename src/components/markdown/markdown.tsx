@@ -7,7 +7,7 @@ import parse, {
 import { renderMarkdown, type MarkdownResult } from '@/lib/markdown';
 import { useEffect, useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 
 type MarkdownProps = {
   content: string;
@@ -26,7 +26,7 @@ export function Markdown({ content, className }: MarkdownProps) {
   }, [content]);
 
   if (!result) {
-    return <div className={className}>{messages.common.loading}</div>;
+    return <div className={className}>{m.common_loading()}</div>;
   }
 
   const options: HTMLReactParserOptions = {

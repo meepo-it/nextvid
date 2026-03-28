@@ -2,16 +2,14 @@ import { createFileRoute } from '@tanstack/react-router';
 import Container from '@/components/layout/container';
 import { WaitlistFormCard } from '@/components/waitlist/waitlist-form-card';
 import { websiteConfig } from '@/config/website';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { seo } from '@/lib/seo';
-
-const m = messages.waitlist;
 
 export const Route = createFileRoute('/(pages)/waitlist')({
   head: () =>
     seo('/waitlist', {
-      title: `${m.title} | ${websiteConfig.metadata?.name}`,
-      description: m.description,
+      title: `${m.waitlist_title()} | ${websiteConfig.metadata?.name}`,
+      description: m.waitlist_title(),
     }),
   component: WaitlistPage,
 });
@@ -22,10 +20,10 @@ function WaitlistPage() {
       <div className="mx-auto max-w-4xl space-y-8 pb-16">
         <div className="space-y-4">
           <h1 className="text-center text-3xl font-bold tracking-tight">
-            {m.title}
+            {m.waitlist_title()}
           </h1>
           <p className="text-center text-lg text-muted-foreground">
-            {m.description}
+            {m.waitlist_title()}
           </p>
         </div>
         <WaitlistFormCard />

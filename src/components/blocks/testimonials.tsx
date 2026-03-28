@@ -2,53 +2,7 @@ import { HeaderSection } from '@/components/shared/header-section';
 import { ScrollReveal } from '@/components/shared/scroll-reveal';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
-
-const m = {
-  title: 'TESTIMONIALS',
-  subtitle: 'What our customers are saying',
-  items: {
-    'item-1': {
-      name: 'Jane Doe',
-      role: 'CTO, Acme Inc',
-      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane',
-      quote:
-        'The best TanStarter kit we evaluated. Auth and billing just work.',
-    },
-    'item-2': {
-      name: 'John Smith',
-      role: 'Founder, Startup',
-      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John',
-      quote:
-        'TanStarter really saved us months of development. We shipped our MVP in just 2 weeks.',
-    },
-    'item-3': {
-      name: 'Alex Chen',
-      role: 'Engineer, Tech Co',
-      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex',
-      quote: 'Clean code, great DX. We extended it for our use case easily.',
-    },
-    'item-4': {
-      name: 'Maria Garcia',
-      role: 'Product Lead, ScaleUp',
-      image: 'https://api.dicebear.com/7.x/lorelei/svg?seed=Maria',
-      quote:
-        'Finally a template that includes auth, billing, and dashboard out of the box. No more stitching boilerplate.',
-    },
-    'item-5': {
-      name: 'Sam Wilson',
-      role: 'Indie Maker',
-      image: 'https://api.dicebear.com/7.x/notionists/svg?seed=Sam',
-      quote: 'The stack choices and structure are exactly what we needed.',
-    },
-    'item-6': {
-      name: 'Jordan Lee',
-      role: 'DevRel, Cloud Co',
-      image: 'https://api.dicebear.com/7.x/open-peeps/svg?seed=Jordan',
-      quote:
-        'Best-in-class starter for production SaaS. Our team recommends it to every founder building with modern React.',
-    },
-  },
-};
+import * as m from '@/paraglide/messages.js';
 
 type Testimonial = {
   name: string;
@@ -66,7 +20,14 @@ function chunkArray<T>(array: T[], chunkSize: number): T[][] {
 }
 
 export default function TestimonialsSection() {
-  const testimonials: Testimonial[] = Object.values(m.items);
+  const testimonials: Testimonial[] = [
+    { name: m.blocks_testimonials_item1_name(), role: m.blocks_testimonials_item1_role(), image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane', quote: m.blocks_testimonials_item1_quote() },
+    { name: m.blocks_testimonials_item2_name(), role: m.blocks_testimonials_item2_role(), image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John', quote: m.blocks_testimonials_item2_quote() },
+    { name: m.blocks_testimonials_item3_name(), role: m.blocks_testimonials_item3_role(), image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex', quote: m.blocks_testimonials_item3_quote() },
+    { name: m.blocks_testimonials_item4_name(), role: m.blocks_testimonials_item4_role(), image: 'https://api.dicebear.com/7.x/lorelei/svg?seed=Maria', quote: m.blocks_testimonials_item4_quote() },
+    { name: m.blocks_testimonials_item5_name(), role: m.blocks_testimonials_item5_role(), image: 'https://api.dicebear.com/7.x/notionists/svg?seed=Sam', quote: m.blocks_testimonials_item5_quote() },
+    { name: m.blocks_testimonials_item6_name(), role: m.blocks_testimonials_item6_role(), image: 'https://api.dicebear.com/7.x/open-peeps/svg?seed=Jordan', quote: m.blocks_testimonials_item6_quote() },
+  ];
 
   const testimonialChunks = chunkArray(
     testimonials,
@@ -77,7 +38,7 @@ export default function TestimonialsSection() {
     <section id="testimonials" className="px-4 py-16 md:py-24">
       <div className="mx-auto max-w-6xl">
         <ScrollReveal>
-          <HeaderSection title={m.title} subtitle={m.subtitle} />
+          <HeaderSection title={m.blocks_testimonials_title()} subtitle={m.blocks_testimonials_subtitle()} />
         </ScrollReveal>
 
         <div className="mt-8 grid gap-3 sm:grid-cols-2 md:mt-12 lg:grid-cols-3">

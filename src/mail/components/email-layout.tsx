@@ -9,7 +9,8 @@ import {
   Text,
 } from '@react-email/components';
 import { websiteConfig } from '@/config/website';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
+import { getLocale } from '@/paraglide/runtime.js';
 
 interface EmailLayoutProps {
   children: React.ReactNode;
@@ -21,7 +22,7 @@ interface EmailLayoutProps {
 export default function EmailLayout({ children }: EmailLayoutProps) {
   const year = new Date().getFullYear();
   return (
-    <Html lang="en">
+    <Html lang={getLocale()}>
       <Head>
         <Font
           fontFamily="Inter"
@@ -36,10 +37,10 @@ export default function EmailLayout({ children }: EmailLayoutProps) {
             {children}
             <Hr className="my-8" />
             <Text className="mt-4">
-              {websiteConfig.metadata?.name} {messages.mail.layout.team}
+              {websiteConfig.metadata?.name} {m.mail_layout_team()}
             </Text>
             <Text>
-              ©️ {year} {messages.mail.layout.copyright}
+              ©️ {year} {m.mail_layout_copyright()}
             </Text>
           </Container>
         </Section>

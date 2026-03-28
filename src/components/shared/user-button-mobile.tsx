@@ -1,6 +1,6 @@
 import { authClient } from '@/auth/client';
 import { getAvatarLinks } from '@/config/avatar-config';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import type { SessionUser } from '@/auth/types';
 import { IconLogout } from '@tabler/icons-react';
 import { Link, useRouter } from '@tanstack/react-router';
@@ -37,7 +37,7 @@ export function UserButtonMobile({ user }: UserButtonMobileProps) {
           router.navigate({ to: '/' });
         },
         onError: (err) => {
-          toast.error(messages.auth.common.logoutFailed);
+          toast.error(m.auth_common_logout_failed());
           console.error(err);
         },
       },
@@ -101,7 +101,7 @@ export function UserButtonMobile({ user }: UserButtonMobileProps) {
               className="flex w-full items-center gap-3 px-2.5 py-2 text-left"
             >
               <IconLogout className="size-4 shrink-0" />
-              <span className="text-sm">{messages.auth.common.logout}</span>
+              <span className="text-sm">{m.auth_common_logout()}</span>
             </button>
           </li>
         </ul>

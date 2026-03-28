@@ -16,9 +16,10 @@ import { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Logo } from '@/components/shared/logo';
 import { ModeSwitcherHorizontal } from '@/components/theme/mode-switcher-horizontal';
+import { LocaleSwitcher } from '@/components/locale/locale-switcher';
 import { UserButtonMobile } from '@/components/shared/user-button-mobile';
 import { LoginWrapper } from '@/components/auth/login-wrapper';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { websiteConfig } from '@/config/website';
 
 const mobileLinkClass =
@@ -101,7 +102,7 @@ export function NavbarMobile({ className, ...props }: NavbarMobileProps) {
                     className="w-full"
                     onClick={() => setOpen(false)}
                   >
-                    {messages.auth.common.login}
+                    {m.auth_common_login()}
                   </Button>
                 </LoginWrapper>
                 <Link
@@ -109,7 +110,7 @@ export function NavbarMobile({ className, ...props }: NavbarMobileProps) {
                   onClick={() => setOpen(false)}
                   className={cn(buttonVariants({ size: 'lg' }), 'w-full')}
                 >
-                  {messages.auth.common.signup}
+                  {m.auth_common_signup()}
                 </Link>
               </div>
             )}
@@ -189,7 +190,8 @@ export function NavbarMobile({ className, ...props }: NavbarMobileProps) {
               })}
             </ul>
 
-            <div className="mt-auto w-full border-t border-border/50 p-4 flex items-center justify-end">
+            <div className="mt-auto w-full border-t border-border/50 p-4 flex items-center justify-between">
+              <LocaleSwitcher />
               <ModeSwitcherHorizontal />
             </div>
           </div>

@@ -8,12 +8,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import type { Table } from '@tanstack/react-table';
 import { IconSettings2 } from '@tabler/icons-react';
 import * as React from 'react';
-
-const t = messages.common.table;
 
 interface DataTableViewOptionsProps<TData>
   extends React.ComponentProps<typeof DropdownMenuContent> {
@@ -42,19 +40,19 @@ export function DataTableViewOptions<TData>({
           <Button
             {...props}
             type="button"
-            aria-label={t.viewOptions}
+            aria-label={m.common_table_view_options()}
             variant="outline"
             size="sm"
             className="ml-auto hidden h-8 font-normal lg:flex"
           >
             <IconSettings2 className="text-muted-foreground" />
-            {t.viewOptions}
+            {m.common_table_view_options()}
           </Button>
         )}
       />
       <DropdownMenuContent className="w-44" align="end" {...props}>
         <DropdownMenuGroup>
-          <DropdownMenuLabel>{t.viewOptions}</DropdownMenuLabel>
+          <DropdownMenuLabel>{m.common_table_view_options()}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           {columns.map((column) => (
             <DropdownMenuCheckboxItem

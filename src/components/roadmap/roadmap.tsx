@@ -1,8 +1,6 @@
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { messages } from '@/messages';
-
-const m = messages.roadmap;
+import * as m from '@/paraglide/messages.js';
 
 interface Task {
   id: string;
@@ -71,9 +69,13 @@ const DEFAULT_COLUMNS: Record<string, Task[]> = {
   ],
 };
 
-export function Roadmap() {
-  const columnTitles = m.columns;
+const columnTitles: Record<string, () => string> = {
+  backlog: m.roadmap_columns_backlog,
+  inProgress: m.roadmap_columns_in_progress,
+  done: m.roadmap_columns_done,
+};
 
+export function Roadmap() {
   return (
     <div className="grid w-full auto-rows-auto grid-cols-1 gap-4 md:grid-cols-2 md:auto-rows-fr lg:grid-cols-3">
       {Object.entries(DEFAULT_COLUMNS).map(([columnValue, tasks]) => (
@@ -82,8 +84,7 @@ export function Roadmap() {
           value={columnValue}
           tasks={tasks}
           title={
-            columnTitles[columnValue as keyof typeof columnTitles] ??
-            columnValue
+            columnTitles[columnValue]?.() ?? columnValue
           }
         />
       ))}

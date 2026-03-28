@@ -19,9 +19,7 @@ import { Link } from '@tanstack/react-router';
 import { Routes } from '@/lib/routes';
 import { IconCircleCheck, IconClock, IconRefresh } from '@tabler/icons-react';
 import { useCallback } from 'react';
-import { messages } from '@/messages';
-
-const m = messages.settings.billing.card;
+import * as m from '@/paraglide/messages.js';
 
 /** Card container: full width, no bottom padding */
 const cardClass = cn('w-full overflow-hidden pt-6 pb-0 flex flex-col');
@@ -76,9 +74,9 @@ export function BillingCard() {
       <Card className={cardClass}>
         <CardHeader>
           <CardTitle className="text-lg font-semibold">
-            {m.currentPlan}
+            {m.settings_billing_card_current_plan()}
           </CardTitle>
-          <CardDescription>{m.currentPlanDescription}</CardDescription>
+          <CardDescription>{m.settings_billing_card_current_plan_description()}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 flex-1">
           <div className="flex items-center justify-start space-x-4">
@@ -101,9 +99,9 @@ export function BillingCard() {
       <Card className={cardClass}>
         <CardHeader>
           <CardTitle className="text-lg font-semibold">
-            {m.currentPlan}
+            {m.settings_billing_card_current_plan()}
           </CardTitle>
-          <CardDescription>{m.currentPlanDescription}</CardDescription>
+          <CardDescription>{m.settings_billing_card_current_plan_description()}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 flex-1">
           <div className="text-destructive text-sm">
@@ -113,7 +111,7 @@ export function BillingCard() {
         <CardFooter className={footerClass}>
           <Button variant="outline" onClick={handleRetry}>
             <IconRefresh className="size-4 mr-1" />
-            {m.retry}
+            {m.settings_billing_card_retry()}
           </Button>
         </CardFooter>
       </Card>
@@ -126,19 +124,19 @@ export function BillingCard() {
       <Card className={cardClass}>
         <CardHeader>
           <CardTitle className="text-lg font-semibold">
-            {m.currentPlan}
+            {m.settings_billing_card_current_plan()}
           </CardTitle>
-          <CardDescription>{m.currentPlanDescription}</CardDescription>
+          <CardDescription>{m.settings_billing_card_current_plan_description()}</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="text-sm text-muted-foreground">{m.noPlan}</div>
+          <div className="text-sm text-muted-foreground">{m.settings_billing_card_no_plan()}</div>
         </CardContent>
         <CardFooter className={footerClass}>
           <Link
             to={Routes.Pricing}
             className={buttonVariants({ variant: 'default' })}
           >
-            {m.upgradePlan}
+            {m.settings_billing_card_upgrade_plan()}
           </Link>
         </CardFooter>
       </Card>
@@ -149,14 +147,14 @@ export function BillingCard() {
   return (
     <Card className={cardClass}>
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">{m.currentPlan}</CardTitle>
-        <CardDescription>{m.currentPlanDescription}</CardDescription>
+        <CardTitle className="text-lg font-semibold">{m.settings_billing_card_current_plan()}</CardTitle>
+        <CardDescription>{m.settings_billing_card_current_plan_description()}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4 flex-1">
         {/* Plan name and status badge (trialing | active) */}
         <div className="flex items-center justify-start space-x-4">
           <div className="text-3xl font-medium">
-            {currentPlanWithName?.name ?? currentPlan?.id ?? m.free}
+            {currentPlanWithName?.name ?? currentPlan?.id ?? m.settings_billing_card_free()}
           </div>
           {subscription &&
             (subscription.status === 'trialing' ||
@@ -173,12 +171,12 @@ export function BillingCard() {
                 {subscription.status === 'trialing' ? (
                   <span className="flex items-center space-x-2">
                     <IconClock className="size-3 mr-1" />
-                    {m.statusTrial}
+                    {m.settings_billing_card_status_trial()}
                   </span>
                 ) : (
                   <span className="flex items-center space-x-2">
                     <IconCircleCheck className="size-3 mr-1" />
-                    {m.statusActive}
+                    {m.settings_billing_card_status_active()}
                   </span>
                 )}
               </Badge>
@@ -188,14 +186,14 @@ export function BillingCard() {
         {/* Free plan hint */}
         {isFreePlan && (
           <div className="text-sm text-muted-foreground">
-            {m.freePlanMessage}
+            {m.settings_billing_card_free_plan_message()}
           </div>
         )}
 
         {/* Lifetime plan hint */}
         {isLifetimeMember && (
           <div className="text-sm text-muted-foreground">
-            {m.lifetimeMessage}
+            {m.settings_billing_card_lifetime_message()}
           </div>
         )}
 
@@ -204,18 +202,18 @@ export function BillingCard() {
           <div className="text-sm text-muted-foreground space-y-2">
             {currentPeriodStart && (
               <div className="text-muted-foreground">
-                {m.periodStart} {currentPeriodStart}
+                {m.settings_billing_card_period_start()} {currentPeriodStart}
               </div>
             )}
             {currentPeriodEnd && (
               <div className="text-muted-foreground">
-                {m.periodEnds} {currentPeriodEnd}
-                {subscription.cancelAtPeriodEnd && ` ${m.cancelsAtPeriodEnd}`}
+                {m.settings_billing_card_period_ends()} {currentPeriodEnd}
+                {subscription.cancelAtPeriodEnd && ` ${m.settings_billing_card_cancels_at_period_end()}`}
               </div>
             )}
             {subscription.status === 'trialing' && trialEndDate && (
               <div className="text-amber-600">
-                {m.trialEnds} {trialEndDate}
+                {m.settings_billing_card_trial_ends()} {trialEndDate}
               </div>
             )}
           </div>
@@ -228,21 +226,21 @@ export function BillingCard() {
             to={Routes.Pricing}
             className={buttonVariants({ variant: 'default' })}
           >
-            {m.upgradePlan}
+            {m.settings_billing_card_upgrade_plan()}
           </Link>
         )}
 
         {/* Lifetime: show manage billing */}
         {isLifetimeMember && currentUser && (
           <CustomerPortalButton returnUrl={undefined}>
-            {m.manageBilling}
+            {m.settings_billing_card_manage_billing()}
           </CustomerPortalButton>
         )}
 
         {/* Subscription: show manage subscription (only when not free and not lifetime) */}
         {!isFreePlan && !isLifetimeMember && currentUser && (
           <CustomerPortalButton returnUrl={undefined}>
-            {m.manageSubscription}
+            {m.settings_billing_card_manage_subscription()}
           </CustomerPortalButton>
         )}
       </CardFooter>

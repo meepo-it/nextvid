@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { UserAvatar } from './user-avatar';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import type { SessionUser } from '@/auth/types';
@@ -31,7 +31,7 @@ export function UserButton({ user }: UserButtonProps) {
           router.navigate({ to: '/' });
         },
         onError: (err) => {
-          toast.error(messages.auth.common.logoutFailed);
+          toast.error(m.auth_common_logout_failed());
           console.error('sign out error:', err);
         },
       },
@@ -76,7 +76,7 @@ export function UserButton({ user }: UserButtonProps) {
           }}
         >
           <IconLogout className="mr-2 size-4" />
-          {messages.auth.common.logout}
+          {m.auth_common_logout()}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

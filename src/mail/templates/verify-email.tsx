@@ -1,9 +1,7 @@
 import EmailButton from '../components/email-button';
 import EmailLayout from '../components/email-layout';
 import { Text } from '@react-email/components';
-import { messages } from '@/messages';
-
-const m = messages.mail.verifyEmail;
+import * as m from '@/paraglide/messages.js';
 
 interface VerifyEmailProps {
   url: string;
@@ -14,10 +12,10 @@ export default function VerifyEmail({ url, name }: VerifyEmailProps) {
   return (
     <EmailLayout>
       <Text>
-        {m.greeting} {name}.
+        {m.mail_verify_email_greeting()} {name}.
       </Text>
-      <Text>{m.body}</Text>
-      <EmailButton href={url}>{m.button}</EmailButton>
+      <Text>{m.mail_verify_email_body()}</Text>
+      <EmailButton href={url}>{m.mail_verify_email_button()}</EmailButton>
     </EmailLayout>
   );
 }

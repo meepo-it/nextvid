@@ -14,9 +14,7 @@ import {
   IconChevronsLeft,
   IconChevronsRight,
 } from '@tabler/icons-react';
-import { messages } from '@/messages';
-
-const t = messages.common.table;
+import * as m from '@/paraglide/messages.js';
 
 interface DataTablePaginationProps<TData> extends React.ComponentProps<'div'> {
   table: Table<TData>;
@@ -44,7 +42,7 @@ export function DataTablePagination<TData>({
       <div className="flex flex-col-reverse items-center gap-4 sm:flex-row sm:gap-6 lg:gap-8">
         <div className="flex items-center space-x-2">
           <p className="whitespace-nowrap font-medium text-sm">
-            {t.rowsPerPage}
+            {m.common_table_rows_per_page()}
           </p>
           <Select
             value={`${table.getState().pagination.pageSize}`}
@@ -65,11 +63,11 @@ export function DataTablePagination<TData>({
           </Select>
         </div>
         <div className="flex items-center justify-center font-medium text-sm">
-          {t.page} {currentPage} / {totalPages}
+          {m.common_table_page()} {currentPage} / {totalPages}
         </div>
         <div className="flex items-center space-x-2">
           <Button
-            aria-label={t.firstPage}
+            aria-label={m.common_table_first_page()}
             variant="outline"
             size="icon"
             className="hidden size-8 lg:flex"
@@ -79,7 +77,7 @@ export function DataTablePagination<TData>({
             <IconChevronsLeft />
           </Button>
           <Button
-            aria-label={t.previousPage}
+            aria-label={m.common_table_previous_page()}
             variant="outline"
             size="icon"
             className="size-8"
@@ -89,7 +87,7 @@ export function DataTablePagination<TData>({
             <IconChevronLeft />
           </Button>
           <Button
-            aria-label={t.nextPage}
+            aria-label={m.common_table_next_page()}
             variant="outline"
             size="icon"
             className="size-8"
@@ -99,7 +97,7 @@ export function DataTablePagination<TData>({
             <IconChevronRight />
           </Button>
           <Button
-            aria-label={t.lastPage}
+            aria-label={m.common_table_last_page()}
             variant="outline"
             size="icon"
             className="hidden size-8 lg:flex"

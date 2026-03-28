@@ -1,9 +1,7 @@
 import EmailButton from '../components/email-button';
 import EmailLayout from '../components/email-layout';
 import { Text } from '@react-email/components';
-import { messages } from '@/messages';
-
-const m = messages.mail.forgotPassword;
+import * as m from '@/paraglide/messages.js';
 
 interface ForgotPasswordProps {
   url: string;
@@ -14,10 +12,10 @@ export default function ForgotPassword({ url, name }: ForgotPasswordProps) {
   return (
     <EmailLayout>
       <Text>
-        {m.greeting} {name}.
+        {m.mail_forgot_password_greeting()} {name}.
       </Text>
-      <Text>{m.body}</Text>
-      <EmailButton href={url}>{m.button}</EmailButton>
+      <Text>{m.mail_forgot_password_body()}</Text>
+      <EmailButton href={url}>{m.mail_forgot_password_button()}</EmailButton>
     </EmailLayout>
   );
 }

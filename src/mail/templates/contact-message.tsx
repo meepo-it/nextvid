@@ -1,8 +1,6 @@
 import EmailLayout from '../components/email-layout';
 import { Text } from '@react-email/components';
-import { messages } from '@/messages';
-
-const m = messages.mail.contactMessage;
+import * as m from '@/paraglide/messages.js';
 
 interface ContactMessageProps {
   name: string;
@@ -18,13 +16,13 @@ export default function ContactMessage({
   return (
     <EmailLayout>
       <Text>
-        {m.name} {name}
+        {m.mail_contact_message_name()} {name}
       </Text>
       <Text>
-        {m.email} {email}
+        {m.mail_contact_message_email()} {email}
       </Text>
       <Text>
-        {m.message} {message}
+        {m.mail_contact_message_message()} {message}
       </Text>
     </EmailLayout>
   );

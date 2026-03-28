@@ -7,7 +7,7 @@ import { Logo } from '@/components/shared/logo';
 import BuiltWithButton from '@/components/shared/built-with-button';
 import { Link, useLocation } from '@tanstack/react-router';
 import { websiteConfig } from '@/config/website';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const pathname = useLocation().pathname;
@@ -26,7 +26,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
               </span>
             </div>
             <p className="text-muted-foreground text-base py-2 md:pr-12">
-              {messages.footer.tagline}
+              {m.footer_tagline()}
             </p>
             <nav
               aria-label="Social links"
@@ -100,7 +100,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
         <Container className="px-4 flex flex-col items-center justify-between gap-4 sm:flex-row">
           <span className="text-muted-foreground text-sm">
             &copy; {new Date().getFullYear()} {websiteConfig.metadata?.name}.{' '}
-            {messages.footer.rightsReserved}
+            {m.footer_rights_reserved()}
           </span>
           <BuiltWithButton />
         </Container>

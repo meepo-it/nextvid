@@ -18,6 +18,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import Container from '@/components/layout/container';
 import { Logo } from '@/components/shared/logo';
 import { ModeSwitcher } from '@/components/theme/mode-switcher';
+import { LocaleSwitcher } from '@/components/locale/locale-switcher';
 import { NavbarMobile } from '@/components/layout/navbar-mobile';
 import { UserButton } from '@/components/shared/user-button';
 import { LoginWrapper } from '@/components/auth/login-wrapper';
@@ -25,7 +26,7 @@ import { IconArrowUpRight } from '@tabler/icons-react';
 import { Link, useLocation } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { websiteConfig } from '@/config/website';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 
 interface NavbarProps {
   scroll?: boolean;
@@ -164,6 +165,7 @@ export function Navbar({ scroll = true }: NavbarProps) {
             </NavigationMenu>
 
             <div className="flex items-center gap-4 shrink-0">
+              <LocaleSwitcher />
               <ModeSwitcher />
               {websiteConfig.auth?.enable &&
                 (!mounted || isPending ? (
@@ -183,14 +185,14 @@ export function Navbar({ scroll = true }: NavbarProps) {
                           'cursor-pointer'
                         )}
                       >
-                        {messages.auth.common.login}
+                        {m.auth_common_login()}
                       </button>
                     </LoginWrapper>
                     <Link
                       to={Routes.Register}
                       className={buttonVariants({ size: 'sm' })}
                     >
-                      {messages.auth.common.signup}
+                      {m.auth_common_signup()}
                     </Link>
                   </>
                 ))}

@@ -2,7 +2,7 @@ import { ChartAreaInteractive } from '@/components/dashboard/chart-area-interact
 import { DashboardHeader } from '@/components/layout/dashboard-header';
 import { DataTable } from '@/components/dashboard/data-table';
 import { SectionCards } from '@/components/dashboard/section-cards';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { createFileRoute } from '@tanstack/react-router';
 import data from './data.json';
 
@@ -13,7 +13,7 @@ export const Route = createFileRoute('/dashboard/')({
 function DashboardPage() {
   const breadcrumbs = [
     {
-      label: messages.dashboard.title,
+      label: m.dashboard_title(),
       isCurrentPage: true,
     },
   ];

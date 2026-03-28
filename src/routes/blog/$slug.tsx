@@ -3,7 +3,7 @@ import Container from '@/components/layout/container';
 import { Markdown } from '@/components/markdown/markdown';
 import { getPostBySlug } from '@/lib/blog';
 import { websiteConfig } from '@/config/website';
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { getCanonicalUrl, getImageUrl } from '@/lib/urls';
 import { seo } from '@/lib/seo';
 import { IconArrowLeft } from '@tabler/icons-react';
@@ -68,7 +68,7 @@ function BlogPostPage() {
           className="mb-6 inline-flex items-center gap-2 text-muted-foreground text-sm hover:text-foreground"
         >
           <IconArrowLeft className="size-4" />
-          {messages.blog.allPosts}
+          {m.blog_all_posts()}
         </Link>
 
         <article>
@@ -101,7 +101,7 @@ function BlogPostPage() {
               className="inline-flex items-center gap-2 text-muted-foreground text-sm hover:text-foreground"
             >
               <IconArrowLeft className="size-4" />
-              {messages.blog.allPosts}
+              {m.blog_all_posts()}
             </Link>
           </div>
         </article>

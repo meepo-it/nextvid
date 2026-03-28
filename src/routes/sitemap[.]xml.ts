@@ -2,9 +2,10 @@ import { createFileRoute } from '@tanstack/react-router';
 import { getBaseUrl } from '@/lib/urls';
 import { getSortedPosts } from '@/lib/blog';
 import { websiteConfig } from '@/config/website';
+import { locales, baseLocale } from '@/paraglide/runtime.js';
 
 /**
- * Dynamic sitemap.xml
+ * Dynamic sitemap.xml with i18n support
  * https://tanstack.dev/start/latest/docs/framework/react/guide/seo#dynamic-sitemap
  */
 export const Route = createFileRoute('/sitemap.xml')({
@@ -35,10 +36,26 @@ export const Route = createFileRoute('/sitemap.xml')({
           staticUrls.push({ path: '/pricing', changefreq: 'weekly' });
         }
 
+        const localizedUrl = (path: string, locale: string) => {
+          const prefix = locale === baseLocale ? '' : `/${locale}`;
+          return `${base}${prefix}${path === '/' && prefix ? '' : path}`;
+        };
+
+        const hreflangLinks = (path: string) =>
+          locales
+            .map(
+              (l) =>
+                `\n    <xhtml:link rel="alternate" hreflang="${l}" href="${localizedUrl(path, l)}" />`,
+            )
+            .join('') +
+          `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${localizedUrl(path, baseLocale)}" />`;
+
         const urlEntry = (
           path: string,
-          opts?: { changefreq?: string; priority?: string; lastmod?: string }
+          locale: string,
+          opts?: { changefreq?: string; priority?: string; lastmod?: string },
         ) => {
+          const loc = localizedUrl(path, locale);
           const lastmod = opts?.lastmod
             ? `\n    <lastmod>${opts.lastmod}</lastmod>`
             : '';
@@ -48,12 +65,18 @@ export const Route = createFileRoute('/sitemap.xml')({
           const priority = opts?.priority
             ? `\n    <priority>${opts.priority}</priority>`
             : '';
-          return `  <url>\n    <loc>${base}${path}</loc>${lastmod}${changefreq}${priority}\n  </url>`;
+          return `  <url>\n    <loc>${loc}</loc>${lastmod}${changefreq}${priority}${hreflangLinks(path)}\n  </url>`;
         };
 
+        // Generate entries for each locale
         const staticPart = staticUrls
-          .map((u) =>
-            urlEntry(u.path, { changefreq: u.changefreq, priority: u.priority })
+          .flatMap((u) =>
+            locales.map((locale) =>
+              urlEntry(u.path, locale, {
+                changefreq: u.changefreq,
+                priority: u.priority,
+              }),
+            ),
           )
           .join('\n');
 
@@ -61,17 +84,20 @@ export const Route = createFileRoute('/sitemap.xml')({
         if (websiteConfig.blog?.enable) {
           const posts = getSortedPosts();
           blogPart = posts
-            .map((p) =>
-              urlEntry(`/blog/${p.slug}`, {
-                changefreq: 'weekly',
-                lastmod: new Date(p.date).toISOString().slice(0, 10),
-              })
+            .flatMap((p) =>
+              locales.map((locale) =>
+                urlEntry(`/blog/${p.slug}`, locale, {
+                  changefreq: 'weekly',
+                  lastmod: new Date(p.date).toISOString().slice(0, 10),
+                }),
+              ),
             )
             .join('\n');
         }
 
         const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${staticPart}
 ${blogPart ? `\n${blogPart}` : ''}
 </urlset>`;

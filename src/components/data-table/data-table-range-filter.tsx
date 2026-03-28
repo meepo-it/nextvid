@@ -2,11 +2,9 @@ import type { Column } from "@tanstack/react-table";
 import * as React from "react";
 
 import { Input } from "@/components/ui/input";
-import { messages } from '@/messages';
+import * as m from '@/paraglide/messages.js';
 import { cn } from "@/lib/utils";
 import type { ExtendedColumnFilter } from "@/components/data-table/types/data-table";
-
-const t = messages.common.table;
 
 interface DataTableRangeFilterProps<TData> extends React.ComponentProps<"div"> {
   filter: ExtendedColumnFilter<TData>;
@@ -90,7 +88,7 @@ export function DataTableRangeFilter<TData>({
       <Input
         id={`${inputId}-min`}
         type="number"
-        aria-label={`${meta?.label} ${t.minimumValue}`}
+        aria-label={`${meta?.label} ${m.common_table_minimum_value()}`}
         aria-valuemin={min}
         aria-valuemax={max}
         data-slot="range-min"
@@ -102,11 +100,11 @@ export function DataTableRangeFilter<TData>({
         defaultValue={value[0]}
         onChange={(event) => onRangeValueChange(event.target.value, true)}
       />
-      <span className="sr-only shrink-0 text-muted-foreground">{t.to}</span>
+      <span className="sr-only shrink-0 text-muted-foreground">{m.common_table_to()}</span>
       <Input
         id={`${inputId}-max`}
         type="number"
-        aria-label={`${meta?.label} ${t.maximumValue}`}
+        aria-label={`${meta?.label} ${m.common_table_maximum_value()}`}
         aria-valuemin={min}
         aria-valuemax={max}
         data-slot="range-max"
