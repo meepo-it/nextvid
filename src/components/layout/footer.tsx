@@ -8,6 +8,8 @@ import { Link, useLocation } from '@tanstack/react-router';
 import { websiteConfig } from '@/config/website';
 import * as m from '@/paraglide/messages.js';
 import { FooterNewsletter } from '@/components/layout/footer-newsletter';
+import { FooterLocaleSwitcher } from '@/components/locale/footer-locale-switcher';
+import { ModeSwitcher } from '@/components/theme/mode-switcher';
 
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const pathname = useLocation().pathname;
@@ -29,13 +31,9 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
               {m.footer_tagline()}
             </p>
 
-            {websiteConfig.newsletter?.enable && (
-              <FooterNewsletter />
-            )}
-
             <nav
               aria-label="Social links"
-              className="flex items-center gap-4 pt-4"
+              className="flex items-center gap-3 pt-2"
             >
               {socialLinks?.map((link) => {
                 const Icon = link.icon;
@@ -46,7 +44,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={link.title}
-                    className="inline-flex size-8 items-center justify-center rounded-full border border-border hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all duration-200"
+                    className="inline-flex size-8 items-center justify-center rounded-full border border-border text-muted-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all duration-200"
                   >
                     {Icon ? <Icon className="size-4" /> : null}
                   </a>
@@ -101,12 +99,22 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
         </div>
       </Container>
 
-      <div className="border-t py-8">
-        <Container className="px-4 flex items-center justify-center">
+      {/* Subscribe + locale switcher — sticky */}
+      <div className="sticky bottom-0 z-40 border-t bg-background/95 backdrop-blur-sm">
+        <Container className="px-4 flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between">
+          {websiteConfig.newsletter?.enable && <FooterNewsletter />}
+          <FooterLocaleSwitcher />
+        </Container>
+      </div>
+
+      {/* Copyright + theme switcher */}
+      <div className="border-t">
+        <Container className="px-4 flex items-center justify-between py-4">
           <span className="text-muted-foreground text-sm">
             &copy; {new Date().getFullYear()} {websiteConfig.metadata?.name}.{' '}
             {m.footer_rights_reserved()}
           </span>
+          <ModeSwitcher />
         </Container>
       </div>
     </footer>

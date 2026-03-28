@@ -7,9 +7,7 @@ import { websiteConfig } from './website';
  * Navbar links
  */
 export function getNavbarLinks(): MenuItemConfig[] {
-  const links: MenuItemConfig[] = [
-    { title: m.nav_features(), href: Routes.Features, external: false },
-  ];
+  const links: MenuItemConfig[] = [];
   if (websiteConfig.payment?.enable) {
     links.push({ title: m.nav_pricing(), href: Routes.Pricing, external: false });
   }

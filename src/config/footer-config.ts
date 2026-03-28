@@ -8,11 +8,6 @@ import * as m from '@/paraglide/messages.js';
  */
 export function getFooterLinks(): MenuItemConfig[] {
   const productItems: MenuItemConfig[] = [];
-  productItems.push({
-    title: m.nav_features(),
-    href: Routes.Features,
-    external: false,
-  });
   if (websiteConfig.payment?.enable) {
     productItems.push({
       title: m.nav_pricing(),

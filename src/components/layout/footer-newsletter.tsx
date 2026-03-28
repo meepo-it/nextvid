@@ -31,28 +31,26 @@ export function FooterNewsletter() {
   };
 
   return (
-    <div className="w-full pt-4">
-      <p className="text-sm text-muted-foreground mb-2">
-        {m.newsletter_description()}
-      </p>
+    <div>
       <form onSubmit={handleSubmit} className="flex w-full max-w-xs">
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder={m.newsletter_placeholder_email()}
-          className="h-9 flex-1 rounded-l-md border border-r-0 border-border bg-background px-3 text-sm outline-none placeholder:text-muted-foreground focus:border-primary"
+          className="h-9 min-w-0 flex-1 rounded-l-md border border-r-0 border-border bg-background px-3 text-sm outline-none placeholder:text-muted-foreground focus:border-primary"
         />
         <button
           type="submit"
           disabled={isPending}
-          className="inline-flex h-9 items-center justify-center rounded-r-md bg-primary px-3 text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
+          className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-r-md bg-primary px-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
         >
           {isPending ? (
             <IconLoader2 className="size-4 animate-spin" />
           ) : (
             <IconSend2 className="size-4" />
           )}
+          {m.newsletter_subscribe()}
         </button>
       </form>
       {error && (
