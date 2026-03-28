@@ -30,16 +30,6 @@ export function getFooterLinks(): MenuItemConfig[] {
   if (websiteConfig.blog?.enable) {
     resourcesItems.push({ title: m.nav_blog(), href: Routes.Blog, external: false });
   }
-  resourcesItems.push({
-    title: m.nav_changelog_title(),
-    href: Routes.Changelog,
-    external: false,
-  });
-  resourcesItems.push({
-    title: m.nav_roadmap_title(),
-    href: Routes.Roadmap,
-    external: false,
-  });
 
   const companyItems: MenuItemConfig[] = [
     { title: m.nav_about_title(), href: Routes.About, external: false },

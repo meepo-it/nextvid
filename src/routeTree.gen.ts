@@ -38,10 +38,8 @@ import { Route as AdminUsersRouteImport } from './routes/admin/users'
 import { Route as testsTestErrorRouteImport } from './routes/(tests)/test-error'
 import { Route as testsTest404RouteImport } from './routes/(tests)/test-404'
 import { Route as pagesWaitlistRouteImport } from './routes/(pages)/waitlist'
-import { Route as pagesRoadmapRouteImport } from './routes/(pages)/roadmap'
 import { Route as pagesPricingRouteImport } from './routes/(pages)/pricing'
 import { Route as pagesContactRouteImport } from './routes/(pages)/contact'
-import { Route as pagesChangelogRouteImport } from './routes/(pages)/changelog'
 import { Route as pagesAboutRouteImport } from './routes/(pages)/about'
 import { Route as legalsTermsRouteImport } from './routes/(legals)/terms'
 import { Route as legalsPrivacyRouteImport } from './routes/(legals)/privacy'
@@ -195,11 +193,6 @@ const pagesWaitlistRoute = pagesWaitlistRouteImport.update({
   path: '/waitlist',
   getParentRoute: () => rootRouteImport,
 } as any)
-const pagesRoadmapRoute = pagesRoadmapRouteImport.update({
-  id: '/(pages)/roadmap',
-  path: '/roadmap',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const pagesPricingRoute = pagesPricingRouteImport.update({
   id: '/(pages)/pricing',
   path: '/pricing',
@@ -208,11 +201,6 @@ const pagesPricingRoute = pagesPricingRouteImport.update({
 const pagesContactRoute = pagesContactRouteImport.update({
   id: '/(pages)/contact',
   path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const pagesChangelogRoute = pagesChangelogRouteImport.update({
-  id: '/(pages)/changelog',
-  path: '/changelog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const pagesAboutRoute = pagesAboutRouteImport.update({
@@ -264,10 +252,8 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof legalsPrivacyRoute
   '/terms': typeof legalsTermsRoute
   '/about': typeof pagesAboutRoute
-  '/changelog': typeof pagesChangelogRoute
   '/contact': typeof pagesContactRoute
   '/pricing': typeof pagesPricingRoute
-  '/roadmap': typeof pagesRoadmapRoute
   '/waitlist': typeof pagesWaitlistRoute
   '/test-404': typeof testsTest404Route
   '/test-error': typeof testsTestErrorRoute
@@ -303,10 +289,8 @@ export interface FileRoutesByTo {
   '/privacy': typeof legalsPrivacyRoute
   '/terms': typeof legalsTermsRoute
   '/about': typeof pagesAboutRoute
-  '/changelog': typeof pagesChangelogRoute
   '/contact': typeof pagesContactRoute
   '/pricing': typeof pagesPricingRoute
-  '/roadmap': typeof pagesRoadmapRoute
   '/waitlist': typeof pagesWaitlistRoute
   '/test-404': typeof testsTest404Route
   '/test-error': typeof testsTestErrorRoute
@@ -346,10 +330,8 @@ export interface FileRoutesById {
   '/(legals)/privacy': typeof legalsPrivacyRoute
   '/(legals)/terms': typeof legalsTermsRoute
   '/(pages)/about': typeof pagesAboutRoute
-  '/(pages)/changelog': typeof pagesChangelogRoute
   '/(pages)/contact': typeof pagesContactRoute
   '/(pages)/pricing': typeof pagesPricingRoute
-  '/(pages)/roadmap': typeof pagesRoadmapRoute
   '/(pages)/waitlist': typeof pagesWaitlistRoute
   '/(tests)/test-404': typeof testsTest404Route
   '/(tests)/test-error': typeof testsTestErrorRoute
@@ -390,10 +372,8 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/about'
-    | '/changelog'
     | '/contact'
     | '/pricing'
-    | '/roadmap'
     | '/waitlist'
     | '/test-404'
     | '/test-error'
@@ -429,10 +409,8 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/about'
-    | '/changelog'
     | '/contact'
     | '/pricing'
-    | '/roadmap'
     | '/waitlist'
     | '/test-404'
     | '/test-error'
@@ -471,10 +449,8 @@ export interface FileRouteTypes {
     | '/(legals)/privacy'
     | '/(legals)/terms'
     | '/(pages)/about'
-    | '/(pages)/changelog'
     | '/(pages)/contact'
     | '/(pages)/pricing'
-    | '/(pages)/roadmap'
     | '/(pages)/waitlist'
     | '/(tests)/test-404'
     | '/(tests)/test-error'
@@ -514,10 +490,8 @@ export interface RootRouteChildren {
   legalsPrivacyRoute: typeof legalsPrivacyRoute
   legalsTermsRoute: typeof legalsTermsRoute
   pagesAboutRoute: typeof pagesAboutRoute
-  pagesChangelogRoute: typeof pagesChangelogRoute
   pagesContactRoute: typeof pagesContactRoute
   pagesPricingRoute: typeof pagesPricingRoute
-  pagesRoadmapRoute: typeof pagesRoadmapRoute
   pagesWaitlistRoute: typeof pagesWaitlistRoute
   testsTest404Route: typeof testsTest404Route
   testsTestErrorRoute: typeof testsTestErrorRoute
@@ -733,13 +707,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof pagesWaitlistRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(pages)/roadmap': {
-      id: '/(pages)/roadmap'
-      path: '/roadmap'
-      fullPath: '/roadmap'
-      preLoaderRoute: typeof pagesRoadmapRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/(pages)/pricing': {
       id: '/(pages)/pricing'
       path: '/pricing'
@@ -752,13 +719,6 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof pagesContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(pages)/changelog': {
-      id: '/(pages)/changelog'
-      path: '/changelog'
-      fullPath: '/changelog'
-      preLoaderRoute: typeof pagesChangelogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(pages)/about': {
@@ -894,10 +854,8 @@ const rootRouteChildren: RootRouteChildren = {
   legalsPrivacyRoute: legalsPrivacyRoute,
   legalsTermsRoute: legalsTermsRoute,
   pagesAboutRoute: pagesAboutRoute,
-  pagesChangelogRoute: pagesChangelogRoute,
   pagesContactRoute: pagesContactRoute,
   pagesPricingRoute: pagesPricingRoute,
-  pagesRoadmapRoute: pagesRoadmapRoute,
   pagesWaitlistRoute: pagesWaitlistRoute,
   testsTest404Route: testsTest404Route,
   testsTestErrorRoute: testsTestErrorRoute,

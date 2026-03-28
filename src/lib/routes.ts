@@ -6,8 +6,6 @@ export const Routes = {
   Faqs: '/#faqs',
   Pricing: '/pricing',
   Blog: '/blog',
-  Changelog: '/changelog',
-  Roadmap: '/roadmap',
   About: '/about',
   Contact: '/contact',
   Waitlist: '/waitlist',

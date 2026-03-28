@@ -4,10 +4,8 @@ import {
   IconBuilding,
   IconCookie,
   IconFileText,
-  IconListCheck,
   IconMail,
   IconMailbox,
-  IconRoute,
   IconShieldCheck,
 } from '@tabler/icons-react';
 import type { MenuItemConfig } from '../types';
@@ -48,20 +46,6 @@ export function getNavbarLinks(): MenuItemConfig[] {
         description: m.nav_waitlist_description(),
         href: Routes.Waitlist,
         icon: IconMailbox,
-        external: false,
-      },
-      {
-        title: m.nav_changelog_title(),
-        description: m.nav_changelog_description(),
-        href: Routes.Changelog,
-        icon: IconListCheck,
-        external: false,
-      },
-      {
-        title: m.nav_roadmap_title(),
-        description: m.nav_roadmap_description(),
-        href: Routes.Roadmap,
-        icon: IconRoute,
         external: false,
       },
       {

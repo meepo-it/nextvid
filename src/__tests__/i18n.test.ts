@@ -73,8 +73,6 @@ describe('i18n URL patterns', () => {
     '/about',
     '/contact',
     '/blog',
-    '/changelog',
-    '/roadmap',
     '/waitlist',
     '/terms',
     '/privacy',
@@ -128,6 +126,6 @@ describe('i18n configuration', () => {
       readFileSync(resolve(root, 'project.inlang', 'settings.json'), 'utf-8'),
     );
     expect(settings.baseLocale).toBe('en');
-    expect(settings.locales).toEqual(['en', 'zh']);
+    expect(settings.locales).toEqual(['en', 'zh', 'ja']);
   });
 });

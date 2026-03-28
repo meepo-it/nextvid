@@ -65,8 +65,6 @@ const config = defineConfig({
         publicPattern('/contact'),
         publicPattern('/blog'),
         publicPattern('/blog/:slug'),
-        publicPattern('/changelog'),
-        publicPattern('/roadmap'),
         publicPattern('/waitlist'),
         publicPattern('/auth/:path(.*)?'),
         publicPattern('/terms'),
