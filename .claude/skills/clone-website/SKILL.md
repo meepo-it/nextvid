@@ -896,20 +896,38 @@ For EACH section in the manifest, execute this loop:
 
 Repeat the fix → screenshot → compare loop until the section passes. Do not move to the next section until the current one is verified.
 
-### Step 3: Interaction Verification
+### Step 3: Interactive Element Sweep (the missing-interaction safety net)
 
-For EACH interaction marked ✅ REPLICATE in INTERACTION_MAP.md:
+This step catches interactions that were detected but never implemented, or that were missed entirely during extraction. It is the architectural guarantee that no interactive element is left as a dead button.
 
-1. **On original site:** Trigger the interaction via Chrome MCP (click, scroll, hover). Screenshot the result state.
-2. **On clone site:** Trigger the same interaction. Screenshot the result state.
-3. **Compare:** Does the same trigger produce the same visual result? Check:
+**On the CLONE site**, use Chrome MCP to find every interactive element:
+
+1. Run the same interaction detection script from Phase 1.5 on the clone page
+2. For every element with state-indicating attributes (`aria-expanded`, `data-state`, `role="tab"`, `role="button"`, clickable elements with `cursor: pointer`):
+   - **Click it** via Chrome MCP
+   - **Observe:** Did anything visually change on the page? (content swap, style change, animation, new content appearing)
+   - If **nothing happened** → this is a candidate for a dead/unimplemented interaction
+3. For each dead interaction found, go back to the **original site** and trigger the same element:
+   - If the original ALSO does nothing → it's correctly static, mark as ✅
+   - If the original DOES change → this is a **missed interaction**, add to manifest as ❌ and fix
+
+This sweep ensures every clickable/expandable/toggleable element in the clone actually does something — or is confirmed to be correctly static because the original is also static.
+
+### Step 4: Interaction Comparison
+
+For EACH interaction marked ✅ REPLICATE in INTERACTION_MAP.md, plus any new interactions discovered in Step 3:
+
+1. **On original site:** Trigger the interaction via Chrome MCP (click, scroll, hover). Screenshot the BEFORE and AFTER states.
+2. **On clone site:** Trigger the same interaction. Screenshot the BEFORE and AFTER states.
+3. **Compare both transitions:** Does the same trigger produce the same visual change? Check:
    - Does the revealed/changed content match?
    - Does the transition feel similar (duration, direction)?
    - Does the trigger element change appearance correctly (active highlight, rotation, color)?
+   - For multi-state elements (app switcher, tab bar): click EVERY option on both sites and compare each resulting state
 4. **Fix or accept:** Same loop as visual regression.
 5. **Update manifest:** Mark as ✅ when behavior matches.
 
-### Step 4: Responsive Verification
+### Step 5: Responsive Verification
 
 Using Chrome MCP resize:
 1. Resize to 1440px → screenshot clone → compare layout with original
@@ -918,7 +936,7 @@ Using Chrome MCP resize:
 
 Note any layout breakages (overflow, stacking issues, hidden elements).
 
-### Step 5: Final Manifest Review
+### Step 6: Final Manifest Review
 
 Read through the entire QA_MANIFEST.md. Every row must be ✅. If any row is still ⬜ or ❌:
 - It's either a known limitation (document in BLOCKED_INTERACTIONS.md)
