@@ -315,43 +315,92 @@ Save this as `docs/research/PAGE_TOPOLOGY.md` — it becomes your assembly bluep
 
 ### Page Intent Analysis
 
-After topology and interaction sweep, BEFORE any CSS extraction, synthesize everything into a structured intent document. This is the "understanding layer" — you are answering: **what IS this page, what does each area DO, and how do the areas relate to each other?**
+After topology and interaction sweep, BEFORE any CSS extraction, synthesize everything into a structured intent document. This is the **foundation of the entire clone** — every subsequent phase depends on the completeness of this analysis. Do not rush it. Do not skip elements because they "look simple."
 
-Create `docs/research/PAGE_INTENT.md` with this structure:
+Create `docs/research/PAGE_INTENT.md`. This document must cover every visible element on the page, not just top-level sections.
 
 ```markdown
 # Page Intent: <site name>
 
 ## What This Page Is
-<1-2 sentences: what is the product/page purpose from a user's perspective>
+<What is this product? What problem does it solve? Who uses it? What is the core user action on this page?>
 
-## Sections
+## Page-Level Behavior
+- Default theme: <light/dark/system>
+- URL routing: <does clicking elements change the URL? SPA or MPA?>
+- Global state: <is there state shared across sections? what drives it?>
+- Authentication: <is the user logged in? does the page differ for logged-out users?>
+
+## Sections (top to bottom)
 
 ### <Section Name>
-- **Purpose:** What this section does for the user (not just "it's a div with buttons")
-- **Content:** What it contains (text, images, controls, data)
-- **Interactions:** What the user can do here, and what happens when they do it
-  - <element>: <action> → <effect on this section AND other sections>
-  - <element>: <action> → <effect>
-- **States:** How many visual states does this section have? List each one.
-- **Dependencies:** Does this section's content change based on another section's state?
+- **Purpose:** What this section does for the user
+- **Layout:** How it's visually organized (columns, grid, stack, overlay)
+
+#### Elements (every visible element in this section)
+For EACH element, document:
+
+| Element | Type | Content | Interactive? | Action → Effect |
+|---|---|---|---|---|
+| Logo | Image | "Mockly" SVG | Click → navigates to / | Same page (already home) |
+| "Chat" tab | Nav link | Text "Chat" | Click → switches page mode | Sidebar shows chat platforms, preview shows chat |
+| "AI Chat" tab | Nav link | Text "AI Chat" | Click → switches page mode | Sidebar shows AI platforms, preview shows AI chat |
+| Instagram button | Button | Instagram icon + "Instagram" | Click → changes preview | Preview swaps to Instagram chat style, button highlights |
+| WhatsApp button | Button | WhatsApp icon + "WhatsApp" | Click → changes preview | Preview swaps to WhatsApp style, button turns green |
+| Messages accordion | Accordion | Header "Messages" + badge "7" | Click → expand/collapse | Reveals 7 editable message rows below |
+| Message row 1 | Editable | Text "Hey, want to try..." | Click → editable | Text becomes editable, updates preview in real-time |
+| "Header" toggle | Toggle switch | Label "Header" | Click → on/off | Toggles phone status bar visibility in preview |
+| Download button | Button | Text "Download" | Click → triggers download | Exports preview as image (BLOCKED: requires auth/payment check) |
+| ... | ... | ... | ... | ... |
+
+#### States
+- **State 1 (default):** <describe what this section looks like on page load>
+- **State 2:** <describe after user interaction X>
+- **State N:** <describe after user interaction Y>
+
+#### Dependencies
+- This section is controlled by: <other section, or none>
+- This section controls: <other section, or none>
+- Shared state: <what data/state is shared with other sections>
 
 ### <Next Section>
 ...
 
 ## Cross-Section Relationships
-- <Section A> controls <Section B>: <how>
-- <Section C> is independent
-- <Section D> overlays <Section E>
 
-## Key Behavior Patterns
-- <Pattern 1>: e.g., "Sidebar selection drives main content — every sidebar choice swaps the entire preview area"
-- <Pattern 2>: e.g., "Header tabs change the page mode — different sidebar options appear per tab"
+Map every control relationship:
+
+| Controller | Target | Mechanism | Effect |
+|---|---|---|---|
+| Header tabs | Sidebar + Preview | Tab click changes page mode | Sidebar options change, preview template changes |
+| Sidebar app grid | Preview area | Button click selects platform | Preview renders selected platform's chat style |
+| Sidebar "Appearance" toggles | Preview area | Toggle on/off | Preview updates (show/hide header, dark mode, etc.) |
+| Sidebar "Messages" editor | Preview chat bubbles | Text edit | Preview bubble content updates in real-time |
+
+## Data Flow
+- User selects app (sidebar) → preview renders that app's chat template
+- User edits message (sidebar) → preview updates the corresponding bubble
+- User toggles appearance option → preview reflects the change
+- User clicks download → image export of current preview state
+
+## Scope Decision
+For each element/interaction, classify:
+- ✅ REPLICATE: Can be cloned with frontend code
+- 🔶 SIMPLIFY: Too complex to fully replicate, build a simplified version (document what's simplified)
+- 🚫 BLOCKED: Requires backend/auth/payment, skip and document
 ```
 
-**Why this matters:** Without this document, you extract CSS in isolation per section and miss that Section A controls Section B. The Mockly sidebar doesn't just have "20 buttons" — it's a controller that drives the entire preview area. That relationship must be understood BEFORE extraction, not discovered during building.
+#### Completeness Check
 
-This document is the bridge between "what the page looks like" (screenshots) and "what the page does" (specs). Every component spec must reference the intent for its section.
+Before proceeding to Phase 1.5, verify the intent document is complete:
+
+1. **Every visible element** on the page appears in at least one section's element table. Scroll through your close-up screenshots and check: is there any text, icon, button, input, toggle, image, or decoration that isn't documented? If yes, add it.
+2. **Every interactive element** has an "Action → Effect" column filled in, based on the click sweep results. No element should say "unknown" or "TBD."
+3. **Every cross-section relationship** is mapped. If clicking something in Section A changes Section B, that relationship must appear in the Cross-Section Relationships table.
+4. **Every state** is enumerated. If a section can look different depending on user actions, each distinct visual state is listed.
+5. **Scope decisions** are made for every interaction. Nothing is left undecided.
+
+If any of these checks fail, go back to Chrome MCP and investigate further before proceeding. An incomplete intent document produces incomplete specs which produce incomplete components. This is the single highest-leverage step in the entire pipeline — time spent here saves multiples in rework later.
 
 ## Phase 1.5: Interaction Scan & Decision
 
