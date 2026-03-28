@@ -18,7 +18,8 @@ __unconfig*
 todos.json
 
 # claude code
-.claude
+.claude/*
+!.claude/skills/
 
 # codebuddy
 .codebuddy
