@@ -313,6 +313,46 @@ Map out every distinct section of the page from top to bottom. Give each a worki
 
 Save this as `docs/research/PAGE_TOPOLOGY.md` — it becomes your assembly blueprint.
 
+### Page Intent Analysis
+
+After topology and interaction sweep, BEFORE any CSS extraction, synthesize everything into a structured intent document. This is the "understanding layer" — you are answering: **what IS this page, what does each area DO, and how do the areas relate to each other?**
+
+Create `docs/research/PAGE_INTENT.md` with this structure:
+
+```markdown
+# Page Intent: <site name>
+
+## What This Page Is
+<1-2 sentences: what is the product/page purpose from a user's perspective>
+
+## Sections
+
+### <Section Name>
+- **Purpose:** What this section does for the user (not just "it's a div with buttons")
+- **Content:** What it contains (text, images, controls, data)
+- **Interactions:** What the user can do here, and what happens when they do it
+  - <element>: <action> → <effect on this section AND other sections>
+  - <element>: <action> → <effect>
+- **States:** How many visual states does this section have? List each one.
+- **Dependencies:** Does this section's content change based on another section's state?
+
+### <Next Section>
+...
+
+## Cross-Section Relationships
+- <Section A> controls <Section B>: <how>
+- <Section C> is independent
+- <Section D> overlays <Section E>
+
+## Key Behavior Patterns
+- <Pattern 1>: e.g., "Sidebar selection drives main content — every sidebar choice swaps the entire preview area"
+- <Pattern 2>: e.g., "Header tabs change the page mode — different sidebar options appear per tab"
+```
+
+**Why this matters:** Without this document, you extract CSS in isolation per section and miss that Section A controls Section B. The Mockly sidebar doesn't just have "20 buttons" — it's a controller that drives the entire preview area. That relationship must be understood BEFORE extraction, not discovered during building.
+
+This document is the bridge between "what the page looks like" (screenshots) and "what the page does" (specs). Every component spec must reference the intent for its section.
+
 ## Phase 1.5: Interaction Scan & Decision
 
 After reconnaissance, run a dedicated interaction detection pass. This is **fully automated** — AI inspects, classifies, and decides what to implement without human input. The only items that get skipped are those that are technically impossible to replicate (require login, payment, etc.).
