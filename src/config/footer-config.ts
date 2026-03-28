@@ -34,7 +34,6 @@ export function getFooterLinks(): MenuItemConfig[] {
   const companyItems: MenuItemConfig[] = [
     { title: m.nav_about_title(), href: Routes.About, external: false },
     { title: m.nav_contact_title(), href: Routes.Contact, external: false },
-    { title: m.nav_waitlist_title(), href: Routes.Waitlist, external: false },
   ];
 
   const legalItems: MenuItemConfig[] = [

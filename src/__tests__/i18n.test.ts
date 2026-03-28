@@ -73,7 +73,6 @@ describe('i18n URL patterns', () => {
     '/about',
     '/contact',
     '/blog',
-    '/waitlist',
     '/terms',
     '/privacy',
     '/cookie',

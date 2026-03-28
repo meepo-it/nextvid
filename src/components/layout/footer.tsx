@@ -4,10 +4,10 @@ import { isLinkActive } from '@/lib/urls';
 import { cn } from '@/lib/utils';
 import Container from '@/components/layout/container';
 import { Logo } from '@/components/shared/logo';
-import BuiltWithButton from '@/components/shared/built-with-button';
 import { Link, useLocation } from '@tanstack/react-router';
 import { websiteConfig } from '@/config/website';
 import * as m from '@/paraglide/messages.js';
+import { FooterNewsletter } from '@/components/layout/footer-newsletter';
 
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
   const pathname = useLocation().pathname;
@@ -28,9 +28,14 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
             <p className="text-muted-foreground text-base py-2 md:pr-12">
               {m.footer_tagline()}
             </p>
+
+            {websiteConfig.newsletter?.enable && (
+              <FooterNewsletter />
+            )}
+
             <nav
               aria-label="Social links"
-              className="flex items-center gap-4 pt-6"
+              className="flex items-center gap-4 pt-4"
             >
               {socialLinks?.map((link) => {
                 const Icon = link.icon;
@@ -97,12 +102,11 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
       </Container>
 
       <div className="border-t py-8">
-        <Container className="px-4 flex flex-col items-center justify-between gap-4 sm:flex-row">
+        <Container className="px-4 flex items-center justify-center">
           <span className="text-muted-foreground text-sm">
             &copy; {new Date().getFullYear()} {websiteConfig.metadata?.name}.{' '}
             {m.footer_rights_reserved()}
           </span>
-          <BuiltWithButton />
         </Container>
       </div>
     </footer>

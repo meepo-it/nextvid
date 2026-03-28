@@ -80,27 +80,6 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* images */}
-          <div className="animate-fade-up delay-4 relative overflow-hidden px-2 my-8 sm:my-12 md:my-16">
-            <div className="inset-shadow-2xs ring-muted/50 dark:inset-shadow-white/20 bg-muted/50 relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
-              <img
-                className="bg-muted/50 relative hidden rounded-2xl dark:block w-full"
-                src="https://cdn.mksaas.com/blocks/music.png"
-                alt="TanStarter dashboard screenshot in dark mode"
-                fetchPriority="high"
-                width={2796}
-                height={2008}
-              />
-              <img
-                className="z-2 border-border/25 relative rounded-2xl border dark:hidden w-full"
-                src="https://cdn.mksaas.com/blocks/music-light.png"
-                alt="TanStarter dashboard screenshot in light mode"
-                fetchPriority="high"
-                width={2796}
-                height={2008}
-              />
-            </div>
-          </div>
         </Container>
       </div>
     </section>

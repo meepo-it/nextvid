@@ -8,7 +8,6 @@ export const Routes = {
   Blog: '/blog',
   About: '/about',
   Contact: '/contact',
-  Waitlist: '/waitlist',
 
   // Auth routes
   Auth: '/auth',
