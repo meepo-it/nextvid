@@ -178,6 +178,245 @@ Map out every distinct section of the page from top to bottom. Give each a worki
 
 Save this as `docs/research/PAGE_TOPOLOGY.md` — it becomes your assembly blueprint.
 
+## Phase 1.5: Interaction Scan & Decision
+
+After reconnaissance, run a dedicated interaction detection pass. This is **fully automated** — AI inspects, classifies, and decides what to implement without human input. The only items that get skipped are those that are technically impossible to replicate (require login, payment, etc.).
+
+### Step 1: Inject Detection Script
+
+Run this via Chrome MCP to discover ALL interactive signals on the page:
+
+```javascript
+// Interaction detection script — run via Chrome MCP
+(function() {
+  const sections = document.querySelectorAll('section, [class*="section"], header, footer, nav, main > div');
+  const results = [];
+
+  sections.forEach((section, i) => {
+    const rect = section.getBoundingClientRect();
+    const sectionId = section.id || section.className?.split(' ')[0] || `section-${i}`;
+    const interactions = [];
+
+    // 1. Event listeners (click, scroll, mouseover)
+    const allElements = section.querySelectorAll('*');
+    const clickables = section.querySelectorAll('button, a, [role="button"], [role="tab"], [onclick], details, summary, input, select, textarea, [data-toggle], [data-tab], [aria-expanded], [aria-controls]');
+    if (clickables.length > 0) {
+      interactions.push({
+        type: 'click-interactive',
+        count: clickables.length,
+        elements: [...clickables].slice(0, 10).map(el => ({
+          tag: el.tagName,
+          text: el.textContent?.trim().slice(0, 50),
+          role: el.getAttribute('role'),
+          ariaExpanded: el.getAttribute('aria-expanded'),
+          ariaControls: el.getAttribute('aria-controls'),
+          href: el.getAttribute('href'),
+          type: el.getAttribute('type')
+        }))
+      });
+    }
+
+    // 2. CSS animations & transitions
+    const animated = [...allElements].filter(el => {
+      const cs = getComputedStyle(el);
+      return (cs.animation && cs.animation !== 'none') ||
+             (cs.transition && cs.transition !== 'all 0s ease 0s' && cs.transition !== 'none');
+    });
+    if (animated.length > 0) {
+      interactions.push({
+        type: 'css-animation',
+        count: animated.length,
+        samples: animated.slice(0, 5).map(el => ({
+          tag: el.tagName,
+          classes: el.className?.toString().slice(0, 80),
+          animation: getComputedStyle(el).animation,
+          transition: getComputedStyle(el).transition
+        }))
+      });
+    }
+
+    // 3. Scroll-driven signals
+    const sticky = [...allElements].filter(el => getComputedStyle(el).position === 'sticky');
+    const scrollSnap = getComputedStyle(section).scrollSnapType;
+    const hasScrollTimeline = [...allElements].some(el => getComputedStyle(el).animationTimeline && getComputedStyle(el).animationTimeline !== 'auto');
+    if (sticky.length > 0 || (scrollSnap && scrollSnap !== 'none') || hasScrollTimeline) {
+      interactions.push({
+        type: 'scroll-driven',
+        sticky: sticky.length,
+        scrollSnap: scrollSnap !== 'none' ? scrollSnap : null,
+        animationTimeline: hasScrollTimeline
+      });
+    }
+
+    // 4. Video / Canvas / Lottie
+    const videos = section.querySelectorAll('video');
+    const canvases = section.querySelectorAll('canvas');
+    const lotties = section.querySelectorAll('lottie-player, [data-lottie], .lottie');
+    if (videos.length || canvases.length || lotties.length) {
+      interactions.push({
+        type: 'media-dynamic',
+        videos: videos.length,
+        canvases: canvases.length,
+        lotties: lotties.length
+      });
+    }
+
+    // 5. Third-party library markers
+    const libMarkers = [];
+    if (document.querySelector('.lenis, .lenis-smooth')) libMarkers.push('lenis');
+    if (document.querySelector('.locomotive-scroll')) libMarkers.push('locomotive-scroll');
+    if (document.querySelector('.swiper, .swiper-container')) libMarkers.push('swiper');
+    if (document.querySelector('[data-embla], .embla')) libMarkers.push('embla');
+    if (document.querySelector('[data-aos]')) libMarkers.push('aos');
+    if (document.querySelector('.gsap, [data-gsap]')) libMarkers.push('gsap');
+    if (document.querySelector('[data-framer], [data-projection-id]')) libMarkers.push('framer-motion');
+    if (document.querySelector('.slick-slider')) libMarkers.push('slick');
+    if (document.querySelector('.splide')) libMarkers.push('splide');
+    if (libMarkers.length > 0) {
+      interactions.push({ type: 'third-party-libs', libs: [...new Set(libMarkers)] });
+    }
+
+    // 6. Forms and auth-gated elements
+    const forms = section.querySelectorAll('form');
+    const authGated = section.querySelectorAll('[data-requires-auth], .login-required, [href*="login"], [href*="signin"], [href*="signup"]');
+    const payGated = section.querySelectorAll('[href*="pricing"], [href*="checkout"], [href*="subscribe"], [data-stripe]');
+    if (forms.length || authGated.length || payGated.length) {
+      interactions.push({
+        type: 'gated-interaction',
+        forms: forms.length,
+        authGated: authGated.length,
+        payGated: payGated.length
+      });
+    }
+
+    // 7. Hover-detectable (elements with :hover rules — check via transition presence)
+    const hoverCandidates = [...allElements].filter(el => {
+      const cs = getComputedStyle(el);
+      return cs.cursor === 'pointer' || el.tagName === 'A' || el.tagName === 'BUTTON';
+    });
+    if (hoverCandidates.length > 0) {
+      interactions.push({
+        type: 'hover-candidates',
+        count: hoverCandidates.length
+      });
+    }
+
+    results.push({
+      index: i,
+      id: sectionId,
+      top: Math.round(rect.top + window.scrollY),
+      height: Math.round(rect.height),
+      interactionCount: interactions.length,
+      interactions
+    });
+  });
+
+  // Global signals
+  const global = {
+    smoothScroll: getComputedStyle(document.documentElement).scrollBehavior,
+    hasLenis: !!document.querySelector('.lenis'),
+    hasScrollSnap: getComputedStyle(document.documentElement).scrollSnapType !== 'none',
+    totalVideos: document.querySelectorAll('video').length,
+    totalCanvases: document.querySelectorAll('canvas').length,
+    totalForms: document.querySelectorAll('form').length,
+    totalIframes: document.querySelectorAll('iframe').length
+  };
+
+  return JSON.stringify({ global, sections: results }, null, 2);
+})();
+```
+
+### Step 2: Scroll-Through Observation
+
+After running the detection script, perform a **slow automated scroll** from top to bottom via Chrome MCP:
+
+1. Scroll in increments of 300px, pausing 500ms at each step
+2. At each pause, take note of:
+   - Elements that just appeared or animated into view
+   - Changes in the navbar/header
+   - Any auto-playing content (carousels, counters, videos)
+3. This catches behaviors the static script can't detect (IntersectionObserver-triggered animations, lazy-loaded content, scroll-position-dependent state changes)
+
+### Step 3: AI Classification & Decision
+
+For each section, classify every detected interaction into one of three categories:
+
+**✅ REPLICATE** — The interaction can be triggered by public actions (scroll, hover, click on visible elements). These MUST be implemented in the clone:
+- Scroll-triggered entrance animations (fade-in, slide-up, stagger)
+- Hover effects (color change, scale, shadow, underline)
+- Click-driven tabs, accordions, toggles
+- Navbar scroll behavior (shrink, shadow, background change)
+- Smooth scrolling (Lenis or CSS)
+- Auto-playing carousels / testimonial rotators
+- Parallax effects
+- Scroll-snap behaviors
+- Video/animation backgrounds (autoplay, loop)
+- Animated counters / number tickers
+- CSS keyframe animations
+- Pricing toggle (monthly/yearly — visual only, no real payment)
+
+**🚫 BLOCKED** — The interaction requires external identity or resources. Skip and document:
+- Content behind login/signup walls
+- Features requiring OAuth / SSO
+- Payment-gated content (trial modals, paywall)
+- CAPTCHA / verification flows
+- Real-time data from authenticated APIs (chat widgets, notifications, user dashboards)
+- Form submissions to third-party services (record the form structure but don't wire the submission)
+- iframe-embedded third-party apps that require auth
+
+**Decision rule:** If you can trigger and observe the full interaction by scrolling, hovering, or clicking public elements in an incognito browser — it's REPLICATE. If any step requires credentials, payment, or third-party auth — it's BLOCKED.
+
+### Step 4: Output Interaction Map
+
+Write two files:
+
+**`docs/research/INTERACTION_MAP.md`:**
+
+```markdown
+# Interaction Map
+
+Generated: <date>
+Target: <url>
+
+## Global Interactions
+- Smooth scroll: <yes/no, library>
+- Navbar scroll behavior: <description>
+- Page-level scroll-snap: <yes/no>
+
+## Per-Section Breakdown
+
+### <Section Name> (top: Npx)
+| Interaction | Type | Classification | Implementation |
+|---|---|---|---|
+| Cards fade in on scroll | scroll-triggered | ✅ REPLICATE | framer-motion whileInView |
+| Hover shadow on cards | hover | ✅ REPLICATE | Tailwind hover: classes |
+| "Start free trial" opens login modal | click-gated | 🚫 BLOCKED | Requires auth |
+
+### <Next Section> ...
+```
+
+**`docs/research/BLOCKED_INTERACTIONS.md`:**
+
+```markdown
+# Blocked Interactions
+
+These interactions were detected but cannot be replicated because they require
+external identity, payment, or third-party services.
+
+| Section | Interaction | Reason | Fallback |
+|---|---|---|---|
+| Hero | "Sign up" button opens OAuth | Requires auth | Static button, link to # |
+| Pricing | Checkout flow | Requires Stripe session | Show pricing cards only |
+| Footer | Live chat widget | Requires Crisp/Intercom auth | Omit widget |
+```
+
+### How This Feeds Into Later Phases
+
+- **Phase 2 (Foundation):** Install any libraries identified in the interaction map (e.g., `pnpm add lenis framer-motion embla-carousel-react`)
+- **Phase 3 (Component Specs):** Every component spec MUST reference its section in INTERACTION_MAP.md. The "States & Behaviors" section of each spec is populated from the interaction map — no guessing.
+- **Phase 5 (Visual QA):** Check every ✅ REPLICATE interaction actually works. Scroll, hover, click through the clone and verify each one.
+- **Completion Report:** Include the BLOCKED_INTERACTIONS.md contents in the final report under "Unreplicated Interactions."
+
 ## Phase 2: Foundation Build
 
 This is sequential. Do it yourself (not delegated to an agent) since it touches many files:
