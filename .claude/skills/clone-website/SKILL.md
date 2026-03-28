@@ -162,6 +162,49 @@ For each sub-region, also check:
 - **SVG icons inline:** Extract the actual SVG markup for small icons (checkmarks, arrows, status indicators) rather than approximating with emoji or text
 - **Clip-paths and masks:** Check `clipPath` and `mask` properties that create non-rectangular shapes
 
+### 13. Visual Output = Full CSS Stack
+
+An element's final appearance is the composite of ALL its CSS layers, not just the first non-transparent property you find. When extracting any element, check the full visual stack:
+- `backgroundColor` AND `backgroundImage` (patterns, gradients, SVG textures)
+- `::before` and `::after` pseudo-elements (decorations, tails, arrows, overlays)
+- Child elements with `position: absolute` that overlay the parent
+- `boxShadow`, `filter`, `backdropFilter`, `mixBlendMode`
+- `clipPath`, `mask`, `transform`
+
+If you extract only `backgroundColor` and stop, you will miss wallpaper patterns, gradient overlays, decorative pseudo-elements, and layered compositions. Every layer contributes to the final pixel output.
+
+### 14. DOM Structure Determines Layout
+
+Two pieces of text that are siblings in a flex row render inline; the same text nested as parent-child renders stacked. The DOM tree structure — not just the CSS of individual elements — determines how things are laid out.
+
+When extracting, always capture:
+- Whether elements are siblings or parent-child
+- The parent's `display`, `flexDirection`, `gap`, `alignItems`, `justifyContent`
+- Which elements are wrappers vs. content-bearing
+
+If you extract only text content and individual styles without capturing the tree relationships, the builder will guess the layout structure and get it wrong.
+
+### 15. Every Spec Value Must Be Traceable
+
+Every value in a spec file must be traceable to a specific extraction step. If you cannot answer "which `getComputedStyle()` call or Chrome MCP screenshot produced this value?", the value is a guess and must be re-extracted.
+
+This applies to colors, sizes, spacing, font properties, border-radius, shadows — everything. A spec that mixes extracted values with assumptions is worse than a spec that is incomplete, because the builder cannot tell which values to trust.
+
+### 16. Visual Complexity Drives Extraction Granularity
+
+Extraction depth is not fixed — it is driven by visual complexity. A plain text section with a heading and paragraph needs only top-level style extraction. A section containing a simulated phone screen with chat bubbles, status indicators, timestamps, and background patterns requires separate extraction passes on each sub-region.
+
+Before extracting any section, look at your close-up screenshot and judge: how many visually distinct layers, sub-components, and states does this section contain? That number determines how many extraction passes you need. One pass per visually distinct sub-region.
+
+### 17. Per-Component Visual QA, Not Just End-to-End
+
+Do not defer all visual comparison to the final Phase 5 QA. After each builder agent completes a component, immediately:
+1. Take a screenshot of the built component in the clone
+2. Take a screenshot of the same region on the original site
+3. Compare them side-by-side
+
+Catch discrepancies at the single-component level where they are easiest to diagnose and fix. A full-page QA at the end makes it hard to tell which component is causing a visual mismatch, and by then you may have built dependent components on top of incorrect ones.
+
 ## Phase 1: Reconnaissance
 
 Navigate to the target URL with Chrome MCP.
