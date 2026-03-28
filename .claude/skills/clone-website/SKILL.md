@@ -205,6 +205,30 @@ Do not defer all visual comparison to the final Phase 5 QA. After each builder a
 
 Catch discrepancies at the single-component level where they are easiest to diagnose and fix. A full-page QA at the end makes it hard to tell which component is causing a visual mismatch, and by then you may have built dependent components on top of incorrect ones.
 
+### 18. Match Icons Against Existing Libraries First
+
+The project already has icon libraries installed (check `package.json` for `@tabler/icons-react`, `lucide-react`, or similar). When extracting icons from the target site:
+1. Identify the icon's visual function (arrow, chevron, search, phone, video, check, etc.)
+2. Search the project's existing icon library for a matching icon
+3. Only create custom SVG components for icons that have no close match in the existing library
+
+This avoids bloating the project with redundant hand-crafted SVGs when a one-line import would produce the same result. Custom SVGs should be the fallback, not the default.
+
+### 19. Interaction QA: Compare Every State, Not Just Default
+
+After building an interactive component (tabs, accordions, dropdowns, toggles, carousels), QA must cover every interaction state, not just the default appearance:
+1. Trigger the same interaction on BOTH the original site and the clone (via Chrome MCP or manual testing)
+2. Screenshot each state on both
+3. Compare: does the same click/hover/scroll produce the same visual result?
+
+Specifically verify:
+- Does the transition/animation match (duration, easing, direction)?
+- Does the revealed content match (layout, text, images)?
+- Does the trigger element change appearance correctly (active tab highlight, chevron rotation, toggle color)?
+- Are edge states handled (first/last tab, empty content, overflow)?
+
+A component that looks correct in its default state but behaves differently on interaction is a failed clone.
+
 ## Phase 1: Reconnaissance
 
 Navigate to the target URL with Chrome MCP.
