@@ -1,5 +1,6 @@
 import { ClarityAnalytics } from './clarity-analytics';
 import { GoogleAnalytics } from './google-analytics';
+import { OpenPanelAnalytics } from './openpanel-analytics';
 import { PlausibleAnalytics } from './plausible-analytics';
 import { UmamiAnalytics } from './umami-analytics';
 
@@ -15,6 +16,7 @@ export function Analytics() {
       <UmamiAnalytics />
       <PlausibleAnalytics />
       <ClarityAnalytics />
+      <OpenPanelAnalytics />
     </>
   );
 }
