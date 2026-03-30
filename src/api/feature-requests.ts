@@ -173,26 +173,26 @@ export const voteFeatureRequest = createServerFn({ method: 'POST' })
       .limit(1);
 
     if (existing.length > 0) {
-      // Remove vote
-      await db.delete(featureVote).where(eq(featureVote.id, existing[0].id));
-      await db
-        .update(featureRequest)
-        .set({ voteCount: sql`${featureRequest.voteCount} - 1` })
-        .where(eq(featureRequest.id, data.featureRequestId));
+      await db.batch([
+        db.delete(featureVote).where(eq(featureVote.id, existing[0].id)),
+        db.update(featureRequest)
+          .set({ voteCount: sql`${featureRequest.voteCount} - 1` })
+          .where(eq(featureRequest.id, data.featureRequestId)),
+      ]);
       return { voted: false };
     }
 
-    // Add vote
-    await db.insert(featureVote).values({
-      id: crypto.randomUUID(),
-      featureRequestId: data.featureRequestId,
-      userId: context.userId,
-      createdAt: new Date(),
-    });
-    await db
-      .update(featureRequest)
-      .set({ voteCount: sql`${featureRequest.voteCount} + 1` })
-      .where(eq(featureRequest.id, data.featureRequestId));
+    await db.batch([
+      db.insert(featureVote).values({
+        id: crypto.randomUUID(),
+        featureRequestId: data.featureRequestId,
+        userId: context.userId,
+        createdAt: new Date(),
+      }),
+      db.update(featureRequest)
+        .set({ voteCount: sql`${featureRequest.voteCount} + 1` })
+        .where(eq(featureRequest.id, data.featureRequestId)),
+    ]);
     return { voted: true };
   });
 

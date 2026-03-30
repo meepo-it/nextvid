@@ -4,7 +4,7 @@
  */
 
 import { relations } from 'drizzle-orm';
-import { integer, sqliteTable, text, index } from 'drizzle-orm/sqlite-core';
+import { integer, sqliteTable, text, index, uniqueIndex } from 'drizzle-orm/sqlite-core';
 import { user } from './auth.schema';
 
 /** 
@@ -124,6 +124,7 @@ export const featureVote = sqliteTable(
     createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull(),
   },
   (table) => [
+    uniqueIndex('feature_vote_unique_idx').on(table.featureRequestId, table.userId),
     index('feature_vote_feature_id_idx').on(table.featureRequestId),
     index('feature_vote_user_id_idx').on(table.userId),
   ]

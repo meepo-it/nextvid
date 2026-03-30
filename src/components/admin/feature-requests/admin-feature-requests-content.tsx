@@ -79,6 +79,9 @@ export function AdminFeatureRequestsContent() {
         toast.success(m.admin_feature_requests_status_updated());
       }
     },
+    onError: () => {
+      toast.error(m.admin_feature_requests_update_error());
+    },
   });
 
   const deleteMutation = useMutation({
@@ -93,6 +96,9 @@ export function AdminFeatureRequestsContent() {
       }
       setRejectTarget(null);
       setRejectReason('');
+    },
+    onError: () => {
+      toast.error(m.admin_feature_requests_delete_error());
     },
   });
 

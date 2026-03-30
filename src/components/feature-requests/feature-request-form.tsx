@@ -30,19 +30,15 @@ export function FeatureRequestForm({
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (title.trim().length < 3 || description.trim().length < 10) return;
     onSubmit({
       title: title.trim(),
       description: description.trim(),
-      category: category.trim() || undefined,
     });
     setTitle('');
     setDescription('');
-    setCategory('');
     setOpen(false);
   };
 
@@ -100,17 +96,6 @@ export function FeatureRequestForm({
               minLength={10}
               maxLength={1000}
               rows={4}
-            />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium">
-              {m.feature_requests_form_category()}
-            </label>
-            <Input
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              placeholder={m.feature_requests_form_category_placeholder()}
-              maxLength={50}
             />
           </div>
           <div className="flex justify-end gap-2">

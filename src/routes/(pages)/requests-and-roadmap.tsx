@@ -15,13 +15,14 @@ import {
 } from '@/api/feature-requests';
 import { websiteConfig } from '@/config/website';
 import { seo } from '@/lib/seo';
+import { toast } from 'sonner';
 import * as m from '@/paraglide/messages.js';
 
 export const Route = createFileRoute('/(pages)/requests-and-roadmap')({
   head: () =>
     seo('/requests-and-roadmap', {
-      title: `${m.feature_requests_title()} | ${websiteConfig.metadata?.name}`,
-      description: m.feature_requests_subtitle(),
+      title: `${m.feature_requests_seo_title()} | ${websiteConfig.metadata?.name}`,
+      description: m.feature_requests_seo_description(),
     }),
   component: RequestsAndRoadmapPage,
 });
@@ -59,8 +60,12 @@ function RequestsAndRoadmapPage() {
     mutationFn: (input: { title: string; description: string; category?: string }) =>
       createFeatureRequest({ data: input }),
     onSuccess: () => {
+      toast.success(m.feature_requests_submit_success());
       queryClient.invalidateQueries({ queryKey: ['feature-requests'] });
       queryClient.invalidateQueries({ queryKey: ['feature-requests-roadmap'] });
+    },
+    onError: () => {
+      toast.error(m.feature_requests_submit_error());
     },
   });
 
@@ -70,6 +75,9 @@ function RequestsAndRoadmapPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['feature-requests'] });
       queryClient.invalidateQueries({ queryKey: ['feature-requests-roadmap'] });
+    },
+    onError: () => {
+      toast.error(m.feature_requests_vote_error());
     },
   });
 
@@ -89,12 +97,17 @@ function RequestsAndRoadmapPage() {
     <Container className="px-4 py-16">
       <div className="mx-auto max-w-5xl space-y-12">
         {/* Page header */}
-        <div className="space-y-4">
-          <h1 className="text-center text-3xl font-bold tracking-tight">
-            {m.feature_requests_title()}
+        <div className="space-y-4 text-center">
+          <h1 className="text-3xl font-bold tracking-tight">
+            {m.feature_requests_title_prefix()}{' '}
+            <span className="bg-gradient-to-r from-violet-500 via-pink-500 to-orange-400 bg-clip-text text-transparent">
+              {m.feature_requests_title_highlight()}
+            </span>
           </h1>
-          <p className="text-center text-lg text-muted-foreground">
-            {m.feature_requests_subtitle()}
+          <p className="mx-auto max-w-xl text-lg text-muted-foreground">
+            {m.feature_requests_subtitle_line1()}{' '}
+            <span className="font-medium text-foreground">{m.feature_requests_subtitle_highlight()}</span>{' '}
+            {m.feature_requests_subtitle_line2()}
           </p>
         </div>
 
