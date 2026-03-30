@@ -4,7 +4,7 @@ This document provides guidelines for AI agents working in this codebase.
 
 ## Project Overview
 
-This is **TanStarter** - a TanStack Start boilerplate for building SaaS applications on Cloudflare Workers. Built with React 19, TanStack Router, TanStack Query, Drizzle ORM, and Better Auth, Content Collections, ShadcnUI, and BaseUI.
+This is **LetsShip** - a TanStack Start boilerplate for building SaaS applications on Cloudflare Workers. Built with React 19, TanStack Router, TanStack Query, Drizzle ORM, and Better Auth, Content Collections, ShadcnUI, and BaseUI.
 
 ## Build Commands
 

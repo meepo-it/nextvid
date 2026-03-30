@@ -24,7 +24,7 @@ export default function HeroSection() {
           <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
             {/* introduction */}
             <a
-              href="https://x.com/tanstarter"
+              href="https://x.com/LetsShip"
               target="_blank"
               rel="noopener noreferrer"
               className="animate-fade-up delay-0 hover:bg-muted group mx-auto flex w-fit items-center gap-2 rounded-full border border-border p-1 pl-4 transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:rounded-full"

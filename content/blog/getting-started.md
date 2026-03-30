@@ -1,12 +1,12 @@
 ---
 title: Getting Started
-description: Quick guide to set up and run the TanStarter template.
+description: Quick guide to set up and run the LetsShip template.
 date: 2026-02-12
 category: Guide
 image: https://cdn.mksaas.com/tanstarter/template/blog-get-started.jpeg
 ---
 
-This post walks you through the basics of running and customizing the TanStarter template.
+This post walks you through the basics of running and customizing the LetsShip template.
 
 ## Prerequisites
 

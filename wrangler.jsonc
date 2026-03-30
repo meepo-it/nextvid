@@ -46,7 +46,7 @@
   // https://developers.cloudflare.com/workers/configuration/routing/custom-domains/
   "routes": [
     {
-      "pattern": "demo.tanstarter.dev",
+      "pattern": "letsship.dev",
       "custom_domain": true
     }
   ],

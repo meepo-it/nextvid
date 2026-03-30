@@ -8,6 +8,7 @@ export const Routes = {
   Blog: '/blog',
   About: '/about',
   Contact: '/contact',
+  RequestsAndRoadmap: '/requests-and-roadmap',
 
   // Auth routes
   Auth: '/auth',
@@ -41,6 +42,7 @@ export const Routes = {
   // Admin routes
   Admin: '/admin',
   AdminUsers: '/admin/users',
+  AdminFeatureRequests: '/admin/feature-requests',
 } as const;
 
 /** Default login redirect route */

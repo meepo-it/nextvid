@@ -1,10 +1,9 @@
 import {
-  IconBell,
+  IconBulb,
   IconCreditCard,
   IconFileUpload,
   IconKey,
   IconLayoutDashboard,
-  IconLock,
   IconSettings2,
   IconShieldCheck,
   IconUserCircle,
@@ -37,6 +36,12 @@ export function getSidebarLinks(): MenuItemConfig[] {
           href: Routes.AdminUsers,
           external: false,
         },
+        {
+          title: m.admin_feature_requests_title(),
+          icon: IconBulb,
+          href: Routes.AdminFeatureRequests,
+          external: false,
+        },
       ],
     },
     {
@@ -60,12 +65,6 @@ export function getSidebarLinks(): MenuItemConfig[] {
             ]
           : []),
         {
-          title: m.dashboard_sidebar_security(),
-          icon: IconLock,
-          href: Routes.SettingsSecurity,
-          external: false,
-        },
-        {
           title: m.dashboard_sidebar_files(),
           icon: IconFileUpload,
           href: Routes.SettingsFiles,
@@ -75,12 +74,6 @@ export function getSidebarLinks(): MenuItemConfig[] {
           title: m.dashboard_sidebar_api_keys(),
           icon: IconKey,
           href: Routes.SettingsApiKeys,
-          external: false,
-        },
-        {
-          title: m.dashboard_sidebar_notifications(),
-          icon: IconBell,
-          href: Routes.SettingsNotifications,
           external: false,
         },
       ],

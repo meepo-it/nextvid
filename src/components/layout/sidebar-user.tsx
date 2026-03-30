@@ -19,7 +19,9 @@ import {
 import { websiteConfig } from '@/config/website';
 import type { SessionUser } from '@/auth/types';
 import {
+  IconBell,
   IconDeviceDesktop,
+  IconLock,
   IconLogout,
   IconMoon,
   IconSelector,
@@ -30,7 +32,8 @@ import { useTheme } from '@/components/theme/theme-provider';
 import { UserAvatar } from '@/components/shared/user-avatar';
 import { authClient } from '@/auth/client';
 import * as m from '@/paraglide/messages.js';
-import { useRouter } from '@tanstack/react-router';
+import { Link, useRouter } from '@tanstack/react-router';
+import { Routes } from '@/lib/routes';
 import { toast } from 'sonner';
 
 interface SidebarUserProps {
@@ -142,6 +145,21 @@ export function SidebarUser({ user }: SidebarUserProps) {
                 </>
               )}
 
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                render={<Link to={Routes.SettingsSecurity} />}
+                onClick={() => setOpen(false)}
+              >
+                <IconLock className="mr-2 size-4" />
+                {m.dashboard_sidebar_security()}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                render={<Link to={Routes.SettingsNotifications} />}
+                onClick={() => setOpen(false)}
+              >
+                <IconBell className="mr-2 size-4" />
+                {m.dashboard_sidebar_notifications()}
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={async (event) => {

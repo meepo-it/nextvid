@@ -77,3 +77,62 @@ export const userFilesRelations = relations(userFiles, ({ one }) => ({
     references: [user.id],
   }),
 }));
+
+/**
+ * Feature requests — user-submitted ideas with voting
+ */
+export const featureRequest = sqliteTable(
+  'feature_request',
+  {
+    id: text('id').primaryKey(),
+    title: text('title').notNull(),
+    description: text('description').notNull(),
+    status: text('status').notNull().default('submitted'), // submitted | planned | in_progress | done
+    category: text('category'),
+    userId: text('user_id')
+      .notNull()
+      .references(() => user.id, { onDelete: 'cascade' }),
+    voteCount: integer('vote_count').notNull().default(0),
+    createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull(),
+    updatedAt: integer('updated_at', { mode: 'timestamp_ms' }).notNull(),
+  },
+  (table) => [
+    index('feature_request_user_id_idx').on(table.userId),
+    index('feature_request_status_idx').on(table.status),
+    index('feature_request_vote_count_idx').on(table.voteCount),
+  ]
+);
+
+export const featureRequestRelations = relations(featureRequest, ({ one, many }) => ({
+  user: one(user, { fields: [featureRequest.userId], references: [user.id] }),
+  votes: many(featureVote),
+}));
+
+/**
+ * Feature votes — one vote per user per feature request
+ */
+export const featureVote = sqliteTable(
+  'feature_vote',
+  {
+    id: text('id').primaryKey(),
+    featureRequestId: text('feature_request_id')
+      .notNull()
+      .references(() => featureRequest.id, { onDelete: 'cascade' }),
+    userId: text('user_id')
+      .notNull()
+      .references(() => user.id, { onDelete: 'cascade' }),
+    createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull(),
+  },
+  (table) => [
+    index('feature_vote_feature_id_idx').on(table.featureRequestId),
+    index('feature_vote_user_id_idx').on(table.userId),
+  ]
+);
+
+export const featureVoteRelations = relations(featureVote, ({ one }) => ({
+  featureRequest: one(featureRequest, {
+    fields: [featureVote.featureRequestId],
+    references: [featureRequest.id],
+  }),
+  user: one(user, { fields: [featureVote.userId], references: [user.id] }),
+}));

@@ -43,7 +43,11 @@ const config = defineConfig({
     },
   },
   plugins: [
-    devtools(),
+    devtools({
+      eventBusConfig: {
+        enabled: false,
+      },
+    }),
     tailwindcss(),
     contentCollections(),
     // this is the plugin that enables path aliases
@@ -69,6 +73,7 @@ const config = defineConfig({
         publicPattern('/terms'),
         publicPattern('/privacy'),
         publicPattern('/cookie'),
+        publicPattern('/requests-and-roadmap'),
         // Protected & API routes — no locale prefix
         protectedPattern('/dashboard/:path(.*)?'),
         protectedPattern('/settings/:path(.*)?'),

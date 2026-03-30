@@ -35,8 +35,10 @@ import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
 import { Route as AuthErrorRouteImport } from './routes/auth/error'
 import { Route as AdminUsersRouteImport } from './routes/admin/users'
+import { Route as AdminFeatureRequestsRouteImport } from './routes/admin/feature-requests'
 import { Route as testsTestErrorRouteImport } from './routes/(tests)/test-error'
 import { Route as testsTest404RouteImport } from './routes/(tests)/test-404'
+import { Route as pagesRequestsAndRoadmapRouteImport } from './routes/(pages)/requests-and-roadmap'
 import { Route as pagesPricingRouteImport } from './routes/(pages)/pricing'
 import { Route as pagesContactRouteImport } from './routes/(pages)/contact'
 import { Route as pagesAboutRouteImport } from './routes/(pages)/about'
@@ -177,6 +179,11 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
   path: '/users',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminFeatureRequestsRoute = AdminFeatureRequestsRouteImport.update({
+  id: '/feature-requests',
+  path: '/feature-requests',
+  getParentRoute: () => AdminRoute,
+} as any)
 const testsTestErrorRoute = testsTestErrorRouteImport.update({
   id: '/(tests)/test-error',
   path: '/test-error',
@@ -185,6 +192,11 @@ const testsTestErrorRoute = testsTestErrorRouteImport.update({
 const testsTest404Route = testsTest404RouteImport.update({
   id: '/(tests)/test-404',
   path: '/test-404',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const pagesRequestsAndRoadmapRoute = pagesRequestsAndRoadmapRouteImport.update({
+  id: '/(pages)/requests-and-roadmap',
+  path: '/requests-and-roadmap',
   getParentRoute: () => rootRouteImport,
 } as any)
 const pagesPricingRoute = pagesPricingRouteImport.update({
@@ -248,8 +260,10 @@ export interface FileRoutesByFullPath {
   '/about': typeof pagesAboutRoute
   '/contact': typeof pagesContactRoute
   '/pricing': typeof pagesPricingRoute
+  '/requests-and-roadmap': typeof pagesRequestsAndRoadmapRoute
   '/test-404': typeof testsTest404Route
   '/test-error': typeof testsTestErrorRoute
+  '/admin/feature-requests': typeof AdminFeatureRequestsRoute
   '/admin/users': typeof AdminUsersRoute
   '/auth/error': typeof AuthErrorRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
@@ -284,8 +298,10 @@ export interface FileRoutesByTo {
   '/about': typeof pagesAboutRoute
   '/contact': typeof pagesContactRoute
   '/pricing': typeof pagesPricingRoute
+  '/requests-and-roadmap': typeof pagesRequestsAndRoadmapRoute
   '/test-404': typeof testsTest404Route
   '/test-error': typeof testsTestErrorRoute
+  '/admin/feature-requests': typeof AdminFeatureRequestsRoute
   '/admin/users': typeof AdminUsersRoute
   '/auth/error': typeof AuthErrorRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
@@ -324,8 +340,10 @@ export interface FileRoutesById {
   '/(pages)/about': typeof pagesAboutRoute
   '/(pages)/contact': typeof pagesContactRoute
   '/(pages)/pricing': typeof pagesPricingRoute
+  '/(pages)/requests-and-roadmap': typeof pagesRequestsAndRoadmapRoute
   '/(tests)/test-404': typeof testsTest404Route
   '/(tests)/test-error': typeof testsTestErrorRoute
+  '/admin/feature-requests': typeof AdminFeatureRequestsRoute
   '/admin/users': typeof AdminUsersRoute
   '/auth/error': typeof AuthErrorRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
@@ -365,8 +383,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/pricing'
+    | '/requests-and-roadmap'
     | '/test-404'
     | '/test-error'
+    | '/admin/feature-requests'
     | '/admin/users'
     | '/auth/error'
     | '/auth/forgot-password'
@@ -401,8 +421,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/pricing'
+    | '/requests-and-roadmap'
     | '/test-404'
     | '/test-error'
+    | '/admin/feature-requests'
     | '/admin/users'
     | '/auth/error'
     | '/auth/forgot-password'
@@ -440,8 +462,10 @@ export interface FileRouteTypes {
     | '/(pages)/about'
     | '/(pages)/contact'
     | '/(pages)/pricing'
+    | '/(pages)/requests-and-roadmap'
     | '/(tests)/test-404'
     | '/(tests)/test-error'
+    | '/admin/feature-requests'
     | '/admin/users'
     | '/auth/error'
     | '/auth/forgot-password'
@@ -480,6 +504,7 @@ export interface RootRouteChildren {
   pagesAboutRoute: typeof pagesAboutRoute
   pagesContactRoute: typeof pagesContactRoute
   pagesPricingRoute: typeof pagesPricingRoute
+  pagesRequestsAndRoadmapRoute: typeof pagesRequestsAndRoadmapRoute
   testsTest404Route: typeof testsTest404Route
   testsTestErrorRoute: typeof testsTestErrorRoute
   BlogSlugRoute: typeof BlogSlugRoute
@@ -673,6 +698,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/feature-requests': {
+      id: '/admin/feature-requests'
+      path: '/feature-requests'
+      fullPath: '/admin/feature-requests'
+      preLoaderRoute: typeof AdminFeatureRequestsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/(tests)/test-error': {
       id: '/(tests)/test-error'
       path: '/test-error'
@@ -685,6 +717,13 @@ declare module '@tanstack/react-router' {
       path: '/test-404'
       fullPath: '/test-404'
       preLoaderRoute: typeof testsTest404RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(pages)/requests-and-roadmap': {
+      id: '/(pages)/requests-and-roadmap'
+      path: '/requests-and-roadmap'
+      fullPath: '/requests-and-roadmap'
+      preLoaderRoute: typeof pagesRequestsAndRoadmapRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(pages)/pricing': {
@@ -754,11 +793,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminFeatureRequestsRoute: typeof AdminFeatureRequestsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminFeatureRequestsRoute: AdminFeatureRequestsRoute,
   AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
@@ -836,6 +877,7 @@ const rootRouteChildren: RootRouteChildren = {
   pagesAboutRoute: pagesAboutRoute,
   pagesContactRoute: pagesContactRoute,
   pagesPricingRoute: pagesPricingRoute,
+  pagesRequestsAndRoadmapRoute: pagesRequestsAndRoadmapRoute,
   testsTest404Route: testsTest404Route,
   testsTestErrorRoute: testsTestErrorRoute,
   BlogSlugRoute: BlogSlugRoute,

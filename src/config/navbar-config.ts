@@ -14,5 +14,6 @@ export function getNavbarLinks(): MenuItemConfig[] {
   if (websiteConfig.blog?.enable) {
     links.push({ title: m.nav_blog(), href: Routes.Blog, external: false });
   }
+  links.push({ title: m.nav_requests_and_roadmap_title(), href: Routes.RequestsAndRoadmap, external: false });
   return links;
 }

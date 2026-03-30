@@ -22,6 +22,13 @@
       "when": 1771687305982,
       "tag": "0002_hard_dexter_bennett",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1774841461039,
+      "tag": "0003_mean_major_mapleleaf",
+      "breakpoints": true
     }
   ]
 }
