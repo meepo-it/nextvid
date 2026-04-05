@@ -193,12 +193,18 @@ const checkCompletionSchema = z.object({ sessionId: z.string().min(1) });
 
 export const checkPaymentCompletion = createServerFn({ method: 'GET' })
   .inputValidator(checkCompletionSchema)
-  .handler(async ({ data }) => {
+  .middleware([authApiMiddleware])
+  .handler(async ({ data, context }) => {
     const db = getDb();
     const [record] = await db
       .select()
       .from(payment)
-      .where(eq(payment.sessionId, data.sessionId))
+      .where(
+        and(
+          eq(payment.sessionId, data.sessionId),
+          eq(payment.userId, context.userId)
+        )
+      )
       .limit(1);
     return { isPaid: !!record?.paid };
   });
