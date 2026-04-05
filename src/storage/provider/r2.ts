@@ -73,6 +73,77 @@ function createFileValidator(config: FileValidatorConfig) {
 }
 
 /**
+ * Common MIME-type-to-extension mapping for content-type validation.
+ * Only covers types typically allowed for user uploads.
+ */
+const MIME_TO_EXTENSIONS: Record<string, string[]> = {
+  'image/jpeg': ['jpg', 'jpeg'],
+  'image/png': ['png'],
+  'image/gif': ['gif'],
+  'image/webp': ['webp'],
+  'image/svg+xml': ['svg'],
+  'image/bmp': ['bmp'],
+  'image/x-icon': ['ico'],
+  'application/pdf': ['pdf'],
+  'text/plain': ['txt'],
+  'text/csv': ['csv'],
+  'application/json': ['json'],
+  'application/zip': ['zip'],
+  'application/gzip': ['gz'],
+  'video/mp4': ['mp4'],
+  'video/webm': ['webm'],
+  'audio/mpeg': ['mp3'],
+  'audio/wav': ['wav'],
+  'application/msword': ['doc'],
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': [
+    'docx',
+  ],
+  'application/vnd.ms-excel': ['xls'],
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [
+    'xlsx',
+  ],
+};
+
+/**
+ * Validate that contentType is consistent with filename extension.
+ * Prevents uploading e.g. text/html with a .jpg extension (stored XSS risk).
+ */
+function validateContentType(
+  contentType: string,
+  filename: string
+): ValidationResult<true> {
+  const ext = filename.includes('.')
+    ? filename.slice(filename.lastIndexOf('.') + 1).toLowerCase()
+    : '';
+  if (!ext) return success(true); // no extension to cross-check
+
+  const allowedExts = MIME_TO_EXTENSIONS[contentType.toLowerCase()];
+  if (allowedExts && !allowedExts.includes(ext)) {
+    return fail(
+      `Content type '${contentType}' does not match file extension '.${ext}'`,
+      'CONTENT_TYPE_MISMATCH'
+    );
+  }
+
+  // Block dangerous MIME types regardless of extension
+  const dangerousTypes = [
+    'text/html',
+    'application/javascript',
+    'text/javascript',
+    'application/x-httpd-php',
+    'application/xhtml+xml',
+  ];
+  if (dangerousTypes.includes(contentType.toLowerCase())) {
+    return fail(
+      `Content type '${contentType}' is not allowed for uploads`,
+      'DANGEROUS_CONTENT_TYPE'
+    );
+  }
+
+  return success(true);
+}
+
+/**
  * Sanitize filename to prevent path traversal and keep storage key safe
  */
 function sanitizeFilename(filename: string): string {
@@ -141,6 +212,11 @@ export class R2Provider {
     const validation = this.validator.validateFile(fileForValidation, filename);
     if (!validation.success) {
       throw new UploadError(validation.error);
+    }
+
+    const contentTypeValidation = validateContentType(contentType, filename);
+    if (!contentTypeValidation.success) {
+      throw new UploadError(contentTypeValidation.error);
     }
 
     const fileId = generateId();

@@ -45,12 +45,28 @@ export const Route = createFileRoute('/api/storage/file')({
           if (!file) {
             return new Response('Not Found', { status: 404 });
           }
-          return new Response(file.body, {
-            headers: {
-              'Content-Type': file.contentType,
-              'Cache-Control': 'public, max-age=31536000, immutable',
-            },
-          });
+
+          // Only allow safe content types to be rendered inline;
+          // force download for everything else to prevent stored XSS.
+          const safeInlineTypes = [
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'image/webp',
+            'image/bmp',
+            'image/x-icon',
+            'image/svg+xml',
+            'application/pdf',
+          ];
+          const responseHeaders: Record<string, string> = {
+            'Content-Type': file.contentType,
+            'Cache-Control': 'public, max-age=31536000, immutable',
+          };
+          if (!safeInlineTypes.includes(file.contentType)) {
+            responseHeaders['Content-Disposition'] = 'attachment';
+          }
+
+          return new Response(file.body, { headers: responseHeaders });
         } catch (e) {
           if (e instanceof ConfigurationError) {
             return new Response('Storage not configured', { status: 503 });
