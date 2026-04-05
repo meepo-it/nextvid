@@ -919,46 +919,24 @@ export class StripeProvider implements PaymentProvider {
       : null;
 
     // Create subscription payment record with proper status and paid=false
-    const currentDate = new Date();
-    const db = getDb();
-
-    try {
-      await db.insert(payment).values({
-        id: crypto.randomUUID(),
-        priceId,
-        type: PaymentTypes.SUBSCRIPTION,
-        scene: PaymentScenes.SUBSCRIPTION,
-        userId,
-        customerId,
-        subscriptionId,
-        sessionId: session.id,
-        invoiceId, // may be null initially
-        paid: false, // will be set to true when invoice.paid event occurs
-        interval: this.mapStripeIntervalToPlanInterval(subscription),
-        status: this.mapSubscriptionStatusToPaymentStatus(subscription.status),
-        periodStart,
-        periodEnd,
-        cancelAtPeriodEnd: subscription.cancel_at_period_end,
-        trialStart,
-        trialEnd,
-        createdAt: currentDate,
-        updatedAt: currentDate,
-      });
-
-      console.log('<< Created subscription payment record success');
-    } catch (error) {
-      // Handle duplicate key constraint violation
-      if (
-        error instanceof Error &&
-        error.message.includes('unique constraint')
-      ) {
-        console.log('<< Payment record already exists, skipping creation');
-        return; // Don't throw, this is expected for duplicate processing
-      }
-
-      // Re-throw other errors
-      throw error;
-    }
+    await this.insertPaymentRecord({
+      priceId,
+      type: PaymentTypes.SUBSCRIPTION,
+      scene: PaymentScenes.SUBSCRIPTION,
+      userId,
+      customerId,
+      subscriptionId,
+      sessionId: session.id,
+      invoiceId, // may be null initially
+      paid: false, // will be set to true when invoice.paid event occurs
+      interval: this.mapStripeIntervalToPlanInterval(subscription),
+      status: this.mapSubscriptionStatusToPaymentStatus(subscription.status),
+      periodStart,
+      periodEnd,
+      cancelAtPeriodEnd: subscription.cancel_at_period_end,
+      trialStart,
+      trialEnd,
+    }, 'subscription');
   }
 
   /**
@@ -987,37 +965,53 @@ export class StripeProvider implements PaymentProvider {
     const scene = PaymentScenes.LIFETIME;
 
     // Create one-time payment record with proper status and paid=false
+    await this.insertPaymentRecord({
+      priceId,
+      type: PaymentTypes.ONE_TIME,
+      scene,
+      userId,
+      customerId,
+      sessionId: session.id,
+      invoiceId, // may be null initially
+      paid: false, // will be set to true when invoice.paid event occurs
+      status: 'completed', // one-time payments are completed once checkout is done
+    }, 'one-time');
+  }
+
+  /**
+   * Unified helper for payment record insertion with error handling
+   * Eliminates duplicate try-catch logic between subscription and one-time payments
+   * Handles duplicate key constraint violations gracefully
+   * @param paymentData Payment record data (excluding id, createdAt, updatedAt)
+   * @param recordType Type for logging ("subscription" or "one-time")
+   */
+  private async insertPaymentRecord(
+    paymentData: Record<string, any>,
+    recordType: string
+  ): Promise<void> {
     const currentDate = new Date();
     const db = getDb();
 
     try {
       await db.insert(payment).values({
         id: crypto.randomUUID(),
-        priceId,
-        type: PaymentTypes.ONE_TIME,
-        scene,
-        userId,
-        customerId,
-        sessionId: session.id,
-        invoiceId, // may be null initially
-        paid: false, // will be set to true when invoice.paid event occurs
-        status: 'completed', // one-time payments are completed once checkout is done
         createdAt: currentDate,
         updatedAt: currentDate,
+        ...paymentData,
       });
 
-      console.log('<< Created one-time payment record success');
+      console.log(`<< Created ${recordType} payment record success`);
     } catch (error) {
-      // Handle duplicate key constraint violation
+      // Handle duplicate key constraint violation gracefully
       if (
         error instanceof Error &&
         error.message.includes('unique constraint')
       ) {
-        console.log('<< Payment record already exists, skipping creation');
-        return; // Don't throw, this is expected for duplicate processing
+        console.log(`<< ${recordType} payment record already exists, skipping creation`);
+        return; // Don't throw - expected for duplicate webhook events
       }
 
-      // Re-throw other errors
+      // Re-throw unexpected errors
       throw error;
     }
   }
