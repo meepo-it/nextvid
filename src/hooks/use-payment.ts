@@ -1,14 +1,13 @@
 import { getCurrentPlan } from '@/api/payment';
 import { useQuery } from '@tanstack/react-query';
 
-export function useCurrentPlan(userId: string | undefined) {
+export function useCurrentPlan(enabled = true) {
   return useQuery({
-    queryKey: ['currentPlan', userId],
+    queryKey: ['currentPlan'],
     queryFn: async () => {
-      if (!userId) throw new Error('userId required');
-      return getCurrentPlan({ data: { userId } });
+      return getCurrentPlan();
     },
-    enabled: !!userId,
+    enabled,
     refetchOnWindowFocus: true,
   });
 }

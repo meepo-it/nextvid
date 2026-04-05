@@ -26,7 +26,7 @@ export const Route = createFileRoute('/(pages)/pricing')({
 function PricingPage() {
   const { data: session } = authClient.useSession();
   const userId = session?.user?.id;
-  const { data: planData } = useCurrentPlan(userId);
+  const { data: planData } = useCurrentPlan(!!userId);
   const currentPlan = planData?.currentPlan ?? null;
 
   return (

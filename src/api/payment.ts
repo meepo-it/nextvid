@@ -85,15 +85,11 @@ export const createCustomerPortalSession = createServerFn({ method: 'POST' })
     return { url: result.url };
   });
 
-const getCurrentPlanSchema = z.object({
-  userId: z.string().min(1),
-});
 
 export const getCurrentPlan = createServerFn({ method: 'GET' })
-  .inputValidator(getCurrentPlanSchema)
   .middleware([authApiMiddleware])
-  .handler(async ({ data }) => {
-    const { userId } = data;
+  .handler(async ({ context }) => {
+    const { userId } = context;
     const db = getDb();
     const plans = getAllPricePlans();
     const freePlan = plans.find((p) => p.isFree && !p.disabled) ?? null;
