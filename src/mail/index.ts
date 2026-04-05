@@ -2,6 +2,7 @@ import { websiteConfig } from '@/config/website';
 import type {
   MailProvider,
   MailProviderName,
+  SendEmailResult,
   SendRawEmailParams,
   SendTemplateParams,
 } from './types';
@@ -34,16 +35,28 @@ export function getMailProvider(): MailProvider {
 }
 
 /**
- * Send email using the configured mail provider
+ * Send email using the configured mail provider.
+ * Returns { success, messageId?, error? } so callers can distinguish
+ * "feature disabled" from "send failed" and access error details.
  */
 export async function sendEmail(
   params: SendTemplateParams | SendRawEmailParams
-): Promise<boolean> {
-  if (!websiteConfig.mail?.enable) return false;
-  const provider = getMailProvider();
-  const result =
-    'template' in params
-      ? await provider.sendTemplate(params)
-      : await provider.sendRawEmail(params);
-  return result.success;
+): Promise<SendEmailResult> {
+  if (!websiteConfig.mail?.enable) {
+    return { success: false, error: 'Mail feature is disabled' };
+  }
+  try {
+    const provider = getMailProvider();
+    const result =
+      'template' in params
+        ? await provider.sendTemplate(params)
+        : await provider.sendRawEmail(params);
+    if (!result.success) {
+      console.error('[mail] Send failed:', result.error);
+    }
+    return result;
+  } catch (error) {
+    console.error('[mail] Unexpected error:', error);
+    return { success: false, error };
+  }
 }
