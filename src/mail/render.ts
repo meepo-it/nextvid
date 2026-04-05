@@ -50,14 +50,36 @@ export async function renderEmailHtml(email: ReactElement): Promise<string> {
   throw new Error('No suitable React DOM server renderer available');
 }
 
+const NAMED_ENTITIES: Record<string, string> = {
+  '&nbsp;': ' ',
+  '&amp;': '&',
+  '&lt;': '<',
+  '&gt;': '>',
+  '&quot;': '"',
+  '&#39;': "'",
+  '&apos;': "'",
+  '&copy;': '\u00A9',
+  '&reg;': '\u00AE',
+  '&trade;': '\u2122',
+  '&ndash;': '\u2013',
+  '&mdash;': '\u2014',
+  '&lsquo;': '\u2018',
+  '&rsquo;': '\u2019',
+  '&ldquo;': '\u201C',
+  '&rdquo;': '\u201D',
+  '&bull;': '\u2022',
+  '&hellip;': '\u2026',
+};
+
 function decodeHtmlEntities(text: string): string {
   return text
-    .replaceAll('&nbsp;', ' ')
-    .replaceAll('&amp;', '&')
-    .replaceAll('&lt;', '<')
-    .replaceAll('&gt;', '>')
-    .replaceAll('&quot;', '"')
-    .replaceAll('&#39;', "'");
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) =>
+      String.fromCodePoint(parseInt(hex, 16))
+    )
+    .replace(/&#(\d+);/g, (_, dec) =>
+      String.fromCodePoint(parseInt(dec, 10))
+    )
+    .replace(/&[a-zA-Z]+;/g, (entity) => NAMED_ENTITIES[entity] ?? entity);
 }
 
 export function toPlainText(html: string): string {
