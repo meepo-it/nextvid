@@ -89,14 +89,14 @@ export const websiteConfig: WebsiteConfig = {
           prices: [
             {
               type: 'subscription',
-              priceId: clientEnv.VITE_STRIPE_PRICE_PRO_MONTHLY!,
+              priceId: clientEnv.VITE_STRIPE_PRICE_PRO_MONTHLY ?? '',
               amount: 990,
               currency: 'USD',
               interval: 'month',
             },
             {
               type: 'subscription',
-              priceId: clientEnv.VITE_STRIPE_PRICE_PRO_YEARLY!,
+              priceId: clientEnv.VITE_STRIPE_PRICE_PRO_YEARLY ?? '',
               amount: 9900,
               currency: 'USD',
               interval: 'year',
@@ -115,7 +115,7 @@ export const websiteConfig: WebsiteConfig = {
           prices: [
             {
               type: 'one_time',
-              priceId: clientEnv.VITE_STRIPE_PRICE_LIFETIME!,
+              priceId: clientEnv.VITE_STRIPE_PRICE_LIFETIME ?? '',
               amount: 19900,
               currency: 'USD',
               allowPromotionCode: true,
