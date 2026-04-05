@@ -3,7 +3,7 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { Spinner } from '@/components/ui/spinner';
 import { authClient } from '@/auth/client';
 import { Routes } from '@/lib/routes';
-import { useNavigate } from '@tanstack/react-router';
+import { Outlet, useNavigate } from '@tanstack/react-router';
 import { useEffect, type ReactNode } from 'react';
 
 /**
@@ -48,5 +48,17 @@ export function SidebarLayout({ children }: { children: ReactNode }) {
       <DashboardSidebar variant="inset" />
       <SidebarInset>{children}</SidebarInset>
     </SidebarProvider>
+  );
+}
+
+/**
+ * Pre-composed layout for route files: SidebarLayout + Outlet.
+ * Use as `component: SidebarLayoutPage` in route definitions.
+ */
+export function SidebarLayoutPage() {
+  return (
+    <SidebarLayout>
+      <Outlet />
+    </SidebarLayout>
   );
 }
