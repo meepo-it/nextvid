@@ -178,6 +178,33 @@ export class StripeProvider implements PaymentProvider {
       return undefined;
     }
   }
+  /**
+   * Validates that a checkout session has required metadata
+   * @param session Stripe checkout session
+   * @returns Object with userId and customerId
+   * @throws Error if required fields are missing
+   */
+  private validateSessionMetadata(session: Stripe.Checkout.Session): {
+    userId: string;
+    customerId: string;
+  } {
+    const userId = session.metadata?.userId;
+    if (!userId || userId.trim() === '') {
+      throw new Error(
+        `Checkout session ${session.id} missing or empty userId in metadata - cannot process`
+      );
+    }
+
+    const customerId = session.customer;
+    if (!customerId || typeof customerId !== 'string') {
+      throw new Error(
+        `Checkout session ${session.id} missing or invalid customerId - cannot process`
+      );
+    }
+
+    return { userId, customerId };
+  }
+
 
   /**
    * Create a checkout session for a plan
@@ -875,9 +902,8 @@ export class StripeProvider implements PaymentProvider {
       return;
     }
 
-    const currentDate = new Date();
-    const userId = session.metadata?.userId!;
-    const customerId = session.customer as string;
+    // Validate session metadata and get userId, customerId
+    let { userId, customerId } = this.validateSessionMetadata(session);
 
     // No matter user uses coupon code or not, even amount=0, invoice id is available
     const invoiceId: string | null = session.invoice as string | null;
@@ -893,6 +919,7 @@ export class StripeProvider implements PaymentProvider {
       : null;
 
     // Create subscription payment record with proper status and paid=false
+    const currentDate = new Date();
     const db = getDb();
 
     try {
@@ -949,9 +976,8 @@ export class StripeProvider implements PaymentProvider {
       return;
     }
 
-    const currentDate = new Date();
-    const userId = session.metadata?.userId!;
-    const customerId = session.customer as string;
+    // Validate session metadata and get userId, customerId
+    const { userId, customerId } = this.validateSessionMetadata(session);
 
     // No matter user uses coupon code or not, even amount=0, invoice id is available
     const invoiceId: string | null = session.invoice as string | null;
@@ -961,6 +987,7 @@ export class StripeProvider implements PaymentProvider {
     const scene = PaymentScenes.LIFETIME;
 
     // Create one-time payment record with proper status and paid=false
+    const currentDate = new Date();
     const db = getDb();
 
     try {

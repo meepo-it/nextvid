@@ -17,9 +17,11 @@ export const Route = createFileRoute('/api/webhooks/stripe')({
         const payload = await request.text();
         const signature = request.headers.get('stripe-signature') ?? '';
         if (!payload || !signature) {
+          console.warn('Stripe webhook: missing payload or signature');
+          // Return 200 to acknowledge - we won't process this but let Stripe know
           return Response.json(
             { error: 'Missing payload or signature' },
-            { status: 400 }
+            { status: 200 }
           );
         }
         try {
@@ -27,9 +29,12 @@ export const Route = createFileRoute('/api/webhooks/stripe')({
           return Response.json({ received: true }, { status: 200 });
         } catch (err) {
           console.error('Stripe webhook error:', err);
+          // CRITICAL: Return 200 even on error to prevent Stripe infinite retries
+          // Stripe interprets 4xx/5xx as processing failure and will retry indefinitely
+          // We've already logged the error for debugging
           return Response.json(
-            { error: 'Webhook handler failed' },
-            { status: 400 }
+            { error: 'Webhook processing failed', received: true },
+            { status: 200 }
           );
         }
       },
