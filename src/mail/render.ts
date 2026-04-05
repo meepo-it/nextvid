@@ -32,17 +32,22 @@ export async function renderEmailHtml(email: ReactElement): Promise<string> {
     renderToStaticMarkup?: (element: ReactElement) => string;
     renderToString?: (element: ReactElement) => string;
   };
-  if (reactDomServer.renderToReadableStream) {
-    const stream = await reactDomServer.renderToReadableStream(email);
-    return await new Response(stream).text();
+  try {
+    if (reactDomServer.renderToReadableStream) {
+      const stream = await reactDomServer.renderToReadableStream(email);
+      return await new Response(stream).text();
+    }
+    if (reactDomServer.renderToStaticMarkup) {
+      return reactDomServer.renderToStaticMarkup(email);
+    }
+    if (reactDomServer.renderToString) {
+      return reactDomServer.renderToString(email);
+    }
+  } catch (error) {
+    console.error('[mail] Email rendering failed:', error);
+    throw error;
   }
-  if (reactDomServer.renderToStaticMarkup) {
-    return reactDomServer.renderToStaticMarkup(email);
-  }
-  if (reactDomServer.renderToString) {
-    return reactDomServer.renderToString(email);
-  }
-  return '';
+  throw new Error('No suitable React DOM server renderer available');
 }
 
 function decodeHtmlEntities(text: string): string {
