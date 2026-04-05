@@ -205,7 +205,6 @@ export class StripeProvider implements PaymentProvider {
     return { userId, customerId };
   }
 
-
   /**
    * Create a checkout session for a plan
    * @param params Parameters for creating the checkout session
@@ -903,7 +902,7 @@ export class StripeProvider implements PaymentProvider {
     }
 
     // Validate session metadata and get userId, customerId
-    let { userId, customerId } = this.validateSessionMetadata(session);
+    const { userId, customerId } = this.validateSessionMetadata(session);
 
     // No matter user uses coupon code or not, even amount=0, invoice id is available
     const invoiceId: string | null = session.invoice as string | null;
@@ -919,24 +918,27 @@ export class StripeProvider implements PaymentProvider {
       : null;
 
     // Create subscription payment record with proper status and paid=false
-    await this.insertPaymentRecord({
-      priceId,
-      type: PaymentTypes.SUBSCRIPTION,
-      scene: PaymentScenes.SUBSCRIPTION,
-      userId,
-      customerId,
-      subscriptionId,
-      sessionId: session.id,
-      invoiceId, // may be null initially
-      paid: false, // will be set to true when invoice.paid event occurs
-      interval: this.mapStripeIntervalToPlanInterval(subscription),
-      status: this.mapSubscriptionStatusToPaymentStatus(subscription.status),
-      periodStart,
-      periodEnd,
-      cancelAtPeriodEnd: subscription.cancel_at_period_end,
-      trialStart,
-      trialEnd,
-    }, 'subscription');
+    await this.insertPaymentRecord(
+      {
+        priceId,
+        type: PaymentTypes.SUBSCRIPTION,
+        scene: PaymentScenes.SUBSCRIPTION,
+        userId,
+        customerId,
+        subscriptionId,
+        sessionId: session.id,
+        invoiceId, // may be null initially
+        paid: false, // will be set to true when invoice.paid event occurs
+        interval: this.mapStripeIntervalToPlanInterval(subscription),
+        status: this.mapSubscriptionStatusToPaymentStatus(subscription.status),
+        periodStart,
+        periodEnd,
+        cancelAtPeriodEnd: subscription.cancel_at_period_end,
+        trialStart,
+        trialEnd,
+      },
+      'subscription'
+    );
   }
 
   /**
@@ -965,17 +967,20 @@ export class StripeProvider implements PaymentProvider {
     const scene = PaymentScenes.LIFETIME;
 
     // Create one-time payment record with proper status and paid=false
-    await this.insertPaymentRecord({
-      priceId,
-      type: PaymentTypes.ONE_TIME,
-      scene,
-      userId,
-      customerId,
-      sessionId: session.id,
-      invoiceId, // may be null initially
-      paid: false, // will be set to true when invoice.paid event occurs
-      status: 'completed', // one-time payments are completed once checkout is done
-    }, 'one-time');
+    await this.insertPaymentRecord(
+      {
+        priceId,
+        type: PaymentTypes.ONE_TIME,
+        scene,
+        userId,
+        customerId,
+        sessionId: session.id,
+        invoiceId, // may be null initially
+        paid: false, // will be set to true when invoice.paid event occurs
+        status: 'completed', // one-time payments are completed once checkout is done
+      },
+      'one-time'
+    );
   }
 
   /**
@@ -1007,7 +1012,9 @@ export class StripeProvider implements PaymentProvider {
         error instanceof Error &&
         error.message.includes('unique constraint')
       ) {
-        console.log(`<< ${recordType} payment record already exists, skipping creation`);
+        console.log(
+          `<< ${recordType} payment record already exists, skipping creation`
+        );
         return; // Don't throw - expected for duplicate webhook events
       }
 

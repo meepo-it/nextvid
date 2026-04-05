@@ -85,7 +85,6 @@ export const createCustomerPortalSession = createServerFn({ method: 'POST' })
     return { url: result.url };
   });
 
-
 export const getCurrentPlan = createServerFn({ method: 'GET' })
   .middleware([authApiMiddleware])
   .handler(async ({ context }) => {

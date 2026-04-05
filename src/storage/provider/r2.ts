@@ -100,9 +100,7 @@ const MIME_TO_EXTENSIONS: Record<string, string[]> = {
     'docx',
   ],
   'application/vnd.ms-excel': ['xls'],
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [
-    'xlsx',
-  ],
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['xlsx'],
 };
 
 /**
