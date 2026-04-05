@@ -6,6 +6,7 @@
 import { relations } from 'drizzle-orm';
 import { integer, sqliteTable, text, index, uniqueIndex } from 'drizzle-orm/sqlite-core';
 import { user } from './auth.schema';
+import type { PaymentScene, PaymentStatus, PaymentType, PlanInterval } from '@/payment/types';
 
 /** 
  * Payment: subscription and one-time 
@@ -22,10 +23,10 @@ export const payment = sqliteTable(
     subscriptionId: text('subscription_id'),
     sessionId: text('session_id'),
     invoiceId: text('invoice_id').unique(),
-    type: text('type').notNull(), // 'subscription' | 'one_time'
-    scene: text('scene'), // 'subscription' | 'lifetime' 
-    interval: text('interval'), // 'month' | 'year'
-    status: text('status').notNull(),
+    type: text('type').notNull().$type<PaymentType>(), // 'subscription' | 'one_time'
+    scene: text('scene').$type<PaymentScene>(), // 'subscription' | 'lifetime'
+    interval: text('interval').$type<PlanInterval>(), // 'month' | 'year'
+    status: text('status').notNull().$type<PaymentStatus>(),
     paid: integer('paid', { mode: 'boolean' }).notNull().default(false),
     periodStart: integer('period_start', { mode: 'timestamp_ms' }),
     periodEnd: integer('period_end', { mode: 'timestamp_ms' }),
