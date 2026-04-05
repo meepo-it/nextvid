@@ -2,6 +2,7 @@ import { env } from 'cloudflare:workers';
 import {
   type FileMetadata,
   type R2BucketInterface,
+  type StorageProvider,
   type UploadFileParams,
   type UploadFileResult,
   type ValidationResult,
@@ -159,7 +160,7 @@ function generateId(): string {
 /**
  * Cloudflare R2 storage provider
  */
-export class R2Provider {
+export class R2Provider implements StorageProvider {
   private readonly bucket: R2BucketInterface;
   private readonly userFilesFolder: string;
   private readonly validator: FileValidator;
