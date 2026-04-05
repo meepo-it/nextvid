@@ -18,10 +18,9 @@ export const Route = createFileRoute('/api/webhooks/stripe')({
         const signature = request.headers.get('stripe-signature') ?? '';
         if (!payload || !signature) {
           console.warn('Stripe webhook: missing payload or signature');
-          // Return 200 to acknowledge - we won't process this but let Stripe know
           return Response.json(
             { error: 'Missing payload or signature' },
-            { status: 200 }
+            { status: 400 }
           );
         }
         try {
