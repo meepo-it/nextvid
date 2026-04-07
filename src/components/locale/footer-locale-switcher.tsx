@@ -1,12 +1,21 @@
 import { getLocale, locales, setLocale } from '@/paraglide/runtime.js';
+import * as m from '@/paraglide/messages.js';
+import { setUserLocale } from '@/api/user-locale';
 import { IconLanguage } from '@tabler/icons-react';
 import { cn } from '@/lib/utils';
 
-const localeLabels: Record<string, string> = {
-  en: 'English',
-  zh: '简体中文',
-  ja: '日本語',
-};
+function getLocaleLabel(code: string): string {
+  switch (code) {
+    case 'en':
+      return m.language_name_en();
+    case 'zh':
+      return m.language_name_zh();
+    case 'ja':
+      return m.language_name_ja();
+    default:
+      return code;
+  }
+}
 
 export function FooterLocaleSwitcher() {
   const currentLocale = getLocale();
@@ -19,13 +28,16 @@ export function FooterLocaleSwitcher() {
           {i > 0 && <span className="mx-1 text-border">|</span>}
           <button
             type="button"
-            onClick={() => setLocale(locale)}
+            onClick={() => {
+              void setUserLocale({ data: { locale } }).catch(() => {});
+              setLocale(locale);
+            }}
             className={cn(
               'cursor-pointer transition-colors hover:text-foreground',
               locale === currentLocale && 'text-foreground font-medium',
             )}
           >
-            {localeLabels[locale]}
+            {getLocaleLabel(locale)}
           </button>
         </span>
       ))}

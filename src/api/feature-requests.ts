@@ -5,15 +5,31 @@ import { user } from '@/db/auth.schema';
 import { authApiMiddleware } from '@/middlewares/auth-middleware';
 import { adminApiMiddleware } from '@/middlewares/admin-middleware';
 import { sendEmail } from '@/mail';
+import { getLocale } from '@/paraglide/runtime.js';
+import * as m from '@/paraglide/messages.js';
+import { withLocale } from '@/lib/i18n';
 import { and, desc, eq, sql } from 'drizzle-orm';
 import { z } from 'zod';
 
-const STATUS_LABELS: Record<string, string> = {
-  submitted: 'Submitted',
-  planned: 'Planned',
-  in_progress: 'In Progress',
-  done: 'Done',
-};
+/**
+ * Resolve a status code to its localized label using the active runtime
+ * locale. Wrap calls in `withLocale(...)` to render under a specific
+ * recipient's language (used by background email jobs).
+ */
+function statusLabel(status: string): string {
+  switch (status) {
+    case 'submitted':
+      return m.feature_requests_status_submitted();
+    case 'planned':
+      return m.feature_requests_status_planned();
+    case 'in_progress':
+      return m.feature_requests_status_in_progress();
+    case 'done':
+      return m.feature_requests_status_done();
+    default:
+      return status;
+  }
+}
 
 /** Status order for forward-only notification */
 const STATUS_ORDER: Record<string, number> = {
@@ -23,47 +39,56 @@ const STATUS_ORDER: Record<string, number> = {
   done: 3,
 };
 
+type Recipient = { email: string; locale: string | null };
+
 /**
- * Get emails of the creator and all voters for a feature request
+ * Get emails (with the recipient's preferred locale) of the creator and all
+ * voters for a feature request. The locale lets background email jobs render
+ * each message in the *recipient's* language rather than the admin's.
  */
-async function getStakeholderEmails(featureRequestId: string): Promise<string[]> {
+async function getStakeholderRecipients(featureRequestId: string): Promise<Recipient[]> {
   const db = getDb();
 
-  // Get creator email
+  // Get creator email + locale
   const [creator] = await db
-    .select({ email: user.email })
+    .select({ email: user.email, locale: user.locale })
     .from(featureRequest)
     .innerJoin(user, eq(featureRequest.userId, user.id))
     .where(eq(featureRequest.id, featureRequestId))
     .limit(1);
 
-  // Get voter emails
+  // Get voter emails + locales
   const voters = await db
-    .select({ email: user.email })
+    .select({ email: user.email, locale: user.locale })
     .from(featureVote)
     .innerJoin(user, eq(featureVote.userId, user.id))
     .where(eq(featureVote.featureRequestId, featureRequestId));
 
-  const emails = new Set<string>();
-  if (creator?.email) emails.add(creator.email);
-  for (const v of voters) {
-    if (v.email) emails.add(v.email);
-  }
-  return [...emails];
+  const seen = new Set<string>();
+  const out: Recipient[] = [];
+  const push = (r: { email: string | null; locale: string | null }) => {
+    if (!r.email || seen.has(r.email)) return;
+    seen.add(r.email);
+    out.push({ email: r.email, locale: r.locale });
+  };
+  if (creator) push(creator);
+  for (const v of voters) push(v);
+  return out;
 }
 
 /**
- * Get creator email only
+ * Get the creator (email + locale) only.
  */
-async function getCreatorEmail(featureRequestId: string): Promise<string | null> {
+async function getCreatorRecipient(featureRequestId: string): Promise<Recipient | null> {
   const db = getDb();
   const [creator] = await db
-    .select({ email: user.email })
+    .select({ email: user.email, locale: user.locale })
     .from(featureRequest)
     .innerJoin(user, eq(featureRequest.userId, user.id))
     .where(eq(featureRequest.id, featureRequestId))
     .limit(1);
-  return creator?.email ?? null;
+  if (!creator?.email) return null;
+  return { email: creator.email, locale: creator.locale };
 }
 
 /**
@@ -144,6 +169,9 @@ export const createFeatureRequest = createServerFn({ method: 'POST' })
       description: data.description.trim(),
       category: data.category?.trim() || null,
       userId: context.userId,
+      // Capture the language the request was written in so admins can group
+      // by locale and so reply emails go out in the same language.
+      locale: getLocale(),
       status: 'submitted',
       voteCount: 0,
       createdAt: now,
@@ -233,24 +261,30 @@ export const updateFeatureRequestStatus = createServerFn({ method: 'POST' })
     // Only send notification emails on forward transitions
     let notifiedCount = 0;
     if (data.notify && isForward) {
-      const emails = await getStakeholderEmails(data.id);
-      const oldLabel = STATUS_LABELS[current.status] ?? current.status;
-      const newLabel = STATUS_LABELS[data.status] ?? data.status;
+      const recipients = await getStakeholderRecipients(data.id);
 
+      // Render each email under the *recipient's* preferred locale rather
+      // than the admin's request locale, so subjects/labels/copy are in the
+      // language the recipient signed up with. STATUS_LABELS is resolved
+      // inside the closure so it picks up the swapped locale too.
       await Promise.allSettled(
-        emails.map((email) =>
-          sendEmail({
-            to: email,
-            template: 'featureRequestStatusUpdate',
-            context: {
-              title: current.title,
-              oldStatus: oldLabel,
-              newStatus: newLabel,
-            },
+        recipients.map((r) =>
+          withLocale(r.locale ?? getLocale(), async () => {
+            const oldLabel = statusLabel(current.status);
+            const newLabel = statusLabel(data.status);
+            return sendEmail({
+              to: r.email,
+              template: 'featureRequestStatusUpdate',
+              context: {
+                title: current.title,
+                oldStatus: oldLabel,
+                newStatus: newLabel,
+              },
+            });
           })
         )
       );
-      notifiedCount = emails.length;
+      notifiedCount = recipients.length;
     }
 
     return { success: true, notified: isForward, notifiedCount };
@@ -280,17 +314,20 @@ export const deleteFeatureRequest = createServerFn({ method: 'POST' })
         .where(eq(featureRequest.id, data.id))
         .limit(1);
 
-      const creatorEmail = await getCreatorEmail(data.id);
+      const creator = await getCreatorRecipient(data.id);
 
-      if (current && creatorEmail) {
-        await sendEmail({
-          to: creatorEmail,
-          template: 'featureRequestRejected',
-          context: {
-            title: current.title,
-            reason: data.reason,
-          },
-        });
+      if (current && creator) {
+        // Render under the creator's preferred locale, not the admin's.
+        await withLocale(creator.locale ?? getLocale(), () =>
+          sendEmail({
+            to: creator.email,
+            template: 'featureRequestRejected',
+            context: {
+              title: current.title,
+              reason: data.reason,
+            },
+          })
+        );
       }
     }
 

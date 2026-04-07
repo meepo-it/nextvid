@@ -22,6 +22,21 @@ import type {
 import { PlanIntervals, PaymentScenes, PaymentTypes } from '../types';
 
 /**
+ * Map our app's locale tag to a Stripe-supported `locale` value.
+ *
+ * Stripe accepts a fixed enum (see https://docs.stripe.com/payments/checkout/customization/appearance).
+ * Our `zh` matches Stripe's `zh` (Simplified) directly, so the map is empty
+ * for now — extend it if you add a locale whose code differs from Stripe's
+ * (e.g. `pt-BR` vs Stripe `pt-BR`, or a custom regional variant). Anything
+ * not in the map is passed through; Stripe falls back to `auto` if it's
+ * unrecognized.
+ */
+function toStripeLocale(locale: string): string {
+  const map: Record<string, string> = {};
+  return map[locale] ?? locale;
+}
+
+/**
  * Stripe payment provider implementation
  */
 export class StripeProvider implements PaymentProvider {
@@ -172,8 +187,15 @@ export class StripeProvider implements PaymentProvider {
   public async createCheckout(
     params: CreateCheckoutParams
   ): Promise<CheckoutResult> {
-    const { planId, priceId, customerEmail, successUrl, cancelUrl, metadata } =
-      params;
+    const {
+      planId,
+      priceId,
+      customerEmail,
+      successUrl,
+      cancelUrl,
+      metadata,
+      locale,
+    } = params;
 
     try {
       // Get plan and price
@@ -226,6 +248,15 @@ export class StripeProvider implements PaymentProvider {
       // Add customer to checkout session
       checkoutParams.customer = customerId;
 
+      // Localize Stripe-hosted checkout page when an app locale is provided.
+      // Stripe's accepted locale list does not include `zh-CN` — it expects
+      // bare `zh` for Simplified Chinese — so map our app locale into the
+      // closest Stripe-supported tag here.
+      if (locale) {
+        checkoutParams.locale =
+          toStripeLocale(locale) as Stripe.Checkout.SessionCreateParams.Locale;
+      }
+
       // Add payment intent data for one-time payments
       if (price.type === PaymentTypes.ONE_TIME) {
         checkoutParams.payment_intent_data = {
@@ -273,12 +304,18 @@ export class StripeProvider implements PaymentProvider {
   public async createCustomerPortal(
     params: CreatePortalParams
   ): Promise<PortalResult> {
-    const { customerId, returnUrl } = params;
+    const { customerId, returnUrl, locale } = params;
 
     try {
       const session = await this.stripe.billingPortal.sessions.create({
         customer: customerId,
         return_url: returnUrl ?? '',
+        ...(locale
+          ? {
+              locale:
+                toStripeLocale(locale) as Stripe.BillingPortal.SessionCreateParams.Locale,
+            }
+          : {}),
       });
 
       return {

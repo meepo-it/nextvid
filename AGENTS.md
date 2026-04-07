@@ -189,6 +189,23 @@ src/
 - **Font:** Bricolage Grotesque (400, 500, 600, 700 weights, Latin subset)
 - **Dark mode:** Class-based (`.dark` on `<html>`), localStorage-persisted
 
+## Internationalization (i18n)
+
+**完整指南：[`docs/i18n.md`](./docs/i18n.md)。任何 i18n 相关改动必须按该文档执行。**
+
+由 Paraglide JS 驱动，支持 `en` / `zh` / `ja`，messages 在 `messages/*.json`，编译产物在 `src/paraglide/`（不要手改）。
+
+强制规则：
+
+- **禁止硬编码任何用户可见字符串。** 一律通过 `import * as m from '@/paraglide/messages.js'` 调用 `m.my_key()`。
+- **新加 key 必须三个 locale 同步加。** key 用 `snake_case`，按业务前缀分组（`nav_` / `auth_` / `pricing_` / `mail_` / `admin_` / ...）。提交前跑 `pnpm exec vitest run src/__tests__/i18n.test.ts` 校验。
+- **路由 `head()` 用 `seo(path, { title: m.x(), description: m.y() })`。** 受保护路由的 layout 也必须有 `head()`。新公共页面记得加进 `src/routes/sitemap[.]xml.ts` 的 `publicPaths`，否则 hreflang 会缺。
+- **格式化日期 / 数字 / 货币用 `src/lib/formatter.ts` 的 helper**（默认走 `getLocale()`），或者 `new Intl.X(getLocale(), …)`。**禁止硬编码 `'en-US'`。**
+- **后台任务 / 异步邮件必须用 `withLocale(recipient.locale ?? getLocale(), () => sendEmail(...))` 包裹**（见 `src/lib/i18n.ts`），不能直接 `sendEmail`，否则所有用户都会收到「管理员当时浏览器语言」的邮件。需要本地化的 status / 枚举标签要在 `withLocale` 闭包内调用对应的 `m.*()` 函数后再传给模板。
+- **第三方集成（Stripe）** 已经在 `src/api/payment.ts` 自动注入 `getLocale()`，新加 checkout / portal 调用按现有模式来。
+- **locale 切换器** 用 `m.language_name_*` / `m.language_region_*` / `m.locale_switcher_*` 这些 key，不要硬编码语言名。
+- **新增 locale** 请严格按 `docs/i18n.md` 的「工作流速查表」走完所有 6 步，否则会漏 sitemap / 切换器 / hreflang / 测试。
+
 ## Important Notes
 
 - This project uses Cloudflare Workers - avoid Node.js-specific APIs

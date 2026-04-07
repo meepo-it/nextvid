@@ -36,6 +36,13 @@
       "when": 1774844793676,
       "tag": "0004_nasty_jazinda",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1775529869936,
+      "tag": "0005_steep_manta",
+      "breakpoints": true
     }
   ]
 }

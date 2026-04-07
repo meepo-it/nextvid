@@ -3,6 +3,7 @@ import { payment } from '@/db/app.schema';
 import { user } from '@/db/auth.schema';
 import { findPlanByPriceId, getAllPricePlans } from '@/lib/price-plan';
 import { authApiMiddleware } from '@/middlewares/auth-middleware';
+import { getLocale } from '@/paraglide/runtime.js';
 import { createCheckout, createCustomerPortal } from '@/payment';
 import type {
   PaymentStatus,
@@ -48,6 +49,8 @@ export const createCheckoutSession = createServerFn({ method: 'POST' })
       successUrl: success,
       cancelUrl: cancel,
       metadata: { ...metadata, userId, userName: userRow.name ?? '' },
+      // Forward the active app locale so Stripe's hosted checkout matches the UI.
+      locale: getLocale(),
     });
     return { url: result.url, id: result.id };
   });
@@ -76,7 +79,8 @@ export const createCustomerPortalSession = createServerFn({ method: 'POST' })
     const result = await createCustomerPortal({
       customerId: row.customerId,
       returnUrl,
-      locale: data.locale,
+      // Caller can override; otherwise fall back to the active app locale.
+      locale: data.locale ?? getLocale(),
     });
     return { url: result.url };
   });

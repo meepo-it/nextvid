@@ -599,6 +599,17 @@
   "locale_suggest_message": "This page is available in {language}",
   "locale_suggest_switch": "Switch",
   "locale_suggest_dismiss": "No thanks",
+  "locale_switcher_title": "Language",
+  "locale_switcher_description": "Choose your preferred language for the interface.",
+  "locale_switcher_request_message": "Need another language? {link} and we'll add it.",
+  "locale_switcher_request_link": "Let us know",
+  "language_name_en": "English",
+  "language_name_ja": "日本語",
+  "language_region_en": "United States",
+  "language_region_ja": "日本",
+  "settings_layout_title": "Settings",
+  "dashboard_layout_title": "Dashboard",
+  "admin_layout_title": "Admin",
   "nav_requests_and_roadmap_title": "Requests & Roadmap",
   "nav_requests_and_roadmap_description": "Submit feature requests and view our roadmap",
   "feature_requests_title": "Requests & Roadmap",
@@ -662,5 +673,7 @@
   "feature_requests_vote_error": "Failed to vote, please try again",
   "admin_feature_requests_update_error": "Failed to update status",
   "admin_feature_requests_delete_error": "Failed to delete request",
-  "admin_feature_requests_reject_default_reason": "Thank you for submitting \"{title}\". After careful consideration, we've decided not to include this in our current roadmap. This may be due to overlap with existing features, technical constraints, or different priorities at this time. We appreciate your feedback and encourage you to continue sharing your ideas."
+  "admin_feature_requests_reject_default_reason": "Thank you for submitting \"{title}\". After careful consideration, we've decided not to include this in our current roadmap. This may be due to overlap with existing features, technical constraints, or different priorities at this time. We appreciate your feedback and encourage you to continue sharing your ideas.",
+  "language_name_zh": "中文",
+  "language_region_zh": "简体中文"
 }

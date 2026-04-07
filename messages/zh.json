@@ -599,6 +599,17 @@
   "locale_suggest_message": "此页面支持 {language} 版本",
   "locale_suggest_switch": "切换",
   "locale_suggest_dismiss": "不用了",
+  "locale_switcher_title": "语言",
+  "locale_switcher_description": "选择你希望使用的界面语言。",
+  "locale_switcher_request_message": "需要其他语言？{link}，我们会添加。",
+  "locale_switcher_request_link": "联系我们",
+  "language_name_en": "English",
+  "language_name_ja": "日本語",
+  "language_region_en": "美国",
+  "language_region_ja": "日本",
+  "settings_layout_title": "设置",
+  "dashboard_layout_title": "控制台",
+  "admin_layout_title": "管理后台",
   "nav_requests_and_roadmap_title": "需求与路线图",
   "nav_requests_and_roadmap_description": "提交功能需求并查看开发路线图",
   "feature_requests_title": "需求与路线图",
@@ -662,5 +673,7 @@
   "feature_requests_vote_error": "投票失败，请重试",
   "admin_feature_requests_update_error": "状态更新失败",
   "admin_feature_requests_delete_error": "删除失败",
-  "admin_feature_requests_reject_default_reason": "感谢你提交「{title}」。经过认真考虑，我们决定暂不将其纳入当前路线图。这可能是因为与现有功能重叠、技术限制或当前优先级不同。我们感谢你的反馈，并鼓励你继续分享你的想法。"
+  "admin_feature_requests_reject_default_reason": "感谢你提交「{title}」。经过认真考虑，我们决定暂不将其纳入当前路线图。这可能是因为与现有功能重叠、技术限制或当前优先级不同。我们感谢你的反馈，并鼓励你继续分享你的想法。",
+  "language_name_zh": "中文",
+  "language_region_zh": "简体中文"
 }

@@ -22,6 +22,11 @@ export const user = sqliteTable("user", {
   banExpires: integer("ban_expires", { mode: "timestamp_ms" }),
   normalizedEmail: text("normalized_email").unique(),
   customerId: text("customer_id"),
+  // Preferred BCP-47 locale of the user. Set on signup from the active app
+  // locale, and updated whenever the user explicitly switches in the locale
+  // switcher. Used by background email jobs to render templates in the
+  // recipient's language rather than the request's language.
+  locale: text("locale"),
 });
 
 export const session = sqliteTable(

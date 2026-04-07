@@ -89,6 +89,11 @@ export const featureRequest = sqliteTable(
     description: text('description').notNull(),
     status: text('status').notNull().default('submitted'), // submitted | planned | in_progress | done
     category: text('category'),
+    // BCP-47 locale code recorded at submission time. Lets us:
+    //   1. group/filter requests by language in the admin UI
+    //   2. notify the author back in their original language
+    //   3. eventually offer translations of the body if/when we add them
+    locale: text('locale').notNull().default('en'),
     userId: text('user_id')
       .notNull()
       .references(() => user.id, { onDelete: 'cascade' }),
