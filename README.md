@@ -28,6 +28,16 @@ By default, you should have access to all 2 repositories. If you find that youâ€
 - [mkfast-template](https://github.com/MkFastHQ/mkfast-template): https://demo.tanstarter.dev
 - [mkfast-app](https://github.com/MkFastHQ/mkfast-app): Working in Progress
 
+## Deployment
+
+This repository **does not use GitHub Actions** for build or deploy. There is no CI workflow that ships code on push or merge â€” deployments are run **manually from your local machine**:
+
+```bash
+pnpm run deploy
+```
+
+The command builds the app and pushes it to Cloudflare Workers via Wrangler. Make sure your local `.env` and Wrangler credentials are configured before running it.
+
 ## Notice
 
 - If you have any questions, please contact me at [support@tanstarter.dev](mailto:support@tanstarter.dev), or join our [discord community](https://mksaas.link/discord) and ask for help there. If you want to receive notifications whenever code changes, please click `Watch` button in the top right.
