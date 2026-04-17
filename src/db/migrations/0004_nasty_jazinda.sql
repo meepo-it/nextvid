@@ -1,1 +1,0 @@
-CREATE UNIQUE INDEX `feature_vote_unique_idx` ON `feature_vote` (`feature_request_id`,`user_id`);

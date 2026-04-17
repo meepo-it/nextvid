@@ -26,22 +26,15 @@
     {
       "idx": 3,
       "version": "6",
-      "when": 1774841461039,
-      "tag": "0003_mean_major_mapleleaf",
+      "when": 1775390035691,
+      "tag": "0003_steady_stryfe",
       "breakpoints": true
     },
     {
       "idx": 4,
       "version": "6",
-      "when": 1774844793676,
-      "tag": "0004_nasty_jazinda",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "6",
-      "when": 1775529869936,
-      "tag": "0005_steep_manta",
+      "when": 1776396626545,
+      "tag": "0004_feature_requests_with_locale",
       "breakpoints": true
     }
   ]

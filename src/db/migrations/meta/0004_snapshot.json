@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "14ef9a1a-c38e-47d1-aff3-bb16cbc7e9e6",
-  "prevId": "9bdc8dfa-57c4-4c8e-a4f7-bc5f7c25200b",
+  "id": "7a8f94d7-f720-474f-bf60-db332878cd7e",
+  "prevId": "ac6ddcee-57cf-437c-98cd-675dfb97fec6",
   "tables": {
     "account": {
       "name": "account",
@@ -519,6 +519,13 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
+        },
+        "locale": {
+          "name": "locale",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
@@ -642,6 +649,14 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
+        },
+        "locale": {
+          "name": "locale",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'en'"
         },
         "user_id": {
           "name": "user_id",
@@ -990,6 +1005,14 @@
             "paid"
           ],
           "isUnique": false
+        },
+        "payment_user_paid_idx": {
+          "name": "payment_user_paid_idx",
+          "columns": [
+            "user_id",
+            "paid"
+          ],
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -1092,7 +1115,22 @@
           "autoincrement": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "user_files_user_id_idx": {
+          "name": "user_files_user_id_idx",
+          "columns": [
+            "user_id"
+          ],
+          "isUnique": false
+        },
+        "user_files_r2_key_idx": {
+          "name": "user_files_r2_key_idx",
+          "columns": [
+            "r2_key"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {
         "user_files_user_id_user_id_fk": {
           "name": "user_files_user_id_user_id_fk",

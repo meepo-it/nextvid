@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "9bdc8dfa-57c4-4c8e-a4f7-bc5f7c25200b",
+  "id": "ac6ddcee-57cf-437c-98cd-675dfb97fec6",
   "prevId": "e05df424-4984-4ce8-b9a1-0a7577b2f5e1",
   "tables": {
     "account": {
@@ -604,197 +604,6 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "feature_request": {
-      "name": "feature_request",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "title": {
-          "name": "title",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "description": {
-          "name": "description",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "status": {
-          "name": "status",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "'submitted'"
-        },
-        "category": {
-          "name": "category",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "vote_count": {
-          "name": "vote_count",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": 0
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "feature_request_user_id_idx": {
-          "name": "feature_request_user_id_idx",
-          "columns": [
-            "user_id"
-          ],
-          "isUnique": false
-        },
-        "feature_request_status_idx": {
-          "name": "feature_request_status_idx",
-          "columns": [
-            "status"
-          ],
-          "isUnique": false
-        },
-        "feature_request_vote_count_idx": {
-          "name": "feature_request_vote_count_idx",
-          "columns": [
-            "vote_count"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "feature_request_user_id_user_id_fk": {
-          "name": "feature_request_user_id_user_id_fk",
-          "tableFrom": "feature_request",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "feature_vote": {
-      "name": "feature_vote",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "feature_request_id": {
-          "name": "feature_request_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "feature_vote_feature_id_idx": {
-          "name": "feature_vote_feature_id_idx",
-          "columns": [
-            "feature_request_id"
-          ],
-          "isUnique": false
-        },
-        "feature_vote_user_id_idx": {
-          "name": "feature_vote_user_id_idx",
-          "columns": [
-            "user_id"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "feature_vote_feature_request_id_feature_request_id_fk": {
-          "name": "feature_vote_feature_request_id_feature_request_id_fk",
-          "tableFrom": "feature_vote",
-          "tableTo": "feature_request",
-          "columnsFrom": [
-            "feature_request_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "feature_vote_user_id_user_id_fk": {
-          "name": "feature_vote_user_id_user_id_fk",
-          "tableFrom": "feature_vote",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
     "payment": {
       "name": "payment",
       "columns": {
@@ -982,6 +791,14 @@
             "paid"
           ],
           "isUnique": false
+        },
+        "payment_user_paid_idx": {
+          "name": "payment_user_paid_idx",
+          "columns": [
+            "user_id",
+            "paid"
+          ],
+          "isUnique": false
         }
       },
       "foreignKeys": {
@@ -1084,7 +901,22 @@
           "autoincrement": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "user_files_user_id_idx": {
+          "name": "user_files_user_id_idx",
+          "columns": [
+            "user_id"
+          ],
+          "isUnique": false
+        },
+        "user_files_r2_key_idx": {
+          "name": "user_files_r2_key_idx",
+          "columns": [
+            "r2_key"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {
         "user_files_user_id_user_id_fk": {
           "name": "user_files_user_id_user_id_fk",

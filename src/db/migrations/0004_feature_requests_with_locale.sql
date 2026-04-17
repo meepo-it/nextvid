@@ -4,6 +4,7 @@ CREATE TABLE `feature_request` (
 	`description` text NOT NULL,
 	`status` text DEFAULT 'submitted' NOT NULL,
 	`category` text,
+	`locale` text DEFAULT 'en' NOT NULL,
 	`user_id` text NOT NULL,
 	`vote_count` integer DEFAULT 0 NOT NULL,
 	`created_at` integer NOT NULL,
@@ -23,5 +24,7 @@ CREATE TABLE `feature_vote` (
 	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
+CREATE UNIQUE INDEX `feature_vote_unique_idx` ON `feature_vote` (`feature_request_id`,`user_id`);--> statement-breakpoint
 CREATE INDEX `feature_vote_feature_id_idx` ON `feature_vote` (`feature_request_id`);--> statement-breakpoint
-CREATE INDEX `feature_vote_user_id_idx` ON `feature_vote` (`user_id`);
+CREATE INDEX `feature_vote_user_id_idx` ON `feature_vote` (`user_id`);--> statement-breakpoint
+ALTER TABLE `user` ADD `locale` text;
