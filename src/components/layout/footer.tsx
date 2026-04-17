@@ -108,11 +108,9 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
         </Container>
       </div>
 
-      {/* Friend links — reciprocal badge marquee. Collapses if unconfigured. */}
-      <FooterFriendLinks />
-
-      {/* Copyright + theme switcher */}
+      {/* Copyright + theme switcher (with friend-links marquee under the border) */}
       <div className="border-t">
+        <FooterFriendLinks />
         <Container className="px-4 flex items-center justify-between py-4">
           <span className="text-muted-foreground text-sm">
             &copy; {new Date().getFullYear()} {websiteConfig.metadata?.name}.{' '}
