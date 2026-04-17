@@ -1,5 +1,9 @@
 name: Deploy to Cloudflare Workers
 
+# This workflow is disabled — deployment currently runs locally via `pnpm deploy`.
+# To re-enable CI/CD:
+#   1. Uncomment the `push` trigger below
+#   2. Remove the `if: false` guard on the `deploy` job
 # on:
 #   push:
 #     branches:
@@ -13,6 +17,8 @@ concurrency:
 
 jobs:
   deploy:
+    # Disabled: local `pnpm deploy` is the source of truth.
+    if: false
     name: Build & Deploy
     runs-on: ubuntu-latest
     timeout-minutes: 15
