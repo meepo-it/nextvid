@@ -22,24 +22,6 @@ export const friendLinks: FriendLink[] = [
     alt: 'LetsShip',
   },
   {
-    href: 'https://betterai.dev',
-    imgSrc:
-      'https://img.shields.io/badge/BetterAI-discover%20AI%20tools-8b5cf6?style=for-the-badge&logo=sparkles&logoColor=white',
-    alt: 'BetterAI',
-  },
-  {
-    href: 'https://betterdirs.com',
-    imgSrc:
-      'https://img.shields.io/badge/BetterDirs-directory%20hub-10b981?style=for-the-badge&logo=list&logoColor=white',
-    alt: 'BetterDirs',
-  },
-  {
-    href: 'https://mkfast.dev',
-    imgSrc:
-      'https://img.shields.io/badge/MkFast-SaaS%20template-f97316?style=for-the-badge&logo=vite&logoColor=white',
-    alt: 'MkFast',
-  },
-  {
     href: 'https://tanstack.com',
     imgSrc:
       'https://img.shields.io/badge/TanStack-Start-ef4444?style=for-the-badge&logo=react&logoColor=white',
