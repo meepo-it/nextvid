@@ -1,0 +1,54 @@
+/**
+ * Friend links — reciprocal backlink badges shown in the footer.
+ *
+ * Each entry is the standard shields.io-style badge: a clickable anchor
+ * wrapping an <img> of the partner site's badge art. Add new partners by
+ * pasting the `href` they give you and the `imgSrc` of their badge.
+ *
+ * Leave the array empty to hide the entire footer row.
+ */
+
+export type FriendLink = {
+  href: string;
+  imgSrc: string;
+  alt: string;
+};
+
+export const friendLinks: FriendLink[] = [
+  {
+    href: 'https://letsship.io',
+    imgSrc:
+      'https://img.shields.io/badge/LetsShip-ship%20faster-0ea5e9?style=for-the-badge&logo=rocket&logoColor=white',
+    alt: 'LetsShip',
+  },
+  {
+    href: 'https://betterai.dev',
+    imgSrc:
+      'https://img.shields.io/badge/BetterAI-discover%20AI%20tools-8b5cf6?style=for-the-badge&logo=sparkles&logoColor=white',
+    alt: 'BetterAI',
+  },
+  {
+    href: 'https://betterdirs.com',
+    imgSrc:
+      'https://img.shields.io/badge/BetterDirs-directory%20hub-10b981?style=for-the-badge&logo=list&logoColor=white',
+    alt: 'BetterDirs',
+  },
+  {
+    href: 'https://mkfast.dev',
+    imgSrc:
+      'https://img.shields.io/badge/MkFast-SaaS%20template-f97316?style=for-the-badge&logo=vite&logoColor=white',
+    alt: 'MkFast',
+  },
+  {
+    href: 'https://tanstack.com',
+    imgSrc:
+      'https://img.shields.io/badge/TanStack-Start-ef4444?style=for-the-badge&logo=react&logoColor=white',
+    alt: 'TanStack',
+  },
+  {
+    href: 'https://workers.cloudflare.com',
+    imgSrc:
+      'https://img.shields.io/badge/Cloudflare-Workers-f38020?style=for-the-badge&logo=cloudflare&logoColor=white',
+    alt: 'Cloudflare Workers',
+  },
+];

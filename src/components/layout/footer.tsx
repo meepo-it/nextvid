@@ -8,6 +8,7 @@ import { Link, useLocation } from '@tanstack/react-router';
 import { websiteConfig } from '@/config/website';
 import * as m from '@/paraglide/messages.js';
 import { FooterNewsletter } from '@/components/layout/footer-newsletter';
+import { FooterFriendLinks } from '@/components/layout/footer-friend-links';
 import { FooterLocaleSwitcher } from '@/components/locale/footer-locale-switcher';
 import { ModeSwitcher } from '@/components/theme/mode-switcher';
 
@@ -106,6 +107,9 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
           <FooterLocaleSwitcher />
         </Container>
       </div>
+
+      {/* Friend links — reciprocal badge marquee. Collapses if unconfigured. */}
+      <FooterFriendLinks />
 
       {/* Copyright + theme switcher */}
       <div className="border-t">

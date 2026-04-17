@@ -29,6 +29,16 @@
   }
 }
 
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Duplicate content: shift exactly half the row width for a seamless loop. */
+    transform: translateX(-50%);
+  }
+}
+
 .animate-fade-up {
   animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
