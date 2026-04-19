@@ -26,6 +26,7 @@ export function getFooterLinks(): MenuItemConfig[] {
     resourcesItems.push({ title: m.nav_blog(), href: Routes.Blog, external: false });
   }
   resourcesItems.push({ title: m.nav_requests_and_roadmap_title(), href: Routes.RequestsAndRoadmap, external: false });
+  resourcesItems.push({ title: m.promote_title(), href: Routes.PromoteAndEarn, external: false });
 
   const companyItems: MenuItemConfig[] = [
     { title: m.nav_about_title(), href: Routes.About, external: false },

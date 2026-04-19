@@ -39,6 +39,7 @@ import { Route as AdminFeatureRequestsRouteImport } from './routes/admin/feature
 import { Route as testsTestErrorRouteImport } from './routes/(tests)/test-error'
 import { Route as testsTest404RouteImport } from './routes/(tests)/test-404'
 import { Route as pagesRequestsAndRoadmapRouteImport } from './routes/(pages)/requests-and-roadmap'
+import { Route as pagesPromoteRouteImport } from './routes/(pages)/promote'
 import { Route as pagesPricingRouteImport } from './routes/(pages)/pricing'
 import { Route as pagesContactRouteImport } from './routes/(pages)/contact'
 import { Route as pagesAboutRouteImport } from './routes/(pages)/about'
@@ -199,6 +200,11 @@ const pagesRequestsAndRoadmapRoute = pagesRequestsAndRoadmapRouteImport.update({
   path: '/requests-and-roadmap',
   getParentRoute: () => rootRouteImport,
 } as any)
+const pagesPromoteRoute = pagesPromoteRouteImport.update({
+  id: '/(pages)/promote',
+  path: '/promote',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const pagesPricingRoute = pagesPricingRouteImport.update({
   id: '/(pages)/pricing',
   path: '/pricing',
@@ -260,6 +266,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof pagesAboutRoute
   '/contact': typeof pagesContactRoute
   '/pricing': typeof pagesPricingRoute
+  '/promote': typeof pagesPromoteRoute
   '/requests-and-roadmap': typeof pagesRequestsAndRoadmapRoute
   '/test-404': typeof testsTest404Route
   '/test-error': typeof testsTestErrorRoute
@@ -298,6 +305,7 @@ export interface FileRoutesByTo {
   '/about': typeof pagesAboutRoute
   '/contact': typeof pagesContactRoute
   '/pricing': typeof pagesPricingRoute
+  '/promote': typeof pagesPromoteRoute
   '/requests-and-roadmap': typeof pagesRequestsAndRoadmapRoute
   '/test-404': typeof testsTest404Route
   '/test-error': typeof testsTestErrorRoute
@@ -340,6 +348,7 @@ export interface FileRoutesById {
   '/(pages)/about': typeof pagesAboutRoute
   '/(pages)/contact': typeof pagesContactRoute
   '/(pages)/pricing': typeof pagesPricingRoute
+  '/(pages)/promote': typeof pagesPromoteRoute
   '/(pages)/requests-and-roadmap': typeof pagesRequestsAndRoadmapRoute
   '/(tests)/test-404': typeof testsTest404Route
   '/(tests)/test-error': typeof testsTestErrorRoute
@@ -383,6 +392,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/pricing'
+    | '/promote'
     | '/requests-and-roadmap'
     | '/test-404'
     | '/test-error'
@@ -421,6 +431,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/pricing'
+    | '/promote'
     | '/requests-and-roadmap'
     | '/test-404'
     | '/test-error'
@@ -462,6 +473,7 @@ export interface FileRouteTypes {
     | '/(pages)/about'
     | '/(pages)/contact'
     | '/(pages)/pricing'
+    | '/(pages)/promote'
     | '/(pages)/requests-and-roadmap'
     | '/(tests)/test-404'
     | '/(tests)/test-error'
@@ -504,6 +516,7 @@ export interface RootRouteChildren {
   pagesAboutRoute: typeof pagesAboutRoute
   pagesContactRoute: typeof pagesContactRoute
   pagesPricingRoute: typeof pagesPricingRoute
+  pagesPromoteRoute: typeof pagesPromoteRoute
   pagesRequestsAndRoadmapRoute: typeof pagesRequestsAndRoadmapRoute
   testsTest404Route: typeof testsTest404Route
   testsTestErrorRoute: typeof testsTestErrorRoute
@@ -726,6 +739,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof pagesRequestsAndRoadmapRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(pages)/promote': {
+      id: '/(pages)/promote'
+      path: '/promote'
+      fullPath: '/promote'
+      preLoaderRoute: typeof pagesPromoteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/(pages)/pricing': {
       id: '/(pages)/pricing'
       path: '/pricing'
@@ -877,6 +897,7 @@ const rootRouteChildren: RootRouteChildren = {
   pagesAboutRoute: pagesAboutRoute,
   pagesContactRoute: pagesContactRoute,
   pagesPricingRoute: pagesPricingRoute,
+  pagesPromoteRoute: pagesPromoteRoute,
   pagesRequestsAndRoadmapRoute: pagesRequestsAndRoadmapRoute,
   testsTest404Route: testsTest404Route,
   testsTestErrorRoute: testsTestErrorRoute,

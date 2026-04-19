@@ -9,6 +9,7 @@ export const Routes = {
   About: '/about',
   Contact: '/contact',
   RequestsAndRoadmap: '/requests-and-roadmap',
+  PromoteAndEarn: '/promote',
 
   // Auth routes
   Auth: '/auth',
