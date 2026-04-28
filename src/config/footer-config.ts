@@ -31,9 +31,6 @@ export function getFooterLinks(): MenuItemConfig[] {
   const companyItems: MenuItemConfig[] = [
     { title: m.nav_about_title(), href: Routes.About, external: false },
     { title: m.nav_contact_title(), href: Routes.Contact, external: false },
-  ];
-
-  const legalItems: MenuItemConfig[] = [
     { title: m.nav_cookie_policy_title(), href: Routes.CookiePolicy, external: false },
     {
       title: m.nav_privacy_policy_title(),
@@ -51,6 +48,5 @@ export function getFooterLinks(): MenuItemConfig[] {
     { title: m.nav_product(), items: productItems },
     { title: m.nav_resources(), items: resourcesItems },
     { title: m.nav_company(), items: companyItems },
-    { title: m.nav_legal(), items: legalItems },
   ];
 }
