@@ -53,7 +53,7 @@ export function NavbarMobile({ className, ...props }: NavbarMobileProps) {
         {...props}
       >
         <Link to="/" className="flex items-center gap-2">
-          <Logo />
+          <Logo className="rounded-none" />
           <span className="text-xl font-semibold">
             {websiteConfig.metadata?.name}
           </span>

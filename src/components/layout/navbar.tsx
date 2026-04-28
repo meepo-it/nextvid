@@ -72,7 +72,7 @@ export function Navbar({ scroll = true }: NavbarProps) {
               aria-label="Home"
               className="flex items-center gap-2 shrink-0"
             >
-              <Logo />
+              <Logo className="rounded-none" />
               <span className="text-xl font-semibold">
                 {websiteConfig.metadata?.name}
               </span>
