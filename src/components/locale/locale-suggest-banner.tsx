@@ -12,8 +12,6 @@ function getLocaleLabel(code: string): string {
       return m.language_name_en();
     case 'zh':
       return m.language_name_zh();
-    case 'ja':
-      return m.language_name_ja();
     default:
       return code;
   }

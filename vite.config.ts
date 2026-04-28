@@ -11,7 +11,7 @@ import { paraglideVitePlugin } from '@inlang/paraglide-js';
 
 // ── i18n URL pattern helpers ──────────────────────────────────────
 const BASE_LOCALE = 'en';
-const LOCALES = ['en', 'zh', 'ja'] as const;
+const LOCALES = ['en', 'zh'] as const;
 
 /** Public route: default locale has no prefix, others get /{locale} prefix */
 function publicPattern(path: string) {

@@ -15,7 +15,6 @@ import { useState } from 'react';
 const localeFlags: Record<string, string> = {
   en: '🇺🇸',
   'zh': '🇨🇳',
-  ja: '🇯🇵',
 };
 
 // Localized label/region for a locale code. Pulled from the message system so
@@ -29,8 +28,6 @@ function getLocaleLabel(code: string): string {
       return m.language_name_en();
     case 'zh':
       return m.language_name_zh();
-    case 'ja':
-      return m.language_name_ja();
     default:
       return code;
   }
@@ -42,8 +39,6 @@ function getLocaleRegion(code: string): string {
       return m.language_region_en();
     case 'zh':
       return m.language_region_zh();
-    case 'ja':
-      return m.language_region_ja();
     default:
       return '';
   }

@@ -142,6 +142,6 @@ describe('i18n URL patterns', () => {
 describe('i18n configuration', () => {
   it('project.inlang/settings.json has correct structure', () => {
     expect(inlangSettings.baseLocale).toBe('en');
-    expect(inlangSettings.locales).toEqual(['en', 'zh', 'ja']);
+    expect(inlangSettings.locales).toEqual(['en', 'zh']);
   });
 });

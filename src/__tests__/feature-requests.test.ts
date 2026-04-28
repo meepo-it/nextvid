@@ -48,7 +48,6 @@ describe('feature-requests schema', () => {
 describe('feature-requests i18n messages', () => {
   const en = loadMessages('en');
   const zh = loadMessages('zh');
-  const ja = loadMessages('ja');
 
   const featureKeys = Object.keys(en).filter(
     (k) => k.startsWith('feature_requests_') || k.startsWith('nav_requests_and_roadmap')
@@ -60,11 +59,6 @@ describe('feature-requests i18n messages', () => {
 
   it('all feature request keys exist in zh', () => {
     const missing = featureKeys.filter((k) => !(k in zh));
-    expect(missing).toEqual([]);
-  });
-
-  it('all feature request keys exist in ja', () => {
-    const missing = featureKeys.filter((k) => !(k in ja));
     expect(missing).toEqual([]);
   });
 
