@@ -23,7 +23,8 @@ import * as z from 'zod';
 
 const authErrorCodes: Record<string, () => string> = {
   signup_disabled: m.auth_error_codes_signup_disabled,
-  account_already_linked_to_different_user: m.auth_error_codes_account_already_linked_to_different_user,
+  account_already_linked_to_different_user:
+    m.auth_error_codes_account_already_linked_to_different_user,
   unable_to_link_account: m.auth_error_codes_unable_to_link_account,
   unable_to_get_user_info: m.auth_error_codes_unable_to_get_user_info,
   "email_doesn't_match": m.auth_error_codes_email_doesnt_match,
@@ -42,7 +43,9 @@ export function ForgotPasswordForm({ className }: { className?: string }) {
   const [isPending, setIsPending] = useState(false);
 
   const ForgotPasswordSchema = z.object({
-    email: z.string().email({ message: m.auth_forgot_password_email_required() }),
+    email: z
+      .string()
+      .email({ message: m.auth_forgot_password_email_required() }),
   });
 
   const form = useForm<z.infer<typeof ForgotPasswordSchema>>({

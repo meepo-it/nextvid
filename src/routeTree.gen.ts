@@ -14,6 +14,7 @@ import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as ManifestDotjsonRouteImport } from './routes/manifest[.]json'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as CreationsRouteImport } from './routes/creations'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -35,6 +36,7 @@ import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
 import { Route as AuthErrorRouteImport } from './routes/auth/error'
 import { Route as AdminUsersRouteImport } from './routes/admin/users'
+import { Route as AdminPaymentsRouteImport } from './routes/admin/payments'
 import { Route as AdminFeatureRequestsRouteImport } from './routes/admin/feature-requests'
 import { Route as testsTestErrorRouteImport } from './routes/(tests)/test-error'
 import { Route as testsTest404RouteImport } from './routes/(tests)/test-404'
@@ -73,6 +75,11 @@ const ManifestDotjsonRoute = ManifestDotjsonRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreationsRoute = CreationsRouteImport.update({
+  id: '/creations',
+  path: '/creations',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -180,6 +187,11 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
   path: '/users',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminFeatureRequestsRoute = AdminFeatureRequestsRouteImport.update({
   id: '/feature-requests',
   path: '/feature-requests',
@@ -255,6 +267,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
+  '/creations': typeof CreationsRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/manifest.json': typeof ManifestDotjsonRoute
   '/robots.txt': typeof RobotsDottxtRoute
@@ -271,6 +284,7 @@ export interface FileRoutesByFullPath {
   '/test-404': typeof testsTest404Route
   '/test-error': typeof testsTestErrorRoute
   '/admin/feature-requests': typeof AdminFeatureRequestsRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/admin/users': typeof AdminUsersRoute
   '/auth/error': typeof AuthErrorRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
@@ -296,6 +310,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
+  '/creations': typeof CreationsRoute
   '/manifest.json': typeof ManifestDotjsonRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -310,6 +325,7 @@ export interface FileRoutesByTo {
   '/test-404': typeof testsTest404Route
   '/test-error': typeof testsTestErrorRoute
   '/admin/feature-requests': typeof AdminFeatureRequestsRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/admin/users': typeof AdminUsersRoute
   '/auth/error': typeof AuthErrorRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
@@ -337,6 +353,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
+  '/creations': typeof CreationsRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/manifest.json': typeof ManifestDotjsonRoute
   '/robots.txt': typeof RobotsDottxtRoute
@@ -353,6 +370,7 @@ export interface FileRoutesById {
   '/(tests)/test-404': typeof testsTest404Route
   '/(tests)/test-error': typeof testsTestErrorRoute
   '/admin/feature-requests': typeof AdminFeatureRequestsRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/admin/users': typeof AdminUsersRoute
   '/auth/error': typeof AuthErrorRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
@@ -381,6 +399,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/auth'
+    | '/creations'
     | '/dashboard'
     | '/manifest.json'
     | '/robots.txt'
@@ -397,6 +416,7 @@ export interface FileRouteTypes {
     | '/test-404'
     | '/test-error'
     | '/admin/feature-requests'
+    | '/admin/payments'
     | '/admin/users'
     | '/auth/error'
     | '/auth/forgot-password'
@@ -422,6 +442,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/creations'
     | '/manifest.json'
     | '/robots.txt'
     | '/sitemap.xml'
@@ -436,6 +457,7 @@ export interface FileRouteTypes {
     | '/test-404'
     | '/test-error'
     | '/admin/feature-requests'
+    | '/admin/payments'
     | '/admin/users'
     | '/auth/error'
     | '/auth/forgot-password'
@@ -462,6 +484,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/auth'
+    | '/creations'
     | '/dashboard'
     | '/manifest.json'
     | '/robots.txt'
@@ -478,6 +501,7 @@ export interface FileRouteTypes {
     | '/(tests)/test-404'
     | '/(tests)/test-error'
     | '/admin/feature-requests'
+    | '/admin/payments'
     | '/admin/users'
     | '/auth/error'
     | '/auth/forgot-password'
@@ -505,6 +529,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRouteWithChildren
+  CreationsRoute: typeof CreationsRoute
   DashboardRoute: typeof DashboardRouteWithChildren
   ManifestDotjsonRoute: typeof ManifestDotjsonRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
@@ -562,6 +587,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/creations': {
+      id: '/creations'
+      path: '/creations'
+      fullPath: '/creations'
+      preLoaderRoute: typeof CreationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -711,6 +743,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/payments': {
+      id: '/admin/payments'
+      path: '/payments'
+      fullPath: '/admin/payments'
+      preLoaderRoute: typeof AdminPaymentsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/feature-requests': {
       id: '/admin/feature-requests'
       path: '/feature-requests'
@@ -814,12 +853,14 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteChildren {
   AdminFeatureRequestsRoute: typeof AdminFeatureRequestsRoute
+  AdminPaymentsRoute: typeof AdminPaymentsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminFeatureRequestsRoute: AdminFeatureRequestsRoute,
+  AdminPaymentsRoute: AdminPaymentsRoute,
   AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
@@ -886,6 +927,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
+  CreationsRoute: CreationsRoute,
   DashboardRoute: DashboardRouteWithChildren,
   ManifestDotjsonRoute: ManifestDotjsonRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,

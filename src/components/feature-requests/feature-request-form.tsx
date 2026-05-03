@@ -18,7 +18,11 @@ import * as m from '@/paraglide/messages.js';
 
 interface FeatureRequestFormProps {
   isLoggedIn: boolean;
-  onSubmit: (data: { title: string; description: string; category?: string }) => void;
+  onSubmit: (data: {
+    title: string;
+    description: string;
+    category?: string;
+  }) => void;
   isSubmitting?: boolean;
 }
 

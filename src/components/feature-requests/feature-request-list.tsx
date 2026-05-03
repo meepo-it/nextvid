@@ -21,8 +21,10 @@ export type FeatureRequestItem = {
 
 const STATUS_STYLES: Record<string, string> = {
   submitted: 'bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400',
-  planned: 'bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-400',
-  in_progress: 'bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-400',
+  planned:
+    'bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-400',
+  in_progress:
+    'bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-400',
   done: 'bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400',
 };
 

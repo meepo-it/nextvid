@@ -27,7 +27,10 @@ import { z } from 'zod';
 const schema = z.object({
   name: z.string().min(3, m.contact_name_min()).max(30, m.contact_name_max()),
   email: z.email(m.contact_email_invalid()),
-  message: z.string().min(10, m.contact_message_min()).max(500, m.contact_message_max()),
+  message: z
+    .string()
+    .min(10, m.contact_message_min())
+    .max(500, m.contact_message_max()),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -56,7 +59,9 @@ export function ContactFormCard() {
   return (
     <Card className="mx-auto max-w-lg overflow-hidden pt-6 pb-0">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">{m.contact_form_title()}</CardTitle>
+        <CardTitle className="text-lg font-semibold">
+          {m.contact_form_title()}
+        </CardTitle>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col">
@@ -68,7 +73,10 @@ export function ContactFormCard() {
                 <FormItem>
                   <FormLabel>{m.contact_name()}</FormLabel>
                   <FormControl>
-                    <Input placeholder={m.contact_placeholder_name()} {...field} />
+                    <Input
+                      placeholder={m.contact_placeholder_name()}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -12,8 +12,20 @@ import * as m from '@/paraglide/messages.js';
  */
 export function getAvatarLinks(): MenuItemConfig[] {
   return [
-    { title: m.dashboard_avatar_dashboard(), href: Routes.Dashboard, icon: IconLayoutDashboard },
-    { title: m.dashboard_avatar_billing(), href: Routes.SettingsBilling, icon: IconCreditCard },
-    { title: m.dashboard_avatar_settings(), href: Routes.SettingsProfile, icon: IconSettings2 },
+    {
+      title: m.dashboard_avatar_dashboard(),
+      href: Routes.Dashboard,
+      icon: IconLayoutDashboard,
+    },
+    {
+      title: m.dashboard_avatar_billing(),
+      href: Routes.SettingsBilling,
+      icon: IconCreditCard,
+    },
+    {
+      title: m.dashboard_avatar_settings(),
+      href: Routes.SettingsProfile,
+      icon: IconSettings2,
+    },
   ];
 }

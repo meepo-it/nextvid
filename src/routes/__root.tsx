@@ -40,26 +40,15 @@ export const Route = createRootRouteWithContext<{
 }>()({
   head: () => ({
     meta: [
-      {
-        charSet: 'utf-8',
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
-      },
-      {
-        title: websiteConfig.metadata?.title,
-      },
-      {
-        name: 'description',
-        content: websiteConfig.metadata?.description,
-      },
+      { charSet: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { title: websiteConfig.metadata?.title },
+      { name: 'description', content: websiteConfig.metadata?.description },
+      { name: 'msapplication-TileImage', content: '/mstile-150x150.png' },
+      { name: 'msapplication-TileColor', content: '#ffffff' },
     ],
     links: [
-      {
-        rel: 'stylesheet',
-        href: appCss,
-      },
+      { rel: 'stylesheet', href: appCss },
       {
         rel: 'apple-touch-icon',
         sizes: '180x180',
@@ -79,6 +68,8 @@ export const Route = createRootRouteWithContext<{
       },
       { rel: 'icon', href: '/favicon.ico' },
       { rel: 'manifest', href: '/manifest.json' },
+      { rel: 'msapplication-config', href: '/browserconfig.xml' },
+      { rel: 'yandex-tableau-widget', href: '/yandex-tableau-widget.xml' },
     ],
   }),
   // shellComponent automatically wraps root component, errorComponent, and notFoundComponent

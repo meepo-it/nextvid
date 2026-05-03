@@ -22,7 +22,7 @@ import { LocaleSwitcher } from '@/components/locale/locale-switcher';
 import { NavbarMobile } from '@/components/layout/navbar-mobile';
 import { UserButton } from '@/components/shared/user-button';
 import { LoginWrapper } from '@/components/auth/login-wrapper';
-import { IconArrowUpRight } from '@tabler/icons-react';
+import { IconArrowUpRight, IconCoins, IconPhoto } from '@tabler/icons-react';
 import { Link, useLocation } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { websiteConfig } from '@/config/website';
@@ -51,7 +51,7 @@ export function Navbar({ scroll = true }: NavbarProps) {
   return (
     <header
       className={cn(
-        'sticky inset-x-0 top-0 z-40 py-4 transition-all duration-300',
+        'sticky inset-x-0 top-0 z-40 py-6 transition-all duration-300',
         showBarBg && 'border-b'
       )}
     >
@@ -65,7 +65,7 @@ export function Navbar({ scroll = true }: NavbarProps) {
         <Container className="px-4">
           <nav
             aria-label="Main navigation"
-            className="hidden lg:flex lg:items-center lg:justify-between lg:gap-4"
+            className="hidden lg:flex lg:items-center lg:justify-between lg:gap-8"
           >
             <Link
               to="/"
@@ -73,7 +73,7 @@ export function Navbar({ scroll = true }: NavbarProps) {
               className="flex items-center gap-2 shrink-0"
             >
               <Logo className="rounded-none" />
-              <span className="text-xl font-semibold">
+              <span className="text-2xl font-semibold">
                 {websiteConfig.metadata?.name}
               </span>
             </Link>
@@ -89,7 +89,7 @@ export function Navbar({ scroll = true }: NavbarProps) {
                     <NavigationMenuItem key={item.title} value={item.title}>
                       <NavigationMenuTrigger
                         className={cn(
-                          'bg-transparent',
+                          'bg-transparent text-base',
                           item.items.some((sub) =>
                             isLinkActive(sub.href, pathname)
                           ) && 'font-semibold text-foreground'
@@ -151,7 +151,7 @@ export function Navbar({ scroll = true }: NavbarProps) {
                         render={<Link to={item.href ?? '#'} />}
                         className={cn(
                           navigationMenuTriggerStyle(),
-                          'bg-transparent',
+                          'bg-transparent text-base',
                           isLinkActive(item.href, pathname) &&
                             'font-semibold text-primary'
                         )}
@@ -164,14 +164,44 @@ export function Navbar({ scroll = true }: NavbarProps) {
               </NavigationMenuList>
             </NavigationMenu>
 
-            <div className="flex items-center gap-4 shrink-0">
+            <div className="flex items-center gap-3 shrink-0">
               <LocaleSwitcher />
               <ModeSwitcher />
               {websiteConfig.auth?.enable &&
                 (!mounted || isPending ? (
                   <Skeleton className="size-8 rounded-full" />
                 ) : user ? (
-                  <UserButton user={user} />
+                  <>
+                    {/* Credits pill */}
+                    <Link
+                      to={Routes.SettingsCredits}
+                      className={cn(
+                        'flex items-center gap-1.5 rounded-xl border px-3 py-1.5',
+                        'border-amber-300 bg-amber-50 text-amber-700 text-sm font-semibold',
+                        'hover:bg-amber-100 transition-colors',
+                        'dark:border-amber-700 dark:bg-amber-900/20 dark:text-amber-400 dark:hover:bg-amber-900/40'
+                      )}
+                    >
+                      <IconCoins className="size-4 shrink-0" />
+                      <span>0</span>
+                    </Link>
+
+                    {/* Creations button */}
+                    <Link
+                      to={Routes.Creations}
+                      className={cn(
+                        'flex items-center gap-1.5 rounded-xl border px-3 py-1.5',
+                        'border-blue-200 bg-blue-50 text-blue-600 text-sm font-semibold',
+                        'hover:bg-blue-100 transition-colors',
+                        'dark:border-blue-700 dark:bg-blue-900/20 dark:text-blue-400 dark:hover:bg-blue-900/40'
+                      )}
+                    >
+                      <IconPhoto className="size-4 shrink-0" />
+                      <span>Creations</span>
+                    </Link>
+
+                    <UserButton user={user} />
+                  </>
                 ) : (
                   <>
                     <LoginWrapper mode="modal" asChild>

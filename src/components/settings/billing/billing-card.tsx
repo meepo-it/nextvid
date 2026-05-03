@@ -76,7 +76,9 @@ export function BillingCard() {
           <CardTitle className="text-lg font-semibold">
             {m.settings_billing_card_current_plan()}
           </CardTitle>
-          <CardDescription>{m.settings_billing_card_current_plan_description()}</CardDescription>
+          <CardDescription>
+            {m.settings_billing_card_current_plan_description()}
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 flex-1">
           <div className="flex items-center justify-start space-x-4">
@@ -101,7 +103,9 @@ export function BillingCard() {
           <CardTitle className="text-lg font-semibold">
             {m.settings_billing_card_current_plan()}
           </CardTitle>
-          <CardDescription>{m.settings_billing_card_current_plan_description()}</CardDescription>
+          <CardDescription>
+            {m.settings_billing_card_current_plan_description()}
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 flex-1">
           <div className="text-destructive text-sm">
@@ -126,10 +130,14 @@ export function BillingCard() {
           <CardTitle className="text-lg font-semibold">
             {m.settings_billing_card_current_plan()}
           </CardTitle>
-          <CardDescription>{m.settings_billing_card_current_plan_description()}</CardDescription>
+          <CardDescription>
+            {m.settings_billing_card_current_plan_description()}
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="text-sm text-muted-foreground">{m.settings_billing_card_no_plan()}</div>
+          <div className="text-sm text-muted-foreground">
+            {m.settings_billing_card_no_plan()}
+          </div>
         </CardContent>
         <CardFooter className={footerClass}>
           <Link
@@ -147,14 +155,20 @@ export function BillingCard() {
   return (
     <Card className={cardClass}>
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">{m.settings_billing_card_current_plan()}</CardTitle>
-        <CardDescription>{m.settings_billing_card_current_plan_description()}</CardDescription>
+        <CardTitle className="text-lg font-semibold">
+          {m.settings_billing_card_current_plan()}
+        </CardTitle>
+        <CardDescription>
+          {m.settings_billing_card_current_plan_description()}
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4 flex-1">
         {/* Plan name and status badge (trialing | active) */}
         <div className="flex items-center justify-start space-x-4">
           <div className="text-3xl font-medium">
-            {currentPlanWithName?.name ?? currentPlan?.id ?? m.settings_billing_card_free()}
+            {currentPlanWithName?.name ??
+              currentPlan?.id ??
+              m.settings_billing_card_free()}
           </div>
           {subscription &&
             (subscription.status === 'trialing' ||
@@ -208,7 +222,8 @@ export function BillingCard() {
             {currentPeriodEnd && (
               <div className="text-muted-foreground">
                 {m.settings_billing_card_period_ends()} {currentPeriodEnd}
-                {subscription.cancelAtPeriodEnd && ` ${m.settings_billing_card_cancels_at_period_end()}`}
+                {subscription.cancelAtPeriodEnd &&
+                  ` ${m.settings_billing_card_cancels_at_period_end()}`}
               </div>
             )}
             {subscription.status === 'trialing' && trialEndDate && (

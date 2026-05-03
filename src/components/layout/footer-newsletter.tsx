@@ -53,9 +53,7 @@ export function FooterNewsletter() {
           {m.newsletter_subscribe()}
         </button>
       </form>
-      {error && (
-        <p className="mt-1 text-xs text-destructive">{error}</p>
-      )}
+      {error && <p className="mt-1 text-xs text-destructive">{error}</p>}
     </div>
   );
 }

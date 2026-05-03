@@ -28,8 +28,14 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 const passwordSchema = z.object({
-  currentPassword: z.string().min(1, { message: m.settings_security_update_password_current_required() }),
-  newPassword: z.string().min(8, { message: m.settings_security_update_password_new_min_length() }),
+  currentPassword: z
+    .string()
+    .min(1, {
+      message: m.settings_security_update_password_current_required(),
+    }),
+  newPassword: z
+    .string()
+    .min(8, { message: m.settings_security_update_password_new_min_length() }),
 });
 
 interface UpdatePasswordCardProps {
@@ -86,8 +92,12 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
       )}
     >
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">{m.settings_security_update_password_title()}</CardTitle>
-        <CardDescription>{m.settings_security_update_password_description()}</CardDescription>
+        <CardTitle className="text-lg font-semibold">
+          {m.settings_security_update_password_title()}
+        </CardTitle>
+        <CardDescription>
+          {m.settings_security_update_password_description()}
+        </CardDescription>
       </CardHeader>
       <Form {...form}>
         <form
@@ -100,7 +110,9 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
               name="currentPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{m.settings_security_update_password_current_password()}</FormLabel>
+                  <FormLabel>
+                    {m.settings_security_update_password_current_password()}
+                  </FormLabel>
                   <div className="relative">
                     <FormControl>
                       <Input
@@ -122,7 +134,9 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
                         <IconEye className="size-4" />
                       )}
                       <span className="sr-only">
-                        {showCurrent ? m.settings_security_update_password_hide_password() : m.settings_security_update_password_show_password()}
+                        {showCurrent
+                          ? m.settings_security_update_password_hide_password()
+                          : m.settings_security_update_password_show_password()}
                       </span>
                     </Button>
                   </div>
@@ -135,7 +149,9 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
               name="newPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{m.settings_security_update_password_new_password()}</FormLabel>
+                  <FormLabel>
+                    {m.settings_security_update_password_new_password()}
+                  </FormLabel>
                   <div className="relative">
                     <FormControl>
                       <Input
@@ -157,7 +173,9 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
                         <IconEye className="size-4" />
                       )}
                       <span className="sr-only">
-                        {showNew ? m.settings_security_update_password_hide_password() : m.settings_security_update_password_show_password()}
+                        {showNew
+                          ? m.settings_security_update_password_hide_password()
+                          : m.settings_security_update_password_show_password()}
                       </span>
                     </Button>
                   </div>
@@ -168,9 +186,13 @@ export function UpdatePasswordCard({ className }: UpdatePasswordCardProps) {
             <FormError message={error} />
           </CardContent>
           <CardFooter className="mt-6 px-6 py-4 flex justify-between items-center bg-muted rounded-none">
-            <p className="text-sm text-muted-foreground">{m.settings_security_update_password_hint()}</p>
+            <p className="text-sm text-muted-foreground">
+              {m.settings_security_update_password_hint()}
+            </p>
             <Button type="submit" disabled={isSaving}>
-              {isSaving ? m.settings_security_update_password_saving() : m.settings_security_update_password_save()}
+              {isSaving
+                ? m.settings_security_update_password_saving()
+                : m.settings_security_update_password_save()}
             </Button>
           </CardFooter>
         </form>

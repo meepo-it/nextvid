@@ -100,23 +100,16 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
         </div>
       </Container>
 
-      {/* Subscribe + locale switcher — sticky */}
-      <div className="sticky bottom-0 z-40 border-t bg-background/95 backdrop-blur-sm">
-        <Container className="px-4 flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between">
-          {websiteConfig.newsletter?.enable && <FooterNewsletter />}
-          <FooterLocaleSwitcher />
-        </Container>
-      </div>
+      <FooterFriendLinks />
 
-      {/* Copyright + theme switcher (with friend-links marquee under the border) */}
-      <div className="border-t">
-        <FooterFriendLinks />
+      {/* Newsletter (left) + locale switcher + theme — sticky, scoped to footer */}
+      <div className="sticky bottom-0 z-40 bg-background/95 backdrop-blur-sm border-t">
         <Container className="px-4 flex items-center justify-between py-4">
-          <span className="text-muted-foreground text-sm">
-            &copy; {new Date().getFullYear()} {websiteConfig.metadata?.name}.{' '}
-            {m.footer_rights_reserved()}
-          </span>
-          <ModeSwitcher />
+          {websiteConfig.newsletter?.enable ? <FooterNewsletter /> : <span />}
+          <div className="flex items-center gap-3">
+            <FooterLocaleSwitcher />
+            <ModeSwitcher />
+          </div>
         </Container>
       </div>
     </footer>

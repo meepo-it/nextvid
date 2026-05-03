@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tableau-widget xmlns="http://yandex.ru/tableau-widget/1.0/">
+  <icon>
+    <src>/yandex-icon-120x120.png</src>
+    <size>120</size>
+  </icon>
+</tableau-widget>

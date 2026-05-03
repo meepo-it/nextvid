@@ -12,7 +12,10 @@ export const Route = createFileRoute('/auth/reset-password')({
   },
   component: ResetPasswordPage,
   head: () => ({
-    meta: [{ title: m.auth_reset_password_title() }, { name: 'description', content: m.auth_reset_password_description() }],
+    meta: [
+      { title: m.auth_reset_password_title() },
+      { name: 'description', content: m.auth_reset_password_description() },
+    ],
   }),
 });
 

@@ -16,9 +16,7 @@ export default function FeatureRequestRejected({
       <Heading className="text-xl">
         {m.mail_feature_request_rejected_title()}
       </Heading>
-      <Text>
-        {m.mail_feature_request_rejected_body({ title })}
-      </Text>
+      <Text>{m.mail_feature_request_rejected_body({ title })}</Text>
       <Text className="rounded bg-gray-100 p-3 italic">{reason}</Text>
       <Text className="text-sm text-gray-500">
         {m.mail_feature_request_rejected_footer()}

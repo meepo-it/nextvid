@@ -18,9 +18,7 @@ export default function FeatureRequestStatusUpdate({
       <Heading className="text-xl">
         {m.mail_feature_request_status_update_title()}
       </Heading>
-      <Text>
-        {m.mail_feature_request_status_update_body({ title })}
-      </Text>
+      <Text>{m.mail_feature_request_status_update_body({ title })}</Text>
       <Text>
         <strong>{oldStatus}</strong> → <strong>{newStatus}</strong>
       </Text>

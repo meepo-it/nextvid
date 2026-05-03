@@ -98,7 +98,9 @@ export default function Integration2Section() {
               <h2 className="text-balance text-3xl font-semibold md:text-4xl">
                 {m.blocks_integration2_title()}
               </h2>
-              <p className="text-muted-foreground">{m.blocks_integration2_description()}</p>
+              <p className="text-muted-foreground">
+                {m.blocks_integration2_description()}
+              </p>
 
               <div className="mt-12 flex flex-wrap justify-center gap-4 md:justify-start">
                 <Link

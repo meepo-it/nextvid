@@ -41,9 +41,7 @@ function BlogListPage() {
           <h1 className="text-3xl font-bold tracking-tight">
             {m.blog_title()}
           </h1>
-          <p className="text-muted-foreground text-lg">
-            {m.blog_title()}
-          </p>
+          <p className="text-muted-foreground text-lg">{m.blog_title()}</p>
         </div>
         <BlogGrid posts={posts} />
         <BlogPagination currentPage={currentPage} totalPages={totalPages} />

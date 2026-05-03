@@ -1,7 +1,12 @@
 import { getLocale, locales, setLocale } from '@/paraglide/runtime.js';
 import * as m from '@/paraglide/messages.js';
 import { setUserLocale } from '@/api/user-locale';
-import { IconCheck, IconLanguage, IconMailFilled } from '@tabler/icons-react';
+import {
+  IconCheck,
+  IconChevronDown,
+  IconLanguage,
+  IconMailFilled,
+} from '@tabler/icons-react';
 import {
   Dialog,
   DialogContent,
@@ -14,7 +19,7 @@ import { useState } from 'react';
 
 const localeFlags: Record<string, string> = {
   en: '🇺🇸',
-  'zh': '🇨🇳',
+  zh: '🇨🇳',
 };
 
 // Localized label/region for a locale code. Pulled from the message system so
@@ -60,8 +65,9 @@ export function LocaleSwitcher() {
       <DialogTrigger className="flex shrink-0 items-center gap-1 rounded-md px-2 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
         <IconLanguage className="size-5" />
         <span>{getLocaleLabel(currentLocale)}</span>
+        <IconChevronDown className="size-3.5 opacity-60" />
       </DialogTrigger>
-      <DialogContent showCloseButton className="max-w-lg p-0 overflow-hidden">
+      <DialogContent showCloseButton className="min-w-[560px] p-0 overflow-hidden">
         <DialogHeader className="px-5 pt-5 pb-0">
           <DialogTitle className="flex items-center gap-2">
             <IconLanguage className="size-5 text-muted-foreground" />
@@ -71,7 +77,7 @@ export function LocaleSwitcher() {
             {m.locale_switcher_description()}
           </DialogDescription>
         </DialogHeader>
-        <div className="grid grid-cols-3 gap-1.5 px-3 pb-2 max-h-72 overflow-y-auto">
+        <div className="grid grid-cols-3 gap-1.5 px-3 pb-2 pt-3 auto-rows-min max-h-72 overflow-y-auto">
           {locales.map((locale) => {
             const isActive = locale === currentLocale;
             return (
@@ -92,9 +98,13 @@ export function LocaleSwitcher() {
                     : 'border-transparent hover:border-border hover:bg-accent text-foreground'
                 }`}
               >
-                <span className="text-lg leading-none">{localeFlags[locale]}</span>
+                <span className="text-lg leading-none">
+                  {localeFlags[locale]}
+                </span>
                 <div className="flex flex-1 flex-col min-w-0">
-                  <span className="text-sm font-medium truncate">{getLocaleLabel(locale)}</span>
+                  <span className="text-sm font-medium truncate">
+                    {getLocaleLabel(locale)}
+                  </span>
                   <span className="text-xs text-muted-foreground truncate">
                     {getLocaleRegion(locale)}
                   </span>

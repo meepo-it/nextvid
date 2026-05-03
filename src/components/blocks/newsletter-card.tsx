@@ -73,7 +73,9 @@ export default function NewsletterCard() {
                 name="email"
                 render={({ field }) => (
                   <FormItem className="relative w-full space-y-0">
-                    <FormLabel className="sr-only">{m.newsletter_email()}</FormLabel>
+                    <FormLabel className="sr-only">
+                      {m.newsletter_email()}
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="email"

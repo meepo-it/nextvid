@@ -43,7 +43,7 @@ export const Route = createFileRoute('/sitemap.xml')({
           locales
             .map(
               (l) =>
-                `\n    <xhtml:link rel="alternate" hreflang="${l}" href="${localizedUrl(path, l)}" />`,
+                `\n    <xhtml:link rel="alternate" hreflang="${l}" href="${localizedUrl(path, l)}" />`
             )
             .join('') +
           `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${localizedUrl(path, baseLocale)}" />`;
@@ -51,7 +51,7 @@ export const Route = createFileRoute('/sitemap.xml')({
         const urlEntry = (
           path: string,
           locale: string,
-          opts?: { changefreq?: string; priority?: string; lastmod?: string },
+          opts?: { changefreq?: string; priority?: string; lastmod?: string }
         ) => {
           const loc = localizedUrl(path, locale);
           const lastmod = opts?.lastmod
@@ -73,8 +73,8 @@ export const Route = createFileRoute('/sitemap.xml')({
               urlEntry(u.path, locale, {
                 changefreq: u.changefreq,
                 priority: u.priority,
-              }),
-            ),
+              })
+            )
           )
           .join('\n');
 
@@ -87,8 +87,8 @@ export const Route = createFileRoute('/sitemap.xml')({
                 urlEntry(`/blog/${p.slug}`, locale, {
                   changefreq: 'weekly',
                   lastmod: new Date(p.date).toISOString().slice(0, 10),
-                }),
-              ),
+                })
+              )
             )
             .join('\n');
         }

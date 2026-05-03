@@ -46,7 +46,9 @@ type Recipient = { email: string; locale: string | null };
  * voters for a feature request. The locale lets background email jobs render
  * each message in the *recipient's* language rather than the admin's.
  */
-async function getStakeholderRecipients(featureRequestId: string): Promise<Recipient[]> {
+async function getStakeholderRecipients(
+  featureRequestId: string
+): Promise<Recipient[]> {
   const db = getDb();
 
   // Get creator email + locale
@@ -79,7 +81,9 @@ async function getStakeholderRecipients(featureRequestId: string): Promise<Recip
 /**
  * Get the creator (email + locale) only.
  */
-async function getCreatorRecipient(featureRequestId: string): Promise<Recipient | null> {
+async function getCreatorRecipient(
+  featureRequestId: string
+): Promise<Recipient | null> {
   const db = getDb();
   const [creator] = await db
     .select({ email: user.email, locale: user.locale })
@@ -97,7 +101,9 @@ async function getCreatorRecipient(featureRequestId: string): Promise<Recipient 
 export const listFeatureRequests = createServerFn({ method: 'GET' })
   .inputValidator(
     z.object({
-      status: z.enum(['all', 'submitted', 'planned', 'in_progress', 'done']).default('all'),
+      status: z
+        .enum(['all', 'submitted', 'planned', 'in_progress', 'done'])
+        .default('all'),
       sort: z.enum(['votes', 'newest']).default('votes'),
       userId: z.string().optional(),
     })
@@ -203,7 +209,8 @@ export const voteFeatureRequest = createServerFn({ method: 'POST' })
     if (existing.length > 0) {
       await db.batch([
         db.delete(featureVote).where(eq(featureVote.id, existing[0].id)),
-        db.update(featureRequest)
+        db
+          .update(featureRequest)
           .set({ voteCount: sql`${featureRequest.voteCount} - 1` })
           .where(eq(featureRequest.id, data.featureRequestId)),
       ]);
@@ -217,7 +224,8 @@ export const voteFeatureRequest = createServerFn({ method: 'POST' })
         userId: context.userId,
         createdAt: new Date(),
       }),
-      db.update(featureRequest)
+      db
+        .update(featureRequest)
         .set({ voteCount: sql`${featureRequest.voteCount} + 1` })
         .where(eq(featureRequest.id, data.featureRequestId)),
     ]);
@@ -248,9 +256,11 @@ export const updateFeatureRequestStatus = createServerFn({ method: 'POST' })
       .limit(1);
 
     if (!current) throw new Error('Feature request not found');
-    if (current.status === data.status) return { success: true, notified: false, notifiedCount: 0 };
+    if (current.status === data.status)
+      return { success: true, notified: false, notifiedCount: 0 };
 
-    const isForward = (STATUS_ORDER[data.status] ?? 0) > (STATUS_ORDER[current.status] ?? 0);
+    const isForward =
+      (STATUS_ORDER[data.status] ?? 0) > (STATUS_ORDER[current.status] ?? 0);
 
     // Update status
     await db

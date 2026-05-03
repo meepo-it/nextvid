@@ -68,10 +68,14 @@ export function DeleteAccountCard() {
         <CardTitle className="text-lg font-bold text-destructive">
           {m.settings_security_delete_account_title()}
         </CardTitle>
-        <CardDescription>{m.settings_security_delete_account_description()}</CardDescription>
+        <CardDescription>
+          {m.settings_security_delete_account_description()}
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-1">
-        <p className="text-sm text-muted-foreground">{m.settings_security_delete_account_warning()}</p>
+        <p className="text-sm text-muted-foreground">
+          {m.settings_security_delete_account_warning()}
+        </p>
         {error && (
           <div className="mt-4">
             <FormError message={error} />
@@ -106,7 +110,9 @@ export function DeleteAccountCard() {
               onClick={handleDeleteAccount}
               disabled={isDeleting}
             >
-              {isDeleting ? m.settings_security_delete_account_deleting() : m.settings_security_delete_account_confirm()}
+              {isDeleting
+                ? m.settings_security_delete_account_deleting()
+                : m.settings_security_delete_account_confirm()}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

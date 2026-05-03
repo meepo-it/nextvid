@@ -21,12 +21,42 @@ function chunkArray<T>(array: T[], chunkSize: number): T[][] {
 
 export default function TestimonialsSection() {
   const testimonials: Testimonial[] = [
-    { name: m.blocks_testimonials_item1_name(), role: m.blocks_testimonials_item1_role(), image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane', quote: m.blocks_testimonials_item1_quote() },
-    { name: m.blocks_testimonials_item2_name(), role: m.blocks_testimonials_item2_role(), image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John', quote: m.blocks_testimonials_item2_quote() },
-    { name: m.blocks_testimonials_item3_name(), role: m.blocks_testimonials_item3_role(), image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex', quote: m.blocks_testimonials_item3_quote() },
-    { name: m.blocks_testimonials_item4_name(), role: m.blocks_testimonials_item4_role(), image: 'https://api.dicebear.com/7.x/lorelei/svg?seed=Maria', quote: m.blocks_testimonials_item4_quote() },
-    { name: m.blocks_testimonials_item5_name(), role: m.blocks_testimonials_item5_role(), image: 'https://api.dicebear.com/7.x/notionists/svg?seed=Sam', quote: m.blocks_testimonials_item5_quote() },
-    { name: m.blocks_testimonials_item6_name(), role: m.blocks_testimonials_item6_role(), image: 'https://api.dicebear.com/7.x/open-peeps/svg?seed=Jordan', quote: m.blocks_testimonials_item6_quote() },
+    {
+      name: m.blocks_testimonials_item1_name(),
+      role: m.blocks_testimonials_item1_role(),
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane',
+      quote: m.blocks_testimonials_item1_quote(),
+    },
+    {
+      name: m.blocks_testimonials_item2_name(),
+      role: m.blocks_testimonials_item2_role(),
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John',
+      quote: m.blocks_testimonials_item2_quote(),
+    },
+    {
+      name: m.blocks_testimonials_item3_name(),
+      role: m.blocks_testimonials_item3_role(),
+      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex',
+      quote: m.blocks_testimonials_item3_quote(),
+    },
+    {
+      name: m.blocks_testimonials_item4_name(),
+      role: m.blocks_testimonials_item4_role(),
+      image: 'https://api.dicebear.com/7.x/lorelei/svg?seed=Maria',
+      quote: m.blocks_testimonials_item4_quote(),
+    },
+    {
+      name: m.blocks_testimonials_item5_name(),
+      role: m.blocks_testimonials_item5_role(),
+      image: 'https://api.dicebear.com/7.x/notionists/svg?seed=Sam',
+      quote: m.blocks_testimonials_item5_quote(),
+    },
+    {
+      name: m.blocks_testimonials_item6_name(),
+      role: m.blocks_testimonials_item6_role(),
+      image: 'https://api.dicebear.com/7.x/open-peeps/svg?seed=Jordan',
+      quote: m.blocks_testimonials_item6_quote(),
+    },
   ];
 
   const testimonialChunks = chunkArray(
@@ -38,7 +68,10 @@ export default function TestimonialsSection() {
     <section id="testimonials" className="px-4 py-16 md:py-24">
       <div className="mx-auto max-w-6xl">
         <ScrollReveal>
-          <HeaderSection title={m.blocks_testimonials_title()} subtitle={m.blocks_testimonials_subtitle()} />
+          <HeaderSection
+            title={m.blocks_testimonials_title()}
+            subtitle={m.blocks_testimonials_subtitle()}
+          />
         </ScrollReveal>
 
         <div className="mt-8 grid gap-3 sm:grid-cols-2 md:mt-12 lg:grid-cols-3">

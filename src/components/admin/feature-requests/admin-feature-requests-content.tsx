@@ -38,8 +38,10 @@ const STATUSES = ['submitted', 'planned', 'in_progress', 'done'] as const;
 
 const STATUS_STYLES: Record<string, string> = {
   submitted: 'bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400',
-  planned: 'bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-400',
-  in_progress: 'bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-400',
+  planned:
+    'bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-400',
+  in_progress:
+    'bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-400',
   done: 'bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400',
 };
 
@@ -53,7 +55,10 @@ const STATUS_LABELS: Record<string, () => string> = {
 export function AdminFeatureRequestsContent() {
   const queryClient = useQueryClient();
   const [statusFilter, setStatusFilter] = useState<string>('all');
-  const [rejectTarget, setRejectTarget] = useState<{ id: string; title: string } | null>(null);
+  const [rejectTarget, setRejectTarget] = useState<{
+    id: string;
+    title: string;
+  } | null>(null);
   const [rejectReason, setRejectReason] = useState('');
   const [notifyCreator, setNotifyCreator] = useState(true);
 
@@ -63,18 +68,30 @@ export function AdminFeatureRequestsContent() {
       listFeatureRequests({
         data: {
           sort: 'votes',
-          status: statusFilter as 'all' | 'submitted' | 'planned' | 'in_progress' | 'done',
+          status: statusFilter as
+            | 'all'
+            | 'submitted'
+            | 'planned'
+            | 'in_progress'
+            | 'done',
         },
       }),
   });
 
   const updateMutation = useMutation({
-    mutationFn: (input: { id: string; status: 'submitted' | 'planned' | 'in_progress' | 'done'; notify: boolean }) =>
-      updateFeatureRequestStatus({ data: input }),
+    mutationFn: (input: {
+      id: string;
+      status: 'submitted' | 'planned' | 'in_progress' | 'done';
+      notify: boolean;
+    }) => updateFeatureRequestStatus({ data: input }),
     onSuccess: (result) => {
       queryClient.invalidateQueries({ queryKey: ['admin-feature-requests'] });
       if (result.notified && result.notifiedCount > 0) {
-        toast.success(m.admin_feature_requests_notified({ count: String(result.notifiedCount) }));
+        toast.success(
+          m.admin_feature_requests_notified({
+            count: String(result.notifiedCount),
+          })
+        );
       } else {
         toast.success(m.admin_feature_requests_status_updated());
       }
@@ -85,8 +102,11 @@ export function AdminFeatureRequestsContent() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (input: { id: string; reason?: string; notifyCreator: boolean }) =>
-      deleteFeatureRequest({ data: input }),
+    mutationFn: (input: {
+      id: string;
+      reason?: string;
+      notifyCreator: boolean;
+    }) => deleteFeatureRequest({ data: input }),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['admin-feature-requests'] });
       if (variables.notifyCreator && variables.reason) {
@@ -140,7 +160,9 @@ export function AdminFeatureRequestsContent() {
 
       {/* List */}
       {isLoading ? (
-        <div className="py-12 text-center text-muted-foreground">Loading...</div>
+        <div className="py-12 text-center text-muted-foreground">
+          Loading...
+        </div>
       ) : items.length === 0 ? (
         <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed py-16">
           <IconBulb className="size-10 text-muted-foreground/40" />
@@ -157,7 +179,9 @@ export function AdminFeatureRequestsContent() {
             >
               {/* Vote count */}
               <div className="flex flex-col items-center">
-                <span className="text-lg font-bold tabular-nums">{item.voteCount}</span>
+                <span className="text-lg font-bold tabular-nums">
+                  {item.voteCount}
+                </span>
                 <span className="text-[10px] text-muted-foreground">votes</span>
               </div>
 
@@ -196,7 +220,11 @@ export function AdminFeatureRequestsContent() {
                   onValueChange={(value) =>
                     updateMutation.mutate({
                       id: item.id,
-                      status: value as 'submitted' | 'planned' | 'in_progress' | 'done',
+                      status: value as
+                        | 'submitted'
+                        | 'planned'
+                        | 'in_progress'
+                        | 'done',
                       notify: true,
                     })
                   }
@@ -221,7 +249,9 @@ export function AdminFeatureRequestsContent() {
                   onClick={() => {
                     setRejectTarget({ id: item.id, title: item.title });
                     setRejectReason(
-                      m.admin_feature_requests_reject_default_reason({ title: item.title })
+                      m.admin_feature_requests_reject_default_reason({
+                        title: item.title,
+                      })
                     );
                     setNotifyCreator(true);
                   }}
@@ -237,14 +267,14 @@ export function AdminFeatureRequestsContent() {
       {/* Reject dialog */}
       <Dialog
         open={!!rejectTarget}
-        onOpenChange={(open) => { if (!open) setRejectTarget(null); }}
+        onOpenChange={(open) => {
+          if (!open) setRejectTarget(null);
+        }}
       >
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>{m.admin_feature_requests_reject_title()}</DialogTitle>
-            <DialogDescription>
-              {rejectTarget?.title}
-            </DialogDescription>
+            <DialogDescription>{rejectTarget?.title}</DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div className="space-y-2">

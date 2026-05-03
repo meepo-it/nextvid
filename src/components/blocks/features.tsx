@@ -18,11 +18,26 @@ import * as m from '@/paraglide/messages.js';
 
 type ImageKey = 'item-1' | 'item-2' | 'item-3' | 'item-4';
 
-const featureItems: Record<ImageKey, { title: () => string; description: () => string }> = {
-  'item-1': { title: m.blocks_features_item1_title, description: m.blocks_features_item1_description },
-  'item-2': { title: m.blocks_features_item2_title, description: m.blocks_features_item2_description },
-  'item-3': { title: m.blocks_features_item3_title, description: m.blocks_features_item3_description },
-  'item-4': { title: m.blocks_features_item4_title, description: m.blocks_features_item4_description },
+const featureItems: Record<
+  ImageKey,
+  { title: () => string; description: () => string }
+> = {
+  'item-1': {
+    title: m.blocks_features_item1_title,
+    description: m.blocks_features_item1_description,
+  },
+  'item-2': {
+    title: m.blocks_features_item2_title,
+    description: m.blocks_features_item2_description,
+  },
+  'item-3': {
+    title: m.blocks_features_item3_title,
+    description: m.blocks_features_item3_description,
+  },
+  'item-4': {
+    title: m.blocks_features_item4_title,
+    description: m.blocks_features_item4_description,
+  },
 };
 
 const icons: Record<ImageKey, Icon> = {
@@ -79,7 +94,9 @@ export default function FeaturesSection() {
                 <h3 className="py-1 text-3xl font-semibold leading-normal text-foreground lg:text-4xl">
                   {m.blocks_features_title()}
                 </h3>
-                <p className="mt-4 text-muted-foreground">{m.blocks_features_description()}</p>
+                <p className="mt-4 text-muted-foreground">
+                  {m.blocks_features_description()}
+                </p>
               </div>
               <Accordion
                 value={[activeItem]}

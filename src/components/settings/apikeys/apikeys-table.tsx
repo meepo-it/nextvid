@@ -164,7 +164,9 @@ export function ApiKeysTable({
                 )}
               >
                 <IconDots className="size-4" />
-                <span className="sr-only">{m.settings_api_keys_columns_actions()}</span>
+                <span className="sr-only">
+                  {m.settings_api_keys_columns_actions()}
+                </span>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => onDelete(keyId)}>
@@ -250,8 +252,12 @@ export function ApiKeysTable({
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>{m.settings_api_keys_create_dialog_title()}</DialogTitle>
-              <DialogDescription>{m.settings_api_keys_create_dialog_description()}</DialogDescription>
+              <DialogTitle>
+                {m.settings_api_keys_create_dialog_title()}
+              </DialogTitle>
+              <DialogDescription>
+                {m.settings_api_keys_create_dialog_description()}
+              </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="flex items-center gap-4">
@@ -279,7 +285,9 @@ export function ApiKeysTable({
                 {m.settings_api_keys_cancel()}
               </Button>
               <Button onClick={handleCreate} disabled={creating}>
-                {creating ? m.settings_api_keys_creating() : m.settings_api_keys_create()}
+                {creating
+                  ? m.settings_api_keys_creating()
+                  : m.settings_api_keys_create()}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -289,8 +297,12 @@ export function ApiKeysTable({
       <Dialog open={newKeyDialogOpen} onOpenChange={handleCloseNewKeyDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{m.settings_api_keys_new_key_dialog_title()}</DialogTitle>
-            <DialogDescription>{m.settings_api_keys_new_key_dialog_description()}</DialogDescription>
+            <DialogTitle>
+              {m.settings_api_keys_new_key_dialog_title()}
+            </DialogTitle>
+            <DialogDescription>
+              {m.settings_api_keys_new_key_dialog_description()}
+            </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="flex items-center gap-2">
@@ -310,7 +322,9 @@ export function ApiKeysTable({
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={handleCloseNewKeyDialog}>{m.settings_api_keys_done()}</Button>
+            <Button onClick={handleCloseNewKeyDialog}>
+              {m.settings_api_keys_done()}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

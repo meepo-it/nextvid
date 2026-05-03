@@ -12,7 +12,10 @@ export const Route = createFileRoute('/auth/forgot-password')({
   },
   component: ForgotPasswordPage,
   head: () => ({
-    meta: [{ title: m.auth_forgot_password_title() }, { name: 'description', content: m.auth_forgot_password_description() }],
+    meta: [
+      { title: m.auth_forgot_password_title() },
+      { name: 'description', content: m.auth_forgot_password_description() },
+    ],
   }),
 });
 

@@ -10,6 +10,7 @@ export const Routes = {
   Contact: '/contact',
   RequestsAndRoadmap: '/requests-and-roadmap',
   PromoteAndEarn: '/promote',
+  Creations: '/creations',
 
   // Auth routes
   Auth: '/auth',
@@ -44,6 +45,7 @@ export const Routes = {
   Admin: '/admin',
   AdminUsers: '/admin/users',
   AdminFeatureRequests: '/admin/feature-requests',
+  AdminPayments: '/admin/payments',
 } as const;
 
 /** Default login redirect route */

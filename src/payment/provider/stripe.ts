@@ -279,8 +279,9 @@ export class StripeProvider implements PaymentProvider {
       // bare `zh` for Simplified Chinese — so map our app locale into the
       // closest Stripe-supported tag here.
       if (locale) {
-        checkoutParams.locale =
-          toStripeLocale(locale) as Stripe.Checkout.SessionCreateParams.Locale;
+        checkoutParams.locale = toStripeLocale(
+          locale
+        ) as Stripe.Checkout.SessionCreateParams.Locale;
       }
 
       // Add payment intent data for one-time payments
@@ -338,8 +339,9 @@ export class StripeProvider implements PaymentProvider {
         return_url: returnUrl ?? '',
         ...(locale
           ? {
-              locale:
-                toStripeLocale(locale) as Stripe.BillingPortal.SessionCreateParams.Locale,
+              locale: toStripeLocale(
+                locale
+              ) as Stripe.BillingPortal.SessionCreateParams.Locale,
             }
           : {}),
       });
@@ -991,7 +993,10 @@ export class StripeProvider implements PaymentProvider {
    * @param recordType Type for logging ("subscription" or "one-time")
    */
   private async insertPaymentRecord(
-    paymentData: Omit<typeof payment.$inferInsert, 'id' | 'createdAt' | 'updatedAt'>,
+    paymentData: Omit<
+      typeof payment.$inferInsert,
+      'id' | 'createdAt' | 'updatedAt'
+    >,
     recordType: string
   ): Promise<void> {
     const currentDate = new Date();

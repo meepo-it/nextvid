@@ -18,7 +18,9 @@ export default function CallToActionSection() {
           <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
             {m.blocks_calltoaction_title()}
           </h2>
-          <p className="mt-4 text-muted-foreground text-lg">{m.blocks_calltoaction_description()}</p>
+          <p className="mt-4 text-muted-foreground text-lg">
+            {m.blocks_calltoaction_description()}
+          </p>
 
           <div className="mt-12 flex flex-wrap justify-center gap-4">
             <Link

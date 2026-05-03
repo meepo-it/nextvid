@@ -23,7 +23,8 @@ import * as z from 'zod';
 
 const authErrorCodes: Record<string, () => string> = {
   signup_disabled: m.auth_error_codes_signup_disabled,
-  account_already_linked_to_different_user: m.auth_error_codes_account_already_linked_to_different_user,
+  account_already_linked_to_different_user:
+    m.auth_error_codes_account_already_linked_to_different_user,
   unable_to_link_account: m.auth_error_codes_unable_to_link_account,
   unable_to_get_user_info: m.auth_error_codes_unable_to_get_user_info,
   "email_doesn't_match": m.auth_error_codes_email_doesnt_match,
@@ -68,7 +69,9 @@ export function ResetPasswordForm() {
         bottomButtonLabel={m.auth_reset_password_back_to_login()}
         bottomButtonHref={Routes.Login}
       >
-        <p className="text-sm text-destructive py-4">{m.auth_reset_password_invalid_token()}</p>
+        <p className="text-sm text-destructive py-4">
+          {m.auth_reset_password_invalid_token()}
+        </p>
       </AuthCard>
     );
   }
@@ -144,7 +147,9 @@ export function ResetPasswordForm() {
                         <IconEye className="size-4 text-muted-foreground" />
                       )}
                       <span className="sr-only">
-                        {showPassword ? m.auth_reset_password_hide_password() : m.auth_reset_password_show_password()}
+                        {showPassword
+                          ? m.auth_reset_password_hide_password()
+                          : m.auth_reset_password_show_password()}
                       </span>
                     </Button>
                   </div>

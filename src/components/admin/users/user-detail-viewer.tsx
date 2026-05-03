@@ -38,7 +38,9 @@ interface UserDetailViewerProps {
 export function UserDetailViewer({ user }: UserDetailViewerProps) {
   const isMobile = useIsMobile();
   const [error, setError] = useState<string | undefined>();
-  const [banReason, setBanReason] = useState<string>(m.admin_users_ban_default_reason());
+  const [banReason, setBanReason] = useState<string>(
+    m.admin_users_ban_default_reason()
+  );
   const [banExpiresAt, setBanExpiresAt] = useState<Date | undefined>();
   const [calendarOpen, setCalendarOpen] = useState(false);
 
@@ -70,7 +72,8 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
       setBanReason(m.admin_users_ban_default_reason());
       setBanExpiresAt(undefined);
     } catch (err) {
-      const msg = err instanceof Error ? err.message : m.admin_users_ban_error();
+      const msg =
+        err instanceof Error ? err.message : m.admin_users_ban_error();
       setError(msg);
       toast.error(msg);
     }
@@ -86,7 +89,8 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
       await unbanUserMutation.mutateAsync({ userId: user.id });
       toast.success(m.admin_users_unban_success());
     } catch (err) {
-      const msg = err instanceof Error ? err.message : m.admin_users_unban_error();
+      const msg =
+        err instanceof Error ? err.message : m.admin_users_unban_error();
       setError(msg);
       toast.error(msg);
     }
@@ -134,7 +138,9 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
                     : 'bg-secondary text-secondary-foreground'
                 )}
               >
-                {user.role === 'admin' ? m.admin_users_admin() : m.admin_users_user()}
+                {user.role === 'admin'
+                  ? m.admin_users_admin()
+                  : m.admin_users_user()}
               </Badge>
               <Badge
                 variant="outline"
@@ -183,7 +189,9 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
           </div>
           <div className="grid gap-3">
             <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">{m.admin_users_joined()}:</span>
+              <span className="text-muted-foreground">
+                {m.admin_users_joined()}:
+              </span>
               <span>
                 {toDate(user.createdAt)
                   ? formatDate(toDate(user.createdAt)!)
@@ -191,7 +199,9 @@ export function UserDetailViewer({ user }: UserDetailViewerProps) {
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">{m.admin_users_updated()}:</span>
+              <span className="text-muted-foreground">
+                {m.admin_users_updated()}:
+              </span>
               <span>
                 {toDate(user.updatedAt)
                   ? formatDate(toDate(user.updatedAt)!)

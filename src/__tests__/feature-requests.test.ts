@@ -5,7 +5,10 @@ import { resolve } from 'node:path';
 const root = resolve(import.meta.dirname, '..', '..');
 
 function loadMessages(locale: string): Record<string, string> {
-  const raw = readFileSync(resolve(root, 'messages', `${locale}.json`), 'utf-8');
+  const raw = readFileSync(
+    resolve(root, 'messages', `${locale}.json`),
+    'utf-8'
+  );
   const { $schema, ...messages } = JSON.parse(raw);
   return messages;
 }
@@ -50,7 +53,9 @@ describe('feature-requests i18n messages', () => {
   const zh = loadMessages('zh');
 
   const featureKeys = Object.keys(en).filter(
-    (k) => k.startsWith('feature_requests_') || k.startsWith('nav_requests_and_roadmap')
+    (k) =>
+      k.startsWith('feature_requests_') ||
+      k.startsWith('nav_requests_and_roadmap')
   );
 
   it('has feature request i18n keys in en', () => {
@@ -118,7 +123,10 @@ describe('feature-requests API input validation', () => {
       category: z.string().max(50).optional(),
     });
 
-    const result = schema.safeParse({ title: 'ab', description: 'a'.repeat(10) });
+    const result = schema.safeParse({
+      title: 'ab',
+      description: 'a'.repeat(10),
+    });
     expect(result.success).toBe(false);
   });
 
@@ -130,7 +138,10 @@ describe('feature-requests API input validation', () => {
       category: z.string().max(50).optional(),
     });
 
-    const result = schema.safeParse({ title: 'Valid title', description: 'short' });
+    const result = schema.safeParse({
+      title: 'Valid title',
+      description: 'short',
+    });
     expect(result.success).toBe(false);
   });
 
@@ -144,7 +155,8 @@ describe('feature-requests API input validation', () => {
 
     const result = schema.safeParse({
       title: 'Add dark mode',
-      description: 'It would be great to have a dark mode option for better readability',
+      description:
+        'It would be great to have a dark mode option for better readability',
       category: 'UI',
     });
     expect(result.success).toBe(true);
@@ -155,7 +167,9 @@ describe('feature-requests API input validation', () => {
     const schema = z.object({ featureRequestId: z.string() });
 
     expect(schema.safeParse({}).success).toBe(false);
-    expect(schema.safeParse({ featureRequestId: 'abc-123' }).success).toBe(true);
+    expect(schema.safeParse({ featureRequestId: 'abc-123' }).success).toBe(
+      true
+    );
   });
 
   it('updateStatus schema only accepts valid statuses', async () => {
@@ -165,9 +179,13 @@ describe('feature-requests API input validation', () => {
       status: z.enum(['submitted', 'planned', 'in_progress', 'done']),
     });
 
-    expect(schema.safeParse({ id: '1', status: 'invalid' }).success).toBe(false);
+    expect(schema.safeParse({ id: '1', status: 'invalid' }).success).toBe(
+      false
+    );
     expect(schema.safeParse({ id: '1', status: 'planned' }).success).toBe(true);
-    expect(schema.safeParse({ id: '1', status: 'in_progress' }).success).toBe(true);
+    expect(schema.safeParse({ id: '1', status: 'in_progress' }).success).toBe(
+      true
+    );
     expect(schema.safeParse({ id: '1', status: 'done' }).success).toBe(true);
   });
 });

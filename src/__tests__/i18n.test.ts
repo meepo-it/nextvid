@@ -5,7 +5,10 @@ import { resolve } from 'node:path';
 const root = resolve(import.meta.dirname, '..', '..');
 
 function loadMessages(locale: string): Record<string, string> {
-  const raw = readFileSync(resolve(root, 'messages', `${locale}.json`), 'utf-8');
+  const raw = readFileSync(
+    resolve(root, 'messages', `${locale}.json`),
+    'utf-8'
+  );
   const data = JSON.parse(raw);
   // Remove $schema key
   const { $schema, ...messages } = data;
@@ -16,7 +19,7 @@ function loadMessages(locale: string): Record<string, string> {
 // iterates every non-base locale against the base, so adding a new locale
 // only requires updating settings.json + creating messages/<locale>.json.
 const inlangSettings = JSON.parse(
-  readFileSync(resolve(root, 'project.inlang', 'settings.json'), 'utf-8'),
+  readFileSync(resolve(root, 'project.inlang', 'settings.json'), 'utf-8')
 );
 const baseLocale: string = inlangSettings.baseLocale;
 const allLocales: string[] = inlangSettings.locales;
@@ -70,7 +73,7 @@ describe('i18n message files', () => {
 
         if (JSON.stringify(baseVars) !== JSON.stringify(targetVars)) {
           mismatched.push(
-            `${key}: ${baseLocale}={${baseVars.join(',')}} ${locale}={${targetVars.join(',')}}`,
+            `${key}: ${baseLocale}={${baseVars.join(',')}} ${locale}={${targetVars.join(',')}}`
           );
         }
       }
@@ -86,7 +89,7 @@ describe('i18n message files', () => {
       const ratio = identical.length / baseKeys.length;
       expect(
         ratio,
-        `${identical.length}/${baseKeys.length} keys are identical to ${baseLocale}`,
+        `${identical.length}/${baseKeys.length} keys are identical to ${baseLocale}`
       ).toBeLessThan(0.2);
     });
   });
@@ -114,7 +117,11 @@ describe('i18n URL patterns', () => {
     '/admin/users',
   ];
 
-  const apiPaths = ['/api/auth/session', '/api/storage/file', '/api/webhooks/stripe'];
+  const apiPaths = [
+    '/api/auth/session',
+    '/api/storage/file',
+    '/api/webhooks/stripe',
+  ];
 
   it('public paths should have locale-prefixed versions defined', () => {
     for (const path of publicPaths) {

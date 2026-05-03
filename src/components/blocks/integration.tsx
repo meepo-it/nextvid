@@ -32,12 +32,42 @@ const items: Array<{
   icon: Icon;
   color: string;
 }> = [
-  { title: m.blocks_integration_item1_title(), description: m.blocks_integration_item1_description(), icon: IconBrandOpenai, color: BRAND_COLORS.openai },
-  { title: m.blocks_integration_item2_title(), description: m.blocks_integration_item2_description(), icon: IconBrandCodesandbox, color: BRAND_COLORS.codesandbox },
-  { title: m.blocks_integration_item3_title(), description: m.blocks_integration_item3_description(), icon: IconBrandReact, color: BRAND_COLORS.react },
-  { title: m.blocks_integration_item4_title(), description: m.blocks_integration_item4_description(), icon: IconBrandVisualStudio, color: BRAND_COLORS.vs },
-  { title: m.blocks_integration_item5_title(), description: m.blocks_integration_item5_description(), icon: IconBrandWikipedia, color: BRAND_COLORS.wikipedia },
-  { title: m.blocks_integration_item6_title(), description: m.blocks_integration_item6_description(), icon: IconBrandGoogleFilled, color: BRAND_COLORS.google },
+  {
+    title: m.blocks_integration_item1_title(),
+    description: m.blocks_integration_item1_description(),
+    icon: IconBrandOpenai,
+    color: BRAND_COLORS.openai,
+  },
+  {
+    title: m.blocks_integration_item2_title(),
+    description: m.blocks_integration_item2_description(),
+    icon: IconBrandCodesandbox,
+    color: BRAND_COLORS.codesandbox,
+  },
+  {
+    title: m.blocks_integration_item3_title(),
+    description: m.blocks_integration_item3_description(),
+    icon: IconBrandReact,
+    color: BRAND_COLORS.react,
+  },
+  {
+    title: m.blocks_integration_item4_title(),
+    description: m.blocks_integration_item4_description(),
+    icon: IconBrandVisualStudio,
+    color: BRAND_COLORS.vs,
+  },
+  {
+    title: m.blocks_integration_item5_title(),
+    description: m.blocks_integration_item5_description(),
+    icon: IconBrandWikipedia,
+    color: BRAND_COLORS.wikipedia,
+  },
+  {
+    title: m.blocks_integration_item6_title(),
+    description: m.blocks_integration_item6_description(),
+    icon: IconBrandGoogleFilled,
+    color: BRAND_COLORS.google,
+  },
 ];
 
 function IntegrationCard({

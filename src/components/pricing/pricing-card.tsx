@@ -63,8 +63,10 @@ export function PricingCard({
     formattedPrice = m.pricing_card_free();
   } else if (price && price.amount > 0) {
     formattedPrice = formatPrice(price.amount, price.currency);
-    if (interval === PlanIntervals.MONTH) priceLabel = m.pricing_card_per_month();
-    else if (interval === PlanIntervals.YEAR) priceLabel = m.pricing_card_per_year();
+    if (interval === PlanIntervals.MONTH)
+      priceLabel = m.pricing_card_per_month();
+    else if (interval === PlanIntervals.YEAR)
+      priceLabel = m.pricing_card_per_year();
   } else {
     formattedPrice = m.pricing_card_not_available();
   }
@@ -138,7 +140,9 @@ export function PricingCard({
               metadata={metadata}
               className="mt-4 w-full"
             >
-              {plan.isLifetime ? m.pricing_card_get_lifetime_access() : m.pricing_card_get_started()}
+              {plan.isLifetime
+                ? m.pricing_card_get_lifetime_access()
+                : m.pricing_card_get_started()}
             </CheckoutButton>
           ) : currentUser && !hasValidPriceId ? (
             <Button disabled className="mt-4 w-full">

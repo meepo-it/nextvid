@@ -33,11 +33,20 @@ function getStatusContent(status: PaymentStatus): {
         description: m.settings_payment_processing_description(),
       };
     case 'success':
-      return { title: m.settings_payment_success_title(), description: m.settings_payment_success_description() };
+      return {
+        title: m.settings_payment_success_title(),
+        description: m.settings_payment_success_description(),
+      };
     case 'failed':
-      return { title: m.settings_payment_failed_title(), description: m.settings_payment_failed_description() };
+      return {
+        title: m.settings_payment_failed_title(),
+        description: m.settings_payment_failed_description(),
+      };
     case 'timeout':
-      return { title: m.settings_payment_timeout_title(), description: m.settings_payment_timeout_description() };
+      return {
+        title: m.settings_payment_timeout_title(),
+        description: m.settings_payment_timeout_description(),
+      };
     default:
       return { title: '', description: '' };
   }

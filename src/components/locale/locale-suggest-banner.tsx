@@ -105,8 +105,13 @@ export function LocaleSuggestBanner() {
     if (suggested) {
       setSuggestedLocale(suggested);
       // Small delay for smoother UX — don't flash immediately on load
-      const timer = setTimeout(() => setVisible(true), 800);
-      return () => clearTimeout(timer);
+      const showTimer = setTimeout(() => setVisible(true), 800);
+      // Auto-dismiss after 15s if user takes no action
+      const hideTimer = setTimeout(() => setVisible(false), 800 + 15000);
+      return () => {
+        clearTimeout(showTimer);
+        clearTimeout(hideTimer);
+      };
     }
   }, []);
 

@@ -24,7 +24,8 @@ import { SocialLoginButton } from './social-login-button';
 
 const authErrorCodes: Record<string, () => string> = {
   signup_disabled: m.auth_error_codes_signup_disabled,
-  account_already_linked_to_different_user: m.auth_error_codes_account_already_linked_to_different_user,
+  account_already_linked_to_different_user:
+    m.auth_error_codes_account_already_linked_to_different_user,
   unable_to_link_account: m.auth_error_codes_unable_to_link_account,
   unable_to_get_user_info: m.auth_error_codes_unable_to_get_user_info,
   "email_doesn't_match": m.auth_error_codes_email_doesnt_match,
@@ -63,7 +64,9 @@ export function RegisterForm({
 
   const RegisterSchema = z.object({
     email: z.string().email({ message: m.auth_register_email_required() }),
-    password: z.string().min(1, { message: m.auth_register_password_required() }),
+    password: z
+      .string()
+      .min(1, { message: m.auth_register_password_required() }),
     name: z.string().min(1, { message: m.auth_register_name_required() }),
   });
 
@@ -179,7 +182,9 @@ export function RegisterForm({
                           <IconEye className="size-4 text-muted-foreground" />
                         )}
                         <span className="sr-only">
-                          {showPassword ? m.auth_register_hide_password() : m.auth_register_show_password()}
+                          {showPassword
+                            ? m.auth_register_hide_password()
+                            : m.auth_register_show_password()}
                         </span>
                       </Button>
                     </div>

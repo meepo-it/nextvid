@@ -1,5 +1,10 @@
 import { websiteConfig } from '@/config/website';
-import { getCanonicalUrl, getBaseUrl, getOgImage, twitterHandleFromUrl } from '@/lib/urls';
+import {
+  getCanonicalUrl,
+  getBaseUrl,
+  getOgImage,
+  twitterHandleFromUrl,
+} from '@/lib/urls';
 import { locales, baseLocale } from '@/paraglide/runtime.js';
 
 /**
@@ -22,10 +27,7 @@ export function seo(
   const image = options.image ?? getOgImage();
   return {
     meta: metadata({ ...options, url, image, type: options.type ?? 'website' }),
-    links: [
-      { rel: 'canonical', href: url },
-      ...getHreflangLinks(path),
-    ],
+    links: [{ rel: 'canonical', href: url }, ...getHreflangLinks(path)],
   };
 }
 

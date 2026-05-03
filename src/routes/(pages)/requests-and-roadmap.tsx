@@ -42,7 +42,12 @@ function RequestsAndRoadmapPage() {
       listFeatureRequests({
         data: {
           sort,
-          status: statusFilter as 'all' | 'submitted' | 'planned' | 'in_progress' | 'done',
+          status: statusFilter as
+            | 'all'
+            | 'submitted'
+            | 'planned'
+            | 'in_progress'
+            | 'done',
           userId,
         },
       }),
@@ -57,8 +62,11 @@ function RequestsAndRoadmapPage() {
   });
 
   const createMutation = useMutation({
-    mutationFn: (input: { title: string; description: string; category?: string }) =>
-      createFeatureRequest({ data: input }),
+    mutationFn: (input: {
+      title: string;
+      description: string;
+      category?: string;
+    }) => createFeatureRequest({ data: input }),
     onSuccess: () => {
       toast.success(m.feature_requests_submit_success());
       queryClient.invalidateQueries({ queryKey: ['feature-requests'] });
@@ -106,7 +114,9 @@ function RequestsAndRoadmapPage() {
           </h1>
           <p className="mx-auto max-w-xl text-lg text-muted-foreground">
             {m.feature_requests_subtitle_line1()}{' '}
-            <span className="font-medium text-foreground">{m.feature_requests_subtitle_highlight()}</span>{' '}
+            <span className="font-medium text-foreground">
+              {m.feature_requests_subtitle_highlight()}
+            </span>{' '}
             {m.feature_requests_subtitle_line2()}
           </p>
         </div>
@@ -114,9 +124,14 @@ function RequestsAndRoadmapPage() {
         {/* Section: Feature Requests */}
         <section id="requests" className="scroll-mt-20 space-y-4">
           <div className="flex items-center justify-between">
-            <a href="#requests" className="group text-xl font-semibold hover:underline">
+            <a
+              href="#requests"
+              className="group text-xl font-semibold hover:underline"
+            >
               {m.feature_requests_tab_requests()}
-              <span className="ml-1 text-muted-foreground/0 transition-colors group-hover:text-muted-foreground">#</span>
+              <span className="ml-1 text-muted-foreground/0 transition-colors group-hover:text-muted-foreground">
+                #
+              </span>
             </a>
             <FeatureRequestForm
               isLoggedIn={isLoggedIn}
@@ -159,7 +174,9 @@ function RequestsAndRoadmapPage() {
 
           {/* List */}
           {isLoading ? (
-            <div className="py-12 text-center text-muted-foreground">Loading...</div>
+            <div className="py-12 text-center text-muted-foreground">
+              Loading...
+            </div>
           ) : (
             <FeatureRequestList
               items={items}
@@ -175,9 +192,14 @@ function RequestsAndRoadmapPage() {
 
         {/* Section: Roadmap */}
         <section id="roadmap" className="scroll-mt-20 space-y-4">
-          <a href="#roadmap" className="group text-xl font-semibold hover:underline">
+          <a
+            href="#roadmap"
+            className="group text-xl font-semibold hover:underline"
+          >
             {m.feature_requests_tab_roadmap()}
-            <span className="ml-1 text-muted-foreground/0 transition-colors group-hover:text-muted-foreground">#</span>
+            <span className="ml-1 text-muted-foreground/0 transition-colors group-hover:text-muted-foreground">
+              #
+            </span>
           </a>
           <RoadmapBoard items={roadmapItems} />
         </section>

@@ -44,10 +44,7 @@ export function formatBytes(
  * Format a date for display in the active locale (e.g. "2026/04/07" in
  * en-US, "2026年4月7日" in ja-JP).
  */
-export function formatDate(
-  date: Date,
-  locale: string = getLocale()
-): string {
+export function formatDate(date: Date, locale: string = getLocale()): string {
   return new Intl.DateTimeFormat(locale, {
     year: 'numeric',
     month: '2-digit',

@@ -39,8 +39,7 @@ const blockEn = {
 
   blocks_features2_title: 'FEATURES',
   blocks_features2_subtitle: 'Designed for productivity',
-  blocks_features2_description:
-    'Everything you need to build and ship faster',
+  blocks_features2_description: 'Everything you need to build and ship faster',
   blocks_features2_feature1: 'Email notifications',
   blocks_features2_feature2: 'Real-time updates',
   blocks_features2_feature3: 'Activity tracking',
@@ -116,8 +115,7 @@ const blockEn = {
   blocks_integration_item6_title: 'Google PaLM',
   blocks_integration_item6_description: 'Google AI models.',
 
-  blocks_integration2_title:
-    'Integrate with your favorite tools',
+  blocks_integration2_title: 'Integrate with your favorite tools',
   blocks_integration2_description:
     'Connect seamlessly with popular platforms and services to enhance your workflow',
   blocks_integration2_primary_button: 'Get Started',
@@ -156,7 +154,8 @@ const blockZh: Record<string, string> = {
   blocks_features_item3_description:
     '用户资料、头像和账号管理，支持每个用户关联多个登录方式。',
   blocks_features_item4_title: '数据分析',
-  blocks_features_item4_description: '追踪使用和转化情况，开箱即用的仪表盘和报表。',
+  blocks_features_item4_description:
+    '追踪使用和转化情况，开箱即用的仪表盘和报表。',
 
   blocks_features2_title: '功能特性',
   blocks_features2_subtitle: '为生产力而设计',
@@ -169,14 +168,17 @@ const blockZh: Record<string, string> = {
   blocks_faqs_title: '常见问题',
   blocks_faqs_subtitle: '常见问题解答',
   blocks_faqs_item1_question: '我可以之后更改方案吗？',
-  blocks_faqs_item1_answer: '可以，您可以随时升级或降级。更改在下一个计费周期生效。',
+  blocks_faqs_item1_answer:
+    '可以，您可以随时升级或降级。更改在下一个计费周期生效。',
   blocks_faqs_item2_question: '接受哪些支付方式？',
-  blocks_faqs_item2_answer: '我们接受所有主流信用卡、PayPal，年付方案也支持电汇。',
+  blocks_faqs_item2_answer:
+    '我们接受所有主流信用卡、PayPal，年付方案也支持电汇。',
   blocks_faqs_item3_question: '有免费试用吗？',
   blocks_faqs_item3_answer:
     '有，所有付费方案均提供 14 天免费试用，无需绑定信用卡。',
   blocks_faqs_item4_question: '退款政策是什么？',
-  blocks_faqs_item4_answer: '我们提供 30 天无条件退款保证，联系客服即可全额退款。',
+  blocks_faqs_item4_answer:
+    '我们提供 30 天无条件退款保证，联系客服即可全额退款。',
   blocks_faqs_item5_question: '如何获取支持？',
   blocks_faqs_item5_answer:
     '所有方案都包含邮件支持，Pro 及以上方案享有优先支持。',
@@ -199,7 +201,8 @@ const blockZh: Record<string, string> = {
     'TanStarter 帮我们节省了几个月的开发时间，2 周就发布了 MVP。',
   blocks_testimonials_item3_name: 'Alex Chen',
   blocks_testimonials_item3_role: 'Engineer, Tech Co',
-  blocks_testimonials_item3_quote: '代码干净，开发体验好，我们很容易就做了定制。',
+  blocks_testimonials_item3_quote:
+    '代码干净，开发体验好，我们很容易就做了定制。',
   blocks_testimonials_item4_name: 'Maria Garcia',
   blocks_testimonials_item4_role: 'Product Lead, ScaleUp',
   blocks_testimonials_item4_quote:
@@ -249,9 +252,9 @@ const blockZh: Record<string, string> = {
 // ── Key normalization: camelCase → snake_case, hyphens → underscores ──
 function toSnakeCase(key: string): string {
   return key
-    .replace(/-/g, '_')                             // hyphens to underscores
-    .replace(/([a-z0-9])([A-Z])/g, '$1_$2')        // camelCase boundary
-    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')     // consecutive caps
+    .replace(/-/g, '_') // hyphens to underscores
+    .replace(/([a-z0-9])([A-Z])/g, '$1_$2') // camelCase boundary
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2') // consecutive caps
     .toLowerCase();
 }
 
@@ -259,7 +262,7 @@ function toSnakeCase(key: string): string {
 function flatten(
   obj: Record<string, unknown>,
   prefix = '',
-  result: Record<string, string> = {},
+  result: Record<string, string> = {}
 ): Record<string, string> {
   for (const [key, value] of Object.entries(obj)) {
     const normalizedKey = toSnakeCase(key);
@@ -277,7 +280,7 @@ function flatten(
           flatten(
             value[i] as Record<string, unknown>,
             `${flatKey}_${i}`,
-            result,
+            result
           );
         }
       }
@@ -302,8 +305,12 @@ const zhFlat = {
 };
 
 // ── Validate key consistency ──────────────────────────────────────
-const enKeys = Object.keys(enFlat).filter((k) => k !== '$schema').sort();
-const zhKeys = Object.keys(zhFlat).filter((k) => k !== '$schema').sort();
+const enKeys = Object.keys(enFlat)
+  .filter((k) => k !== '$schema')
+  .sort();
+const zhKeys = Object.keys(zhFlat)
+  .filter((k) => k !== '$schema')
+  .sort();
 
 const missingInZh = enKeys.filter((k) => !zhKeys.includes(k));
 const missingInEn = zhKeys.filter((k) => !enKeys.includes(k));
@@ -322,11 +329,11 @@ mkdirSync(outDir, { recursive: true });
 
 writeFileSync(
   resolve(outDir, 'en.json'),
-  JSON.stringify(enFlat, null, 2) + '\n',
+  JSON.stringify(enFlat, null, 2) + '\n'
 );
 writeFileSync(
   resolve(outDir, 'zh.json'),
-  JSON.stringify(zhFlat, null, 2) + '\n',
+  JSON.stringify(zhFlat, null, 2) + '\n'
 );
 
 // ── Write key mapping for codemod reference ───────────────────────
@@ -334,7 +341,7 @@ const keyMap: Record<string, string> = {};
 function buildKeyMap(
   obj: Record<string, unknown>,
   prefix = '',
-  dotPath = '',
+  dotPath = ''
 ): void {
   for (const [key, value] of Object.entries(obj)) {
     const normalizedKey = key.replace(/-/g, '_');
@@ -350,11 +357,7 @@ function buildKeyMap(
         }
       }
     } else if (typeof value === 'object' && value !== null) {
-      buildKeyMap(
-        value as Record<string, unknown>,
-        flatKey,
-        currentDotPath,
-      );
+      buildKeyMap(value as Record<string, unknown>, flatKey, currentDotPath);
     }
   }
 }
@@ -362,18 +365,20 @@ buildKeyMap(en as unknown as Record<string, unknown>);
 
 writeFileSync(
   resolve(root, 'scripts', 'message-key-map.json'),
-  JSON.stringify(keyMap, null, 2) + '\n',
+  JSON.stringify(keyMap, null, 2) + '\n'
 );
 
 console.log(`\n✅ Generated messages/en.json (${enKeys.length} keys)`);
 console.log(`✅ Generated messages/zh.json (${zhKeys.length} keys)`);
-console.log(`✅ Generated scripts/message-key-map.json (${Object.keys(keyMap).length} mappings)`);
+console.log(
+  `✅ Generated scripts/message-key-map.json (${Object.keys(keyMap).length} mappings)`
+);
 
 if (missingInZh.length === 0 && missingInEn.length === 0) {
   console.log('\n✅ All keys match between en and zh');
 } else {
   console.log(
-    `\n⚠️  Key mismatches found: ${missingInZh.length} missing in zh, ${missingInEn.length} missing in en`,
+    `\n⚠️  Key mismatches found: ${missingInZh.length} missing in zh, ${missingInEn.length} missing in en`
   );
   process.exit(1);
 }

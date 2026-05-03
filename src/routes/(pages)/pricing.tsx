@@ -33,8 +33,12 @@ function PricingPage() {
     <Container className="py-16 px-4">
       <div className="mx-auto max-w-6xl space-y-8">
         <div className="space-y-4 text-center">
-          <h1 className="text-3xl font-bold tracking-tight">{m.pricing_title()}</h1>
-          <p className="text-lg text-muted-foreground">{m.pricing_subtitle()}</p>
+          <h1 className="text-3xl font-bold tracking-tight">
+            {m.pricing_title()}
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            {m.pricing_subtitle()}
+          </p>
         </div>
         <PricingTable
           currentPlan={currentPlan}

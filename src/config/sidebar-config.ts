@@ -1,9 +1,8 @@
 import {
   IconBulb,
   IconCreditCard,
-  IconFileUpload,
-  IconKey,
   IconLayoutDashboard,
+  IconReceipt,
   IconSettings2,
   IconShieldCheck,
   IconUserCircle,
@@ -20,20 +19,26 @@ import { websiteConfig } from './website';
 export function getSidebarLinks(): MenuItemConfig[] {
   return [
     {
-      title: m.dashboard_sidebar_dashboard(),
-      icon: IconLayoutDashboard,
-      href: Routes.Dashboard,
-      external: false,
-    },
-    {
       title: m.admin_title(),
       icon: IconShieldCheck,
       authorizeOnly: ['admin'],
       items: [
         {
+          title: m.dashboard_sidebar_dashboard(),
+          icon: IconLayoutDashboard,
+          href: Routes.Dashboard,
+          external: false,
+        },
+        {
           title: m.admin_users_title(),
           icon: IconUsers,
           href: Routes.AdminUsers,
+          external: false,
+        },
+        {
+          title: 'Payments',
+          icon: IconReceipt,
+          href: Routes.AdminPayments,
           external: false,
         },
         {
@@ -64,18 +69,6 @@ export function getSidebarLinks(): MenuItemConfig[] {
               },
             ]
           : []),
-        {
-          title: m.dashboard_sidebar_files(),
-          icon: IconFileUpload,
-          href: Routes.SettingsFiles,
-          external: false,
-        },
-        {
-          title: m.dashboard_sidebar_api_keys(),
-          icon: IconKey,
-          href: Routes.SettingsApiKeys,
-          external: false,
-        },
       ],
     },
   ];

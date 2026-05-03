@@ -49,7 +49,10 @@ export function RoadmapBoard({ items }: RoadmapBoardProps) {
             <span className="text-sm font-semibold">
               {COLUMN_LABELS[key]?.() ?? key}
             </span>
-            <Badge variant="secondary" className="pointer-events-none rounded-sm">
+            <Badge
+              variant="secondary"
+              className="pointer-events-none rounded-sm"
+            >
               {grouped[key].length}
             </Badge>
           </div>
@@ -70,7 +73,10 @@ function RoadmapCard({ item }: { item: FeatureRequestItem }) {
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between gap-2">
           <span className="line-clamp-1 text-sm font-medium">{item.title}</span>
-          <Badge variant="outline" className="pointer-events-none shrink-0 text-[10px]">
+          <Badge
+            variant="outline"
+            className="pointer-events-none shrink-0 text-[10px]"
+          >
             {m.feature_requests_votes({ count: String(item.voteCount) })}
           </Badge>
         </div>

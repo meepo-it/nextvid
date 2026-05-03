@@ -9,7 +9,7 @@ import * as m from '@/paraglide/messages.js';
 export default function HeroSection() {
   return (
     <section id="hero" className="overflow-hidden">
-      {/* background, warm-tinted light blobs on top of the hero section */}
+      {/* background blobs */}
       <div
         aria-hidden="true"
         className="absolute inset-0 isolate hidden opacity-65 contain-strict lg:block"
@@ -78,8 +78,8 @@ export default function HeroSection() {
                 <span className="text-nowrap">{m.blocks_hero_secondary()}</span>
               </Link>
             </div>
-          </div>
 
+          </div>
         </Container>
       </div>
     </section>

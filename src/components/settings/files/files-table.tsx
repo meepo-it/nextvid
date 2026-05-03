@@ -208,7 +208,9 @@ export function FilesTable({
                 )}
               >
                 <IconDots className="size-4" />
-                <span className="sr-only">{m.settings_files_columns_actions()}</span>
+                <span className="sr-only">
+                  {m.settings_files_columns_actions()}
+                </span>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => onDelete(id)}>
@@ -288,12 +290,18 @@ export function FilesTable({
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>{m.settings_files_upload_dialog_title()}</DialogTitle>
-              <DialogDescription>{m.settings_files_upload_dialog_description()}</DialogDescription>
+              <DialogTitle>
+                {m.settings_files_upload_dialog_title()}
+              </DialogTitle>
+              <DialogDescription>
+                {m.settings_files_upload_dialog_description()}
+              </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                <Label htmlFor="file-input">{m.settings_files_file_label()}</Label>
+                <Label htmlFor="file-input">
+                  {m.settings_files_file_label()}
+                </Label>
                 <Input
                   id="file-input"
                   type="file"
@@ -312,10 +320,14 @@ export function FilesTable({
                   checked={isPublic}
                   onCheckedChange={setIsPublic}
                 />
-                <Label htmlFor="is-public">{m.settings_files_is_public_label()}</Label>
+                <Label htmlFor="is-public">
+                  {m.settings_files_is_public_label()}
+                </Label>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="description">{m.settings_files_description_label()}</Label>
+                <Label htmlFor="description">
+                  {m.settings_files_description_label()}
+                </Label>
                 <Input
                   id="description"
                   placeholder={m.settings_files_description_placeholder()}
@@ -337,7 +349,9 @@ export function FilesTable({
                 onClick={handleUpload}
                 disabled={!selectedFile || uploading}
               >
-                {uploading ? m.settings_files_uploading() : m.settings_files_upload()}
+                {uploading
+                  ? m.settings_files_uploading()
+                  : m.settings_files_upload()}
               </Button>
             </DialogFooter>
           </DialogContent>

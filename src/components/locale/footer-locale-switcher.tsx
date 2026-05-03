@@ -19,8 +19,8 @@ export function FooterLocaleSwitcher() {
   const currentLocale = getLocale();
 
   return (
-    <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-      <IconLanguage className="size-4 shrink-0" />
+    <div className="flex items-center gap-2 text-base text-muted-foreground">
+      <IconLanguage className="size-5 shrink-0" />
       {locales.map((locale, i) => (
         <span key={locale} className="flex items-center">
           {i > 0 && <span className="mx-1 text-border">|</span>}
@@ -32,7 +32,7 @@ export function FooterLocaleSwitcher() {
             }}
             className={cn(
               'cursor-pointer transition-colors hover:text-foreground',
-              locale === currentLocale && 'text-foreground font-medium',
+              locale === currentLocale && 'text-foreground font-medium'
             )}
           >
             {getLocaleLabel(locale)}

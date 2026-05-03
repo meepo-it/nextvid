@@ -97,8 +97,12 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
       )}
     >
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">{m.settings_profile_avatar_title()}</CardTitle>
-        <CardDescription>{m.settings_profile_avatar_description()}</CardDescription>
+        <CardTitle className="text-lg font-semibold">
+          {m.settings_profile_avatar_title()}
+        </CardTitle>
+        <CardDescription>
+          {m.settings_profile_avatar_description()}
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4 flex-1">
         <div className="flex flex-col items-center sm:flex-row gap-4 sm:gap-8">
@@ -122,13 +126,17 @@ export function UpdateAvatarCard({ className }: UpdateAvatarCardProps) {
               className="sr-only"
               disabled={uploadMutation.isPending}
             />
-            {uploadMutation.isPending ? m.settings_profile_avatar_uploading() : m.settings_profile_avatar_upload_avatar()}
+            {uploadMutation.isPending
+              ? m.settings_profile_avatar_uploading()
+              : m.settings_profile_avatar_upload_avatar()}
           </label>
         </div>
         <FormError message={error} />
       </CardContent>
       <CardFooter className="mt-auto px-6 py-4 flex justify-between items-center bg-muted rounded-none">
-        <p className="text-sm text-muted-foreground">{m.settings_profile_avatar_hint()}</p>
+        <p className="text-sm text-muted-foreground">
+          {m.settings_profile_avatar_hint()}
+        </p>
       </CardFooter>
     </Card>
   );

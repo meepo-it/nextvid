@@ -24,8 +24,12 @@ export default function Features2Section() {
           <div className="grid items-center gap-12 lg:grid-cols-5 lg:gap-24">
             <div className="lg:col-span-2">
               <div className="lg:pr-0">
-                <h2 className="text-4xl font-semibold">{m.blocks_features2_title()}</h2>
-                <p className="mt-6 text-muted-foreground">{m.blocks_features2_description()}</p>
+                <h2 className="text-4xl font-semibold">
+                  {m.blocks_features2_title()}
+                </h2>
+                <p className="mt-6 text-muted-foreground">
+                  {m.blocks_features2_description()}
+                </p>
               </div>
 
               <ul className="mt-8 divide-y border-y *:flex *:items-center *:gap-3 *:py-3">

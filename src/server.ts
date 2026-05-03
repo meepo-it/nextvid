@@ -16,7 +16,7 @@ export default {
         context: {
           fromFetch: true,
         },
-      }),
+      })
     );
   },
 };

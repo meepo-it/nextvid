@@ -87,8 +87,12 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
       )}
     >
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">{m.settings_profile_name_title()}</CardTitle>
-        <CardDescription>{m.settings_profile_name_description()}</CardDescription>
+        <CardTitle className="text-lg font-semibold">
+          {m.settings_profile_name_title()}
+        </CardTitle>
+        <CardDescription>
+          {m.settings_profile_name_description()}
+        </CardDescription>
       </CardHeader>
       <Form {...form}>
         <form
@@ -103,7 +107,10 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
                 <FormItem>
                   <FormLabel>{m.settings_profile_name_title()}</FormLabel>
                   <FormControl>
-                    <Input placeholder={m.settings_profile_name_placeholder()} {...field} />
+                    <Input
+                      placeholder={m.settings_profile_name_placeholder()}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -112,9 +119,13 @@ export function UpdateNameCard({ className }: UpdateNameCardProps) {
             <FormError message={error} />
           </CardContent>
           <CardFooter className="mt-6 px-6 py-4 flex justify-between items-center bg-muted rounded-none">
-            <p className="text-sm text-muted-foreground">{m.settings_profile_name_hint()}</p>
+            <p className="text-sm text-muted-foreground">
+              {m.settings_profile_name_hint()}
+            </p>
             <Button type="submit" disabled={isSaving}>
-              {isSaving ? m.settings_profile_name_saving() : m.settings_profile_name_save()}
+              {isSaving
+                ? m.settings_profile_name_saving()
+                : m.settings_profile_name_save()}
             </Button>
           </CardFooter>
         </form>

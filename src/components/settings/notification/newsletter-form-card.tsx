@@ -79,7 +79,10 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
       }
     } catch (err) {
       console.error('newsletter subscription error:', err);
-      const msg = err instanceof Error ? err.message : m.settings_notification_newsletter_error();
+      const msg =
+        err instanceof Error
+          ? err.message
+          : m.settings_notification_newsletter_error();
       toast.error(msg);
       form.setValue('subscribed', newsletterStatus?.subscribed ?? false);
     }
@@ -88,8 +91,12 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
   return (
     <Card className={cn('w-full overflow-hidden pt-6 pb-0', className)}>
       <CardHeader>
-        <CardTitle className="text-lg font-semibold">{m.settings_notification_newsletter_title()}</CardTitle>
-        <CardDescription>{m.settings_notification_newsletter_description()}</CardDescription>
+        <CardTitle className="text-lg font-semibold">
+          {m.settings_notification_newsletter_title()}
+        </CardTitle>
+        <CardDescription>
+          {m.settings_notification_newsletter_description()}
+        </CardDescription>
       </CardHeader>
       <Form {...form}>
         <form>
@@ -99,7 +106,9 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
               name="subscribed"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between">
-                  <FormLabel className="text-base">{m.settings_notification_newsletter_label()}</FormLabel>
+                  <FormLabel className="text-base">
+                    {m.settings_notification_newsletter_label()}
+                  </FormLabel>
                   <div className="relative flex items-center">
                     {(isStatusLoading ||
                       subscribeMutation.isPending ||
@@ -133,7 +142,9 @@ export function NewsletterFormCard({ className }: NewsletterFormCardProps) {
             />
           </CardContent>
           <CardFooter className="mt-6 px-6 py-4 bg-muted rounded-none">
-            <p className="text-sm text-muted-foreground">{m.settings_notification_newsletter_hint()}</p>
+            <p className="text-sm text-muted-foreground">
+              {m.settings_notification_newsletter_hint()}
+            </p>
           </CardFooter>
         </form>
       </Form>

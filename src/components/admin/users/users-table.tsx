@@ -117,7 +117,10 @@ export function UsersTable({
         enableHiding: true,
         enableSorting: false,
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={m.admin_users_columns_name()} />
+          <DataTableColumnHeader
+            column={column}
+            label={m.admin_users_columns_name()}
+          />
         ),
         cell: ({ row }) => <UserDetailViewer user={row.original} />,
         meta: { label: m.admin_users_columns_name() },
@@ -130,7 +133,10 @@ export function UsersTable({
         enableHiding: true,
         enableSorting: false,
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={m.admin_users_columns_email()} />
+          <DataTableColumnHeader
+            column={column}
+            label={m.admin_users_columns_email()}
+          />
         ),
         cell: ({ row }) => {
           const u = row.original;
@@ -164,7 +170,10 @@ export function UsersTable({
         enableHiding: true,
         enableSorting: false,
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={m.admin_users_columns_role()} />
+          <DataTableColumnHeader
+            column={column}
+            label={m.admin_users_columns_role()}
+          />
         ),
         cell: ({ row }) => {
           const r = row.original.role ?? 'user';
@@ -192,7 +201,10 @@ export function UsersTable({
         enableHiding: true,
         enableSorting: false,
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={m.admin_users_columns_created_at()} />
+          <DataTableColumnHeader
+            column={column}
+            label={m.admin_users_columns_created_at()}
+          />
         ),
         cell: ({ row }) => formatDateTime(new Date(row.original.createdAt)),
         meta: { label: m.admin_users_columns_created_at() },
@@ -205,7 +217,10 @@ export function UsersTable({
         enableHiding: true,
         enableSorting: false,
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={m.admin_users_columns_status()} />
+          <DataTableColumnHeader
+            column={column}
+            label={m.admin_users_columns_status()}
+          />
         ),
         cell: ({ row }) => {
           const banned = row.original.banned;
@@ -243,7 +258,10 @@ export function UsersTable({
         enableHiding: true,
         enableSorting: false,
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={m.admin_users_columns_ban_reason()} />
+          <DataTableColumnHeader
+            column={column}
+            label={m.admin_users_columns_ban_reason()}
+          />
         ),
         cell: ({ row }) => (
           <span className="text-muted-foreground">
@@ -260,7 +278,10 @@ export function UsersTable({
         enableHiding: true,
         enableSorting: false,
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} label={m.admin_users_columns_ban_expires()} />
+          <DataTableColumnHeader
+            column={column}
+            label={m.admin_users_columns_ban_expires()}
+          />
         ),
         cell: ({ row }) => {
           const exp = row.original.banExpires;

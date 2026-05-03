@@ -22,7 +22,9 @@ export type SupportedLocale = (typeof locales)[number];
  * `zh-MY` → `zh-CN`. We never collapse a Traditional tag into Simplified or
  * vice versa, since the scripts are not mutually intelligible to many users.
  */
-export function normalizeLocale(input: string | null | undefined): SupportedLocale {
+export function normalizeLocale(
+  input: string | null | undefined
+): SupportedLocale {
   if (!input) return baseLocale as SupportedLocale;
   const supported = locales as readonly string[];
 

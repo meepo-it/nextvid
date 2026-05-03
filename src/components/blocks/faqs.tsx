@@ -9,11 +9,11 @@ import {
 import * as m from '@/paraglide/messages.js';
 
 const faqItems = [
-  { id: 'item-1', question: () => m.blocks_faqs_item1_question(), answer: () => m.blocks_faqs_item1_answer() },
-  { id: 'item-2', question: () => m.blocks_faqs_item2_question(), answer: () => m.blocks_faqs_item2_answer() },
-  { id: 'item-3', question: () => m.blocks_faqs_item3_question(), answer: () => m.blocks_faqs_item3_answer() },
-  { id: 'item-4', question: () => m.blocks_faqs_item4_question(), answer: () => m.blocks_faqs_item4_answer() },
-  { id: 'item-5', question: () => m.blocks_faqs_item5_question(), answer: () => m.blocks_faqs_item5_answer() },
+  {
+    id: 'item-1',
+    question: () => m.blocks_faqs_item1_question(),
+    answer: () => m.blocks_faqs_item1_answer(),
+  },
 ];
 
 export default function FaqSection() {
@@ -21,7 +21,10 @@ export default function FaqSection() {
     <section id="faqs" className="px-4 py-16 md:py-24">
       <div className="mx-auto max-w-4xl">
         <ScrollReveal>
-          <HeaderSection title={m.blocks_faqs_title()} subtitle={m.blocks_faqs_subtitle()} />
+          <HeaderSection
+            title={m.blocks_faqs_title()}
+            subtitle={m.blocks_faqs_subtitle()}
+          />
         </ScrollReveal>
 
         <ScrollReveal delay={150} className="mx-auto mt-12 max-w-4xl">

@@ -9,10 +9,18 @@ export const clientEnv = createEnv({
   client: {
     VITE_BASE_URL: z.url().default('http://localhost:3000'),
 
-    // Payment (Stripe)
+    // Payment (Stripe) — subscription plans
+    VITE_STRIPE_PRICE_HOBBY_MONTHLY: z.string().optional(),
+    VITE_STRIPE_PRICE_HOBBY_ANNUAL: z.string().optional(),
     VITE_STRIPE_PRICE_PRO_MONTHLY: z.string().optional(),
-    VITE_STRIPE_PRICE_PRO_YEARLY: z.string().optional(),
-    VITE_STRIPE_PRICE_LIFETIME: z.string().optional(),
+    VITE_STRIPE_PRICE_PRO_ANNUAL: z.string().optional(),
+    VITE_STRIPE_PRICE_MAX_MONTHLY: z.string().optional(),
+    VITE_STRIPE_PRICE_MAX_ANNUAL: z.string().optional(),
+
+    // Payment (Stripe) — one-time credit packs
+    VITE_STRIPE_PRICE_STARTER_PACK: z.string().optional(),
+    VITE_STRIPE_PRICE_CREATOR_PACK: z.string().optional(),
+    VITE_STRIPE_PRICE_STUDIO_PACK: z.string().optional(),
 
     // Analytics
     VITE_GOOGLE_ANALYTICS_ID: z.string().optional(),
