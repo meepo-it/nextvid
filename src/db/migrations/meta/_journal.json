@@ -36,6 +36,34 @@
       "when": 1776396626545,
       "tag": "0004_feature_requests_with_locale",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1777813933473,
+      "tag": "0005_marvelous_tana_nile",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1777816621773,
+      "tag": "0006_yummy_luke_cage",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1778314079537,
+      "tag": "0007_military_justin_hammer",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1747526400000,
+      "tag": "0008_dual_credit_balance",
+      "breakpoints": true
     }
   ]
 }

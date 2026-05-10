@@ -1,7 +1,7 @@
 import { SidebarLayoutPage } from '@/components/layout/sidebar-layout';
 import { websiteConfig } from '@/config/website';
 import { adminRouteMiddleware } from '@/middlewares/admin-middleware';
-import { seo } from '@/lib/seo';
+import { seoNoindex } from '@/lib/seo';
 import * as m from '@/paraglide/messages.js';
 import { createFileRoute } from '@tanstack/react-router';
 
@@ -12,7 +12,7 @@ export const Route = createFileRoute('/admin')({
     middleware: [adminRouteMiddleware],
   },
   head: () =>
-    seo('/admin', {
+    seoNoindex('/admin', {
       title: `${m.admin_layout_title()} | ${websiteConfig.metadata?.name}`,
     }),
 });

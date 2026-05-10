@@ -23,7 +23,7 @@ export const Route = createFileRoute('/blog/')({
   head: () =>
     seo('/blog', {
       title: `${m.blog_title()} | ${websiteConfig.metadata?.name}`,
-      description: m.blog_title(),
+      description: m.blog_description(),
     }),
   component: BlogListPage,
 });

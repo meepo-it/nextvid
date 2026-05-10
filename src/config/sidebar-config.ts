@@ -1,12 +1,13 @@
 import {
-  IconBulb,
+  IconChartBar,
   IconCreditCard,
-  IconLayoutDashboard,
+  IconMovie,
   IconReceipt,
   IconSettings2,
   IconShieldCheck,
   IconUserCircle,
   IconUsers,
+  IconVideo,
 } from '@tabler/icons-react';
 import { Routes } from '@/lib/routes';
 import type { MenuItemConfig } from '../types';
@@ -24,9 +25,15 @@ export function getSidebarLinks(): MenuItemConfig[] {
       authorizeOnly: ['admin'],
       items: [
         {
-          title: m.dashboard_sidebar_dashboard(),
-          icon: IconLayoutDashboard,
-          href: Routes.Dashboard,
+          title: 'Overview',
+          icon: IconChartBar,
+          href: Routes.AdminOverview,
+          external: false,
+        },
+        {
+          title: 'Generations',
+          icon: IconMovie,
+          href: Routes.AdminGenerations,
           external: false,
         },
         {
@@ -42,9 +49,9 @@ export function getSidebarLinks(): MenuItemConfig[] {
           external: false,
         },
         {
-          title: m.admin_feature_requests_title(),
-          icon: IconBulb,
-          href: Routes.AdminFeatureRequests,
+          title: 'Video Models',
+          icon: IconVideo,
+          href: Routes.AdminVideoModels,
           external: false,
         },
       ],

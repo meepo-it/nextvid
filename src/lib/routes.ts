@@ -8,8 +8,6 @@ export const Routes = {
   Blog: '/blog',
   About: '/about',
   Contact: '/contact',
-  RequestsAndRoadmap: '/requests-and-roadmap',
-  PromoteAndEarn: '/promote',
   Creations: '/creations',
 
   // Auth routes
@@ -28,9 +26,6 @@ export const Routes = {
   // Payment routes
   Payment: '/payment',
 
-  // Dashboard routes
-  Dashboard: '/dashboard',
-
   // Settings routes
   Settings: '/settings',
   SettingsProfile: '/settings/profile',
@@ -43,10 +38,12 @@ export const Routes = {
 
   // Admin routes
   Admin: '/admin',
+  AdminOverview: '/admin/overview',
   AdminUsers: '/admin/users',
-  AdminFeatureRequests: '/admin/feature-requests',
   AdminPayments: '/admin/payments',
+  AdminVideoModels: '/admin/video-models',
+  AdminGenerations: '/admin/generations',
 } as const;
 
 /** Default login redirect route */
-export const DEFAULT_LOGIN_REDIRECT = Routes.Dashboard;
+export const DEFAULT_LOGIN_REDIRECT = Routes.Creations;

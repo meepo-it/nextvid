@@ -91,7 +91,7 @@ export function UserButton({ user, credits = 0 }: UserButtonProps) {
         {user.role === 'admin' && (
           <>
             <DropdownMenuSeparator />
-            <Link to={Routes.Dashboard} className="block">
+            <Link to={Routes.AdminOverview} className="block">
               <DropdownMenuItem className="gap-3 py-2.5">
                 <IconShieldCheck className="size-4 shrink-0" />
                 <span>Admin</span>

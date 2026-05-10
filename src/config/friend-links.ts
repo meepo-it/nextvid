@@ -16,12 +16,6 @@ export type FriendLink = {
 
 export const friendLinks: FriendLink[] = [
   {
-    href: 'https://letsship.io',
-    imgSrc:
-      'https://img.shields.io/badge/LetsShip-ship%20faster-0ea5e9?style=for-the-badge&logo=rocket&logoColor=white',
-    alt: 'LetsShip',
-  },
-  {
     href: 'https://tanstack.com',
     imgSrc:
       'https://img.shields.io/badge/TanStack-Start-ef4444?style=for-the-badge&logo=react&logoColor=white',

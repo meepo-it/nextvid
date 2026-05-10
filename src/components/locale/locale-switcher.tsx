@@ -67,7 +67,10 @@ export function LocaleSwitcher() {
         <span>{getLocaleLabel(currentLocale)}</span>
         <IconChevronDown className="size-3.5 opacity-60" />
       </DialogTrigger>
-      <DialogContent showCloseButton className="min-w-[560px] p-0 overflow-hidden">
+      <DialogContent
+        showCloseButton
+        className="min-w-[560px] p-0 overflow-hidden"
+      >
         <DialogHeader className="px-5 pt-5 pb-0">
           <DialogTitle className="flex items-center gap-2">
             <IconLanguage className="size-5 text-muted-foreground" />

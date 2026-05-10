@@ -24,7 +24,6 @@ export const Route = createFileRoute('/sitemap.xml')({
           { path: '/terms', changefreq: 'monthly' },
           { path: '/privacy', changefreq: 'monthly' },
           { path: '/cookie', changefreq: 'monthly' },
-          { path: '/requests-and-roadmap', changefreq: 'weekly' },
         ];
 
         if (websiteConfig.blog?.enable) {

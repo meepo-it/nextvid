@@ -10,8 +10,6 @@ import {
   Scripts,
   useRouterState,
 } from '@tanstack/react-router';
-import { AffonsoScript } from '@/components/affiliate/affonso';
-import { PromotekitScript } from '@/components/affiliate/promotekit';
 import { Analytics } from '@/components/analytics/analytics';
 import { CrispChat } from '@/components/chatbox/crisp-chat';
 import { ThemeProvider } from '@/components/theme/theme-provider';
@@ -88,9 +86,7 @@ function RootComponent() {
   const matches = useRouterState({ select: (s) => s.matches }) ?? [];
   const isAuthPages = pathname.startsWith(Routes.Auth);
   const isProtectedPages =
-    pathname.startsWith(Routes.Admin) ||
-    pathname.startsWith(Routes.Dashboard) ||
-    pathname.startsWith(Routes.Settings);
+    pathname.startsWith(Routes.Admin) || pathname.startsWith(Routes.Settings);
   // When no child route matches (e.g. /hello), only root is in matches; use minimal layout
   const isNotFound =
     pathname !== Routes.Root && pathname !== '' && matches.length <= 1;
@@ -136,8 +132,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <DevTools />
         <Analytics />
         <CrispChat />
-        <AffonsoScript />
-        <PromotekitScript />
         <Scripts />
       </body>
     </html>

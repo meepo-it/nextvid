@@ -1,8 +1,4 @@
-import {
-  IconCreditCard,
-  IconLayoutDashboard,
-  IconSettings2,
-} from '@tabler/icons-react';
+import { IconCreditCard, IconSettings2, IconVideo } from '@tabler/icons-react';
 import { Routes } from '@/lib/routes';
 import type { MenuItemConfig } from '../types';
 import * as m from '@/paraglide/messages.js';
@@ -13,9 +9,9 @@ import * as m from '@/paraglide/messages.js';
 export function getAvatarLinks(): MenuItemConfig[] {
   return [
     {
-      title: m.dashboard_avatar_dashboard(),
-      href: Routes.Dashboard,
-      icon: IconLayoutDashboard,
+      title: 'My Creations',
+      href: Routes.Creations,
+      icon: IconVideo,
     },
     {
       title: m.dashboard_avatar_billing(),

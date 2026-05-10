@@ -14,9 +14,7 @@ export type EmailTemplate =
   | 'forgotPassword'
   | 'verifyEmail'
   | 'subscribeNewsletter'
-  | 'contactMessage'
-  | 'featureRequestStatusUpdate'
-  | 'featureRequestRejected';
+  | 'contactMessage';
 
 export interface SendEmailResult {
   success: boolean;

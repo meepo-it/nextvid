@@ -8,6 +8,20 @@ import {
 import { locales, baseLocale } from '@/paraglide/runtime.js';
 
 /**
+ * Build metadata + canonical link for a page that should NOT be indexed.
+ * Use for /admin, /settings, /auth, /creations and any private route.
+ */
+export function seoNoindex(path: string, options: { title: string }) {
+  return {
+    meta: [
+      { title: options.title },
+      { name: 'robots', content: 'noindex,nofollow' },
+    ],
+    links: [] as { rel: string; href: string }[],
+  };
+}
+
+/**
  * Build metadata + canonical link for a page
  * @param path - The path of the page
  * @param options - The options for the page
@@ -66,6 +80,10 @@ export const metadata = ({
       : []),
     ...(url ? [{ property: 'og:url', content: url }] : []),
     ...(image ? [{ property: 'og:image', content: image }] : []),
+    {
+      property: 'og:site_name',
+      content: websiteConfig.metadata?.name ?? 'NextVid',
+    },
     // Twitter metadata (twitter:site = site's @username, not domain)
     { name: 'twitter:title', content: title },
     ...(twitterSite ? [{ name: 'twitter:site', content: twitterSite }] : []),
@@ -77,6 +95,7 @@ export const metadata = ({
       ? [
           { name: 'twitter:card', content: 'summary_large_image' as const },
           { name: 'twitter:image', content: image },
+          { name: 'twitter:image:alt', content: description ?? title },
         ]
       : []),
   ];

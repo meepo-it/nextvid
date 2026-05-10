@@ -1,7 +1,9 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
+import { seoNoindex } from '@/lib/seo';
 import BackButtonSmall from '@/components/shared/back-button-small';
 
 export const Route = createFileRoute('/auth')({
+  head: () => seoNoindex('/auth', { title: 'NextVid' }),
   component: AuthLayout,
 });
 

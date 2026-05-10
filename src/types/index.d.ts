@@ -26,9 +26,9 @@ export interface UiConfig {
 
 /** Website metadata */
 export interface MetadataConfig {
-  name?: string;         // The name of the website, e.g. 'LetsShip'
-  title?: string;        // The title of the website, e.g. 'LetsShip - The Ultimate SaaS Template'
-  description?: string;  // The description of the website, e.g. 'LetsShip is the ultimate SaaS template for building your next SaaS application.'
+  name?: string;         // The name of the website, e.g. 'NextVid'
+  title?: string;        // The title of the website, e.g. 'NextVid - The Ultimate SaaS Template'
+  description?: string;  // The description of the website, e.g. 'NextVid is the ultimate SaaS template for building your next SaaS application.'
   images?: ImagesConfig; // The images of the website
 }
 

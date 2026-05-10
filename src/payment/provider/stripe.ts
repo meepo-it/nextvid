@@ -1,12 +1,20 @@
 import { getDb } from '@/db';
-import { payment } from '@/db/app.schema';
+import { payment, userCredit } from '@/db/app.schema';
 import { user } from '@/db/auth.schema';
 import type { Payment } from '@/db/types';
 import {
   PAYMENT_RECORD_RETRY_ATTEMPTS,
   PAYMENT_RECORD_RETRY_DELAY,
 } from '@/payment/constants';
-import { findPlanByPlanId, findPriceInPlan } from '@/lib/price-plan';
+import {
+  SUBSCRIPTION_CREDITS,
+  CREDIT_PACK_CREDITS,
+} from '@/config/plans-config';
+import {
+  findPlanByPlanId,
+  findPlanByPriceId,
+  findPriceInPlan,
+} from '@/lib/price-plan';
 import { sendPaymentNotification } from '@/notification';
 import { desc, eq } from 'drizzle-orm';
 import { Stripe } from 'stripe';
@@ -657,17 +665,57 @@ export class StripeProvider implements PaymentProvider {
   }
 
   /**
-   * Process subscription purchase
-   * @param _userId User ID (reserved for future use, e.g. credits)
-   * @param _priceId Price ID (reserved for future use, e.g. credits)
+   * Grant (or reset) subscription credits for a user.
+   * Called on initial purchase and on every renewal (invoice.paid).
+   * Subscription credits reset — not accumulated — each billing cycle.
    */
   private async processSubscriptionPurchase(
-    _userId: string,
-    _priceId: string
+    userId: string,
+    priceId: string
   ): Promise<void> {
     console.log('>> Process subscription purchase');
 
-    // No credits in MkFast; keep log for consistency with MkSaaS flow
+    const plan = findPlanByPriceId(priceId);
+    if (!plan) {
+      console.warn('<< No plan found for priceId:', priceId);
+      return;
+    }
+
+    const planCredits =
+      SUBSCRIPTION_CREDITS[plan.id as keyof typeof SUBSCRIPTION_CREDITS];
+    if (!planCredits) {
+      console.warn('<< No subscription credits configured for plan:', plan.id);
+      return;
+    }
+
+    const db = getDb();
+    const now = new Date();
+    const existing = await db
+      .select({ id: userCredit.id })
+      .from(userCredit)
+      .where(eq(userCredit.userId, userId))
+      .limit(1);
+
+    if (existing.length > 0) {
+      await db
+        .update(userCredit)
+        .set({ subscriptionCredits: planCredits, lastCreditResetAt: now, updatedAt: now })
+        .where(eq(userCredit.userId, userId));
+    } else {
+      await db.insert(userCredit).values({
+        id: crypto.randomUUID(),
+        userId,
+        subscriptionCredits: planCredits,
+        packCredits: 0,
+        lastCreditResetAt: now,
+        createdAt: now,
+        updatedAt: now,
+      });
+    }
+
+    console.log(
+      `<< Granted ${planCredits} subscription credits to user ${userId} (plan: ${plan.id})`
+    );
     console.log('<< Process subscription purchase success');
   }
 
@@ -716,10 +764,8 @@ export class StripeProvider implements PaymentProvider {
   }
 
   /**
-   * Process lifetime plan purchase
-   * @param invoice Stripe invoice
-   * @param paymentRecord Payment record
-   * @param session Checkout session (for userName in notification)
+   * Process one-time credit pack purchase: add credits to the user's balance
+   * and send a payment notification.
    */
   private async processLifetimePlanPurchase(
     invoice: Stripe.Invoice,
@@ -727,6 +773,58 @@ export class StripeProvider implements PaymentProvider {
     session: Stripe.Checkout.Session
   ): Promise<void> {
     console.log('>> Process lifetime plan purchase');
+
+    // Grant credit pack credits
+    const plan = findPlanByPriceId(paymentRecord.priceId);
+    if (plan) {
+      const addedPackCredits =
+        CREDIT_PACK_CREDITS[plan.id as keyof typeof CREDIT_PACK_CREDITS];
+      if (addedPackCredits) {
+        const db = getDb();
+        const now = new Date();
+        // Pack credits always expire 90 days from purchase date.
+        // Multiple purchases stack: credits accumulate, expiry extends to the later date.
+        const newExpiry = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000);
+
+        const existing = await db
+          .select({
+            id: userCredit.id,
+            packCredits: userCredit.packCredits,
+            packCreditsExpiresAt: userCredit.packCreditsExpiresAt,
+          })
+          .from(userCredit)
+          .where(eq(userCredit.userId, paymentRecord.userId))
+          .limit(1);
+
+        if (existing.length > 0) {
+          const currentExpiry = existing[0].packCreditsExpiresAt;
+          const resolvedExpiry =
+            currentExpiry && currentExpiry > newExpiry ? currentExpiry : newExpiry;
+          await db
+            .update(userCredit)
+            .set({
+              packCredits: existing[0].packCredits + addedPackCredits,
+              packCreditsExpiresAt: resolvedExpiry,
+              updatedAt: now,
+            })
+            .where(eq(userCredit.userId, paymentRecord.userId));
+        } else {
+          await db.insert(userCredit).values({
+            id: crypto.randomUUID(),
+            userId: paymentRecord.userId,
+            subscriptionCredits: 0,
+            packCredits: addedPackCredits,
+            packCreditsExpiresAt: newExpiry,
+            createdAt: now,
+            updatedAt: now,
+          });
+        }
+
+        console.log(
+          `<< Added ${addedPackCredits} pack credits to user ${paymentRecord.userId} (pack: ${plan.id}), expires ${newExpiry.toISOString()}`
+        );
+      }
+    }
 
     // Send notification
     const amount = invoice.amount_paid ? invoice.amount_paid / 100 : 0;

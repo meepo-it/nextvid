@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "mkfast-template",
+  "name": "nextvid",
   "compatibility_date": "2025-09-02",
   "compatibility_flags": [
     // Enable Node.js API
@@ -46,7 +46,7 @@
   // https://developers.cloudflare.com/workers/configuration/routing/custom-domains/
   "routes": [
     {
-      "pattern": "letsship.dev",
+      "pattern": "nextvid.ai",
       "custom_domain": true
     }
   ],
@@ -58,23 +58,32 @@
    * https://developers.cloudflare.com/workers/runtime-apis/bindings/
    */
   /**
-   * D1: create database with `npx wrangler d1 create mkfast-template`
+   * D1: create database with `npx wrangler d1 create nextvid`
    */
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "mkfast-template",
-      "database_id": "dc34f04a-3445-4b5c-bf61-c4ec2328e239",
+      "database_name": "nextvid",
+      "database_id": "8211b647-d78d-4826-8b48-bd7cfe9e1c81",
       "migrations_dir": "./src/db/migrations"
     }
   ],
   /**
-   * R2: create bucket with `npx wrangler r2 bucket create mkfast-template`
+   * R2: existing bucket nextvid (assets.nextvid.ai)
    */
   "r2_buckets": [
     {
-      "bucket_name": "mkfast-template",
+      "bucket_name": "nextvid",
       "binding": "BUCKET"
     }
-  ]
+  ],
+
+  /**
+   * Cron Triggers
+   * Daily credit reset for annual subscribers at 02:00 UTC
+   * https://developers.cloudflare.com/workers/configuration/cron-triggers/
+   */
+  "triggers": {
+    "crons": ["0 2 * * *"]
+  }
 }

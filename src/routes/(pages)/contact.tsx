@@ -9,7 +9,7 @@ export const Route = createFileRoute('/(pages)/contact')({
   head: () =>
     seo('/contact', {
       title: `${m.contact_title()} | ${websiteConfig.metadata?.name}`,
-      description: m.contact_title(),
+      description: m.contact_description(),
     }),
   component: ContactPage,
 });
@@ -23,7 +23,7 @@ function ContactPage() {
             {m.contact_title()}
           </h1>
           <p className="text-center text-lg text-muted-foreground">
-            {m.contact_title()}
+            {m.contact_description()}
           </p>
         </div>
         <ContactFormCard />

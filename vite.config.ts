@@ -43,6 +43,25 @@ const config = defineConfig({
     },
   },
   plugins: [
+    // `cloudflare:*` modules are provided by the Cloudflare Vite plugin only in
+    // the Worker (ssr) environment. Vite's client environment also analyses
+    // server-only files (e.g. src/db/index.ts) and fails to resolve them.
+    // We provide an empty stub for the client so the bundle stays valid; the
+    // Worker runtime supplies the real implementation at request time.
+    {
+      name: 'cloudflare-modules-client-stub',
+      enforce: 'pre',
+      resolveId(id) {
+        if (id.startsWith('cloudflare:') && (this as any).environment?.name === 'client') {
+          return `\0cloudflare-stub:${id}`;
+        }
+      },
+      load(id) {
+        if (id.startsWith('\0cloudflare-stub:')) {
+          return 'export const env = {};';
+        }
+      },
+    },
     devtools({
       eventBusConfig: {
         enabled: false,

@@ -1,9 +1,8 @@
-import { getNavbarLinks } from '@/config/navbar-config';
+import { getNavbarLinks } from '@/config/navbar-config.tsx';
 import { authClient } from '@/auth/client';
 import { isLinkActive } from '@/lib/urls';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/lib/routes';
-import { buttonVariants } from '@/components/ui/button';
 import { Button } from '@/components/ui/button';
 import {
   Collapsible,
@@ -11,14 +10,18 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import { Link, useLocation } from '@tanstack/react-router';
-import { IconChevronRight, IconMenu2, IconX } from '@tabler/icons-react';
+import {
+  IconArrowBigRightFilled,
+  IconChevronRight,
+  IconMenu2,
+  IconX,
+} from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Logo } from '@/components/shared/logo';
 import { ModeSwitcherHorizontal } from '@/components/theme/mode-switcher-horizontal';
 import { LocaleSwitcher } from '@/components/locale/locale-switcher';
 import { UserButtonMobile } from '@/components/shared/user-button-mobile';
-import { LoginWrapper } from '@/components/auth/login-wrapper';
 import * as m from '@/paraglide/messages.js';
 import { websiteConfig } from '@/config/website';
 
@@ -93,26 +96,16 @@ export function NavbarMobile({ className, ...props }: NavbarMobileProps) {
         >
           <div className="flex flex-1 flex-col items-start gap-4 p-4">
             {websiteConfig.auth?.enable && !user && (
-              <div className="flex w-full flex-col gap-4">
-                <LoginWrapper mode="redirect" asChild>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="lg"
-                    className="w-full"
-                    onClick={() => setOpen(false)}
-                  >
-                    {m.auth_common_login()}
-                  </Button>
-                </LoginWrapper>
-                <Link
-                  to={Routes.Register}
-                  onClick={() => setOpen(false)}
-                  className={cn(buttonVariants({ size: 'lg' }), 'w-full')}
-                >
-                  {m.auth_common_signup()}
-                </Link>
-              </div>
+              <Link
+                to={Routes.Login}
+                onClick={() => setOpen(false)}
+                className="group flex w-full items-center justify-center gap-2 rounded-full border border-violet-300 bg-violet-100/80 px-5 py-3 shadow-sm transition-all hover:border-violet-400 hover:bg-violet-200/70 hover:shadow-md hover:shadow-violet-300/50 active:scale-[0.98] dark:border-violet-700/60 dark:bg-violet-900/30 dark:hover:border-violet-600 dark:hover:bg-violet-800/40"
+              >
+                <IconArrowBigRightFilled className="size-4 shrink-0 text-violet-500 transition-colors group-hover:text-violet-600" />
+                <span className="bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-sm font-semibold text-transparent transition-all group-hover:from-violet-700 group-hover:to-fuchsia-700">
+                  Get Started
+                </span>
+              </Link>
             )}
 
             <ul className="w-full space-y-1">

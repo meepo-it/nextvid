@@ -6,15 +6,14 @@ export default function BuiltWithButton() {
     <a
       target="_blank"
       rel="noopener noreferrer"
-      href="https://letsship.com?utm_source=built-with-letsship"
+      href="https://nextvid.ai"
       className={cn(
         buttonVariants({ variant: 'outline', size: 'sm' }),
         'border border-border px-4 py-4 rounded-md gap-2'
       )}
     >
       <span>Built with</span>
-      <img src="/letsship.png" alt="LetsShip" className="size-5" />
-      <span className="font-semibold">LetsShip</span>
+      <span className="font-semibold">NextVid</span>
     </a>
   );
 }

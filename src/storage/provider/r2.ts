@@ -187,8 +187,16 @@ export class R2Provider implements StorageProvider {
     return this.bucket;
   }
 
-  /** Build same-origin proxy URL for a key */
+  /** Build a URL for the given R2 key.
+   *  If PUBLIC_STORAGE_BASE_URL is set (e.g. an R2 custom domain or CDN), use that
+   *  so external services (like AI providers) can download the file directly.
+   *  Otherwise fall back to the same-origin proxy URL. */
   getPublicUrl(key: string, requestOrigin?: string): string {
+    const publicBase = (env as unknown as Record<string, string | undefined>)
+      .PUBLIC_STORAGE_BASE_URL;
+    if (publicBase) {
+      return `${publicBase.replace(/\/$/, '')}/${key}`;
+    }
     if (requestOrigin) {
       return `${requestOrigin}/api/storage/file?key=${encodeURIComponent(key)}`;
     }

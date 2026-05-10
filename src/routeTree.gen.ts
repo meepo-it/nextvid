@@ -13,13 +13,12 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as ManifestDotjsonRouteImport } from './routes/manifest[.]json'
-import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CreationsRouteImport } from './routes/creations'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SettingsIndexRouteImport } from './routes/settings/index'
-import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as CreationsIndexRouteImport } from './routes/creations/index'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as SettingsSecurityRouteImport } from './routes/settings/security'
@@ -29,19 +28,24 @@ import { Route as SettingsNotificationsRouteImport } from './routes/settings/not
 import { Route as SettingsFilesRouteImport } from './routes/settings/files'
 import { Route as SettingsBillingRouteImport } from './routes/settings/billing'
 import { Route as SettingsApikeysRouteImport } from './routes/settings/apikeys'
+import { Route as CreationsIdRouteImport } from './routes/creations/$id'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as AuthResetPasswordRouteImport } from './routes/auth/reset-password'
 import { Route as AuthRegisterRouteImport } from './routes/auth/register'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
 import { Route as AuthErrorRouteImport } from './routes/auth/error'
+import { Route as AdminVideoModelsRouteImport } from './routes/admin/video-models'
 import { Route as AdminUsersRouteImport } from './routes/admin/users'
 import { Route as AdminPaymentsRouteImport } from './routes/admin/payments'
-import { Route as AdminFeatureRequestsRouteImport } from './routes/admin/feature-requests'
+import { Route as AdminOverviewRouteImport } from './routes/admin/overview'
+import { Route as AdminGenerationsRouteImport } from './routes/admin/generations'
+import { Route as testsWcPreviewRouteImport } from './routes/(tests)/wc-preview'
 import { Route as testsTestErrorRouteImport } from './routes/(tests)/test-error'
 import { Route as testsTest404RouteImport } from './routes/(tests)/test-404'
-import { Route as pagesRequestsAndRoadmapRouteImport } from './routes/(pages)/requests-and-roadmap'
-import { Route as pagesPromoteRouteImport } from './routes/(pages)/promote'
+import { Route as testsHomeDesignDraftsRouteImport } from './routes/(tests)/home-design-drafts'
+import { Route as testsHiwPreviewRouteImport } from './routes/(tests)/hiw-preview'
+import { Route as testsFeatPreviewRouteImport } from './routes/(tests)/feat-preview'
 import { Route as pagesPricingRouteImport } from './routes/(pages)/pricing'
 import { Route as pagesContactRouteImport } from './routes/(pages)/contact'
 import { Route as pagesAboutRouteImport } from './routes/(pages)/about'
@@ -72,11 +76,6 @@ const ManifestDotjsonRoute = ManifestDotjsonRouteImport.update({
   path: '/manifest.json',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CreationsRoute = CreationsRouteImport.update({
   id: '/creations',
   path: '/creations',
@@ -102,10 +101,10 @@ const SettingsIndexRoute = SettingsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => SettingsRoute,
 } as any)
-const DashboardIndexRoute = DashboardIndexRouteImport.update({
+const CreationsIndexRoute = CreationsIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => DashboardRoute,
+  getParentRoute: () => CreationsRoute,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
@@ -152,6 +151,11 @@ const SettingsApikeysRoute = SettingsApikeysRouteImport.update({
   path: '/apikeys',
   getParentRoute: () => SettingsRoute,
 } as any)
+const CreationsIdRoute = CreationsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => CreationsRoute,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/blog/$slug',
   path: '/blog/$slug',
@@ -182,6 +186,11 @@ const AuthErrorRoute = AuthErrorRouteImport.update({
   path: '/error',
   getParentRoute: () => AuthRoute,
 } as any)
+const AdminVideoModelsRoute = AdminVideoModelsRouteImport.update({
+  id: '/video-models',
+  path: '/video-models',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminUsersRoute = AdminUsersRouteImport.update({
   id: '/users',
   path: '/users',
@@ -192,10 +201,20 @@ const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
   path: '/payments',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminFeatureRequestsRoute = AdminFeatureRequestsRouteImport.update({
-  id: '/feature-requests',
-  path: '/feature-requests',
+const AdminOverviewRoute = AdminOverviewRouteImport.update({
+  id: '/overview',
+  path: '/overview',
   getParentRoute: () => AdminRoute,
+} as any)
+const AdminGenerationsRoute = AdminGenerationsRouteImport.update({
+  id: '/generations',
+  path: '/generations',
+  getParentRoute: () => AdminRoute,
+} as any)
+const testsWcPreviewRoute = testsWcPreviewRouteImport.update({
+  id: '/(tests)/wc-preview',
+  path: '/wc-preview',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const testsTestErrorRoute = testsTestErrorRouteImport.update({
   id: '/(tests)/test-error',
@@ -207,14 +226,19 @@ const testsTest404Route = testsTest404RouteImport.update({
   path: '/test-404',
   getParentRoute: () => rootRouteImport,
 } as any)
-const pagesRequestsAndRoadmapRoute = pagesRequestsAndRoadmapRouteImport.update({
-  id: '/(pages)/requests-and-roadmap',
-  path: '/requests-and-roadmap',
+const testsHomeDesignDraftsRoute = testsHomeDesignDraftsRouteImport.update({
+  id: '/(tests)/home-design-drafts',
+  path: '/home-design-drafts',
   getParentRoute: () => rootRouteImport,
 } as any)
-const pagesPromoteRoute = pagesPromoteRouteImport.update({
-  id: '/(pages)/promote',
-  path: '/promote',
+const testsHiwPreviewRoute = testsHiwPreviewRouteImport.update({
+  id: '/(tests)/hiw-preview',
+  path: '/hiw-preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const testsFeatPreviewRoute = testsFeatPreviewRouteImport.update({
+  id: '/(tests)/feat-preview',
+  path: '/feat-preview',
   getParentRoute: () => rootRouteImport,
 } as any)
 const pagesPricingRoute = pagesPricingRouteImport.update({
@@ -267,8 +291,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
-  '/creations': typeof CreationsRoute
-  '/dashboard': typeof DashboardRouteWithChildren
+  '/creations': typeof CreationsRouteWithChildren
   '/manifest.json': typeof ManifestDotjsonRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/settings': typeof SettingsRouteWithChildren
@@ -279,19 +302,24 @@ export interface FileRoutesByFullPath {
   '/about': typeof pagesAboutRoute
   '/contact': typeof pagesContactRoute
   '/pricing': typeof pagesPricingRoute
-  '/promote': typeof pagesPromoteRoute
-  '/requests-and-roadmap': typeof pagesRequestsAndRoadmapRoute
+  '/feat-preview': typeof testsFeatPreviewRoute
+  '/hiw-preview': typeof testsHiwPreviewRoute
+  '/home-design-drafts': typeof testsHomeDesignDraftsRoute
   '/test-404': typeof testsTest404Route
   '/test-error': typeof testsTestErrorRoute
-  '/admin/feature-requests': typeof AdminFeatureRequestsRoute
+  '/wc-preview': typeof testsWcPreviewRoute
+  '/admin/generations': typeof AdminGenerationsRoute
+  '/admin/overview': typeof AdminOverviewRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/admin/video-models': typeof AdminVideoModelsRoute
   '/auth/error': typeof AuthErrorRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/creations/$id': typeof CreationsIdRoute
   '/settings/apikeys': typeof SettingsApikeysRoute
   '/settings/billing': typeof SettingsBillingRoute
   '/settings/files': typeof SettingsFilesRoute
@@ -301,7 +329,7 @@ export interface FileRoutesByFullPath {
   '/settings/security': typeof SettingsSecurityRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
-  '/dashboard/': typeof DashboardIndexRoute
+  '/creations/': typeof CreationsIndexRoute
   '/settings/': typeof SettingsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/storage/file': typeof ApiStorageFileRoute
@@ -310,7 +338,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
-  '/creations': typeof CreationsRoute
   '/manifest.json': typeof ManifestDotjsonRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -320,19 +347,24 @@ export interface FileRoutesByTo {
   '/about': typeof pagesAboutRoute
   '/contact': typeof pagesContactRoute
   '/pricing': typeof pagesPricingRoute
-  '/promote': typeof pagesPromoteRoute
-  '/requests-and-roadmap': typeof pagesRequestsAndRoadmapRoute
+  '/feat-preview': typeof testsFeatPreviewRoute
+  '/hiw-preview': typeof testsHiwPreviewRoute
+  '/home-design-drafts': typeof testsHomeDesignDraftsRoute
   '/test-404': typeof testsTest404Route
   '/test-error': typeof testsTestErrorRoute
-  '/admin/feature-requests': typeof AdminFeatureRequestsRoute
+  '/wc-preview': typeof testsWcPreviewRoute
+  '/admin/generations': typeof AdminGenerationsRoute
+  '/admin/overview': typeof AdminOverviewRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/admin/video-models': typeof AdminVideoModelsRoute
   '/auth/error': typeof AuthErrorRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/creations/$id': typeof CreationsIdRoute
   '/settings/apikeys': typeof SettingsApikeysRoute
   '/settings/billing': typeof SettingsBillingRoute
   '/settings/files': typeof SettingsFilesRoute
@@ -342,7 +374,7 @@ export interface FileRoutesByTo {
   '/settings/security': typeof SettingsSecurityRoute
   '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
-  '/dashboard': typeof DashboardIndexRoute
+  '/creations': typeof CreationsIndexRoute
   '/settings': typeof SettingsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/storage/file': typeof ApiStorageFileRoute
@@ -353,8 +385,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
-  '/creations': typeof CreationsRoute
-  '/dashboard': typeof DashboardRouteWithChildren
+  '/creations': typeof CreationsRouteWithChildren
   '/manifest.json': typeof ManifestDotjsonRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/settings': typeof SettingsRouteWithChildren
@@ -365,19 +396,24 @@ export interface FileRoutesById {
   '/(pages)/about': typeof pagesAboutRoute
   '/(pages)/contact': typeof pagesContactRoute
   '/(pages)/pricing': typeof pagesPricingRoute
-  '/(pages)/promote': typeof pagesPromoteRoute
-  '/(pages)/requests-and-roadmap': typeof pagesRequestsAndRoadmapRoute
+  '/(tests)/feat-preview': typeof testsFeatPreviewRoute
+  '/(tests)/hiw-preview': typeof testsHiwPreviewRoute
+  '/(tests)/home-design-drafts': typeof testsHomeDesignDraftsRoute
   '/(tests)/test-404': typeof testsTest404Route
   '/(tests)/test-error': typeof testsTestErrorRoute
-  '/admin/feature-requests': typeof AdminFeatureRequestsRoute
+  '/(tests)/wc-preview': typeof testsWcPreviewRoute
+  '/admin/generations': typeof AdminGenerationsRoute
+  '/admin/overview': typeof AdminOverviewRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/admin/video-models': typeof AdminVideoModelsRoute
   '/auth/error': typeof AuthErrorRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/creations/$id': typeof CreationsIdRoute
   '/settings/apikeys': typeof SettingsApikeysRoute
   '/settings/billing': typeof SettingsBillingRoute
   '/settings/files': typeof SettingsFilesRoute
@@ -387,7 +423,7 @@ export interface FileRoutesById {
   '/settings/security': typeof SettingsSecurityRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
-  '/dashboard/': typeof DashboardIndexRoute
+  '/creations/': typeof CreationsIndexRoute
   '/settings/': typeof SettingsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/storage/file': typeof ApiStorageFileRoute
@@ -400,7 +436,6 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/creations'
-    | '/dashboard'
     | '/manifest.json'
     | '/robots.txt'
     | '/settings'
@@ -411,19 +446,24 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/pricing'
-    | '/promote'
-    | '/requests-and-roadmap'
+    | '/feat-preview'
+    | '/hiw-preview'
+    | '/home-design-drafts'
     | '/test-404'
     | '/test-error'
-    | '/admin/feature-requests'
+    | '/wc-preview'
+    | '/admin/generations'
+    | '/admin/overview'
     | '/admin/payments'
     | '/admin/users'
+    | '/admin/video-models'
     | '/auth/error'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
     | '/auth/reset-password'
     | '/blog/$slug'
+    | '/creations/$id'
     | '/settings/apikeys'
     | '/settings/billing'
     | '/settings/files'
@@ -433,7 +473,7 @@ export interface FileRouteTypes {
     | '/settings/security'
     | '/admin/'
     | '/blog/'
-    | '/dashboard/'
+    | '/creations/'
     | '/settings/'
     | '/api/auth/$'
     | '/api/storage/file'
@@ -442,7 +482,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
-    | '/creations'
     | '/manifest.json'
     | '/robots.txt'
     | '/sitemap.xml'
@@ -452,19 +491,24 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/pricing'
-    | '/promote'
-    | '/requests-and-roadmap'
+    | '/feat-preview'
+    | '/hiw-preview'
+    | '/home-design-drafts'
     | '/test-404'
     | '/test-error'
-    | '/admin/feature-requests'
+    | '/wc-preview'
+    | '/admin/generations'
+    | '/admin/overview'
     | '/admin/payments'
     | '/admin/users'
+    | '/admin/video-models'
     | '/auth/error'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
     | '/auth/reset-password'
     | '/blog/$slug'
+    | '/creations/$id'
     | '/settings/apikeys'
     | '/settings/billing'
     | '/settings/files'
@@ -474,7 +518,7 @@ export interface FileRouteTypes {
     | '/settings/security'
     | '/admin'
     | '/blog'
-    | '/dashboard'
+    | '/creations'
     | '/settings'
     | '/api/auth/$'
     | '/api/storage/file'
@@ -485,7 +529,6 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/creations'
-    | '/dashboard'
     | '/manifest.json'
     | '/robots.txt'
     | '/settings'
@@ -496,19 +539,24 @@ export interface FileRouteTypes {
     | '/(pages)/about'
     | '/(pages)/contact'
     | '/(pages)/pricing'
-    | '/(pages)/promote'
-    | '/(pages)/requests-and-roadmap'
+    | '/(tests)/feat-preview'
+    | '/(tests)/hiw-preview'
+    | '/(tests)/home-design-drafts'
     | '/(tests)/test-404'
     | '/(tests)/test-error'
-    | '/admin/feature-requests'
+    | '/(tests)/wc-preview'
+    | '/admin/generations'
+    | '/admin/overview'
     | '/admin/payments'
     | '/admin/users'
+    | '/admin/video-models'
     | '/auth/error'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/register'
     | '/auth/reset-password'
     | '/blog/$slug'
+    | '/creations/$id'
     | '/settings/apikeys'
     | '/settings/billing'
     | '/settings/files'
@@ -518,7 +566,7 @@ export interface FileRouteTypes {
     | '/settings/security'
     | '/admin/'
     | '/blog/'
-    | '/dashboard/'
+    | '/creations/'
     | '/settings/'
     | '/api/auth/$'
     | '/api/storage/file'
@@ -529,8 +577,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRouteWithChildren
-  CreationsRoute: typeof CreationsRoute
-  DashboardRoute: typeof DashboardRouteWithChildren
+  CreationsRoute: typeof CreationsRouteWithChildren
   ManifestDotjsonRoute: typeof ManifestDotjsonRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SettingsRoute: typeof SettingsRouteWithChildren
@@ -541,10 +588,12 @@ export interface RootRouteChildren {
   pagesAboutRoute: typeof pagesAboutRoute
   pagesContactRoute: typeof pagesContactRoute
   pagesPricingRoute: typeof pagesPricingRoute
-  pagesPromoteRoute: typeof pagesPromoteRoute
-  pagesRequestsAndRoadmapRoute: typeof pagesRequestsAndRoadmapRoute
+  testsFeatPreviewRoute: typeof testsFeatPreviewRoute
+  testsHiwPreviewRoute: typeof testsHiwPreviewRoute
+  testsHomeDesignDraftsRoute: typeof testsHomeDesignDraftsRoute
   testsTest404Route: typeof testsTest404Route
   testsTestErrorRoute: typeof testsTestErrorRoute
+  testsWcPreviewRoute: typeof testsWcPreviewRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -582,13 +631,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ManifestDotjsonRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/creations': {
       id: '/creations'
       path: '/creations'
@@ -624,12 +666,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsIndexRouteImport
       parentRoute: typeof SettingsRoute
     }
-    '/dashboard/': {
-      id: '/dashboard/'
+    '/creations/': {
+      id: '/creations/'
       path: '/'
-      fullPath: '/dashboard/'
-      preLoaderRoute: typeof DashboardIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      fullPath: '/creations/'
+      preLoaderRoute: typeof CreationsIndexRouteImport
+      parentRoute: typeof CreationsRoute
     }
     '/blog/': {
       id: '/blog/'
@@ -694,6 +736,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsApikeysRouteImport
       parentRoute: typeof SettingsRoute
     }
+    '/creations/$id': {
+      id: '/creations/$id'
+      path: '/$id'
+      fullPath: '/creations/$id'
+      preLoaderRoute: typeof CreationsIdRouteImport
+      parentRoute: typeof CreationsRoute
+    }
     '/blog/$slug': {
       id: '/blog/$slug'
       path: '/blog/$slug'
@@ -736,6 +785,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthErrorRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/admin/video-models': {
+      id: '/admin/video-models'
+      path: '/video-models'
+      fullPath: '/admin/video-models'
+      preLoaderRoute: typeof AdminVideoModelsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/users': {
       id: '/admin/users'
       path: '/users'
@@ -750,12 +806,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPaymentsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/feature-requests': {
-      id: '/admin/feature-requests'
-      path: '/feature-requests'
-      fullPath: '/admin/feature-requests'
-      preLoaderRoute: typeof AdminFeatureRequestsRouteImport
+    '/admin/overview': {
+      id: '/admin/overview'
+      path: '/overview'
+      fullPath: '/admin/overview'
+      preLoaderRoute: typeof AdminOverviewRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/admin/generations': {
+      id: '/admin/generations'
+      path: '/generations'
+      fullPath: '/admin/generations'
+      preLoaderRoute: typeof AdminGenerationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/(tests)/wc-preview': {
+      id: '/(tests)/wc-preview'
+      path: '/wc-preview'
+      fullPath: '/wc-preview'
+      preLoaderRoute: typeof testsWcPreviewRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/(tests)/test-error': {
       id: '/(tests)/test-error'
@@ -771,18 +841,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof testsTest404RouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(pages)/requests-and-roadmap': {
-      id: '/(pages)/requests-and-roadmap'
-      path: '/requests-and-roadmap'
-      fullPath: '/requests-and-roadmap'
-      preLoaderRoute: typeof pagesRequestsAndRoadmapRouteImport
+    '/(tests)/home-design-drafts': {
+      id: '/(tests)/home-design-drafts'
+      path: '/home-design-drafts'
+      fullPath: '/home-design-drafts'
+      preLoaderRoute: typeof testsHomeDesignDraftsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(pages)/promote': {
-      id: '/(pages)/promote'
-      path: '/promote'
-      fullPath: '/promote'
-      preLoaderRoute: typeof pagesPromoteRouteImport
+    '/(tests)/hiw-preview': {
+      id: '/(tests)/hiw-preview'
+      path: '/hiw-preview'
+      fullPath: '/hiw-preview'
+      preLoaderRoute: typeof testsHiwPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(tests)/feat-preview': {
+      id: '/(tests)/feat-preview'
+      path: '/feat-preview'
+      fullPath: '/feat-preview'
+      preLoaderRoute: typeof testsFeatPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(pages)/pricing': {
@@ -852,16 +929,20 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
-  AdminFeatureRequestsRoute: typeof AdminFeatureRequestsRoute
+  AdminGenerationsRoute: typeof AdminGenerationsRoute
+  AdminOverviewRoute: typeof AdminOverviewRoute
   AdminPaymentsRoute: typeof AdminPaymentsRoute
   AdminUsersRoute: typeof AdminUsersRoute
+  AdminVideoModelsRoute: typeof AdminVideoModelsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
-  AdminFeatureRequestsRoute: AdminFeatureRequestsRoute,
+  AdminGenerationsRoute: AdminGenerationsRoute,
+  AdminOverviewRoute: AdminOverviewRoute,
   AdminPaymentsRoute: AdminPaymentsRoute,
   AdminUsersRoute: AdminUsersRoute,
+  AdminVideoModelsRoute: AdminVideoModelsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
@@ -885,16 +966,18 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
-interface DashboardRouteChildren {
-  DashboardIndexRoute: typeof DashboardIndexRoute
+interface CreationsRouteChildren {
+  CreationsIdRoute: typeof CreationsIdRoute
+  CreationsIndexRoute: typeof CreationsIndexRoute
 }
 
-const DashboardRouteChildren: DashboardRouteChildren = {
-  DashboardIndexRoute: DashboardIndexRoute,
+const CreationsRouteChildren: CreationsRouteChildren = {
+  CreationsIdRoute: CreationsIdRoute,
+  CreationsIndexRoute: CreationsIndexRoute,
 }
 
-const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
-  DashboardRouteChildren,
+const CreationsRouteWithChildren = CreationsRoute._addFileChildren(
+  CreationsRouteChildren,
 )
 
 interface SettingsRouteChildren {
@@ -927,8 +1010,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
-  CreationsRoute: CreationsRoute,
-  DashboardRoute: DashboardRouteWithChildren,
+  CreationsRoute: CreationsRouteWithChildren,
   ManifestDotjsonRoute: ManifestDotjsonRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SettingsRoute: SettingsRouteWithChildren,
@@ -939,10 +1021,12 @@ const rootRouteChildren: RootRouteChildren = {
   pagesAboutRoute: pagesAboutRoute,
   pagesContactRoute: pagesContactRoute,
   pagesPricingRoute: pagesPricingRoute,
-  pagesPromoteRoute: pagesPromoteRoute,
-  pagesRequestsAndRoadmapRoute: pagesRequestsAndRoadmapRoute,
+  testsFeatPreviewRoute: testsFeatPreviewRoute,
+  testsHiwPreviewRoute: testsHiwPreviewRoute,
+  testsHomeDesignDraftsRoute: testsHomeDesignDraftsRoute,
   testsTest404Route: testsTest404Route,
   testsTestErrorRoute: testsTestErrorRoute,
+  testsWcPreviewRoute: testsWcPreviewRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,

@@ -28,11 +28,9 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 const passwordSchema = z.object({
-  currentPassword: z
-    .string()
-    .min(1, {
-      message: m.settings_security_update_password_current_required(),
-    }),
+  currentPassword: z.string().min(1, {
+    message: m.settings_security_update_password_current_required(),
+  }),
   newPassword: z
     .string()
     .min(8, { message: m.settings_security_update_password_new_min_length() }),

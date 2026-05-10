@@ -26,6 +26,16 @@ export const serverEnv = createEnv({
     // Payment (Stripe)
     STRIPE_SECRET_KEY: z.string().optional(),
     STRIPE_WEBHOOK_SECRET: z.string().optional(),
+
+    // Video generation providers
+    APIMART_API_KEY: z.string().optional(),
+    ALIBABA_WAN_API_KEY: z.string().optional(),
+    KIE_API_KEY: z.string().optional(),
+
+    // Public storage base URL (e.g. R2 public bucket URL or CDN).
+    // When set, uploaded files get a publicly accessible URL instead of the
+    // same-origin proxy URL — required for 3rd-party services to download them.
+    PUBLIC_STORAGE_BASE_URL: z.string().url().optional(),
   },
   runtimeEnv: process.env,
 });

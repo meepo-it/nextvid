@@ -37,7 +37,7 @@ export function AuthCard({
         <CardDescription>{headerLabel}</CardDescription>
       </CardHeader>
       <CardContent>{children}</CardContent>
-      <CardFooter>
+      <CardFooter className="flex justify-center border-t border-border/60 bg-muted/30 py-4">
         <BottomLink label={bottomButtonLabel} href={bottomButtonHref} />
       </CardFooter>
     </Card>

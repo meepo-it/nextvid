@@ -6,6 +6,17 @@ import * as m from '@/paraglide/messages.js';
 /**
  * Footer links, grouped by section
  */
+const MODEL_FOOTER_ITEMS: MenuItemConfig[] = [
+  { title: 'Seedance 2.0', href: '/?model=seedance-2.0', external: false },
+  { title: 'Kling v3', href: '/?model=kling-v3', external: false },
+  { title: 'HappyHorse 1.0', href: '/?model=happyhorse-1.0', external: false },
+  { title: 'Wan 2.7', href: '/?model=wan2.7', external: false },
+  { title: 'Hailuo 2.3', href: '/?model=hailuo-2.3', external: false },
+  { title: 'Vidu Q3 Pro', href: '/?model=vidu-q3-pro', external: false },
+  { title: 'Veo 3 Fast', href: '/?model=veo3-fast', external: false },
+  { title: 'SkyReels v4', href: '/?model=skyreels-v4-fast', external: false },
+];
+
 export function getFooterLinks(): MenuItemConfig[] {
   const productItems: MenuItemConfig[] = [];
   if (websiteConfig.payment?.enable) {
@@ -18,25 +29,6 @@ export function getFooterLinks(): MenuItemConfig[] {
   productItems.push({
     title: m.nav_faq(),
     href: Routes.Faqs,
-    external: false,
-  });
-
-  const resourcesItems: MenuItemConfig[] = [];
-  if (websiteConfig.blog?.enable) {
-    resourcesItems.push({
-      title: m.nav_blog(),
-      href: Routes.Blog,
-      external: false,
-    });
-  }
-  resourcesItems.push({
-    title: m.nav_requests_and_roadmap_title(),
-    href: Routes.RequestsAndRoadmap,
-    external: false,
-  });
-  resourcesItems.push({
-    title: m.promote_title(),
-    href: Routes.PromoteAndEarn,
     external: false,
   });
 
@@ -62,7 +54,7 @@ export function getFooterLinks(): MenuItemConfig[] {
 
   return [
     { title: m.nav_product(), items: productItems },
-    { title: m.nav_resources(), items: resourcesItems },
+    { title: 'Models', items: MODEL_FOOTER_ITEMS },
     { title: m.nav_company(), items: companyItems },
   ];
 }

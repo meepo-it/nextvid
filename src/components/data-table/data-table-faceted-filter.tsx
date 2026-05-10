@@ -27,6 +27,7 @@ interface DataTableFacetedFilterProps<TData, TValue> {
   title?: string;
   options: Option[];
   multiple?: boolean;
+  buttonClassName?: string;
 }
 
 export function DataTableFacetedFilter<TData, TValue>({
@@ -34,6 +35,7 @@ export function DataTableFacetedFilter<TData, TValue>({
   title,
   options,
   multiple,
+  buttonClassName,
 }: DataTableFacetedFilterProps<TData, TValue>) {
   const [open, setOpen] = React.useState(false);
 
@@ -79,7 +81,7 @@ export function DataTableFacetedFilter<TData, TValue>({
             {...props}
             variant="outline"
             size="sm"
-            className="border-dashed font-normal"
+            className={cn('border-dashed font-normal', buttonClassName)}
           >
             {selectedValues?.size > 0 ? (
               <div

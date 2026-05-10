@@ -88,66 +88,137 @@ export const userFilesRelations = relations(userFiles, ({ one }) => ({
 }));
 
 /**
- * Feature requests — user-submitted ideas with voting
+ * User credits — current balance per user
  */
-export const featureRequest = sqliteTable(
-  'feature_request',
+export const userCredit = sqliteTable(
+  'user_credit',
   {
     id: text('id').primaryKey(),
-    title: text('title').notNull(),
-    description: text('description').notNull(),
-    status: text('status').notNull().default('submitted'), // submitted | planned | in_progress | done
-    category: text('category'),
-    // BCP-47 locale code recorded at submission time. Lets us:
-    //   1. group/filter requests by language in the admin UI
-    //   2. notify the author back in their original language
-    //   3. eventually offer translations of the body if/when we add them
-    locale: text('locale').notNull().default('en'),
     userId: text('user_id')
       .notNull()
+      .unique()
       .references(() => user.id, { onDelete: 'cascade' }),
-    voteCount: integer('vote_count').notNull().default(0),
+    /** Monthly allowance from active subscription — reset each billing cycle */
+    subscriptionCredits: integer('subscription_credits').notNull().default(0),
+    /** Accumulated one-time pack credits — independent of subscription */
+    packCredits: integer('pack_credits').notNull().default(0),
+    /** Pack credits expire 90 days after the most recent pack purchase */
+    packCreditsExpiresAt: integer('pack_credits_expires_at', { mode: 'timestamp_ms' }),
+    /** Last time subscription credits were reset — used by annual renewal cron */
+    lastCreditResetAt: integer('last_credit_reset_at', { mode: 'timestamp_ms' }),
     createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull(),
     updatedAt: integer('updated_at', { mode: 'timestamp_ms' }).notNull(),
   },
   (table) => [
-    index('feature_request_user_id_idx').on(table.userId),
-    index('feature_request_status_idx').on(table.status),
-    index('feature_request_vote_count_idx').on(table.voteCount),
+    index('user_credit_user_id_idx').on(table.userId),
   ]
 );
 
-export const featureRequestRelations = relations(featureRequest, ({ one, many }) => ({
-  user: one(user, { fields: [featureRequest.userId], references: [user.id] }),
-  votes: many(featureVote),
+export const userCreditRelations = relations(userCredit, ({ one }) => ({
+  user: one(user, { fields: [userCredit.userId], references: [user.id] }),
 }));
 
 /**
- * Feature votes — one vote per user per feature request
+ * Video generation jobs
  */
-export const featureVote = sqliteTable(
-  'feature_vote',
+export const videoGeneration = sqliteTable(
+  'video_generation',
   {
     id: text('id').primaryKey(),
-    featureRequestId: text('feature_request_id')
-      .notNull()
-      .references(() => featureRequest.id, { onDelete: 'cascade' }),
     userId: text('user_id')
       .notNull()
       .references(() => user.id, { onDelete: 'cascade' }),
+    // Generation params
+    type: text('type').notNull(),        // text-to-video | image-to-video | reference-to-video | video-edit
+    provider: text('provider').notNull(), // apimart | wan | kie
+    model: text('model').notNull(),       // e.g. wan2.7, kling-v3
+    providerModel: text('provider_model').notNull(), // actual model name sent to provider
+    prompt: text('prompt'),
+    negativePrompt: text('negative_prompt'),
+    imageUrl: text('image_url'),
+    videoUrl: text('video_url'),
+    mediaUrls: text('media_urls'),        // JSON array of additional media
+    resolution: text('resolution').notNull(),
+    duration: integer('duration').notNull(),
+    aspectRatio: text('aspect_ratio').notNull(),
+    // Job tracking
+    status: text('status').notNull().default('pending'), // pending | submitted | running | completed | failed
+    providerTaskId: text('provider_task_id'),
+    outputVideoUrl: text('output_video_url'),
+    outputDuration: integer('output_duration'),
+    providerPrompt: text('provider_prompt'), // final prompt used by provider
+    creditsUsed: integer('credits_used').notNull().default(0),
+    errorMessage: text('error_message'),
     createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull(),
+    updatedAt: integer('updated_at', { mode: 'timestamp_ms' }).notNull(),
   },
   (table) => [
-    uniqueIndex('feature_vote_unique_idx').on(table.featureRequestId, table.userId),
-    index('feature_vote_feature_id_idx').on(table.featureRequestId),
-    index('feature_vote_user_id_idx').on(table.userId),
+    index('video_gen_user_id_idx').on(table.userId),
+    index('video_gen_status_idx').on(table.status),
+    index('video_gen_type_idx').on(table.type),
+    index('video_gen_created_at_idx').on(table.createdAt),
   ]
 );
 
-export const featureVoteRelations = relations(featureVote, ({ one }) => ({
-  featureRequest: one(featureRequest, {
-    fields: [featureVote.featureRequestId],
-    references: [featureRequest.id],
-  }),
-  user: one(user, { fields: [featureVote.userId], references: [user.id] }),
+export const videoGenerationRelations = relations(videoGeneration, ({ one }) => ({
+  user: one(user, { fields: [videoGeneration.userId], references: [user.id] }),
+}));
+
+/**
+ * Video provider — one row per vendor (ApiMart, etc.)
+ */
+export const videoProvider = sqliteTable('video_provider', {
+  id: text('id').primaryKey(),
+  key: text('key').notNull().unique(),             // 'apimart' — used in adapter registry
+  displayName: text('display_name').notNull(),
+  enabled: integer('enabled', { mode: 'boolean' }).notNull().default(true),
+  apiKeyEnvVar: text('api_key_env_var').notNull(), // env var name, e.g. 'APIMART_API_KEY'
+  baseUrl: text('base_url'),
+  notes: text('notes'),
+  sortOrder: integer('sort_order').notNull().default(0),
+  createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull(),
+  updatedAt: integer('updated_at', { mode: 'timestamp_ms' }).notNull(),
+});
+
+/**
+ * Video model config — one row per model within a provider
+ */
+export const videoModelConfig = sqliteTable(
+  'video_model_config',
+  {
+    id: text('id').primaryKey(),
+    providerId: text('provider_id')
+      .notNull()
+      .references(() => videoProvider.id, { onDelete: 'cascade' }),
+    modelKey: text('model_key').notNull(),               // our internal key, e.g. 'wan2.7'
+    providerModelName: text('provider_model_name').notNull(), // sent to API, e.g. 'wan2.7'
+    displayNameEn: text('display_name_en').notNull(),
+    displayNameZh: text('display_name_zh').notNull(),
+    enabled: integer('enabled', { mode: 'boolean' }).notNull().default(true),
+    supportedTypes: text('supported_types').notNull(),         // JSON: string[]
+    supportedResolutions: text('supported_resolutions').notNull(), // JSON: string[]
+    supportedAspectRatios: text('supported_aspect_ratios').notNull(), // JSON: string[]
+    supportedDurations: text('supported_durations').notNull(),   // JSON: number[]
+    defaultResolution: text('default_resolution').notNull(),
+    defaultDuration: integer('default_duration').notNull(),
+    defaultAspectRatio: text('default_aspect_ratio').notNull(),
+    creditCost480p: integer('credit_cost_480p').notNull().default(2),
+    creditCost720p: integer('credit_cost_720p').notNull().default(3),
+    creditCost1080p: integer('credit_cost_1080p').notNull().default(5),
+    sortOrder: integer('sort_order').notNull().default(0),
+    createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull(),
+    updatedAt: integer('updated_at', { mode: 'timestamp_ms' }).notNull(),
+  },
+  (table) => [
+    index('video_model_provider_idx').on(table.providerId),
+    uniqueIndex('video_model_key_provider_idx').on(table.modelKey, table.providerId),
+  ]
+);
+
+export const videoProviderRelations = relations(videoProvider, ({ many }) => ({
+  models: many(videoModelConfig),
+}));
+
+export const videoModelConfigRelations = relations(videoModelConfig, ({ one }) => ({
+  provider: one(videoProvider, { fields: [videoModelConfig.providerId], references: [videoProvider.id] }),
 }));

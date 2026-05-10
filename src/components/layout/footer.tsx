@@ -38,6 +38,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
             >
               {socialLinks?.map((link) => {
                 const Icon = link.icon;
+                const isEmail = link.title === 'Email';
                 return (
                   <a
                     key={link.title}
@@ -45,9 +46,14 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={link.title}
-                    className="inline-flex size-8 items-center justify-center rounded-full border border-border text-muted-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all duration-200"
+                    className={
+                      isEmail
+                        ? 'inline-flex items-center gap-2 rounded-full border border-border px-4 py-1.5 text-sm font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all duration-200'
+                        : 'inline-flex size-8 items-center justify-center rounded-full border border-border text-muted-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all duration-200'
+                    }
                   >
                     {Icon ? <Icon className="size-4" /> : null}
+                    {isEmail && <span>Contact Us</span>}
                   </a>
                 );
               })}
@@ -102,10 +108,9 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
 
       <FooterFriendLinks />
 
-      {/* Newsletter (left) + locale switcher + theme — sticky, scoped to footer */}
+      {/* Locale switcher + theme — sticky, scoped to footer */}
       <div className="sticky bottom-0 z-40 bg-background/95 backdrop-blur-sm border-t">
-        <Container className="px-4 flex items-center justify-between py-4">
-          {websiteConfig.newsletter?.enable ? <FooterNewsletter /> : <span />}
+        <Container className="px-4 flex items-center justify-center py-4">
           <div className="flex items-center gap-3">
             <FooterLocaleSwitcher />
             <ModeSwitcher />

@@ -1,58 +1,64 @@
 ---
 title: Cookie Policy
-description: How we use cookies and similar technologies on our website
-date: 2026-02-15
+description: How NextVid uses cookies and similar technologies
+date: 2026-05-08
 ---
 
 ## Introduction
 
-This Cookie Policy explains how we use cookies and similar technologies on our website. By using our website, you consent to the use of cookies as described in this policy.
+This Cookie Policy explains how NextVid ("we", "us", or "our") uses cookies and similar tracking technologies on nextvid.ai. By continuing to use our website, you consent to the use of cookies as described in this policy.
 
 ## What Are Cookies
 
-Cookies are small text files that are stored on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to the website owners.
+Cookies are small text files placed on your device when you visit a website. They help us remember your preferences, keep you signed in, and understand how you interact with our platform.
 
-## How We Use Cookies
-
-We use cookies for the following purposes:
-
-- **Essential Cookies**: These cookies are necessary for the website to function properly and cannot be switched off in our systems.
-- **Performance Cookies**: These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site.
-- **Functional Cookies**: These cookies enable the website to provide enhanced functionality and personalization.
-- **Targeting Cookies**: These cookies may be set through our site by our advertising partners to build a profile of your interests.
-
-## Types of Cookies We Use
+## Cookies We Use
 
 ### Essential Cookies
-- Session cookies for maintaining user sessions
-- Security cookies for protecting against fraud and abuse
+These are required for the platform to function and cannot be disabled.
+
+- **Session cookies** — keep you signed in during your visit
+- **Authentication cookies** — verify your identity and protect your account
+- **Security cookies** — detect and prevent fraud and abuse
 
 ### Performance Cookies
-- Analytics cookies to understand how visitors interact with our website
-- Load balancing cookies to distribute traffic to servers
+These help us understand how visitors use NextVid so we can improve the experience.
+
+- **Analytics cookies** — collect anonymous data on page visits, feature usage, and error rates
 
 ### Functional Cookies
-- Preference cookies to remember your settings and choices
-- Language cookies to remember your language preference
+These remember your preferences to personalise your experience.
 
-### Targeting Cookies
-- Advertising cookies to deliver relevant advertisements
-- Social media cookies to enable sharing content on social platforms
+- **Language cookies** — remember your language preference (English / 中文)
+- **Theme cookies** — remember your light/dark mode setting
+- **Model preference cookies** — remember your last selected AI model and generation settings
+
+### Payment Cookies
+If you make a purchase, our payment provider (Stripe) may set cookies to securely process your transaction. These are subject to Stripe's own cookie policy.
 
 ## Managing Cookies
 
-Most web browsers allow you to control cookies through their settings. You can:
+You can control cookies through your browser settings:
 
-- Delete cookies from your device
-- Block cookies by activating the setting on your browser that allows you to refuse all or some cookies
-- Set your browser to notify you when you receive a cookie
+- **Delete cookies** — clear stored cookies at any time via your browser's privacy settings
+- **Block cookies** — configure your browser to refuse all or specific cookies
+- **Opt out of analytics** — most modern browsers support "Do Not Track" signals
 
-Please note that if you choose to block or delete cookies, you may not be able to access certain areas or features of our website.
+Please note that disabling essential cookies will prevent you from signing in and using core features of NextVid.
 
-## Changes to This Cookie Policy
+## Third-Party Cookies
 
-We may update our Cookie Policy from time to time. We will notify you of any changes by posting the new Cookie Policy on this page.
+We may use the following third-party services that set their own cookies:
+
+- **Stripe** — payment processing cookies
+- **Cloudflare** — security and performance cookies
+
+These third parties operate under their own privacy and cookie policies.
+
+## Changes to This Policy
+
+We may update this Cookie Policy from time to time. Any changes will be posted on this page with an updated date. Continued use of NextVid after changes constitutes acceptance.
 
 ## Contact Us
 
-If you have any questions about this Cookie Policy, please [contact us](/contact).
+If you have any questions about how we use cookies, please contact us at [support@nextvid.ai](mailto:support@nextvid.ai) or visit our [contact page](/contact).

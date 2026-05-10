@@ -5,16 +5,12 @@ import ContactMessage from './templates/contact-message';
 import ForgotPassword from './templates/forgot-password';
 import SubscribeNewsletter from './templates/subscribe-newsletter';
 import VerifyEmail from './templates/verify-email';
-import FeatureRequestStatusUpdate from './templates/feature-request-status-update';
-import FeatureRequestRejected from './templates/feature-request-rejected';
 
 const EmailTemplates = {
   forgotPassword: ForgotPassword,
   verifyEmail: VerifyEmail,
   subscribeNewsletter: SubscribeNewsletter,
   contactMessage: ContactMessage,
-  featureRequestStatusUpdate: FeatureRequestStatusUpdate,
-  featureRequestRejected: FeatureRequestRejected,
 } as const;
 
 const EmailSubjects: Record<EmailTemplate, () => string> = {
@@ -22,8 +18,6 @@ const EmailSubjects: Record<EmailTemplate, () => string> = {
   verifyEmail: m.mail_verify_email_subject,
   subscribeNewsletter: m.mail_subscribe_newsletter_subject,
   contactMessage: m.mail_contact_message_subject,
-  featureRequestStatusUpdate: m.mail_feature_request_status_update_subject,
-  featureRequestRejected: m.mail_feature_request_rejected_subject,
 };
 
 export async function renderEmailHtml(email: ReactElement): Promise<string> {

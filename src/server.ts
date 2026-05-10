@@ -2,6 +2,7 @@
 // This file is a good smoke test to make sure the custom server entry is working
 import handler from '@tanstack/react-start/server-entry';
 import { paraglideMiddleware } from './paraglide/server.js';
+import { runDailyCreditReset } from './cron/credit-reset';
 
 /**
  * TanStack Start server entry
@@ -18,5 +19,9 @@ export default {
         },
       })
     );
+  },
+
+  async scheduled(_event: ScheduledEvent, _env: unknown, ctx: ExecutionContext) {
+    ctx.waitUntil(runDailyCreditReset());
   },
 };

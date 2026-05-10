@@ -3,17 +3,17 @@ export const ANNUAL_DISCOUNT_PERCENT = 30;
 
 /** Monthly credits per subscription plan */
 export const SUBSCRIPTION_CREDITS = {
-  free: 5,
-  hobby: 120,
-  pro: 2000,
-  max: 5000,
+  free: 50,
+  hobby: 800,
+  pro: 3200,
+  max: 7000,
 } as const;
 
 /** One-time credits per credit pack */
 export const CREDIT_PACK_CREDITS = {
-  'starter-pack': 120,
-  'creator-pack': 650,
-  'studio-pack': 2000,
+  'starter-pack': 500,
+  'creator-pack': 2200,
+  'studio-pack': 6000,
 } as const;
 
 /** Subscription prices in cents */

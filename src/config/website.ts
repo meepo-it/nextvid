@@ -35,30 +35,26 @@ export const websiteConfig: WebsiteConfig = {
     },
   },
   social: {
-    github: 'https://github.com/MkFastHQ',
-    discord: 'https://mksaas.link/discord',
-    twitter: 'https://x.com/LetsShip',
-    youtube: 'https://www.youtube.com/@LetsShip',
+    github: '',
+    discord: '',
+    twitter: 'https://x.com/nextvid_ai',
+    youtube: 'https://www.youtube.com/@nextvid_ai',
   },
   auth: {
     enable: true,
     enableGoogleLogin: true,
-    enableCredentialLogin: false,
+    enableCredentialLogin: true,
     enableDeleteAccount: false,
   },
   blog: {
     enable: false,
     paginationSize: 6,
   },
-  affiliates: {
-    enable: false,
-    provider: 'affonso',
-  },
   mail: {
     enable: true,
     provider: 'resend',
-    fromEmail: 'LetsShip <support@tanstarter.dev>',
-    supportEmail: 'LetsShip <support@tanstarter.dev>',
+    fromEmail: 'NextVid <support@nextvid.ai>',
+    supportEmail: 'NextVid <support@nextvid.ai>',
   },
   newsletter: {
     enable: true,
@@ -94,14 +90,10 @@ export const websiteConfig: WebsiteConfig = {
             return m.pricing_plans_free_description();
           },
           get features() {
-            return [
-              m.pricing_plans_free_features_0(),
-            ];
+            return [m.pricing_plans_free_features_0()];
           },
           get limits() {
-            return [
-              m.pricing_plans_free_limits_0(),
-            ];
+            return [m.pricing_plans_free_limits_0()];
           },
         },
 
@@ -130,17 +122,13 @@ export const websiteConfig: WebsiteConfig = {
             return 'Hobby';
           },
           get description() {
-            return 'For light monthly image generation';
+            return 'Great for personal projects and casual creators';
           },
           get features() {
-            return [
-              '120 credits/month',
-            ];
+            return ['800 credits/month', '~16 videos per month'];
           },
           get limits() {
-            return [
-              'Lower monthly credit allowance than Pro',
-            ];
+            return ['Lower monthly credit allowance than Pro'];
           },
         },
 
@@ -173,14 +161,10 @@ export const websiteConfig: WebsiteConfig = {
             return m.pricing_plans_pro_description();
           },
           get features() {
-            return [
-              m.pricing_plans_pro_features_0(),
-            ];
+            return [m.pricing_plans_pro_features_0()];
           },
           get limits() {
-            return [
-              m.pricing_plans_pro_limits_0(),
-            ];
+            return [m.pricing_plans_pro_limits_0()];
           },
         },
 
@@ -209,17 +193,13 @@ export const websiteConfig: WebsiteConfig = {
             return 'Max';
           },
           get description() {
-            return 'For high-volume use at the best credit rate';
+            return 'For studios and power users at the best credit rate';
           },
           get features() {
-            return [
-              '5,000 credits/month',
-            ];
+            return ['7,000 credits/month', '~140 videos per month'];
           },
           get limits() {
-            return [
-              'Best for high-volume use only',
-            ];
+            return ['Best for high-volume use only'];
           },
         },
 
@@ -243,14 +223,10 @@ export const websiteConfig: WebsiteConfig = {
             return 'One-time payment. No recurring billing.';
           },
           get features() {
-            return [
-              '120 one-time credits',
-            ];
+            return ['500 one-time credits', '~10 videos'];
           },
           get limits() {
-            return [
-              'No monthly credit refresh',
-            ];
+            return ['No monthly credit refresh'];
           },
         },
 
@@ -275,14 +251,10 @@ export const websiteConfig: WebsiteConfig = {
             return 'One-time payment. No recurring billing.';
           },
           get features() {
-            return [
-              '650 one-time credits',
-            ];
+            return ['2,200 one-time credits', '~44 videos'];
           },
           get limits() {
-            return [
-              'No monthly credit refresh',
-            ];
+            return ['No monthly credit refresh'];
           },
         },
 
@@ -306,14 +278,10 @@ export const websiteConfig: WebsiteConfig = {
             return 'One-time payment. No recurring billing.';
           },
           get features() {
-            return [
-              '2,000 one-time credits',
-            ];
+            return ['6,000 one-time credits', '~120 videos'];
           },
           get limits() {
-            return [
-              'No monthly credit refresh',
-            ];
+            return ['No monthly credit refresh'];
           },
         },
       },

@@ -1,10 +1,9 @@
-import { getNavbarLinks } from '@/config/navbar-config';
+import { getNavbarLinks } from '@/config/navbar-config.tsx';
 import { useScroll } from '@/hooks/use-scroll';
 import { authClient } from '@/auth/client';
 import { isLinkActive } from '@/lib/urls';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/lib/routes';
-import { buttonVariants } from '@/components/ui/button';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -22,9 +21,15 @@ import { LocaleSwitcher } from '@/components/locale/locale-switcher';
 import { NavbarMobile } from '@/components/layout/navbar-mobile';
 import { UserButton } from '@/components/shared/user-button';
 import { LoginWrapper } from '@/components/auth/login-wrapper';
-import { IconArrowUpRight, IconCoins, IconPhoto } from '@tabler/icons-react';
+import {
+  IconArrowBigRightFilled,
+  IconArrowUpRight,
+  IconCoins,
+  IconPhoto,
+} from '@tabler/icons-react';
 import { Link, useLocation } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
+import { useUserCredit } from '@/hooks/use-video';
 import { websiteConfig } from '@/config/website';
 import * as m from '@/paraglide/messages.js';
 
@@ -40,6 +45,7 @@ export function Navbar({ scroll = true }: NavbarProps) {
   const [menuValue, setMenuValue] = useState<string | null>(null);
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
+  const { data: creditData } = useUserCredit();
   const showBarBg = scroll && scrolled;
 
   // Sync mount (avoid auth hydration mismatch) and close menu on route change
@@ -51,7 +57,7 @@ export function Navbar({ scroll = true }: NavbarProps) {
   return (
     <header
       className={cn(
-        'sticky inset-x-0 top-0 z-40 py-6 transition-all duration-300',
+        'sticky inset-x-0 top-0 z-40 py-3 transition-all duration-300',
         showBarBg && 'border-b'
       )}
     >
@@ -183,7 +189,7 @@ export function Navbar({ scroll = true }: NavbarProps) {
                       )}
                     >
                       <IconCoins className="size-4 shrink-0" />
-                      <span>0</span>
+                      <span>{creditData?.credits ?? '—'}</span>
                     </Link>
 
                     {/* Creations button */}
@@ -203,28 +209,17 @@ export function Navbar({ scroll = true }: NavbarProps) {
                     <UserButton user={user} />
                   </>
                 ) : (
-                  <>
-                    <LoginWrapper mode="modal" asChild>
-                      <button
-                        type="button"
-                        className={cn(
-                          buttonVariants({
-                            variant: 'outline',
-                            size: 'sm',
-                          }),
-                          'cursor-pointer'
-                        )}
-                      >
-                        {m.auth_common_login()}
-                      </button>
-                    </LoginWrapper>
-                    <Link
-                      to={Routes.Register}
-                      className={buttonVariants({ size: 'sm' })}
+                  <LoginWrapper mode="modal" asChild>
+                    <button
+                      type="button"
+                      className="group flex items-center gap-2 rounded-full border border-violet-300 bg-violet-100/80 px-5 py-2 shadow-sm transition-all hover:scale-[1.03] hover:border-violet-400 hover:bg-violet-200/70 hover:shadow-md hover:shadow-violet-300/50 active:scale-95 dark:border-violet-700/60 dark:bg-violet-900/30 dark:hover:border-violet-600 dark:hover:bg-violet-800/40"
                     >
-                      {m.auth_common_signup()}
-                    </Link>
-                  </>
+                      <IconArrowBigRightFilled className="size-3.5 shrink-0 text-violet-500 transition-colors group-hover:text-violet-600" />
+                      <span className="bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-sm font-semibold text-transparent transition-all group-hover:from-violet-700 group-hover:to-fuchsia-700">
+                        Get Started
+                      </span>
+                    </button>
+                  </LoginWrapper>
                 ))}
             </div>
           </nav>
